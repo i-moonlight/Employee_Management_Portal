@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebAPI.Models;
 using WebAPI.Repositories;
 
 namespace WebAPI.Controllers
@@ -18,6 +19,13 @@ namespace WebAPI.Controllers
         public JsonResult Get()
         {
             return new JsonResult(_employeeRepository.Read());
+        }
+        
+        [HttpPost]
+        public JsonResult Post(Employee emp)
+        {
+            _employeeRepository.Create(emp);
+            return new JsonResult("Created Successfully");
         }
     }
 }

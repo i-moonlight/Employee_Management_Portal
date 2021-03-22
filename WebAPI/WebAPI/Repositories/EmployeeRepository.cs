@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.DataBase;
+using WebAPI.Models;
 
 namespace WebAPI.Repositories
 {
@@ -19,6 +20,13 @@ namespace WebAPI.Repositories
         public IEnumerable Read()
         {
             return _context.Employees.OrderBy(x => x.EmployeeId);
+        }
+        
+        public Employee Create(Employee model)
+        {
+            _context.Employees.Add(model);
+            _context.SaveChanges();
+            return model;
         }
     }
 }
