@@ -28,5 +28,12 @@ namespace WebAPI.Repositories
             _context.SaveChanges();
             return model;
         }
+        
+        public Employee Update(Employee model)
+        {
+            _context.Employees.Update(model);
+            _context.SaveChanges();
+            return model;
+        }
     }
 }

@@ -27,5 +27,12 @@ namespace WebAPI.Controllers
             _employeeRepository.Create(emp);
             return new JsonResult("Created Successfully");
         }
+
+        [HttpPut]
+        public JsonResult Put(Employee emp)
+        {
+            _employeeRepository.Update(emp);
+            return new JsonResult("Update Successfully");
+        }
     }
 }
