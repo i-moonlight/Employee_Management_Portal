@@ -34,5 +34,12 @@ namespace WebAPI.Controllers
             _employeeRepository.Update(emp);
             return new JsonResult("Update Successfully");
         }
+        
+        [HttpDelete("{id}")]
+        public JsonResult Delete(int id)
+        {
+            _employeeRepository.Delete(id);
+            return new JsonResult("Delete successful");
+        }
     }
 }

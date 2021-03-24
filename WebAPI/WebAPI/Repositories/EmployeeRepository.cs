@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.DataBase;
@@ -34,6 +35,13 @@ namespace WebAPI.Repositories
             _context.Employees.Update(model);
             _context.SaveChanges();
             return model;
+        }
+        
+        public void Delete(int id)
+        {
+            var model = _context.Employees.FirstOrDefault(x => x.EmployeeId == id);
+            _context.Employees.Remove(model ?? throw new InvalidOperationException());
+            _context.SaveChanges();
         }
     }
 }
