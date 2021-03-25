@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
-import { SharedService } from './shared.service';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { SharedService } from './shared.service';
 
 describe('SharedService', () => {
   let service: SharedService;

@@ -1,6 +1,6 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { EmployeeComponent } from './employee.component';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('EmployeeComponent', () => {
   let component: EmployeeComponent;
