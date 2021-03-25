@@ -4,12 +4,13 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.DataBase;
 using WebAPI.Models;
+using WebAPI.Repositories.Interfaces;
 
-namespace WebAPI.Repositories
+namespace WebAPI.Repositories.Implementations
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EmployeeRepository
+    public class EmployeeRepository : ICrudRepository<Employee>
     {
         private readonly AppDbContext _context;
 

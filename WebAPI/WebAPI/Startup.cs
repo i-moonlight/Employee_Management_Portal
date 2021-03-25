@@ -10,7 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebAPI.DataBase;
-using WebAPI.Repositories;
+using WebAPI.Models;
+using WebAPI.Repositories.Implementations;
+using WebAPI.Repositories.Interfaces;
 
 namespace WebAPI
 {
@@ -29,7 +31,8 @@ namespace WebAPI
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             
-            services.AddScoped<EmployeeRepository>();
+            // Dependency injection.
+            services.AddScoped<ICrudRepository<Employee>, EmployeeRepository>();
 
             services.AddControllers();
         }

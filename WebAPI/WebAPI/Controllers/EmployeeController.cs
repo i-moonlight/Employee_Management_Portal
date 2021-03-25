@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebAPI.Models;
-using WebAPI.Repositories;
+using WebAPI.Repositories.Interfaces;
 
 namespace WebAPI.Controllers
 {
@@ -8,37 +8,37 @@ namespace WebAPI.Controllers
     [ApiController]
     public class EmployeeController : ControllerBase
     {
-        private readonly EmployeeRepository _employeeRepository;
+        private readonly ICrudRepository<Employee> _empRepository;
 
-        public EmployeeController(EmployeeRepository employeeRepository)
+        public EmployeeController(ICrudRepository<Employee> empRepository)
         {
-            _employeeRepository = employeeRepository;
+            _empRepository = empRepository;
         }
 
         [HttpGet]
         public JsonResult Get()
         {
-            return new JsonResult(_employeeRepository.Read());
+            return new JsonResult(_empRepository.Read());
         }
         
         [HttpPost]
         public JsonResult Post(Employee emp)
         {
-            _employeeRepository.Create(emp);
+            _empRepository.Create(emp);
             return new JsonResult("Created Successfully");
         }
 
         [HttpPut]
         public JsonResult Put(Employee emp)
         {
-            _employeeRepository.Update(emp);
+            _empRepository.Update(emp);
             return new JsonResult("Update Successfully");
         }
         
         [HttpDelete("{id}")]
         public JsonResult Delete(int id)
         {
-            _employeeRepository.Delete(id);
+            _empRepository.Delete(id);
             return new JsonResult("Delete successful");
         }
     }
