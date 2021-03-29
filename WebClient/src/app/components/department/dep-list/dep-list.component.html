@@ -1,1 +1,19 @@
-<p>dep-list works!</p>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>DepartmentId</th>
+    <th>Department Name</th>
+    <th>Options</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let dataItem of departmentList">
+    <td>{{dataItem["DepartmentId"]}}</td>
+    <td>{{dataItem["DepartmentName"]}}</td>
+    <td>
+      <button type="button" class="btn btn-light mr-1">Edit</button>
+      <button type="button" class="btn btn-light mr-1">Delete</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
