@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-dep-modal',
@@ -6,8 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dep-modal.component.css']
 })
 export class DepartmentModalComponent implements OnInit {
-
-  constructor() {}
+  @Input() dep: any;
 
   ngOnInit(): void {}
 }
