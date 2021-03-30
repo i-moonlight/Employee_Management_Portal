@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using WebAPI.Models;
 using WebAPI.Repositories.Interfaces;
 
@@ -31,8 +32,18 @@ namespace WebAPI.Controllers
         [HttpPut]
         public JsonResult Put(Employee emp)
         {
-            _empRepository.Update(emp);
-            return new JsonResult("Update Successfully");
+            var success = true;
+            try
+            {
+                _empRepository.Update(emp);
+            }
+            catch (Exception)
+            {
+                success = false;
+            }
+            return success
+                ? new JsonResult("Update successful")
+                : new JsonResult("Update was not successful");
         }
         
         [HttpDelete("{id}")]
