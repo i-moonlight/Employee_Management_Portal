@@ -35,4 +35,19 @@ export class DepartmentListComponent implements OnInit {
     this.updateDepartmentList();
     this.activateAddEditDepComp = false;
   }
+
+  editClick(item: any): void {
+    this.dep = item;
+    this.modalTitle = 'Edit Department';
+    this.activateAddEditDepComp = true;
+  }
+
+  deleteClick(item): void {
+    if (confirm('Are you sure?')) {
+      this.service.deleteDepartment(item.DepartmentId).subscribe(data => {
+        alert(data.toString());
+        this.updateDepartmentList();
+      });
+    }
+  }
 }
