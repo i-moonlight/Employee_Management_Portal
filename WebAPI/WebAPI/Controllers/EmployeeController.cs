@@ -49,8 +49,18 @@ namespace WebAPI.Controllers
         [HttpDelete("{id}")]
         public JsonResult Delete(int id)
         {
-            _empRepository.Delete(id);
-            return new JsonResult("Delete successful");
+            var success = true;
+            try
+            {
+                _empRepository.Delete(id);
+            }
+            catch (Exception)
+            {
+                success = false;
+            }
+            return success
+                ? new JsonResult("Delete successful")
+                : new JsonResult("Delete was not successful");
         }
     }
 }
