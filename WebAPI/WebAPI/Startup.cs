@@ -33,6 +33,7 @@ namespace WebAPI
             
             // Dependency injection.
             services.AddScoped<ICrudRepository<Employee>, EmployeeRepository>();
+            services.AddScoped<ICrudRepository<Department>, DepartmentRepository>();
 
             services.AddControllers();
         }
