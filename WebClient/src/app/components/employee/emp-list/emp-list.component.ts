@@ -8,6 +8,9 @@ import { SharedService } from '../../../services/shared/shared.service';
 })
 export class EmployeeListComponent implements OnInit {
   employeeList: any = [];
+  emp: any;
+  modalTitle: string;
+  activateAddEditEmpComp: boolean = false;
 
   constructor(private service: SharedService) {}
 
@@ -17,5 +20,22 @@ export class EmployeeListComponent implements OnInit {
 
   updateEmployeeList(): void {
     this.service.getEmployeeList().subscribe(res => this.employeeList = res);
+  }
+
+  addClick(): void {
+    this.emp = {
+      EmployeeId: 0,
+      EmployeeName: '',
+      Department: '',
+      DateOfJoining: '',
+      PhotoFileName: 'anonymous.png'
+    }
+    this.modalTitle = 'Add Employee';
+    this.activateAddEditEmpComp = true;
+  }
+
+  closeClick(): void {
+    this.activateAddEditEmpComp = false;
+    this.updateEmployeeList();
   }
 }

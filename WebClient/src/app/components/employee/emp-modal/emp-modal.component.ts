@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-emp-modal',
@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./emp-modal.component.css']
 })
 export class EmployeeModalComponent implements OnInit {
+  @Input() emp: any;
 
   ngOnInit(): void {}
 }
