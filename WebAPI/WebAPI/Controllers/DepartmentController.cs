@@ -21,5 +21,12 @@ namespace WebAPI.Controllers
         {
             return new JsonResult(_depRepository.Read());
         }
+        
+        [HttpPost]
+        public JsonResult Post(Department dep)
+        {
+            _depRepository.Create(dep);
+            return new JsonResult("Created Successfully");
+        }
     }
 }

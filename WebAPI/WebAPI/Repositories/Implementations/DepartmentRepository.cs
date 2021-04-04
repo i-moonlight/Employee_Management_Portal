@@ -4,7 +4,6 @@ using WebAPI.DataBase;
 using WebAPI.Models;
 using WebAPI.Repositories.Interfaces;
 
-
 namespace WebAPI.Repositories.Implementations
 {
     public class DepartmentRepository : ICrudRepository<Department>
@@ -19,6 +18,13 @@ namespace WebAPI.Repositories.Implementations
         public IEnumerable Read()
         {
             return _context.Departments.OrderBy(x => x.DepartmentId);
+        }
+        
+        public Department Create(Department model)
+        {
+            _context.Departments.Add(model);
+            _context.SaveChanges();
+            return model;
         }
     }
 }
