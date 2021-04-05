@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 
 export class SharedService {
   readonly APIUrl = 'http://localhost:5000/api';
+  readonly PhotoUrl = 'http://localhost:5000/Photos/';
 
   constructor(private http: HttpClient) {}
 
@@ -45,5 +46,9 @@ export class SharedService {
 
   deleteEmployee(val: any): Observable<any> {
     return this.http.delete(this.APIUrl + '/employee/' + val);
+  }
+
+  uploadPhoto(val: any): Observable<any> {
+    return this.http.delete(this.PhotoUrl + '/employee/', val);
   }
 }
