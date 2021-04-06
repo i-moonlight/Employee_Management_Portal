@@ -28,5 +28,12 @@ namespace WebAPI.Controllers
             _depRepository.Create(dep);
             return new JsonResult("Created Successfully");
         }
+        
+        [HttpPut]
+        public JsonResult Put(Department dep)
+        { 
+            _depRepository.Update(dep);
+            return new JsonResult("Update successful");
+        }
     }
 }

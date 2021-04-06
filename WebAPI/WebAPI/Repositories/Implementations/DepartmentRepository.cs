@@ -26,5 +26,12 @@ namespace WebAPI.Repositories.Implementations
             _context.SaveChanges();
             return model;
         }
+        
+        public Department Update(Department model)
+        {
+            _context.Departments.Update(model);
+            _context.SaveChanges();
+            return model;
+        }
     }
 }
