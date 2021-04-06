@@ -29,4 +29,20 @@ export class SharedService {
   getEmployeeList(): Observable<any[]> {
     return this.http.get<any>(this.APIUrl + '/employee');
   }
+
+  getAllDepartmentNames(): Observable<any[]> {
+    return this.http.get<any[]>(this.APIUrl + '/employee/GetAllDepartmentNames');
+  }
+
+  addEmployee(val: any): Observable<any> {
+    return this.http.post(this.APIUrl + '/employee', val);
+  }
+
+  updateEmployee(val: any): Observable<any> {
+    return this.http.put(this.APIUrl + '/employee', val);
+  }
+
+  deleteEmployee(val: any): Observable<any> {
+    return this.http.delete(this.APIUrl + '/employee/' + val);
+  }
 }
