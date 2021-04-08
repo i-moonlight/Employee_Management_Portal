@@ -32,8 +32,18 @@ namespace WebAPI.Controllers
         [HttpPut]
         public JsonResult Put(Department dep)
         { 
-            _depRepository.Update(dep);
-            return new JsonResult("Update successful");
+            var success = true;
+            try
+            {
+                _depRepository.Update(dep);
+            }
+            catch (Exception)
+            {
+                success = false;
+            }
+            return success
+                ? new JsonResult("Update successful")
+                : new JsonResult("Update was not successful");
         }
     }
 }
