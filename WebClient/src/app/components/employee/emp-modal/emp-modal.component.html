@@ -27,3 +27,17 @@
 <button (click)="updateEmployee()" *ngIf="emp.EmployeeId!=0" class="btn btn-primary">
   Update
 </button>
+
+<div class="ml-3 bd-highlight">
+  <img [src]=photoFilePath>
+  <input type="file" (change)="uploadPhoto($event)" class="mt-2"/>
+</div>
+
+<button (click)="addEmployee()" *ngIf="emp.EmployeeId==0" class="btn btn-primary">
+  Add
+</button>
+
+<button (click)="updateEmployee()" *ngIf="emp.EmployeeId!=0" class="btn btn-primary">
+  Update
+</button>
+
