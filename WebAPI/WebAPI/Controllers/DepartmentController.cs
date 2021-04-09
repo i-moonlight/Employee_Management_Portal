@@ -45,5 +45,12 @@ namespace WebAPI.Controllers
                 ? new JsonResult("Update successful")
                 : new JsonResult("Update was not successful");
         }
+        
+        [HttpDelete("{id}")]
+        public JsonResult Delete(int id)
+        {
+            _depRepository.Delete(id);
+            return new JsonResult("Delete successful");
+        }
     }
 }
