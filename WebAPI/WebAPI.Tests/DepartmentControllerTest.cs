@@ -70,6 +70,21 @@ namespace WebAPI.Tests
             Assert.AreEqual(new JsonResult(_model).GetType(), result.GetType(), "Return type mismatch");
             Assert.AreEqual(typeof(string), result.Value.GetType(), "Return value type mismatch");
         }
+        
+        [Test]
+        public void Delete_ShouldDeleteDepartment()
+        {
+            // Arrange.
+            _mockDepRepo.Setup(x => x.Delete(_model.DepartmentId));
+
+            // Act.
+            JsonResult result = _controller.Delete(_model.DepartmentId);
+
+            // Assert.
+            Assert.NotNull(result, "Result is null");
+            Assert.AreEqual(new JsonResult(_model).GetType(), result.GetType(), "Return type mismatch");
+            Assert.AreEqual(typeof(string), result.Value.GetType(), "Return value type mismatch");
+        }
 
         private static IEnumerable<Department> GetCategories()
         {
