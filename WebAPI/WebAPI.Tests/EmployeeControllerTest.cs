@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
@@ -16,12 +17,13 @@ namespace WebAPI.Tests
         private EmployeeController _controller;
         private IEnumerable<Employee> _fakeCategories;
         private Employee _model;
+        private readonly IWebHostEnvironment _env = null;
 
         [SetUp]
         public void Setup()
         {
             _mockEmpRepo = new Mock<ICrudRepository<Employee>>();
-            _controller = new EmployeeController(_mockEmpRepo.Object);
+            _controller = new EmployeeController(_mockEmpRepo.Object, _env);
             _fakeCategories = GetCategories();
             _model = new Employee();
         }
