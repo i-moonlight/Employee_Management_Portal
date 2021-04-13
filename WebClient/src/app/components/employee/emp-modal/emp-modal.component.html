@@ -30,17 +30,26 @@
   Update
 </button>
 
-<!-- Select date-->
+<!-- Select photo-->
 <div class="ml-3 bd-highlight">
   <div class="container">
     <img [src]=photoFilePath>
-    <input type="file" (change)="uploadPhoto($event)" class="mt-2"/>
+    <input type="file" class="input" multiple="multiple" (change)="onFileSelected($event)">
   </div>
+
   <button (click)="addEmployee()" *ngIf="emp.EmployeeId==0" class="btn btn-primary">
     Add
   </button>
 
   <button (click)="updateEmployee()" *ngIf="emp.EmployeeId!=0" class="btn btn-primary">
+    Update
+  </button>
+
+  <button type="button" (click)="uploadPhoto($event)" *ngIf="emp.EmployeeId==0" class="btn btn-primary but">
+    Upload
+  </button>
+
+  <button type="button" (click)="updatePhoto(employeeId)" *ngIf="emp.EmployeeId!=0" class="btn btn-primary but">
     Update
   </button>
 </div>
