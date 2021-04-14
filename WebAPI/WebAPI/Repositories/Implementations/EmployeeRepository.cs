@@ -24,6 +24,11 @@ namespace WebAPI.Repositories.Implementations
             return _context.Employees.OrderBy(x => x.EmployeeId);
         }
         
+        public IEnumerable ReadAll()
+        {
+            return _context.Departments.OrderBy(x => x.DepartmentId);
+        }
+        
         public Employee Create(Employee model)
         {
             _context.Employees.Add(model);

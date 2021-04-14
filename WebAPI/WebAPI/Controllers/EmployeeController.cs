@@ -90,5 +90,11 @@ namespace WebAPI.Controllers
                 return new JsonResult("anonymous.png");
             }
         }
+        
+        [Route("GetAllDepartmentNames")]
+        public JsonResult GetAllDepartmentNames()
+        {
+            return new JsonResult(_empRepository.ReadAll());
+        }
     }
 }
