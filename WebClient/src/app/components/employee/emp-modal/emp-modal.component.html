@@ -1,10 +1,12 @@
+<!-- Modal edit-->
 <div class="d-flex flex-row bd-highlight mb-3">
   <div class="form-froup row">
+    <!-- Employee name field-->
     <label class="col-sm-2 col-form-label">Employee Name</label>
     <div class="col-sm-10">
       <input type="text" class="form-control" [(ngModel)]="employeeName" placeholder="Enter Employee Name">
     </div>
-
+    <!-- Select department name-->
     <label class="col-sm-2 col-form-label">Department</label>
     <div class="col-sm-10">
       <select class="form-control" [(ngModel)]="department">
@@ -12,7 +14,7 @@
         <option *ngFor="let depName of departmentsList">{{depName["DepartmentName"]}}</option>
       </select>
     </div>
-
+    <!-- Select date-->
     <label class="col-sm-2 col-form-label">Date</label>
     <div class="col-sm-10">
       <input type="date" class="form-control" [(ngModel)]="dateOfJoining">
@@ -28,9 +30,19 @@
   Update
 </button>
 
+<!-- Select date-->
 <div class="ml-3 bd-highlight">
-  <img [src]=photoFilePath>
-  <input type="file" (change)="uploadPhoto($event)" class="mt-2"/>
+  <div class="container">
+    <img [src]=photoFilePath>
+    <input type="file" (change)="uploadPhoto($event)" class="mt-2"/>
+  </div>
+  <button (click)="addEmployee()" *ngIf="emp.EmployeeId==0" class="btn btn-primary">
+    Add
+  </button>
+
+  <button (click)="updateEmployee()" *ngIf="emp.EmployeeId!=0" class="btn btn-primary">
+    Update
+  </button>
 </div>
 
 <button (click)="addEmployee()" *ngIf="emp.EmployeeId==0" class="btn btn-primary">
@@ -40,4 +52,3 @@
 <button (click)="updateEmployee()" *ngIf="emp.EmployeeId!=0" class="btn btn-primary">
   Update
 </button>
-

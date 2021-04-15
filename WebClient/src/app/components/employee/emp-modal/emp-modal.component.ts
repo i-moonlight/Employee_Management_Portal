@@ -8,7 +8,7 @@ import { SharedService } from '../../../services/shared/shared.service';
 })
 export class EmployeeModalComponent implements OnInit {
   @Input() emp: any;
-  employeeId: string;
+  employeeId: number;
   employeeName: string;
   department: string;
   dateOfJoining: string;
@@ -56,7 +56,7 @@ export class EmployeeModalComponent implements OnInit {
     this.service.updateEmployee(object).subscribe(res => alert(res.toString()));
   }
 
-  uploadPhoto(event): void {
+  uploadPhoto(event: any): void {
     let file = event.target.files[0];
     const formData: FormData = new FormData();
     formData.append('uploadFile', file, file.name);

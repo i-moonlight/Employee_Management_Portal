@@ -1,17 +1,16 @@
-.form-control{
-  margin-left: 3rem;
+.form-control {
   margin-bottom: 2rem;
 }
 
 .form-froup {
-  width: 90%;
+  width: 60%;
 }
 
-.bd-highlight{
+.bd-highlight {
   width: 40%;
 }
 
 img {
   height: 250px;
-  width: 200px;
+  width: 260px;
 }
