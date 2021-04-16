@@ -29,7 +29,7 @@ namespace WebAPI.Tests
         }
 
         [Test]
-        public void Get_ShouldReturnAllEmployees()
+        public void Get_Should_Returns_JsonResult_String_Value()
         {
             // Arrange   
             _mockEmpRepo.Setup(x => x.Read()).Returns(_fakeCategories);
@@ -44,7 +44,7 @@ namespace WebAPI.Tests
         }
         
         [Test]
-        public void Post_ShouldCreateEmployee()
+        public void Post_Should_Returns_JsonResult_String_Value()
         {
             // Arrange.   
             _mockEmpRepo.Setup(x => x.Create(_model)).Returns(_fakeCategories.GetEnumerator().Current);
@@ -59,7 +59,7 @@ namespace WebAPI.Tests
         }
         
         [Test]
-        public void Put_ShouldUpdateEmployee()
+        public void Put_Should_Returns_JsonResult_String_Value()
         {
             // Arrange.
             _mockEmpRepo.Setup(x => x.Update(_model)).Returns(_fakeCategories.GetEnumerator().Current);
@@ -74,7 +74,7 @@ namespace WebAPI.Tests
         }
         
         [Test]
-        public void Delete_ShouldDeleteEmployee()
+        public void Delete_Should_Returns_JsonResult_String_Value()
         {
             // Arrange.   
             _mockEmpRepo.Setup(x => x.Delete(_model.EmployeeId));
@@ -89,7 +89,7 @@ namespace WebAPI.Tests
         }
         
         [Test]
-        public void SaveFile_ShouldSaveFile()
+        public void SaveFile_Should_Returns_Json_Result_String_Value()
         {
             // Act
             JsonResult result = _controller.SaveFile();
@@ -101,7 +101,7 @@ namespace WebAPI.Tests
         }
         
         [Test]
-        public void GetAllDepartmentNames_ShouldReturnValueTypeNotNull()
+        public void GetAllDepartmentNames_Should_Returns_ValueType_NotNull()
         {
             // Arrange.   
             _mockEmpRepo.Setup(x => x.ReadAll()).Returns(_fakeCategories);
