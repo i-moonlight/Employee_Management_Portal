@@ -10,3 +10,7 @@
 .btn-red {
   background: indianred;
 }
+
+.modal-body{
+  width: 100%;
+}
