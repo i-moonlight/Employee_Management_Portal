@@ -14,3 +14,16 @@ img {
   height: 250px;
   width: 260px;
 }
+
+.but {
+  display: block;
+  width: 128px;
+  height: 30px;
+  padding: initial;
+  margin-top: 10px;
+  margin-left: 13px;
+}
+
+.input {
+  margin-top: 30px;
+}
