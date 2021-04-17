@@ -27,7 +27,7 @@ namespace WebAPI.Tests
         }
 
         [Test]
-        public void Get_ShouldReturnAllDepartments()
+        public void Get_Should_Returns_JsonResult_String_Value()
         {
             // Arrange.   
             _mockDepRepo.Setup(x => x.Read()).Returns(_fakeCategories);
@@ -42,7 +42,7 @@ namespace WebAPI.Tests
         }
         
         [Test]
-        public void Post_ShouldCreateDepartment()
+        public void Post_Should_Returns_JsonResult_String_Value()
         {
             // Arrange.   
             _mockDepRepo.Setup(x => x.Create(new Department())).Returns(_fakeCategories.GetEnumerator().Current);
@@ -57,7 +57,7 @@ namespace WebAPI.Tests
         }    
         
         [Test]
-        public void Put_ShouldUpdateDepartment()
+        public void Put_Should_Returns_JsonResult_String_Value()
         {
             // Arrange. 
             _mockDepRepo.Setup(x => x.Update(_model)).Returns(_fakeCategories.GetEnumerator().Current);
@@ -72,7 +72,7 @@ namespace WebAPI.Tests
         }
         
         [Test]
-        public void Delete_ShouldDeleteDepartment()
+        public void Delete_Should_Returns_JsonResult_String_Value()
         {
             // Arrange.
             _mockDepRepo.Setup(x => x.Delete(_model.DepartmentId));
