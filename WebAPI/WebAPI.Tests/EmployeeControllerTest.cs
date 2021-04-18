@@ -31,13 +31,13 @@ namespace WebAPI.Tests
         [Test]
         public void Get_Should_Returns_JsonResult_String_Value()
         {
-            // Arrange   
+            // Arrange.   
             _mockEmpRepo.Setup(x => x.Read()).Returns(_fakeCategories);
 
-            // Act
+            // Act.
             JsonResult result = _controller.Get();
 
-            // Assert
+            // Assert.
             Assert.NotNull(result, "Result is null");
             Assert.AreEqual(new JsonResult(new Employee()).GetType(), result.GetType(), "Return type mismatch");
             Assert.AreEqual(typeof(List<Employee>), result.Value.GetType(), "Return value type mismatch");
@@ -91,10 +91,10 @@ namespace WebAPI.Tests
         [Test]
         public void SaveFile_Should_Returns_Json_Result_String_Value()
         {
-            // Act
+            // Act.
             JsonResult result = _controller.SaveFile();
 
-            // Assert
+            // Assert.
             Assert.NotNull(result, "Result is null");
             Assert.AreEqual(new JsonResult(_model).GetType(), result.GetType(), "Return type mismatch");
             Assert.AreEqual(typeof(string), result.Value.GetType(), "Return value type mismatch");
