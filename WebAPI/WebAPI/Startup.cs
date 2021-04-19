@@ -29,7 +29,7 @@ namespace WebAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
-            //Enable application context
+            // Enable application context.
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             
@@ -57,7 +57,7 @@ namespace WebAPI
 
             app.UseRouting();
 
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
     }
 }
