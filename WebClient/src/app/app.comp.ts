@@ -9,8 +9,8 @@ export interface Todo {
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  templateUrl: './app.comp.html',
+  styleUrls: ['./app.comp.css']
 })
 
 export class AppComponent {
