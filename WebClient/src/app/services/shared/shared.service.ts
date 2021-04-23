@@ -27,8 +27,8 @@ export class SharedService {
     return this.http.delete(this.APIUrl + '/department/' + val);
   }
 
-  getEmployeeList(): Observable<any[]> {
-    return this.http.get<any>(this.APIUrl + '/employee');
+  getEmployeeListFromDB(): Observable<string[]> {
+    return this.http.get<string[]>(this.APIUrl + '/employee');
   }
 
   getAllDepartmentNames(): Observable<any[]> {
@@ -43,8 +43,8 @@ export class SharedService {
     return this.http.put(this.APIUrl + '/employee', val);
   }
 
-  deleteEmployee(val: any): Observable<any> {
-    return this.http.delete(this.APIUrl + '/employee/' + val);
+  deleteEmployeeFromDB(employeeId: number): Observable<string> {
+    return this.http.delete<string>(this.APIUrl + '/employee/' + employeeId);
   }
 
   uploadPhoto(formData: FormData): Observable<any> {
