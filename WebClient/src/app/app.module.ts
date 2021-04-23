@@ -6,13 +6,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { EmployeeComponent } from './components/employee/emp.comp';
 import { EmployeeListComponent } from './components/employee/emp-list/emp-list.comp';
 import { EmployeeModalComponent } from './components/employee/emp-modal/emp-modal.comp';
+import { DepartmentComponent } from './components/department/dep.comp';
 
 @NgModule({
   declarations: [
     AppComponent,
     EmployeeComponent,
     EmployeeListComponent,
-    EmployeeModalComponent
+    EmployeeModalComponent,
+    DepartmentComponent
   ],
   imports: [
     BrowserModule,
