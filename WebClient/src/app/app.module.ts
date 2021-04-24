@@ -7,6 +7,7 @@ import { EmployeeComponent } from './components/employee/emp.comp';
 import { EmployeeListComponent } from './components/employee/emp-list/emp-list.comp';
 import { EmployeeModalComponent } from './components/employee/emp-modal/emp-modal.comp';
 import { DepartmentComponent } from './components/department/dep.comp';
+import { DepartmentListComponent } from './components/department/dep-list/dep-list.comp';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { DepartmentComponent } from './components/department/dep.comp';
     EmployeeComponent,
     EmployeeListComponent,
     EmployeeModalComponent,
-    DepartmentComponent
+    DepartmentComponent,
+    DepartmentListComponent
   ],
   imports: [
     BrowserModule,
