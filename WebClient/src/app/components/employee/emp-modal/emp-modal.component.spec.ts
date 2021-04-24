@@ -13,6 +13,7 @@ describe('EmployeeModalComponent', () => {
   let fixture: ComponentFixture<EmployeeModalComponent>;
   let service: SharedService;
   let mockList: string[];
+  let mock: Employee;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -29,6 +30,7 @@ describe('EmployeeModalComponent', () => {
     component.emp = <Employee>{};
     service = fixture.debugElement.injector.get<SharedService>(SharedService as any);
     mockList = [];
+    mock = <Employee>{}
     fixture.detectChanges();
   });
 
@@ -90,4 +92,29 @@ describe('EmployeeModalComponent', () => {
     component.uploadPhoto();
     expect(spy.calls.any()).toBeTruthy();
   });
-});
+
+  it('should set photo name value when upload photo file', () => {
+    spyOn(service, 'uploadPhotoToStorage').and.returnValue(of('photo file name'));
+    component.uploadPhoto();
+    expect(component.photoFileName).toEqual('photo file name');
+  });
+
+  it('should call update photo method when click on button', () => {
+    const spy = spyOn(component, 'updatePhoto');
+    const btn = fixture.debugElement.query(By.css('.but'));
+    btn.triggerEventHandler('click', null);
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('should call shared service when update photo file', () => {
+    const spy = spyOn(service, 'updatePhotoToStorage').and.returnValue(of(''));
+    component.updatePhoto(mock.EmployeeId);
+    expect(spy.calls.any()).toBeTruthy();
+  });
+
+  it('should set photo name value when update photo file', () => {
+    spyOn(service, 'updatePhotoToStorage').and.returnValue(of('photo file name'));
+    component.updatePhoto(mock.EmployeeId);
+    expect(component.photoFileName).toEqual('photo file name');
+  });
+})
