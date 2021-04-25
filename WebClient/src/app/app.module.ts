@@ -8,6 +8,7 @@ import { EmployeeListComponent } from './components/employee/emp-list/emp-list.c
 import { EmployeeModalComponent } from './components/employee/emp-modal/emp-modal.comp';
 import { DepartmentComponent } from './components/department/dep.comp';
 import { DepartmentListComponent } from './components/department/dep-list/dep-list.comp';
+import { DepartmentModalComponent} from './components/department/dep-modal/dep-modal.comp';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { DepartmentListComponent } from './components/department/dep-list/dep-li
     EmployeeListComponent,
     EmployeeModalComponent,
     DepartmentComponent,
-    DepartmentListComponent
+    DepartmentListComponent,
+    DepartmentModalComponent
   ],
   imports: [
     BrowserModule,
