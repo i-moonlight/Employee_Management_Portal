@@ -51,10 +51,10 @@ export class EmployeeListComponent implements OnInit {
 
   deleteEmployee(dataItem: Employee): void {
     this.service.deleteEmployeeFromDB(dataItem.EmployeeId).subscribe(
-      (response: string) => {
-        alert(response);
+      (res: string) => {
+        alert(res);
         this.updateEmployeeList();
-        console.warn(response);
+        console.warn(res);
       },
       (error: string) => console.error(error))
   }
