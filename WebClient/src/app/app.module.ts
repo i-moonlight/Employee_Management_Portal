@@ -9,6 +9,7 @@ import { EmployeeModalComponent } from './components/employee/emp-modal/emp-moda
 import { DepartmentComponent } from './components/department/dep.comp';
 import { DepartmentListComponent } from './components/department/dep-list/dep-list.comp';
 import { DepartmentModalComponent} from './components/department/dep-modal/dep-modal.comp';
+import { SharedService } from './services/shared/shared.service';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,7 @@ import { DepartmentModalComponent} from './components/department/dep-modal/dep-m
     HttpClientModule,
     FormsModule
   ],
-  providers: [],
+  providers: [SharedService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
