@@ -6,6 +6,7 @@ import { EmployeeModalComponent } from './emp-modal.component';
 import { SharedService } from '../../../services/shared/shared.service';
 import { of } from 'rxjs';
 import { Employee } from '../employee.component';
+import { By } from '@angular/platform-browser';
 
 describe('EmployeeModalComponent', () => {
   let component: EmployeeModalComponent;
@@ -38,6 +39,31 @@ describe('EmployeeModalComponent', () => {
   it('should call shared service when load department list', () => {
     const spy = spyOn(service, 'getAllDepartmentNamesFromDB').and.returnValue(of(mockList));
     component.loadDepartmentList();
+    expect(spy.calls.any()).toBeTruthy();
+  });
+
+  it('should set department list value when load department list', () => {
+    spyOn(service, 'getAllDepartmentNamesFromDB').and.returnValue(of(mockList));
+    component.loadDepartmentList();
+    expect(component.departmentList).toEqual(mockList);
+  });
+
+  it('should call shared service when add employee', () => {
+    const spy = spyOn(service, 'addEmployeeToDB').and.returnValue(of('Created Successfully'));
+    component.addEmployee();
+    expect(spy.calls.any()).toBeTruthy();
+  });
+
+  it('should call update employee method when click on update button', () => {
+    const spy = spyOn(component, 'updatePhoto');
+    const btn = fixture.debugElement.query(By.css('.update'));
+    btn.triggerEventHandler('click', null);
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('should call shared service when update employee', () => {
+    const spy = spyOn(service, 'updateEmployeeToDB').and.returnValue(of('Update successful'));
+    component.updateEmployee();
     expect(spy.calls.any()).toBeTruthy();
   });
 });
