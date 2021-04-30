@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SharedService } from '../../../services/shared/shared.service';
 
 @Component({
   selector: 'app-dep-list',
@@ -6,8 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dep-list.comp.css']
 })
 export class DepartmentListComponent implements OnInit {
+  departmentList: any = [];
 
-  constructor() {}
+  constructor(private service: SharedService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.updateDepartmentList();
+  }
+
+  updateDepartmentList(): void {
+    this.service.getDepartmentList().subscribe(data => this.departmentList = data);
+  }
 }
