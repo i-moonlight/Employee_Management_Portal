@@ -8,6 +8,9 @@ import { SharedService } from '../../../services/shared/shared.service';
 })
 export class DepartmentListComponent implements OnInit {
   departmentList: any = [];
+  dep: any;
+  activateAddEditDepComp: boolean = false;
+  modalTitle: string;
 
   constructor(private service: SharedService) {}
 
@@ -17,5 +20,19 @@ export class DepartmentListComponent implements OnInit {
 
   updateDepartmentList(): void {
     this.service.getDepartmentList().subscribe(data => this.departmentList = data);
+  }
+
+  addClick(): void {
+    this.dep = {
+      DepartmentId: 0,
+      DepartmentName: ''
+    };
+    this.modalTitle = 'Add Department';
+    this.activateAddEditDepComp = true;
+  }
+
+  closeClick(): void {
+    this.updateDepartmentList();
+    this.activateAddEditDepComp = false;
   }
 }
