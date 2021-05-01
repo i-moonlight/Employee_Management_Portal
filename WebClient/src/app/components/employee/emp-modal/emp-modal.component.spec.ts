@@ -66,4 +66,28 @@ describe('EmployeeModalComponent', () => {
     component.updateEmployee();
     expect(spy.calls.any()).toBeTruthy();
   });
+
+  it('should call event when select photo file', () => {
+    const fakeChangeEvent = new Event('change');
+    const spy = spyOn(component, 'onFileSelected');
+    const element = document.getElementById('file');
+    element.dispatchEvent(fakeChangeEvent);
+    expect(spy).toHaveBeenCalledWith(fakeChangeEvent);
+  });
+
+  it('should call file reader when select photo file', () => {
+    const mockReader: FileReader = jasmine.createSpyObj('FileReader', ['readAsDataURL', 'onload']);
+    const mockFile: File = new File([''], 'filename', {type: 'text/html'});
+    const mockEvent = {target: {files: [mockFile]}};
+    const spy = spyOn(window as any, 'FileReader').and.returnValue(mockReader);
+    component.onFileSelected(mockEvent as any);
+    expect(spy).toHaveBeenCalled();
+    expect(mockReader.readAsDataURL).toHaveBeenCalledWith(mockFile);
+  });
+
+  it('should call shared service when upload photo file', () => {
+    const spy = spyOn(service, 'uploadPhotoToStorage').and.returnValue(of('photo file name'));
+    component.uploadPhoto();
+    expect(spy.calls.any()).toBeTruthy();
+  });
 });
