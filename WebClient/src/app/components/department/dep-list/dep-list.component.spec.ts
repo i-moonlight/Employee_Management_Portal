@@ -2,6 +2,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { DepartmentListComponent } from './dep-list.component';
 import { SharedService } from '../../../services/shared/shared.service';
@@ -12,6 +13,7 @@ describe('DepartmentListComponent', () => {
   let fixture: ComponentFixture<DepartmentListComponent>;
   let service: SharedService;
   let mockList: Department[];
+  let mock: Department;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -27,6 +29,7 @@ describe('DepartmentListComponent', () => {
     component = fixture.componentInstance;
     service = fixture.debugElement.injector.get<SharedService>(SharedService as any);
     mockList = [];
+    mock = <Department>{DepartmentId: 0, DepartmentName: ''};
     fixture.detectChanges();
   })
 
@@ -62,5 +65,37 @@ describe('DepartmentListComponent', () => {
     spyOn(service, 'getDepartmentListFromDB').and.returnValue(of(mockList));
     component.updateDepartmentList();
     expect(component.departmentList).toEqual(mockList);
+  })
+
+  it('should call add department method when click on button', () => {
+    const spy = spyOn(component, 'addDepartment');
+    const btn = fixture.debugElement.query(By.css('.btn-float'));
+    btn.triggerEventHandler('click', null);
+    expect(spy).toHaveBeenCalled();
+  })
+
+  it('should activate modal department component when add department', () => {
+    component.addDepartment();
+    expect(component.activateDepModalComp).toBeTrue();
+  })
+
+  it('should set department object values when add department', () => {
+    component.addDepartment();
+    expect(component.department).toEqual(mock);
+  })
+
+  it('should have modal title value as `Add Department` when add department', () => {
+    component.addDepartment();
+    expect(component.modalTitle).toEqual('Add Department');
+  })
+
+  it('should activate department modal component when edit department', () => {
+    component.editDepartment(mock);
+    expect(component.activateDepModalComp).toBeTrue();
+  })
+
+  it('should set department object value when edit department', () => {
+    component.editDepartment(mock);
+    expect(component.department).toEqual(mock);
   })
 })
