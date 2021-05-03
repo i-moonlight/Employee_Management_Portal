@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SharedService } from '../../../services/shared/shared.service';
 
 @Component({
   selector: 'app-emp-list',
@@ -6,8 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./emp-list.comp.css']
 })
 export class EmployeeListComponent implements OnInit {
+  employeeList: any = [];
 
-  constructor() {}
+  constructor(private service: SharedService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.updateEmployeeList();
+  }
+
+  updateEmployeeList(): void {
+    this.service.getEmployeeList().subscribe(data => this.employeeList = data);
+  }
 }
