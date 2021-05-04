@@ -98,4 +98,39 @@ describe('DepartmentListComponent', () => {
     component.editDepartment(mock);
     expect(component.department).toEqual(mock);
   })
+
+  it('should have modal title value as `Edit Department` when edit department', () => {
+    component.editDepartment(mock);
+    expect(component.modalTitle).toEqual('Edit Department');
+  })
+
+  it('should call close department modal method when click on close button', () => {
+    const spy  = spyOn(component, 'closeDepartmentModal');
+    const btn = fixture.debugElement.query(By.css('.btn-close'));
+    btn.triggerEventHandler('click', null);
+    expect(spy).toHaveBeenCalled();
+  })
+
+  it('should deactivate department modal component when close department modal', () => {
+    component.closeDepartmentModal();
+    expect(component.activateDepModalComp).toBeFalse();
+  })
+
+  it('should call update department list method when close department modal', () => {
+    const spy = spyOn(component, 'updateDepartmentList');
+    component.closeDepartmentModal();
+    expect(spy).toHaveBeenCalled();
+  })
+
+  it('should call confirm window when show delete confirm', () => {
+    const spy = spyOn(window, 'confirm');
+    component.showDeleteConfirm(mock);
+    expect(spy).toHaveBeenCalledWith('Are you sure??');
+  })
+
+  it('should call delete department method when click on confirm button', () => {
+    const spy = spyOn(component, 'deleteDepartment')
+    component.showDeleteConfirm(mock);
+    expect(spy).toHaveBeenCalledWith(mock);
+  })
 })
