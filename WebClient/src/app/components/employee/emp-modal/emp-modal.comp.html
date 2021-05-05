@@ -1,1 +1,23 @@
-<p>emp-modal works!</p>
+<div class="d-flex flex-row bd-highlight mb-3">
+  <div class="form-froup row">
+    <label class="col-sm-2 col-form-label">Employee Name</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" [(ngModel)]="employeeName" placeholder="Enter Employee Name">
+    </div>
+
+    <label class="col-sm-2 col-form-label">Department</label>
+    <div class="col-sm-10">
+      <select class="form-control" [(ngModel)]="department">
+        <option>--Select--</option>
+        <option *ngFor="let depName of departmentsList">{{depName["DepartmentName"]}}</option>
+      </select>
+    </div>
+
+    <label class="col-sm-2 col-form-label">Date</label>
+    <div class="col-sm-10">
+      <input type="date" class="form-control" [(ngModel)]="dateOfJoining">
+    </div>
+  </div>
+</div>
+<button (click)="addEmployee()" *ngIf="emp.EmployeeId==0" class="btn btn-primary">Add</button>
+<button (click)="updateEmployee()" *ngIf="emp.EmployeeId!=0" class="btn btn-primary">Update</button>

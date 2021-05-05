@@ -38,4 +38,20 @@ export class EmployeeListComponent implements OnInit {
     this.activateAddEditEmpComp = false;
     this.updateEmployeeList();
   }
+
+  editClick(item): void {
+    console.log(item);
+    this.emp = item;
+    this.modalTitle = "Edit Employee";
+    this.activateAddEditEmpComp = true;
+  }
+
+  deleteClick(item): void {
+    if (confirm('Are you sure??')) {
+      this.service.deleteEmployee(item.EmployeeId).subscribe(data => {
+        alert(data.toString());
+        this.updateEmployeeList();
+      })
+    }
+  }
 }

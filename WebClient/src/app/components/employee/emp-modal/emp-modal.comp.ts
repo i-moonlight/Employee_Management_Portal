@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { SharedService } from '../../../services/shared/shared.service';
 
 @Component({
   selector: 'app-emp-modal',
@@ -7,8 +8,45 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class EmployeeModalComponent implements OnInit {
   @Input() emp: any;
+  employeeId: string;
+  employeeName: string;
+  department: string;
+  dateOfJoining: string;
+  departmentsList: any = [];
 
-  constructor() {}
+  constructor(private service: SharedService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadDepartmentList()
+  }
+
+  private loadDepartmentList(): void {
+    this.service.getAllDepartmentNames().subscribe((response: any) => {
+      this.departmentsList = response;
+      this.employeeId = this.emp.EmployeeId;
+      this.employeeName = this.emp.EmployeeName;
+      this.department = this.emp.Department;
+      this.dateOfJoining = this.emp.DateOfJoining;
+    });
+  }
+
+  addEmployee(): void {
+    let object = {
+      EmployeeId: this.employeeId,
+      EmployeeName: this.employeeName,
+      Department: this.department,
+      DateOfJoining: this.dateOfJoining
+    };
+    this.service.addEmployee(object).subscribe(response => alert(response.toString()));
+  }
+
+  updateEmployee(): void {
+    let object = {
+      EmployeeId: this.employeeId,
+      EmployeeName: this.employeeName,
+      Department: this.department,
+      DateOfJoining: this.dateOfJoining
+    };
+    this.service.updateEmployee(object).subscribe(response => alert(response.toString()));
+  }
 }
