@@ -12,6 +12,8 @@ export class EmployeeModalComponent implements OnInit {
   employeeName: string;
   department: string;
   dateOfJoining: string;
+  photoFileName: string;
+  photoFilePath: string;
   departmentsList: any = [];
 
   constructor(private service: SharedService) {}
@@ -27,6 +29,8 @@ export class EmployeeModalComponent implements OnInit {
       this.employeeName = this.emp.EmployeeName;
       this.department = this.emp.Department;
       this.dateOfJoining = this.emp.DateOfJoining;
+      this.photoFileName = this.emp.PhotoFileName;
+      this.photoFilePath = this.service.PhotoUrl + this.photoFileName;
     });
   }
 
@@ -35,7 +39,8 @@ export class EmployeeModalComponent implements OnInit {
       EmployeeId: this.employeeId,
       EmployeeName: this.employeeName,
       Department: this.department,
-      DateOfJoining: this.dateOfJoining
+      DateOfJoining: this.dateOfJoining,
+      PhotoFileName: this.photoFileName
     };
     this.service.addEmployee(object).subscribe(response => alert(response.toString()));
   }
@@ -45,8 +50,20 @@ export class EmployeeModalComponent implements OnInit {
       EmployeeId: this.employeeId,
       EmployeeName: this.employeeName,
       Department: this.department,
-      DateOfJoining: this.dateOfJoining
+      DateOfJoining: this.dateOfJoining,
+      PhotoFileName: this.photoFileName
     };
     this.service.updateEmployee(object).subscribe(response => alert(response.toString()));
+  }
+
+  uploadPhoto(event): void {
+    let file = event.target.files[0];
+    const formData: FormData = new FormData();
+    formData.append('uploadFile', file, file.name);
+
+    this.service.uploadPhoto(formData).subscribe((response: any) => {
+      this.photoFileName = response.toString();
+      this.photoFilePath = this.service.PhotoUrl + this.photoFileName;
+    });
   }
 }
