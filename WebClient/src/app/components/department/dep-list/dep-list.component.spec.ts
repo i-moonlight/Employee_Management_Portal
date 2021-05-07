@@ -3,7 +3,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { of } from 'rxjs';
+import {of, throwError} from 'rxjs';
 import { DepartmentListComponent } from './dep-list.component';
 import { SharedService } from '../../../services/shared/shared.service';
 import { Department } from '../department.component';
@@ -132,5 +132,46 @@ describe('DepartmentListComponent', () => {
     const spy = spyOn(component, 'deleteDepartment')
     component.showDeleteConfirm(mock);
     expect(spy).toHaveBeenCalledWith(mock);
+  })
+
+  it('should call shared service when delete department', () => {
+    const spy = spyOn(service, 'deleteDepartmentFromDB').and.returnValue(of('Delete successful'));
+    component.deleteDepartment(mock);
+    expect(spy.calls.any()).toBeTruthy();
+  })
+
+  it('should call alert window when delete department', () => {
+    const spy = spyOn(window, 'alert');
+    spyOn(service, 'deleteDepartmentFromDB').and.returnValue(of('Delete successful'));
+    component.deleteDepartment(mock);
+    expect(spy).toHaveBeenCalledWith('Delete successful');
+  })
+
+  it('should call update department list method when delete department', () => {
+    const spy = spyOn(component, 'updateDepartmentList');
+    spyOn(service, 'deleteDepartmentFromDB').and.returnValue(of('Delete successful'));
+    component.deleteDepartment(mock);
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('should call warn console when delete department', () => {
+    const spy = spyOn(console, 'warn');
+    spyOn(service, 'deleteDepartmentFromDB').and.returnValue(of('Delete successful'));
+    component.deleteDepartment(mock);
+    expect(spy).toHaveBeenCalledWith('Delete successful');
+  });
+
+  it('should call error console when delete department exception', () => {
+    const spy = spyOn(console, 'error');
+    spyOn(service, 'deleteDepartmentFromDB').and.returnValue(throwError('Delete was not successful'));
+    component.deleteDepartment(mock);
+    expect(spy).toHaveBeenCalledWith('Delete was not successful');
+  });
+
+  it('should call department list filter method when input data', () => {
+    const spy = spyOn(component, 'toFilterDepartmentList');
+    const btn = fixture.debugElement.query(By.css('.form-control'));
+    btn.triggerEventHandler('keyup', null);
+    expect(spy).toHaveBeenCalled();
   })
 })
