@@ -38,4 +38,10 @@ describe('DepartmentListComponent', () => {
     component.updateDepartmentList();
     expect(spy.calls.any()).toBeTruthy();
   });
+
+  it('should set department list value when update department list', () => {
+    spyOn(service, 'getDepartmentList').and.returnValue(of(mockList));
+    component.updateDepartmentList();
+    expect(component.departmentList).toEqual(mockList);
+  });
 });
