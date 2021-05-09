@@ -9,7 +9,7 @@ import { Employee } from '../employee.component';
 })
 export class EmployeeListComponent implements OnInit {
   employee: Employee;
-  employeeList: string[];
+  employeeList: Employee[];
   modalTitle: string;
   activateAddEditEmpComp: boolean;
 
@@ -49,13 +49,20 @@ export class EmployeeListComponent implements OnInit {
     console.warn(dataItem);
   }
 
+  showConfirmDeleteEmployee(dataItem: Employee): void {
+    if (confirm('Are you sure??'))
+      return this.deleteEmployee(dataItem);
+  }
+
   deleteEmployee(dataItem: Employee): void {
     this.service.deleteEmployeeFromDB(dataItem.EmployeeId).subscribe(
-      (res: string) => {
-        alert(res);
+      (response: string) => {
+        alert(response);
         this.updateEmployeeList();
-        console.warn(res);
+        console.warn(response);
       },
-      (error: string) => console.error(error))
-  }
+      (error: string) => {
+        console.error(error);
+      })
+  };
 }
