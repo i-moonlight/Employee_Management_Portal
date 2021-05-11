@@ -15,6 +15,7 @@ export class EmployeeModalComponent implements OnInit {
   photoFileName: string;
   photoFilePath: string;
   departmentsList: any = [];
+  fileToUpload: File = null;
 
   constructor(private service: SharedService) {}
 
@@ -40,7 +41,8 @@ export class EmployeeModalComponent implements OnInit {
       EmployeeName: this.employeeName,
       Department: this.department,
       DateOfJoining: this.dateOfJoining,
-      PhotoFileName: this.photoFileName
+      PhotoFileName: this.fileToUpload.name,
+      PhotoFilePath: this.photoFilePath
     };
     this.service.addEmployee(object).subscribe(response => alert(response.toString()));
   }
@@ -51,9 +53,21 @@ export class EmployeeModalComponent implements OnInit {
       EmployeeName: this.employeeName,
       Department: this.department,
       DateOfJoining: this.dateOfJoining,
-      PhotoFileName: this.photoFileName
+      PhotoFileName: this.photoFileName,
+      PhotoFilePath: this.photoFilePath
     };
     this.service.updateEmployee(object).subscribe(response => alert(response.toString()));
+    console.log(this.photoFileName, this.photoFilePath);
+  }
+
+  onFileSelected(event) {
+    this.fileToUpload = event.target.files[0];
+
+    // Show image preview.
+    const reader = new FileReader();
+    reader.onload = (event: any) => this.photoFilePath = event.target.result;
+    reader.readAsDataURL(this.fileToUpload);
+    console.log(this.photoFileName, this.photoFilePath, this.fileToUpload);
   }
 
   uploadPhoto(event: any): void {
@@ -64,6 +78,20 @@ export class EmployeeModalComponent implements OnInit {
     this.service.uploadPhoto(formData).subscribe((response: any) => {
       this.photoFileName = response.toString();
       this.photoFilePath = this.service.PhotoUrl + this.photoFileName;
+    });
+  }
+
+  updatePhoto(employeeId: number): void {
+    const formData = new FormData();
+    formData.append('File', this.fileToUpload, this.fileToUpload.name);
+    this.service.updatePhoto(employeeId, formData).subscribe((data: string) => {
+      try {
+        this.photoFileName = data;
+        this.photoFilePath = this.service.PhotoUrl + this.photoFileName;
+        console.warn('Photo is saved!')
+      } catch (e) {
+        e.console.error('Photo were not saved!')
+      }
     });
   }
 }
