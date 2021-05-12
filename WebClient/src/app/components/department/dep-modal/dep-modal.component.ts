@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { SharedService } from '../../../services/shared/shared.service';
+import { Department } from '../department.component';
 
 @Component({
   selector: 'app-dep-modal',
@@ -7,8 +8,8 @@ import { SharedService } from '../../../services/shared/shared.service';
   styleUrls: ['./dep-modal.component.css']
 })
 export class DepartmentModalComponent implements OnInit {
-  @Input() dep: any;
-  departmentId: string;
+  @Input() dep: Department;
+  departmentId: number;
   departmentName: string;
 
   constructor(private service: SharedService) {}
@@ -18,19 +19,18 @@ export class DepartmentModalComponent implements OnInit {
     this.departmentName = this.dep.DepartmentName;
   }
 
-  addDepartment(): void {
-    let object = {
+  getDepartment(): Department {
+    return this.dep = {
       DepartmentId: this.departmentId,
       DepartmentName: this.departmentName
     };
-    this.service.addDepartment(object).subscribe(res => alert(res.toString()));
+  }
+
+  addDepartment(): void {
+    this.service.addDepartmentToDB(this.getDepartment()).subscribe((res: string) => alert(res));
   }
 
   updateDepartment(): void {
-    let object = {
-      DepartmentId: this.departmentId,
-      DepartmentName: this.departmentName
-    };
-    this.service.updateDepartment(object).subscribe(res => alert(res.toString()));
+    this.service.updateDepartmentToDB(this.getDepartment()).subscribe((res: string) => alert(res));
   }
 }

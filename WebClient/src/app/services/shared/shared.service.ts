@@ -17,12 +17,12 @@ export class SharedService {
     return this.http.get<Department[]>(this.APIUrl + '/department');
   }
 
-  addDepartment(val: any): Observable<any> {
-    return this.http.post(this.APIUrl + '/department', val);
+  addDepartmentToDB(department: Department): Observable<string> {
+    return this.http.post<string>(this.APIUrl + '/department', department);
   }
 
-  updateDepartment(val: any): Observable<any> {
-    return this.http.put(this.APIUrl + '/department', val);
+  updateDepartmentToDB(department: Department): Observable<string> {
+    return this.http.put<string>(this.APIUrl + '/department', department);
   }
 
   deleteDepartmentFromDB(departmentId: number): Observable<string> {
