@@ -28,6 +28,6 @@
     <img [src]=photoFilePath>
     <input type="file" class="input" multiple="multiple" (change)="onFileSelected($event)">
   </div>
-  <button type="button" (click)="uploadPhoto($event)" *ngIf="emp.EmployeeId==0" class="btn btn-primary but">Upload</button>
+  <button type="button" (click)="uploadPhoto()" *ngIf="emp.EmployeeId==0" class="btn btn-primary but">Upload</button>
   <button type="button" (click)="updatePhoto(employeeId)" *ngIf="emp.EmployeeId!=0" class="btn btn-primary but">Update</button>
 </div>
