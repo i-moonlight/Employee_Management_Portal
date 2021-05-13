@@ -1,17 +1,23 @@
+*,
+*::before,
+*::after {
+  box-sizing: content-box;
+}
+
+.col-form-label {
+  width: auto;
+}
+
 .form-control {
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 .form-froup {
   width: 60%;
 }
 
-.bd-highlight {
-  width: 40%;
-}
-
 img {
-  height: 250px;
+  height: 280px;
   width: 260px;
 }
 
@@ -21,9 +27,22 @@ img {
   height: 30px;
   padding: initial;
   margin-top: 10px;
-  margin-left: 13px;
 }
 
 .input {
   margin-top: 30px;
+}
+
+.container {
+  width: 100%;
+  max-width: 60%;
+  margin: 0 auto;
+}
+
+.form-froup[_ngcontent-ssx-c46] {
+  width: 70%;
+}
+
+.row {
+  display: block;
 }
