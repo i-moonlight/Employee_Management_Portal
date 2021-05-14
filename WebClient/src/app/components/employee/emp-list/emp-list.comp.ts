@@ -46,12 +46,17 @@ export class EmployeeListComponent implements OnInit {
     this.activateAddEditEmpComp = true;
   }
 
-  deleteClick(item): void {
+  deleteEmployee(item: any): void {
     if (confirm('Are you sure??')) {
       this.service.deleteEmployee(item.EmployeeId).subscribe(data => {
-        alert(data.toString());
-        this.updateEmployeeList();
-      })
+        try {
+          alert(data.toString());
+          this.updateEmployeeList();
+          console.warn('Employee deleted!')
+        } catch (e) {
+          e.console.error('Employee not deleted!')
+        }
+      });
     }
   }
 }
