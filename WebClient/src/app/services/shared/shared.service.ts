@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { IEmployee } from '../../components/employee/emp.comp';
 
 @Injectable({
   providedIn: 'root'
@@ -32,27 +33,27 @@ export class SharedService {
     return this.http.get<string[]>(this.APIUrl + '/employee');
   }
 
-  getAllDepartmentNames(): Observable<any[]> {
-    return this.http.get<any[]>(this.APIUrl + '/employee/GetAllDepartmentNames');
+  getAllDepartmentNamesFromDB(): Observable<string[]> {
+    return this.http.get<string[]>(this.APIUrl + '/employee/GetAllDepartmentNames');
   }
 
-  addEmployee(val: any): Observable<any> {
-    return this.http.post(this.APIUrl + '/employee', val);
+  addEmployeeToDB(employee: IEmployee): Observable<string> {
+    return this.http.post<string>(this.APIUrl + '/employee/', employee);
   }
 
-  updateEmployee(val: any): Observable<any> {
-    return this.http.put(this.APIUrl + '/employee', val);
+  updateEmployeeToDB(employee: IEmployee): Observable<string> {
+    return this.http.put<string>(this.APIUrl + '/employee', employee);
   }
 
   deleteEmployeeFromDB(employeeId: number): Observable<string> {
     return this.http.delete<string>(this.APIUrl + '/employee/' + employeeId);
   }
 
-  uploadPhoto(formData: FormData): Observable<any> {
-    return this.http.post(this.APIUrl + '/employee/UploadPhoto/', formData);
+  uploadPhotoToStorage(formData: FormData): Observable<string> {
+    return this.http.post<string>(this.APIUrl + '/employee/UploadPhoto/', formData);
   }
 
-  updatePhoto(employeeId: number, formData: FormData): Observable<string> {
+  updatePhotoToStorage(employeeId: number, formData: FormData): Observable<string> {
     return this.http.post<string>(this.APIUrl + '/employee/' + employeeId + '/UpdatePhoto', formData);
   }
 }
