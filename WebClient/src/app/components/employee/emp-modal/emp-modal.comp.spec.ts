@@ -40,4 +40,10 @@ describe('EmployeeModalComponent', () => {
     component.loadDepartmentList();
     expect(spy.calls.any()).toBeTruthy();
   });
+
+  it('should set department list value when load department list', () => {
+    spyOn(service, 'getAllDepartmentNamesFromDB').and.returnValue(of(mockList));
+    component.loadDepartmentList();
+    expect(component.departmentList).toEqual(mockList);
+  });
 });
