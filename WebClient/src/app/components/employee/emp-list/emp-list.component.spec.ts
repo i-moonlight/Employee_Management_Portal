@@ -3,7 +3,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { Employee } from '../employee.component';
 import { EmployeeListComponent } from './emp-list.component';
 import { SharedService } from '../../../services/shared/shared.service';
@@ -21,7 +21,7 @@ describe('EmployeeListComponent', () => {
       imports: [HttpClientModule, FormsModule],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
-  });
+  })
 
   beforeEach(() => {
     fixture = TestBed.createComponent(EmployeeListComponent);
@@ -69,11 +69,51 @@ describe('EmployeeListComponent', () => {
   it('should set component activate value when close employee modal', () => {
     component.closeEmployeeModal();
     expect(component.activateAddEditEmpComp).toBeFalse();
-  });
-  
+  })
+
+  it('should call update employee list when close employee modal', () => {
+    const spy = spyOn(component, 'updateEmployeeList');
+    component.closeEmployeeModal();
+    expect(spy).toHaveBeenCalled();
+  })
+
+  it('should set component activate value when edit employee', () => {
+    component.editEmployee(mock);
+    expect(component.activateAddEditEmpComp).toBeTrue();
+  })
+
+  it('should set employee value when edit employee', () => {
+    component.editEmployee(mock);
+    expect(component.employee).toEqual(mock);
+  })
+
+  it('should set modal title value as `Edit Employee` when edit employee', () => {
+    component.editEmployee(mock);
+    expect(component.modalTitle).toEqual('Edit Employee');
+  })
+
   it('should call confirm window when show confirm', () => {
     const spy = spyOn(window, 'confirm');
     component.showConfirmDeleteEmployee(mock);
     expect(spy).toHaveBeenCalled();
+  })
+
+  it('should call delete employee method when positive result confirm', () => {
+   const spy = spyOn(component, 'deleteEmployee');
+    component.showConfirmDeleteEmployee(mock);
+    expect(spy).toHaveBeenCalledWith(mock);
+  })
+
+  it('should call shared service when delete employee', () => {
+    const spy = spyOn(service, 'deleteEmployeeFromDB').and.returnValue(of('Delete successful'));
+    component.deleteEmployee(mock);
+    expect(spy.calls.any()).toBeTruthy();
+  })
+
+  it('should call error console when delete employee', () => {
+    const spy = spyOn(console, 'error');
+    spyOn(service, 'deleteEmployeeFromDB').and.returnValue(throwError('Delete was not successful'));
+    component.deleteEmployee(mock);
+    expect(spy).toHaveBeenCalledWith('Delete was not successful');
   })
 })
