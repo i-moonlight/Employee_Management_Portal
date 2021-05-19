@@ -46,4 +46,10 @@ describe('EmployeeModalComponent', () => {
     component.loadDepartmentList();
     expect(component.departmentList).toEqual(mockList);
   });
+
+  it('should call shared service when add employee', () => {
+    const spy = spyOn(service, 'addEmployeeToDB').and.returnValue(of('Created Successfully'));
+    component.addEmployee();
+    expect(spy.calls.any()).toBeTruthy();
+  });
 });
