@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { of } from 'rxjs';
 import { IEmployee } from '../emp.comp';
+import { By } from '@angular/platform-browser';
 
 describe('EmployeeModalComponent', () => {
   let component: EmployeeModalComponent;
@@ -51,5 +52,12 @@ describe('EmployeeModalComponent', () => {
     const spy = spyOn(service, 'addEmployeeToDB').and.returnValue(of('Created Successfully'));
     component.addEmployee();
     expect(spy.calls.any()).toBeTruthy();
+  });
+
+  it('should call update employee method when click on update button', () => {
+    const spy = spyOn(component, 'updatePhoto');
+    const btn = fixture.debugElement.query(By.css('.update'));
+    btn.triggerEventHandler('click', null);
+    expect(spy).toHaveBeenCalled();
   });
 });
