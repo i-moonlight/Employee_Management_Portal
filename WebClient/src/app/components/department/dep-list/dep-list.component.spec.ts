@@ -175,4 +175,27 @@ describe('DepartmentListComponent', () => {
     btn.triggerEventHandler('keyup', null);
     expect(spy).toHaveBeenCalled();
   });
+
+  it('should set department list value when filter department list', () => {
+    component.toFilterDepartmentList();
+    expect(component.departmentList).toEqual(mockList);
+  });
+
+  it('should call filter method when filter department list', () => {
+    const spy = spyOn(component.departmentListWithoutFilter, 'filter');
+    component.toFilterDepartmentList();
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('should call department list sort method when click on sort button', () => {
+    const spy = spyOn(component, 'toSortDepartmentList');
+    const btn = fixture.debugElement.query(By.css('.sort'));
+    btn.triggerEventHandler('click', null);
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('should set department list value when sort department list', () => {
+    component.toSortDepartmentList('test', true);
+    expect(component.departmentList).toEqual(mockList);
+  });
 });
