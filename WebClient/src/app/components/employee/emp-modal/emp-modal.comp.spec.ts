@@ -60,4 +60,10 @@ describe('EmployeeModalComponent', () => {
     btn.triggerEventHandler('click', null);
     expect(spy).toHaveBeenCalled();
   });
+
+  it('should call shared service when update employee', () => {
+    const spy = spyOn(service, 'updateEmployeeToDB').and.returnValue(of('Update successful'));
+    component.updateEmployee();
+    expect(spy.calls.any()).toBeTruthy();
+  });
 });
