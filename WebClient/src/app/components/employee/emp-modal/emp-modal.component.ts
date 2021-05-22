@@ -1,6 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {SharedService} from '../../../services/shared/shared.service';
-import {Employee} from '../employee.component';
+import { Component, Input, OnInit } from '@angular/core';
+import { SharedService } from '../../../services/shared/shared.service';
+import { Employee } from '../employee.component';
 
 @Component({
   selector: 'app-emp-modal',
@@ -18,26 +18,26 @@ export class EmployeeModalComponent implements OnInit {
   photoFilePath: string;
   fileToUpload: File;
   formData: FormData;
+  buttonClicked: boolean;
 
-  constructor(private service: SharedService) {
-    this.fileToUpload = null;
-    this.formData = new FormData();
-  }
+  constructor(private service: SharedService) {}
 
   ngOnInit(): void {
-    this.loadDepartmentList()
     this.employeeId = this.emp.EmployeeId;
     this.employeeName = this.emp.EmployeeName;
     this.department = this.emp.Department;
     this.dateOfJoining = this.emp.DateOfJoining;
     this.photoFileName = this.emp.PhotoFileName;
     this.photoFilePath = this.service.PhotoUrl + this.photoFileName;
+    this.fileToUpload = null;
+    this.formData = new FormData();
+    this.buttonClicked = false;
+    this.loadDepartmentList();
   }
 
   loadDepartmentList(): void {
-    this.service.getAllDepartmentNamesFromDB().subscribe((response: string[]) => {
-      this.departmentList = response;
-    });
+    this.service.getAllDepartmentNamesFromDB().subscribe((res: string[]) =>
+      this.departmentList = res);
   }
 
   private getEmployee(): Employee {
@@ -50,31 +50,21 @@ export class EmployeeModalComponent implements OnInit {
     }
   }
 
-  updateEmployee(): void {
-    let object = {
-      EmployeeId: this.employeeId,
-      EmployeeName: this.employeeName,
-      Department: this.department,
-      DateOfJoining: this.dateOfJoining,
-      PhotoFileName: this.photoFileName,
-      PhotoFilePath: this.photoFilePath
-    };
-    this.service.updateEmployeeToDB(object).subscribe(res => alert(res.toString()));
-    console.log(this.photoFileName, this.photoFilePath);
-  }
-
   addEmployee(): void {
-    this.service.addEmployeeToDB(this.getEmployee()).subscribe((response: string) => {
-      alert(response);
-    });
+    this.service.addEmployeeToDB(this.getEmployee()).subscribe((res: string) =>
+      alert(res));
   }
 
+  updateEmployee(): void {
+    this.service.updateEmployeeToDB(this.getEmployee()).subscribe(() =>
+      console.warn(this.photoFilePath));
+  }
 
   onFileSelected(event: any): void {
     this.fileToUpload = event.target.files[0];
     this.formData.append('File', this.fileToUpload, this.fileToUpload.name);
 
-    // Show image preview.
+    // Show image preview
     const reader = new FileReader();
     reader.onload = (event: any) => this.photoFilePath = event.target.result;
     reader.readAsDataURL(this.fileToUpload);
@@ -106,5 +96,32 @@ export class EmployeeModalComponent implements OnInit {
         e.console.error('Photo not update')
       }
     });
+  }
+
+  uploadEmployeeData(): void {
+    this.service.uploadPhotoToStorage(this.formData).subscribe((res: string) => {
+        this.photoFileName = res;
+        this.photoFilePath = this.service.PhotoUrl + this.photoFileName;
+        console.warn(res)
+      },
+      (error: string) => console.error(error)
+    );
+  }
+
+  updateEmployeeData(employeeId: number): void {
+    this.service.updatePhotoToStorage(employeeId, this.formData).subscribe((res: string) => {
+        if (res == 'anonymous.png') {
+          this.photoFileName = this.emp.PhotoFileName;
+          this.photoFilePath = this.service.PhotoUrl + this.photoFileName;
+          this.updateEmployee();
+        } else {
+          this.photoFileName = res;
+          this.photoFilePath = this.service.PhotoUrl + this.photoFileName;
+          this.updateEmployee()
+        }
+        console.warn(res)
+      },
+      (error: string) => console.error(error)
+    );
   }
 }
