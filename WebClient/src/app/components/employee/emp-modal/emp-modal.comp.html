@@ -26,7 +26,7 @@
 <div class="ml-3 bd-highlight">
   <div class="container">
     <img [src]="photoFilePath">
-    <input type="file" class="input" multiple="multiple" (change)="onFileSelected($event)">
+    <input type="file" class="input" id="file" multiple="multiple" (change)="onFileSelected($event)">
     <button type="button" class="btn btn-primary but"
             (click)="uploadPhoto()" *ngIf="emp.EmployeeId==0">Upload
     </button>
