@@ -84,4 +84,10 @@ describe('EmployeeModalComponent', () => {
     expect(spy).toHaveBeenCalled();
     expect(mockReader.readAsDataURL).toHaveBeenCalledWith(mockFile);
   });
+
+  it('should call shared service when upload photo file', () => {
+    const spy = spyOn(service, 'uploadPhotoToStorage').and.returnValue(of('photo file name'));
+    component.uploadPhoto();
+    expect(spy.calls.any()).toBeTruthy();
+  });
 });
