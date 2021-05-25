@@ -90,4 +90,10 @@ describe('EmployeeModalComponent', () => {
     component.uploadPhoto();
     expect(spy.calls.any()).toBeTruthy();
   });
+
+  it('should set photo name value when upload photo file', () => {
+    spyOn(service, 'uploadPhotoToStorage').and.returnValue(of('photo file name'));
+    component.uploadPhoto();
+    expect(component.photoFileName).toEqual('photo file name');
+  });
 });
