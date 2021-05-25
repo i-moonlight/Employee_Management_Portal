@@ -170,32 +170,32 @@ describe('DepartmentListComponent', () => {
   });
 
   it('should call department list filter method when input data', () => {
-    const spy = spyOn(component, 'toFilterDepartmentList');
+    const spy = spyOn(component, 'filterDepartmentList');
     const btn = fixture.debugElement.query(By.css('.form-control'));
     btn.triggerEventHandler('keyup', null);
     expect(spy).toHaveBeenCalled();
   });
 
   it('should set department list value when filter department list', () => {
-    component.toFilterDepartmentList();
+    component.filterDepartmentList();
     expect(component.departmentList).toEqual(mockList);
   });
 
   it('should call filter method when filter department list', () => {
     const spy = spyOn(component.departmentListWithoutFilter, 'filter');
-    component.toFilterDepartmentList();
+    component.filterDepartmentList();
     expect(spy).toHaveBeenCalled();
   });
 
   it('should call department list sort method when click on sort button', () => {
-    const spy = spyOn(component, 'toSortDepartmentList');
+    const spy = spyOn(component, 'sortDepartmentList');
     const btn = fixture.debugElement.query(By.css('.sort'));
     btn.triggerEventHandler('click', null);
     expect(spy).toHaveBeenCalled();
   });
 
   it('should set department list value when sort department list', () => {
-    component.toSortDepartmentList('test', true);
+    component.sortDepartmentList('test', true);
     expect(component.departmentList).toEqual(mockList);
   });
 });

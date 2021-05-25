@@ -22,6 +22,7 @@ export class DepartmentListComponent implements OnInit {
     this.activateDepModalComp = false;
     this.departmentIdFilter = '';
     this.departmentNameFilter = '';
+    this.departmentList = [];
     this.departmentListWithoutFilter = [];
     this.updateDepartmentList();
   }
@@ -60,40 +61,38 @@ export class DepartmentListComponent implements OnInit {
   }
 
   deleteDepartment(dataItem: Department): void {
-    this.service.deleteDepartmentFromDB(dataItem.DepartmentId).subscribe(
-      (res: string) => {
-        alert(res);
-        this.updateDepartmentList();
-        console.warn(res);
+    this.service.deleteDepartmentFromDB(dataItem.DepartmentId).subscribe((res: string) => {
+      alert(res);
+      this.updateDepartmentList();
+      console.warn(res)
       },
-      (error: string) => {
-        console.error(error);
-      }
-    );
+      (error: string) => console.error(error));
   }
 
-  toFilterDepartmentList(): void {
+  filterDepartmentList(): void {
     let depIdFilter = this.departmentIdFilter;
     let depNameFilter = this.departmentNameFilter;
 
-    this.departmentList = this.departmentListWithoutFilter.filter((dep: Department) => {
-      return dep.DepartmentId.toString()
-        .toLowerCase()
-        .includes(depIdFilter.toString().trim().toLowerCase())
-      &&
-      dep.DepartmentName.toString()
-        .toLowerCase()
-        .includes(depNameFilter.toString().trim().toLowerCase())
-    });
+    this.departmentList = this.departmentListWithoutFilter.filter((department: Department) => {
+      return department.DepartmentId
+          .toString()
+          .toLowerCase()
+          .includes(depIdFilter.toString().trim().toLowerCase())
+        &&
+        department.DepartmentName
+          .toString()
+          .toLowerCase()
+          .includes(depNameFilter.toString().trim().toLowerCase())
+    })
   }
 
-  toSortDepartmentList(prop: string, asc: boolean): void {
-    this.departmentList = this.departmentListWithoutFilter.sort((a, b) => {
+  sortDepartmentList(prop: string, asc: boolean): void {
+    this.departmentList = this.departmentList.sort((a, b) => {
       if (asc) {
         return (a[prop] > b[prop]) ? 1 : ((a[prop] < b[prop]) ? -1 : 0);
       } else {
         return (b[prop] > a[prop]) ? 1 : ((b[prop] < a[prop]) ? -1 : 0);
       }
-    });
+    })
   }
 }
