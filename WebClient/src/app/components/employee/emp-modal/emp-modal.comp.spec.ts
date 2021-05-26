@@ -96,4 +96,11 @@ describe('EmployeeModalComponent', () => {
     component.uploadPhoto();
     expect(component.photoFileName).toEqual('photo file name');
   });
+
+  it('should call update photo method when click on button', () => {
+    const spy = spyOn(component, 'updatePhoto');
+    const btn = fixture.debugElement.query(By.css('.but'));
+    btn.triggerEventHandler('click', null);
+    expect(spy).toHaveBeenCalled();
+  });
 });
