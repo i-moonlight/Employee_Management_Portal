@@ -13,6 +13,7 @@ describe('EmployeeModalComponent', () => {
   let fixture: ComponentFixture<EmployeeModalComponent>;
   let service: SharedService;
   let mockList: string[];
+  let mock: IEmployee;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -29,6 +30,7 @@ describe('EmployeeModalComponent', () => {
     component.emp = <IEmployee>{};
     service = fixture.debugElement.injector.get<SharedService>(SharedService as any);
     mockList = [];
+    mock = <IEmployee>{}
     fixture.detectChanges();
   });
 
@@ -102,5 +104,11 @@ describe('EmployeeModalComponent', () => {
     const btn = fixture.debugElement.query(By.css('.but'));
     btn.triggerEventHandler('click', null);
     expect(spy).toHaveBeenCalled();
+  });
+
+  it('should call shared service when update photo file', () => {
+    const spy = spyOn(service, 'updatePhotoToStorage').and.returnValue(of(''));
+    component.updatePhoto(mock.EmployeeId);
+    expect(spy.calls.any()).toBeTruthy();
   });
 });
