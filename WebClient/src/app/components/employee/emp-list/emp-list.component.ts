@@ -10,14 +10,20 @@ import { Employee } from '../employee.component';
 export class EmployeeListComponent implements OnInit {
   employee: Employee;
   employeeList: Employee[];
-  modalTitle: string;
   activateAddEditEmpComp: boolean;
+  employeeListWithoutFilter: Employee[];
+  employeeIdFilter: string;
+  employeeNameFilter: string;
+  employeeDepartmentFilter: string;
+  employeeDateOfJoiningFilter: string;
+  modalTitle: string;
 
-  constructor(private service: SharedService) {
-    this.activateAddEditEmpComp = false;
-  }
+  constructor(private service: SharedService) {}
 
   ngOnInit(): void {
+    this.activateAddEditEmpComp = false;
+    this.employeeList = [];
+    this.employeeListWithoutFilter = [];
     this.updateEmployeeList();
   }
 
@@ -61,8 +67,20 @@ export class EmployeeListComponent implements OnInit {
         this.updateEmployeeList();
         console.warn(response);
       },
-      (error: string) => {
-        console.error(error);
-      })
+      (error: string) => console.error(error))
   };
+
+  filterEmployeeList(): void {
+    let empIdFilter = this.employeeIdFilter;
+    let empNameFilter = this.employeeNameFilter;
+    let empDepartmentFilter = this.employeeDepartmentFilter;
+    let empNameDateOfJoiningFilter = this.employeeDateOfJoiningFilter;
+
+    this.employeeList = this.employeeListWithoutFilter.filter((emp) => {
+      return emp.EmployeeId.toString().toLowerCase().includes(empIdFilter.toLowerCase()) &&
+        emp.EmployeeName.toString().toLowerCase().includes(empNameFilter.toLowerCase()) &&
+        emp.Department.toString().toLowerCase().includes(empDepartmentFilter.toLowerCase()) &&
+        emp.DateOfJoining.toString().toLowerCase().includes(empNameDateOfJoiningFilter.toLowerCase())
+    });
+  }
 }
