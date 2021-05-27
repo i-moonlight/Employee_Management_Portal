@@ -1,0 +1,12 @@
+#file: noinspection SpringBootApplicationYaml
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/store
+    username: admin
+    password: 52670
+
+#    main:
+#        allow-circular-references: true
+
+#  main:
+#    web-application-type: none
