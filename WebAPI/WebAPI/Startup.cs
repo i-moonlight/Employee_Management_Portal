@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json.Serialization;
 using WebAPI.DataBase;
 using WebAPI.Models;
 using WebAPI.Repositories.Implementations;
@@ -29,6 +30,13 @@ namespace WebAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
+            // JSON Serializer.
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
+                .AddNewtonsoftJson(options =>
+                    options.SerializerSettings.ContractResolver = new DefaultContractResolver());
+            
             // Enable application context.
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -57,6 +65,9 @@ namespace WebAPI
 
             app.UseRouting();
 
+            // Enable CORS.
+            app.UseCors(options => options.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader());
+            
             app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
     }
