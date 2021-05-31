@@ -111,4 +111,10 @@ describe('EmployeeModalComponent', () => {
     component.updatePhoto(mock.EmployeeId);
     expect(spy.calls.any()).toBeTruthy();
   });
+
+  it('should set photo name value when update photo file', () => {
+    spyOn(service, 'updatePhotoToStorage').and.returnValue(of('photo file name'));
+    component.updatePhoto(mock.EmployeeId);
+    expect(component.photoFileName).toEqual('photo file name');
+  });
 });
