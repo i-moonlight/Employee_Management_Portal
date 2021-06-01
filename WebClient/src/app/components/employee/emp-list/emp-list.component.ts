@@ -83,4 +83,14 @@ export class EmployeeListComponent implements OnInit {
         emp.DateOfJoining.toString().toLowerCase().includes(empNameDateOfJoiningFilter.toLowerCase())
     });
   }
+
+  sortEmployeeList(prop: string, asc: boolean): void {
+    this.employeeList = this.employeeList.sort((a, b) => {
+      if (asc) {
+        return (a[prop] > b[prop]) ? 1 : ((a[prop] < b[prop]) ? -1 : 0);
+      } else {
+        return (b[prop] > a[prop]) ? 1 : ((b[prop] < a[prop]) ? -1 : 0);
+      }
+    });
+  }
 }
