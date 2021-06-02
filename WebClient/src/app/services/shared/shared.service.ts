@@ -9,8 +9,8 @@ import { Department } from '../../components/department/department.component';
 })
 
 export class SharedService {
-  readonly APIUrl = 'http://localhost:5000/api';
-  readonly PhotoUrl = 'http://localhost:5000/Photos/';
+  readonly APIUrl = 'http://localhost:8080';
+  readonly PhotoUrl = 'http://localhost:8080/Photos/';
 
   constructor(private http: HttpClient) {}
 

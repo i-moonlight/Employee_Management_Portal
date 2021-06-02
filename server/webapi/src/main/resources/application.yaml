@@ -1,6 +1,7 @@
 #file: noinspection SpringBootApplicationYaml
 spring:
   datasource:
+    server: 8080
     url: jdbc:postgresql://localhost:5432/store
     username: admin
     password: 52670

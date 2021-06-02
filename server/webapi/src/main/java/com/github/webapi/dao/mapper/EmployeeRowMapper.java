@@ -1,4 +1,4 @@
-package com.github.webapi.dao;
+package com.github.webapi.dao.mapper;
 
 import com.github.webapi.domain.model.Employee;
 import org.jetbrains.annotations.NotNull;

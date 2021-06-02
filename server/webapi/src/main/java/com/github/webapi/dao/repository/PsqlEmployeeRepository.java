@@ -1,5 +1,6 @@
-package com.github.webapi.dao;
+package com.github.webapi.dao.repository;
 
+import com.github.webapi.dao.mapper.EmployeeRowMapper;
 import com.github.webapi.domain.model.Employee;
 import com.github.webapi.domain.interfaces.EmployeeRepository;
 import org.jetbrains.annotations.NotNull;
