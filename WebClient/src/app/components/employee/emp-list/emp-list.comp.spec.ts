@@ -38,4 +38,10 @@ describe('EmployeeListComponent', () => {
     component.updateEmployeeList();
     expect(spy.calls.any()).toBeTruthy();
   });
+
+  it('should set employee list value when update employee list', () => {
+    spyOn(service, 'getEmployeeListFromDB').and.returnValue(of(mockList));
+    component.updateEmployeeList();
+    expect(component.employeeList).toEqual(mockList);
+  });
 });
