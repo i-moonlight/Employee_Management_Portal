@@ -9,7 +9,7 @@ import { IEmployee } from '../emp.comp';
 })
 export class EmployeeListComponent implements OnInit {
   employee: IEmployee;
-  employeeList: string[];
+  employeeList: IEmployee[];
   modalTitle: string;
   activateAddEditEmpComp: boolean;
 
@@ -22,7 +22,9 @@ export class EmployeeListComponent implements OnInit {
   }
 
   updateEmployeeList(): void {
-    this.service.getEmployeeListFromDB().subscribe(response => this.employeeList = response);
+    this.service.getEmployeeListFromDB().subscribe((response: IEmployee[]) => {
+      this.employeeList = response
+    });
   }
 
   addEmployee(): void {
@@ -49,17 +51,20 @@ export class EmployeeListComponent implements OnInit {
     console.warn(dataItem);
   }
 
-  deleteEmployee(dataItem: IEmployee): void {
-    if (confirm('Are you sure??')) {
-      this.service.deleteEmployeeFromDB(dataItem.EmployeeId).subscribe((dataItem: string) => {
-        try {
-          alert(dataItem);
-          this.updateEmployeeList();
-          console.warn('Employee deleted!')
-        } catch (e) {
-          e.console.error('Employee not deleted!')
-        }
-      });
-    }
+  showConfirmDeleteEmployee(dataItem: IEmployee): void {
+    if (confirm('Are you sure??'))
+      return this.deleteEmployee(dataItem);
   }
+
+  deleteEmployee(dataItem: IEmployee): void {
+    this.service.deleteEmployeeFromDB(dataItem.EmployeeId).subscribe(
+      (response: string) => {
+        alert(response);
+        this.updateEmployeeList();
+        console.warn(response);
+      },
+      (error: string) => {
+        console.error(error);
+      })
+  };
 }

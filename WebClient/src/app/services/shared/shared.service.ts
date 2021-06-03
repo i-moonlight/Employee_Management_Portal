@@ -29,8 +29,8 @@ export class SharedService {
     return this.http.delete(this.APIUrl + '/department/' + val);
   }
 
-  getEmployeeListFromDB(): Observable<string[]> {
-    return this.http.get<string[]>(this.APIUrl + '/employee');
+  getEmployeeListFromDB(): Observable<IEmployee[]> {
+    return this.http.get<IEmployee[]>(this.APIUrl + '/employee');
   }
 
   getAllDepartmentNamesFromDB(): Observable<string[]> {
