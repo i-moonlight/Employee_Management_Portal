@@ -5,12 +5,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { of } from 'rxjs';
+import { IEmployee } from '../emp.comp';
 
 describe('EmployeeListComponent', () => {
   let component: EmployeeListComponent;
   let fixture: ComponentFixture<EmployeeListComponent>;
   let service: SharedService;
-  let mockList: string[];
+  let mockList: IEmployee[];
+  let mock: IEmployee;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -26,6 +28,7 @@ describe('EmployeeListComponent', () => {
     component = fixture.componentInstance;
     service = fixture.debugElement.injector.get<SharedService>(SharedService as any);
     mockList = [];
+    mock = <IEmployee>{};
     fixture.detectChanges();
   });
 
@@ -43,5 +46,11 @@ describe('EmployeeListComponent', () => {
     spyOn(service, 'getEmployeeListFromDB').and.returnValue(of(mockList));
     component.updateEmployeeList();
     expect(component.employeeList).toEqual(mockList);
+  });
+
+  it('should call confirm window when show confirm', () => {
+    const spy = spyOn(window, 'confirm');
+    component.showConfirmDeleteEmployee(mock);
+    expect(spy).toHaveBeenCalled();
   });
 });
