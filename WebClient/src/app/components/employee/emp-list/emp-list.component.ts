@@ -17,6 +17,7 @@ export class EmployeeListComponent implements OnInit {
   employeeDepartmentFilter: string;
   employeeDateOfJoiningFilter: string;
   modalTitle: string;
+  photoFilePath: string;
 
   constructor(private service: SharedService) {}
 
@@ -29,6 +30,12 @@ export class EmployeeListComponent implements OnInit {
 
   updateEmployeeList(): void {
     this.service.getEmployeeListFromDB().subscribe(res => this.employeeList = res);
+  }
+
+  showEmployeePhoto(dataItem: Employee): string {
+    this.employee = dataItem;
+    this.photoFilePath = this.service.PhotoUrl + this.employee.PhotoFileName;
+    return this.photoFilePath;
   }
 
   addEmployee(): void {
@@ -49,10 +56,9 @@ export class EmployeeListComponent implements OnInit {
   }
 
   editEmployee(dataItem: Employee): void {
+    this.activateAddEditEmpComp = true;
     this.employee = dataItem;
     this.modalTitle = "Edit Employee";
-    this.activateAddEditEmpComp = true;
-    console.warn(dataItem);
   }
 
   showConfirmDeleteEmployee(dataItem: Employee): void {
@@ -61,11 +67,10 @@ export class EmployeeListComponent implements OnInit {
   }
 
   deleteEmployee(dataItem: Employee): void {
-    this.service.deleteEmployeeFromDB(dataItem.EmployeeId).subscribe(
-      (response: string) => {
-        alert(response);
-        this.updateEmployeeList();
-        console.warn(response);
+    this.service.deleteEmployeeFromDB(dataItem.EmployeeId).subscribe((res: string) => {
+      alert(res);
+      this.updateEmployeeList();
+      console.warn(res);
       },
       (error: string) => console.error(error))
   };
