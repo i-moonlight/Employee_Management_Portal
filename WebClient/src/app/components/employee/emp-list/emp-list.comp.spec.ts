@@ -53,4 +53,10 @@ describe('EmployeeListComponent', () => {
     component.showConfirmDeleteEmployee(mock);
     expect(spy).toHaveBeenCalled();
   });
+
+  it('should call shared service when delete employee', () => {
+    const spy = spyOn(service, 'deleteEmployeeFromDB').and.returnValue(of('Delete successful'));
+    component.deleteEmployee(mock);
+    expect(spy.calls.any()).toBeTruthy();
+  });
 });
