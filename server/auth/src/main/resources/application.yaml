@@ -1,0 +1,12 @@
+server:
+  port: 9090
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/auth
+    username: admin
+    password: 52670
+
+  sql:
+    init:
+      platform: postgres
