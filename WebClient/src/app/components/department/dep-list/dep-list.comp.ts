@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedService } from '../../../services/shared/shared.service';
+import { IDepartment } from '../dep.comp';
 
 @Component({
   selector: 'app-dep-list',
@@ -7,72 +8,86 @@ import { SharedService } from '../../../services/shared/shared.service';
   styleUrls: ['./dep-list.comp.css']
 })
 export class DepartmentListComponent implements OnInit {
-  departmentList: any = [];
-  dep: any;
-  activateAddEditDepComp: boolean = false;
+  activateDepModalComp: boolean;
+  department: IDepartment;
+  departmentIdFilter: string;
+  departmentNameFilter: string;
+  departmentList: IDepartment[];
+  departmentListWithoutFilter: IDepartment[];
   modalTitle: string;
-
-  departmentIdFilter: string = '';
-  departmentNameFilter: string = '';
-  departmentListWithoutFilter: any = [];
 
   constructor(private service: SharedService) {}
 
   ngOnInit(): void {
+    this.activateDepModalComp = false;
+    this.departmentIdFilter = '';
+    this.departmentNameFilter = '';
+    this.departmentListWithoutFilter = [];
     this.updateDepartmentList();
   }
 
   updateDepartmentList(): void {
-    this.service.getDepartmentList().subscribe(data => {
-      this.departmentList = data;
-      this.departmentListWithoutFilter = data;
+    this.service.getDepartmentListFromDB().subscribe((response: IDepartment[]) => {
+      this.departmentList = response;
+      this.departmentListWithoutFilter = response;
     });
   }
 
-  addClick(): void {
-    this.dep = {
+  addDepartment(): void {
+    this.activateDepModalComp = true;
+    this.department = {
       DepartmentId: 0,
       DepartmentName: ''
     };
     this.modalTitle = 'Add Department';
-    this.activateAddEditDepComp = true;
   }
 
-  closeClick(): void {
-    this.updateDepartmentList();
-    this.activateAddEditDepComp = false;
-  }
-
-  editClick(item: any): void {
-    this.dep = item;
+  editDepartment(dataItem: IDepartment): void {
+    this.activateDepModalComp = true;
+    this.department = dataItem;
     this.modalTitle = 'Edit Department';
-    this.activateAddEditDepComp = true;
   }
 
-  deleteClick(item): void {
-    if (confirm('Are you sure?')) {
-      this.service.deleteDepartment(item.DepartmentId).subscribe(data => {
-        alert(data.toString());
+  closeDepartmentModal(): void {
+    this.activateDepModalComp = false
+    this.updateDepartmentList();
+  }
+
+  showDeleteConfirm(dataItem: IDepartment): void {
+    if (confirm('Are you sure??'))
+      this.deleteDepartment(dataItem);
+  }
+
+  deleteDepartment(dataItem: IDepartment): void {
+    this.service.deleteDepartmentFromDB(dataItem.DepartmentId).subscribe(
+      (response: string) => {
+        alert(response);
         this.updateDepartmentList();
-      });
-    }
+        console.warn(response);
+      },
+      (error: string) => {
+        console.error(error);
+      }
+    );
   }
 
-  filterData() {
+  toFilterDepartmentList(): void {
     let depIdFilter = this.departmentIdFilter;
     let depNameFilter = this.departmentNameFilter;
 
-    this.departmentList = this.departmentListWithoutFilter.filter(function (el) {
-      return el.DepartmentId.toString().toLowerCase()
-          .includes(depIdFilter.toString().trim().toLowerCase())
-        &&
-        el.DepartmentName.toString().toLowerCase()
-          .includes(depNameFilter.toString().trim().toLowerCase())
+    this.departmentList = this.departmentListWithoutFilter.filter((dep: IDepartment) => {
+      return dep.DepartmentId.toString()
+        .toLowerCase()
+        .includes(depIdFilter.toString().trim().toLowerCase())
+      &&
+      dep.DepartmentName.toString()
+        .toLowerCase()
+        .includes(depNameFilter.toString().trim().toLowerCase())
     });
   }
 
-  sortResult(prop: string, asc: boolean) {
-    this.departmentList = this.departmentListWithoutFilter.sort(function (a, b) {
+  toSortDepartmentList(prop: string, asc: boolean): void {
+    this.departmentList = this.departmentListWithoutFilter.sort((a, b) => {
       if (asc) {
         return (a[prop] > b[prop]) ? 1 : ((a[prop] < b[prop]) ? -1 : 0);
       } else {

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IEmployee } from '../../components/employee/emp.comp';
+import { IDepartment } from '../../components/department/dep.comp';
+
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +15,8 @@ export class SharedService {
 
   constructor(private http: HttpClient) {}
 
-  getDepartmentList(): Observable<any[]> {
-    return this.http.get<any>(this.APIUrl + '/department');
+  getDepartmentListFromDB(): Observable<IDepartment[]> {
+    return this.http.get<IDepartment[]>(this.APIUrl + '/department');
   }
 
   addDepartment(val: any): Observable<any> {
@@ -25,8 +27,8 @@ export class SharedService {
     return this.http.put(this.APIUrl + '/department', val);
   }
 
-  deleteDepartment(val: any): Observable<any> {
-    return this.http.delete(this.APIUrl + '/department/' + val);
+  deleteDepartmentFromDB(departmentId: number): Observable<string> {
+    return this.http.delete<string>(this.APIUrl + '/department/' + departmentId);
   }
 
   getEmployeeListFromDB(): Observable<IEmployee[]> {
