@@ -5,12 +5,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { of } from 'rxjs';
+import { IDepartment } from '../dep.comp';
 
 describe('DepartmentListComponent', () => {
   let component: DepartmentListComponent;
   let fixture: ComponentFixture<DepartmentListComponent>;
   let service: SharedService;
-  let mockList: any[];
+  let mockList: IDepartment[];
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -34,13 +35,13 @@ describe('DepartmentListComponent', () => {
   });
 
   it('should call shared service when update department list', () => {
-    const spy = spyOn(service, 'getDepartmentList').and.returnValue(of(mockList));
+    const spy = spyOn(service, 'getDepartmentListFromDB').and.returnValue(of(mockList));
     component.updateDepartmentList();
     expect(spy.calls.any()).toBeTruthy();
   });
 
   it('should set department list value when update department list', () => {
-    spyOn(service, 'getDepartmentList').and.returnValue(of(mockList));
+    spyOn(service, 'getDepartmentListFromDB').and.returnValue(of(mockList));
     component.updateDepartmentList();
     expect(component.departmentList).toEqual(mockList);
   });
