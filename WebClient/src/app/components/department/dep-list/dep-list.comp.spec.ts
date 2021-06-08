@@ -34,6 +34,10 @@ describe('DepartmentListComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should deactivate department modal component when initialize department list component', () => {
+    expect(component.activateDepModalComp).toBeFalse();
+  });
+
   it('should call shared service when update department list', () => {
     const spy = spyOn(service, 'getDepartmentListFromDB').and.returnValue(of(mockList));
     component.updateDepartmentList();
