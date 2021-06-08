@@ -6,6 +6,7 @@ spring:
     url: jdbc:postgresql://localhost:5432/auth
     username: admin
     password: 52670
+    driver-class-name: org.postgresql.Driver
 
   sql:
     init:
