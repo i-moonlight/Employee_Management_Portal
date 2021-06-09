@@ -38,6 +38,14 @@ describe('DepartmentListComponent', () => {
     expect(component.activateDepModalComp).toBeFalse();
   });
 
+  it('should set department filter id value when initialize department list component', () => {
+    expect(component.departmentIdFilter).toEqual('');
+  });
+
+  it('should set department filter name value when initialize department list component', () => {
+    expect(component.departmentNameFilter).toEqual('');
+  });
+
   it('should call shared service when update department list', () => {
     const spy = spyOn(service, 'getDepartmentListFromDB').and.returnValue(of(mockList));
     component.updateDepartmentList();
