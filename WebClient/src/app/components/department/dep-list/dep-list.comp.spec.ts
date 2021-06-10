@@ -46,6 +46,12 @@ describe('DepartmentListComponent', () => {
     expect(component.departmentNameFilter).toEqual('');
   });
 
+  it('should set call update department list when initialize department list component', () => {
+    const spy  = spyOn(component, 'updateDepartmentList');
+    component.ngOnInit();
+    expect(spy).toHaveBeenCalled();
+  });
+
   it('should call shared service when update department list', () => {
     const spy = spyOn(service, 'getDepartmentListFromDB').and.returnValue(of(mockList));
     component.updateDepartmentList();
