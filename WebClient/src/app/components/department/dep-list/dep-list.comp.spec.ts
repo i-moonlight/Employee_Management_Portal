@@ -71,4 +71,9 @@ describe('DepartmentListComponent', () => {
     btn.triggerEventHandler('click', null);
     expect(spy).toHaveBeenCalled();
   });
+
+  it('should activate modal department component when add department', () => {
+    component.addDepartment();
+    expect(component.activateDepModalComp).toBeTrue();
+  });
 });
