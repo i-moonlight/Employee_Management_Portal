@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { of } from 'rxjs';
 import { IDepartment } from '../dep.comp';
+import { By } from '@angular/platform-browser';
 
 describe('DepartmentListComponent', () => {
   let component: DepartmentListComponent;
@@ -62,5 +63,12 @@ describe('DepartmentListComponent', () => {
     spyOn(service, 'getDepartmentListFromDB').and.returnValue(of(mockList));
     component.updateDepartmentList();
     expect(component.departmentList).toEqual(mockList);
+  });
+
+  it('should call add department method when click on button', () => {
+    const spy = spyOn(component, 'addDepartment');
+    const btn = fixture.debugElement.query(By.css('.btn-float'));
+    btn.triggerEventHandler('click', null);
+    expect(spy).toHaveBeenCalled();
   });
 });
