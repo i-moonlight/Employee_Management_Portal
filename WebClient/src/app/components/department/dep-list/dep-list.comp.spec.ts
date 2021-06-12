@@ -13,6 +13,7 @@ describe('DepartmentListComponent', () => {
   let fixture: ComponentFixture<DepartmentListComponent>;
   let service: SharedService;
   let mockList: IDepartment[];
+  let mock: IDepartment;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -28,6 +29,7 @@ describe('DepartmentListComponent', () => {
     component = fixture.componentInstance;
     service = fixture.debugElement.injector.get<SharedService>(SharedService as any);
     mockList = [];
+    mock = <IDepartment>{DepartmentId: 0, DepartmentName: ''};
     fixture.detectChanges();
   });
 
@@ -75,5 +77,10 @@ describe('DepartmentListComponent', () => {
   it('should activate modal department component when add department', () => {
     component.addDepartment();
     expect(component.activateDepModalComp).toBeTrue();
+  });
+
+  it('should set department object values when add department', () => {
+    component.addDepartment();
+    expect(component.department).toEqual(mock);
   });
 });
