@@ -16,11 +16,13 @@ describe('EmployeeListComponent', () => {
   let mock: Employee;
 
   beforeEach(async() => {
-    await TestBed.configureTestingModule({
-      declarations: [EmployeeListComponent],
-      imports: [HttpClientModule, FormsModule],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    }).compileComponents();
+    await TestBed
+      .configureTestingModule({
+        declarations: [EmployeeListComponent],
+        imports: [HttpClientModule, FormsModule],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      })
+      .compileComponents();
   });
 
   beforeEach(() => {
@@ -115,5 +117,41 @@ describe('EmployeeListComponent', () => {
     spyOn(service, 'deleteEmployeeFromDB').and.returnValue(throwError('Delete was not successful'));
     component.deleteEmployee(mock);
     expect(spy).toHaveBeenCalledWith('Delete was not successful');
+  });
+
+  it('should call employee list filter method when input data', () => {
+    const spy = spyOn(component, 'filterEmployeeList');
+    const btn = fixture.debugElement.query(By.css('.form-control'));
+    btn.triggerEventHandler('keyup', null);
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('should set employee list value when filter employee list', () => {
+    component.filterEmployeeList();
+    expect(component.employeeList).toEqual(mockList);
+  });
+
+  it('should call filter method when filter employee list', () => {
+    const spy = spyOn(component.employeeListWithoutFilter, 'filter');
+    component.filterEmployeeList();
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('should call employee list sort method when click on button', () => {
+    const spy = spyOn(component, 'sortEmployeeList');
+    const btn = fixture.debugElement.query(By.css('.sort'));
+    btn.triggerEventHandler('click', null);
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('should set employee list value when sort employee list', () => {
+    component.sortEmployeeList('test', true);
+    expect(component.employeeList).toEqual(mockList);
+  });
+
+  it('should call sort method when sort employee list', () => {
+    const spy = spyOn(component.employeeList, 'sort');
+    component.sortEmployeeList(' ', true);
+    expect(spy).toHaveBeenCalled();
   });
 });
