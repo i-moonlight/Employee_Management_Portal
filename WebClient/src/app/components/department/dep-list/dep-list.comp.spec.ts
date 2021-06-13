@@ -83,4 +83,9 @@ describe('DepartmentListComponent', () => {
     component.addDepartment();
     expect(component.department).toEqual(mock);
   });
+
+  it('should have modal title value as `Add Department` when add department', () => {
+    component.addDepartment();
+    expect(component.modalTitle).toEqual('Add Department');
+  });
 });
