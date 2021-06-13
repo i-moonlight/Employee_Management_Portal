@@ -1,6 +1,6 @@
 create table users
 (
-    id        SERIAL NOT NULL PRIMARY KEY,
+    id        UUID NOT NULL PRIMARY KEY,
     firstname VARCHAR(255),
     lastname  VARCHAR(255),
     username  VARCHAR(255),
@@ -24,5 +24,5 @@ create table users
 --     FOREIGN KEY (roleId) references role (id)
 -- );
 
-INSERT INTO users (firstname, lastname, username, email, password, role)
-VALUES ('admin', 'admin', 'admin', 'admin@gmail.com', '$2a$10$QRW1d.EKZPnxV.D7hj4@gd67#5JLgiFCD', 'admin');
+INSERT INTO users (id, firstname, lastname, username, email, password, role)
+VALUES ('49ae31fc-79e9-4577-a4b9-47ac32ebcddd', 'admin', 'admin', 'admin', 'admin@gmail.com', '$2a$10$QRW1d.EKZPnxV.D7hj4@gd67#5JLgiFCD', 'ADMIN');

@@ -1,7 +1,7 @@
 package com.github.auth.config;
 
-import com.github.auth.domain.service.AuthUserDetailsService;
-import com.github.auth.domain.service.JwtService;
+import com.github.auth.domain.service.implementation.JwtService;
+import com.github.auth.domain.service.implementation.DaoUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,9 +19,9 @@ import java.io.IOException;
 
 @Component
 @RequiredArgsConstructor
-public class JwtAuthFilter extends OncePerRequestFilter {
+public class SecurityAuthFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
-    private final AuthUserDetailsService userDetailsService;
+    private final DaoUserDetailsService userDetailsService;
 
     @Override
     protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain filterChain)

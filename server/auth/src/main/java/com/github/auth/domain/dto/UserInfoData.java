@@ -1,4 +1,4 @@
-package com.github.auth.domain.model;
+package com.github.auth.domain.dto;
 
 import lombok.Builder;
 import lombok.Data;
@@ -7,12 +7,11 @@ import java.util.UUID;
 
 @Builder
 @Data
-public class User {
+public class UserInfoData {
     private UUID id;
     private String username;
     private String firstname;
     private String lastname;
     private String email;
-    private String password;
-    private Role role;
+    private final boolean isActivated = false;
 }

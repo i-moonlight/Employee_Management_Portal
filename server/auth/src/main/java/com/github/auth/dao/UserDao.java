@@ -1,6 +1,7 @@
 package com.github.auth.dao;
 
 import com.github.auth.domain.model.User;
+import com.github.auth.domain.repository.AuthRepository;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -11,7 +12,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class UserDao {
+public class UserDao implements AuthRepository {
     private final JdbcTemplate template;
 
     public Optional<User> getUserByName(String username) {
@@ -24,10 +25,12 @@ public class UserDao {
     }
 
     public void saveUser(@NotNull User user) {
-        template.update("INSERT INTO users(firstname, lastname, username, email, password, role)" +
-                        " VALUES (?, ?, ?, ?, ?, ?)",
+        template.update("INSERT INTO users(id, firstname, lastname, username, email, password, role)" +
+                        " VALUES (?, ?, ?, ?, ?, ?, ?)",
+                user.getId(),
                 user.getFirstname(), user.getLastname(), user.getUsername(),
-                user.getEmail(), user.getPassword(),
+                user.getEmail(),
+                user.getPassword(),
                 user.getRole().toString());
     }
 }

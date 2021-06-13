@@ -3,19 +3,18 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/auth
-    username: admin
-    password: 52670
+    url: jdbc:postgresql://${POSTGRES_HOST}:5432/${POSTGRES_DATABASE}
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
   sql:
     init:
       platform: postgres
 
-application:
-  security:
-    jwt:
-      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
-      expiration: 60000 # 86400000 # a day
-      refresh-token:
-        expiration: 604800000 # 7 days
+security:
+  jwt:
+    expiration:
+      secret: ${JWT_SECRET}
+      access-token:  15 # 15 min
+      refresh-token: 1440 # a day

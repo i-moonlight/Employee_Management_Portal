@@ -1,4 +1,4 @@
-package com.github.auth.domain.service;
+package com.github.auth.domain.service.implementation;
 
 import com.github.auth.dao.UserDao;
 import com.github.auth.domain.model.AuthUserDetails;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class AuthUserDetailsService implements UserDetailsService {
+public class DaoUserDetailsService implements UserDetailsService {
 
     @Autowired
     private UserDao repository;
