@@ -88,4 +88,9 @@ describe('DepartmentListComponent', () => {
     component.addDepartment();
     expect(component.modalTitle).toEqual('Add Department');
   });
+
+  it('should activate department modal component when edit department', () => {
+    component.editDepartment(mock);
+    expect(component.activateDepModalComp).toBeTrue();
+  });
 });
