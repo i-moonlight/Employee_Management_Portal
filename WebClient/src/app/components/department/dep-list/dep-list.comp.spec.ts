@@ -93,4 +93,9 @@ describe('DepartmentListComponent', () => {
     component.editDepartment(mock);
     expect(component.activateDepModalComp).toBeTrue();
   });
+
+  it('should set department object value when edit department', () => {
+    component.editDepartment(mock);
+    expect(component.department).toEqual(mock);
+  });
 });
