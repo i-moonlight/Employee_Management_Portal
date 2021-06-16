@@ -103,4 +103,11 @@ describe('DepartmentListComponent', () => {
     component.editDepartment(mock);
     expect(component.modalTitle).toEqual('Edit Department');
   });
+
+  it('should call close department modal method when click on close button', () => {
+    const spy  = spyOn(component, 'closeDepartmentModal');
+    const btn = fixture.debugElement.query(By.css('.btn-close'));
+    btn.triggerEventHandler('click', null);
+    expect(spy).toHaveBeenCalled();
+  });
 });
