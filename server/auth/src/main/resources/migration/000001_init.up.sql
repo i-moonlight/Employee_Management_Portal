@@ -25,4 +25,4 @@ create table users
 -- );
 
 INSERT INTO users (id, firstname, lastname, username, email, password, role)
-VALUES ('49ae31fc-79e9-4577-a4b9-47ac32ebcddd', 'admin', 'admin', 'admin', 'admin@gmail.com', '$2a$10$QRW1d.EKZPnxV.D7hj4@gd67#5JLgiFCD', 'ADMIN');
+VALUES ('49ae31fc-79e9-4577-a4b9-47ac32ebcddd', 'admin', 'admin', 'admin', 'admin@gmail.com', '{bcrypt}$2a$10$QRW1d.EKZPnxV.D7hj4@gd67#5JLgiFCD', 'ADMIN');

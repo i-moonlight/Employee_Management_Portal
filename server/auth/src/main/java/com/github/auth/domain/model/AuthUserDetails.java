@@ -1,6 +1,5 @@
 package com.github.auth.domain.model;
 
-import com.github.auth.domain.model.User;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

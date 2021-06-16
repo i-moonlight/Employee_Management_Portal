@@ -17,7 +17,8 @@ public class UserDao implements AuthRepository {
 
     public Optional<User> getUserByName(String username) {
         try {
-            return Optional.ofNullable(template.queryForObject("SELECT * FROM users WHERE username = ?",
+            return Optional.ofNullable(
+                    template.queryForObject("SELECT * FROM users WHERE username = ?",
                     new UserRowMapper(), username));
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();

@@ -7,11 +7,13 @@ import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
+
 public class UserRowMapper implements RowMapper<User> {
     @Override
     public User mapRow(@NotNull ResultSet rs, int rowNum) throws SQLException {
         return User.builder()
-                //.id(rs.getInt("id"))
+                .id(UUID.nameUUIDFromBytes(rs.getBytes("id")))
                 .firstname(rs.getString("firstname"))
                 .lastname(rs.getString("lastname"))
                 .username(rs.getString("username"))

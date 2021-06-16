@@ -2,6 +2,19 @@ server:
   port: 9090
 
 spring:
+  config:
+    import: optional:file:.env[.properties]
+    cache:
+      type: redis
+      cache-names: redis-cache
+
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: 6379
+      username: ${REDIS_USERNAME}
+      password: ${REDIS_PASSWORD}
+
   datasource:
     url: jdbc:postgresql://${POSTGRES_HOST}:5432/${POSTGRES_DATABASE}
     username: ${POSTGRES_USERNAME}
