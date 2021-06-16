@@ -110,4 +110,9 @@ describe('DepartmentListComponent', () => {
     btn.triggerEventHandler('click', null);
     expect(spy).toHaveBeenCalled();
   });
+
+  it('should deactivate department modal component when close department modal', () => {
+    component.closeDepartmentModal();
+    expect(component.activateDepModalComp).toBeFalse();
+  });
 });
