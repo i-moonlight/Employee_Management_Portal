@@ -115,4 +115,10 @@ describe('DepartmentListComponent', () => {
     component.closeDepartmentModal();
     expect(component.activateDepModalComp).toBeFalse();
   });
+
+  it('should call update department list method when close department modal', () => {
+    const spy = spyOn(component, 'updateDepartmentList');
+    component.closeDepartmentModal();
+    expect(spy).toHaveBeenCalled();
+  });
 });
