@@ -127,4 +127,10 @@ describe('DepartmentListComponent', () => {
     component.showDeleteConfirm(mock);
     expect(spy).toHaveBeenCalledWith('Are you sure??');
   });
+
+  it('should call delete department method when click on confirm button', () => {
+    const spy = spyOn(component, 'deleteDepartment')
+    component.showDeleteConfirm(mock);
+    expect(spy).toHaveBeenCalledWith(mock);
+  });
 });
