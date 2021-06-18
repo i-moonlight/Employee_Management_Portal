@@ -121,4 +121,10 @@ describe('DepartmentListComponent', () => {
     component.closeDepartmentModal();
     expect(spy).toHaveBeenCalled();
   });
+
+  it('should call confirm window when show delete confirm', () => {
+    const spy = spyOn(window, 'confirm');
+    component.showDeleteConfirm(mock);
+    expect(spy).toHaveBeenCalledWith('Are you sure??');
+  });
 });
