@@ -1,12 +1,12 @@
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { By } from '@angular/platform-browser';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClientModule } from '@angular/common/http';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { EmployeeModalComponent } from './emp-modal.component';
-import { SharedService } from '../../../services/shared/shared.service';
+import { HttpClientModule } from '@angular/common/http';
 import { of } from 'rxjs';
 import { Employee } from '../employee.component';
-import { By } from '@angular/platform-browser';
+import { EmployeeModalComponent } from './emp-modal.component';
+import { SharedService } from '../../../services/shared/shared.service';
 
 describe('EmployeeModalComponent', () => {
   let component: EmployeeModalComponent;
@@ -15,12 +15,13 @@ describe('EmployeeModalComponent', () => {
   let mockList: string[];
   let mock: Employee;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [EmployeeModalComponent],
-      imports: [HttpClientModule, FormsModule],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    })
+  beforeEach(async() => {
+    await TestBed
+      .configureTestingModule({
+        declarations: [EmployeeModalComponent],
+        imports: [HttpClientModule, FormsModule],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      })
       .compileComponents();
   });
 
@@ -30,7 +31,7 @@ describe('EmployeeModalComponent', () => {
     component.emp = <Employee>{};
     service = fixture.debugElement.injector.get<SharedService>(SharedService as any);
     mockList = [];
-    mock = <Employee>{}
+    mock = <Employee>{};
     fixture.detectChanges();
   });
 
@@ -51,20 +52,13 @@ describe('EmployeeModalComponent', () => {
   });
 
   it('should call shared service when add employee', () => {
-    const spy = spyOn(service, 'addEmployeeToDB').and.returnValue(of('Created Successfully'));
+    const spy = spyOn(service, 'addEmployeeToDB').and.returnValue(of(''));
     component.addEmployee();
     expect(spy.calls.any()).toBeTruthy();
   });
 
-  it('should call update employee method when click on update button', () => {
-    const spy = spyOn(component, 'updatePhoto');
-    const btn = fixture.debugElement.query(By.css('.update'));
-    btn.triggerEventHandler('click', null);
-    expect(spy).toHaveBeenCalled();
-  });
-
   it('should call shared service when update employee', () => {
-    const spy = spyOn(service, 'updateEmployeeToDB').and.returnValue(of('Update successful'));
+    const spy = spyOn(service, 'updateEmployeeToDB').and.returnValue(of(''));
     component.updateEmployee();
     expect(spy.calls.any()).toBeTruthy();
   });
@@ -88,33 +82,35 @@ describe('EmployeeModalComponent', () => {
   });
 
   it('should call shared service when upload photo file', () => {
-    const spy = spyOn(service, 'uploadPhotoToStorage').and.returnValue(of('photo file name'));
-    component.uploadPhoto();
+    const spy = spyOn(service, 'uploadPhotoToStorage').and.returnValue(of(''));
+    component.uploadEmployeeData();
     expect(spy.calls.any()).toBeTruthy();
   });
 
   it('should set photo name value when upload photo file', () => {
-    spyOn(service, 'uploadPhotoToStorage').and.returnValue(of('photo file name'));
-    component.uploadPhoto();
-    expect(component.photoFileName).toEqual('photo file name');
+    const mockResponse = 'photo file name';
+    spyOn(service, 'uploadPhotoToStorage').and.returnValue(of(mockResponse));
+    component.uploadEmployeeData();
+    expect(component.photoFileName).toEqual(mockResponse);
   });
 
-  it('should call update photo method when click on button', () => {
-    const spy = spyOn(component, 'updatePhoto');
-    const btn = fixture.debugElement.query(By.css('.but'));
+  it('should call update employee method when click on update button', () => {
+    const spy = spyOn(component, 'updateEmployeeData');
+    const btn = fixture.debugElement.query(By.css('.update'));
     btn.triggerEventHandler('click', null);
     expect(spy).toHaveBeenCalled();
   });
 
   it('should call shared service when update photo file', () => {
     const spy = spyOn(service, 'updatePhotoToStorage').and.returnValue(of(''));
-    component.updatePhoto(mock.EmployeeId);
+    component.updateEmployeeData(mock.EmployeeId);
     expect(spy.calls.any()).toBeTruthy();
   });
 
   it('should set photo name value when update photo file', () => {
-    spyOn(service, 'updatePhotoToStorage').and.returnValue(of('photo file name'));
-    component.updatePhoto(mock.EmployeeId);
-    expect(component.photoFileName).toEqual('photo file name');
+    const mockResponse = 'photo file name';
+    spyOn(service, 'updatePhotoToStorage').and.returnValue(of(mockResponse));
+    component.updateEmployeeData(mock.EmployeeId);
+    expect(component.photoFileName).toEqual(mockResponse);
   });
-})
+});
