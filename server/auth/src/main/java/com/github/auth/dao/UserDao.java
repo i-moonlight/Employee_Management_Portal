@@ -4,22 +4,41 @@ import com.github.auth.domain.model.User;
 import com.github.auth.domain.repository.AuthRepository;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 @RequiredArgsConstructor
 public class UserDao implements AuthRepository {
     private final JdbcTemplate template;
 
+    public Optional<User> findUserById(UUID userid) {
+        try {
+            return Optional.ofNullable(template.queryForObject(
+                    "SELECT * FROM users WHERE id = ?", new UserRowMapper(), userid));
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
+    }
+
     public Optional<User> getUserByName(String username) {
         try {
-            return Optional.ofNullable(
-                    template.queryForObject("SELECT * FROM users WHERE username = ?",
-                    new UserRowMapper(), username));
+            return Optional.ofNullable(template.queryForObject(
+                    "SELECT * FROM users WHERE username = ?", new UserRowMapper(), username));
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
+    }
+
+    public Optional<User> findUserByEmail(String email) {
+        try {
+            return Optional.ofNullable(template.queryForObject(
+                    "SELECT * FROM users WHERE email = ?", new UserRowMapper(), email));
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
         }

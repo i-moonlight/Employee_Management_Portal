@@ -4,6 +4,7 @@ import com.github.auth.domain.dto.AuthRequest;
 import org.springframework.http.ResponseEntity;
 
 public interface AuthService {
-    ResponseEntity<?> register(AuthRequest request);
     ResponseEntity<?> login(AuthRequest request);
+    ResponseEntity<?> register(AuthRequest request);
+    void revokeToken(String userid);
 }

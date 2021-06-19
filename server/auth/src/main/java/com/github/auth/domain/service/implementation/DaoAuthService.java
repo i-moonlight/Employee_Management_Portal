@@ -66,7 +66,7 @@ public class DaoAuthService implements AuthService {
         Optional<User> authUser = repository.getUserByName(request.getUsername());
 
         if (authUser.isPresent()) {
-            return new ResponseEntity<>("Пользователь уже существует", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Пользователь " + request.getUsername() + " уже существует", HttpStatus.BAD_REQUEST);
         }
 
         UUID uuid = UUID.randomUUID();
@@ -100,5 +100,14 @@ public class DaoAuthService implements AuthService {
                 .refreshToken(refreshToken)
                 .userInfoData(userInfo)
                 .build());
+    }
+
+    @Override
+    public void revokeToken(String userid) {
+        Optional<User> authUser = repository.findUserById(UUID.fromString(userid));
+        if (authUser.isPresent()) {
+            UserDetails userDetails = new AuthUserDetails(authUser.get());
+            redis.opsForValue().getAndDelete(userDetails.getUsername());
+        }
     }
 }

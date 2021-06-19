@@ -33,4 +33,7 @@ build/
 .vscode/
 
 ### Security ###
-/.env
+.env
+
+### Service files ###
+/src/main/resources/script/content.secure.sql
