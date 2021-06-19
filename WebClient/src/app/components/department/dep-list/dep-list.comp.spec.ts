@@ -133,4 +133,10 @@ describe('DepartmentListComponent', () => {
     component.showDeleteConfirm(mock);
     expect(spy).toHaveBeenCalledWith(mock);
   });
+
+  it('should call shared service when delete department', () => {
+    const spy = spyOn(service, 'deleteDepartmentFromDB').and.returnValue(of('Delete successful'));
+    component.deleteDepartment(mock);
+    expect(spy.calls.any()).toBeTruthy();
+  });
 });
