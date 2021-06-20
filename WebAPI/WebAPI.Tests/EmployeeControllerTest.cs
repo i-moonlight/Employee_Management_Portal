@@ -89,10 +89,10 @@ namespace WebAPI.Tests
         }
         
         [Test]
-        public void SaveFile_Should_Returns_Json_Result_String_Value()
+        public void UploadPhoto_Should_Returns_JsonResult_String_Value()
         {
             // Act.
-            JsonResult result = _controller.SaveFile();
+            JsonResult result = _controller.UploadPhoto();
 
             // Assert.
             Assert.NotNull(result, "Result is null");
