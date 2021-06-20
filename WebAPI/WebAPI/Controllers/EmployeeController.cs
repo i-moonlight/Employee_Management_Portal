@@ -67,18 +67,18 @@ namespace WebAPI.Controllers
                 : new JsonResult("Delete was not successful");
         }
         
-        [Route("SaveFile")]
         [HttpPost]
-        public JsonResult SaveFile()
+        [Route("UploadPhoto")]
+        public JsonResult UploadPhoto()
         {
             try
             {
                 var httpRequest = Request.Form;
                 var postedFile = httpRequest.Files[0];
                 var filename = postedFile.FileName;
-                var physicalPath = _env.ContentRootPath + "/Photos/" + filename;
+                var selectPath = _env.ContentRootPath + "/Photos/" + filename;
 
-                using(var stream = new FileStream(physicalPath, FileMode.Create))
+                using (var stream = new FileStream(selectPath, FileMode.Create))
                 {
                     postedFile.CopyTo(stream);
                 }
