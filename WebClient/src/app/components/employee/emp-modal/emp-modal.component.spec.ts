@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { Employee } from '../employee.component';
 import { EmployeeModalComponent } from './emp-modal.component';
 import { SharedService } from '../../../services/shared/shared.service';
@@ -28,10 +28,11 @@ describe('EmployeeModalComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(EmployeeModalComponent);
     component = fixture.componentInstance;
-    component.emp = <Employee>{};
+    component.emp = ({} as Employee);
     service = fixture.debugElement.injector.get<SharedService>(SharedService as any);
     mockList = [];
     mock = <Employee>{};
+    mock = ({} as Employee);
     fixture.detectChanges();
   });
 
@@ -94,6 +95,22 @@ describe('EmployeeModalComponent', () => {
     expect(component.photoFileName).toEqual(mockResponse);
   });
 
+  it('should call error console when upload photo exception', () => {
+    const mockResponse = 'anonymous.png';
+    const spy = spyOn(console, 'error');
+    spyOn(service, 'uploadPhotoToStorage').and.returnValue(throwError(mockResponse));
+    component.uploadEmployeeData();
+    expect(spy).toHaveBeenCalledWith(mockResponse);
+  });
+
+  it('should call warn console when upload photo file', () => {
+    const mockResponse = 'photo file name';
+    const spy = spyOn(console, 'warn');
+    spyOn(service, 'uploadPhotoToStorage').and.returnValue(of(mockResponse));
+    component.uploadEmployeeData();
+    expect(spy).toHaveBeenCalledWith(mockResponse);
+  });
+
   it('should call update employee method when click on update button', () => {
     const spy = spyOn(component, 'updateEmployeeData');
     const btn = fixture.debugElement.query(By.css('.update'));
@@ -112,5 +129,36 @@ describe('EmployeeModalComponent', () => {
     spyOn(service, 'updatePhotoToStorage').and.returnValue(of(mockResponse));
     component.updateEmployeeData(mock.EmployeeId);
     expect(component.photoFileName).toEqual(mockResponse);
+  });
+
+  it('should call update employee method when update photo file', () => {
+    const spy = spyOn(component, 'updateEmployee');
+    spyOn(service, 'updatePhotoToStorage').and.returnValue(of(''));
+    component.updateEmployeeData(mock.EmployeeId);
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('should call update employee method when response value as `anonymous`', () => {
+    const mockResponse = 'anonymous.png';
+    const spy = spyOn(component, 'updateEmployee');
+    spyOn(service, 'updatePhotoToStorage').and.returnValue(of(mockResponse));
+    component.updateEmployeeData(mock.EmployeeId);
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('should call warn console when update photo file', () => {
+    const mockResponse = 'photo file name';
+    const spy = spyOn(console, 'warn');
+    spyOn(service, 'updatePhotoToStorage').and.returnValue(of(mockResponse));
+    component.updateEmployeeData(mock.EmployeeId);
+    expect(spy).toHaveBeenCalledWith(mockResponse);
+  });
+
+  it('should call error console when update photo exception', () => {
+    const mockResponse = 'anonymous.png';
+    const spy = spyOn(console, 'error');
+    spyOn(service, 'updatePhotoToStorage').and.returnValue(throwError(mockResponse));
+    component.updateEmployeeData(mock.EmployeeId);
+    expect(spy).toHaveBeenCalledWith(mockResponse);
   });
 });
