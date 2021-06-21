@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections;
+using System.IO;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.DataBase;
+using WebAPI.Helpers;
 using WebAPI.Models;
 using WebAPI.Repositories.Interfaces;
 
@@ -48,6 +50,9 @@ namespace WebAPI.Repositories.Implementations
             var model = _context.Employees.FirstOrDefault(x => x.EmployeeId == id);
             _context.Employees.Remove(model ?? throw new InvalidOperationException());
             _context.SaveChanges();
+            
+            var path = Constants.StoragePath + model.PhotoFileName;
+            if (File.Exists(path)) File.Delete(path);
         }
     }
 }
