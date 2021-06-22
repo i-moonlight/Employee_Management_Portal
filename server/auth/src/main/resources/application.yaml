@@ -25,6 +25,20 @@ spring:
     init:
       platform: postgres
 
+  spring.mail:
+    host: smtp.gmail.com
+    port: 465
+    protocol: smtp
+    username: xyz@gmail.com
+    password: abc
+    test-connection: true
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+      mail.smtp.starttls.required: true
+      mail.smtp.socketFactory.class: javax.net.ssl.SSLSocketFactory
+      mail.debug: true
+
 security:
   jwt:
     expiration:

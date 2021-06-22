@@ -9,4 +9,6 @@ public interface AuthRepository {
     Optional<User> findUserById(UUID id);
     Optional<User> getUserByName(String username);
     void saveUser(User user);
+    Optional<User> findUserByEmail(String email);
+
 }

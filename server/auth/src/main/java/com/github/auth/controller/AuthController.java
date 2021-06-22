@@ -1,8 +1,11 @@
 package com.github.auth.controller;
 
 import com.github.auth.domain.dto.AuthRequest;
+import com.github.auth.domain.password.model.ResetPasswordRequest;
 import com.github.auth.domain.service.AuthService;
+import com.github.auth.domain.service.PasswordService;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthService authService;
+    private final PasswordService passwordService;
 
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody AuthRequest request) {
@@ -24,5 +28,15 @@ public class AuthController {
     @DeleteMapping("/signout/{userid}")
     public void signout(@PathVariable String userid) {
         authService.revokeToken(userid);
+    }
+
+    @PostMapping("/forgot-password")
+    public String processForgotPassword(String email) {
+        return passwordService.sendResetPasswordToken(email);
+    }
+
+    @PostMapping("/change-password")
+    public ResponseEntity<?> changePassword(@NotNull ResetPasswordRequest request) {
+        return passwordService.changePasswordByEmail(request);
     }
 }
