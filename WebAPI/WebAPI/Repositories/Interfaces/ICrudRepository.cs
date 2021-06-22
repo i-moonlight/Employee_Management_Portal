@@ -9,5 +9,6 @@ namespace WebAPI.Repositories.Interfaces
         public T Create(T model);
         public T Update(T model);
         public void Delete(int id);
+        public string GetFileName(int id);
     }
 }

@@ -54,5 +54,10 @@ namespace WebAPI.Repositories.Implementations
             var path = Constants.StoragePath + model.PhotoFileName;
             if (File.Exists(path)) File.Delete(path);
         }
+
+        public string GetFileName(int id)
+        {
+            return _context.Employees.Find(id).PhotoFileName;
+        }
     }
 }
