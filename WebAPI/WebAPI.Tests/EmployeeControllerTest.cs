@@ -101,6 +101,21 @@ namespace WebAPI.Tests
         }
         
         [Test]
+        public void UpdatePhoto_Should_Returns_JsonResult_String_Value()
+        {
+            // Arrange.   
+            _mockEmpRepo.Setup(x => x.GetFileName(_model.EmployeeId)).Returns("PhotoFileName");
+
+            // Act.
+            JsonResult result = _controller.UpdatePhoto(_model.EmployeeId);
+
+            // Assert.
+            Assert.NotNull(result, "Result is null");
+            Assert.AreEqual(new JsonResult(_model).GetType(), result.GetType(), "Return type mismatch");
+            Assert.AreEqual(typeof(string), result.Value.GetType(), "Return value type mismatch");
+        }
+
+        [Test]
         public void GetAllDepartmentNames_Should_Returns_ValueType_NotNull()
         {
             // Arrange.   
