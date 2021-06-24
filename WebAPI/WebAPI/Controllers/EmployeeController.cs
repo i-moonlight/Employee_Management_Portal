@@ -2,6 +2,7 @@
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI.Helpers;
 using WebAPI.Models;
 using WebAPI.Repositories.Interfaces;
 
@@ -67,20 +68,49 @@ namespace WebAPI.Controllers
                 : new JsonResult("Delete was not successful");
         }
         
-        [Route("SaveFile")]
         [HttpPost]
-        public JsonResult SaveFile()
+        [Route("UploadPhoto")]
+        public JsonResult UploadPhoto()
         {
             try
             {
                 var httpRequest = Request.Form;
                 var postedFile = httpRequest.Files[0];
                 var filename = postedFile.FileName;
-                var physicalPath = _env.ContentRootPath + "/Photos/" + filename;
+                var selectPath = _env.ContentRootPath + "/Photos/" + filename;
 
-                using(var stream = new FileStream(physicalPath, FileMode.Create))
+                using (var stream = new FileStream(selectPath, FileMode.Create))
                 {
                     postedFile.CopyTo(stream);
+                }
+
+                return new JsonResult(filename);
+            }
+            catch (Exception)
+            {
+                return new JsonResult("anonymous.png");
+            }
+        }
+        
+        [HttpPost]
+        [Route("{Id}/UpdatePhoto")]
+        public JsonResult UpdatePhoto(int id)
+        {
+            try
+            {
+                var photoName = _empRepository.GetFileName(id);
+                var httpRequest = Request.Form;
+                var postedFile = httpRequest.Files[0];
+                var filename = postedFile.FileName;
+                var selectPath = _env.ContentRootPath + "/Photos/" + filename;
+                var storagePath = Constants.StoragePath + photoName;
+
+                if (System.IO.File.Exists(selectPath)) System.IO.File.Copy(storagePath, selectPath, true);
+
+                using (var stream = new FileStream(selectPath, FileMode.Create))
+                {
+                    postedFile.CopyTo(stream);
+                    if (System.IO.File.Exists(selectPath)) System.IO.File.Delete(storagePath);
                 }
 
                 return new JsonResult(filename);
