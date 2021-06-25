@@ -146,4 +146,11 @@ describe('DepartmentListComponent', () => {
     component.deleteDepartment(mock);
     expect(spy).toHaveBeenCalledWith('Delete successful');
   });
+
+  it('should call update department list method when delete department', () => {
+    const spy = spyOn(component, 'updateDepartmentList');
+    spyOn(service, 'deleteDepartmentFromDB').and.returnValue(of('Delete successful'));
+    component.deleteDepartment(mock);
+    expect(spy).toHaveBeenCalled();
+  });
 });
