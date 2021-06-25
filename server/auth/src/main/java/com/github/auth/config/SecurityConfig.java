@@ -1,6 +1,6 @@
 package com.github.auth.config;
 
-import com.github.auth.domain.service.implementation.DaoUserDetailsService;
+import com.github.auth.domain.account.service.RepositoryUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Bean;
@@ -27,7 +27,7 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return new DaoUserDetailsService();
+        return new RepositoryUserDetailsService();
     }
 
     @Bean

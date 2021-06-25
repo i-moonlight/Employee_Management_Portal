@@ -1,4 +1,4 @@
-package com.github.auth.domain.password.model;
+package com.github.auth.domain.password.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

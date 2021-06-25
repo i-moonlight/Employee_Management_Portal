@@ -1,4 +1,4 @@
-package com.github.auth.domain.model;
+package com.github.auth.domain.account.model;
 
 import org.jetbrains.annotations.NotNull;
 import org.springframework.security.core.GrantedAuthority;

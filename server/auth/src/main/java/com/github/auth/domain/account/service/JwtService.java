@@ -1,6 +1,6 @@
-package com.github.auth.domain.service.implementation;
+package com.github.auth.domain.account.service;
 
-import com.github.auth.domain.service.property.JwtProperties;
+import com.github.auth.domain.account.props.JwtProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

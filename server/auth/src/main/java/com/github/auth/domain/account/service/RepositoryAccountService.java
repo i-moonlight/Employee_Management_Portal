@@ -1,16 +1,16 @@
-package com.github.auth.domain.service.implementation;
+package com.github.auth.domain.account.service;
 
-import com.github.auth.domain.dto.AuthRequest;
-import com.github.auth.domain.dto.AuthResponse;
-import com.github.auth.domain.dto.UserInfoData;
-import com.github.auth.domain.model.AuthUserDetails;
-import com.github.auth.domain.model.Role;
-import com.github.auth.domain.model.User;
-import com.github.auth.domain.repository.AuthRepository;
-import com.github.auth.domain.service.AuthService;
+import com.github.auth.domain.account.dto.AuthRequest;
+import com.github.auth.domain.account.dto.AuthResponse;
+import com.github.auth.domain.account.dto.UserInfoData;
+import com.github.auth.domain.account.model.AuthUserDetails;
+import com.github.auth.domain.account.model.Role;
+import com.github.auth.domain.account.model.User;
+import com.github.auth.domain.repository.TokenRepository;
+import com.github.auth.domain.repository.UserRepository;
+import com.github.auth.domain.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,14 +22,14 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class DaoAuthService implements AuthService {
-    private final AuthRepository repository;
+public class RepositoryAccountService implements AccountService {
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
-    private final RedisTemplate<String, Object> redis;
+    private final TokenRepository<String, String> tokenRepository;
+    private final UserRepository userRepository;
 
     public ResponseEntity<?> login(@NotNull AuthRequest request) {
-        Optional<User> authUser = repository.getUserByName(request.getUsername());
+        Optional<User> authUser = userRepository.findUserByName(request.getUsername());
 
         // Auth username check
         if (authUser.isEmpty()) {
@@ -45,7 +45,7 @@ public class DaoAuthService implements AuthService {
         UserDetails userDetails = new AuthUserDetails(authUser.get());
         String accessToken = jwtService.generateToken(userDetails);
         String refreshToken = jwtService.generateRefreshToken(userDetails);
-        redis.opsForValue().set(userDetails.getUsername(), refreshToken);
+        tokenRepository.saveToken(userDetails.getUsername(), refreshToken);
 
         UserInfoData userInfo = UserInfoData.builder()
                 .id(authUser.get().getId())
@@ -63,7 +63,7 @@ public class DaoAuthService implements AuthService {
     }
 
     public ResponseEntity<?> register(@NotNull AuthRequest request) {
-        Optional<User> authUser = repository.getUserByName(request.getUsername());
+        Optional<User> authUser = userRepository.findUserByName(request.getUsername());
 
         if (authUser.isPresent()) {
             return new ResponseEntity<>("Пользователь " + request.getUsername() + " уже существует", HttpStatus.BAD_REQUEST);
@@ -80,12 +80,12 @@ public class DaoAuthService implements AuthService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER)
                 .build();
-        repository.saveUser(user);
+        userRepository.saveUser(user);
 
         UserDetails userDetails = new AuthUserDetails(user);
         String accessToken = jwtService.generateToken(userDetails);
         String refreshToken = jwtService.generateRefreshToken(userDetails);
-        redis.opsForValue().set(userDetails.getUsername(), refreshToken);
+        tokenRepository.saveToken(userDetails.getUsername(), refreshToken);
 
         UserInfoData userInfo = UserInfoData.builder()
                 .id(uuid)
@@ -104,10 +104,10 @@ public class DaoAuthService implements AuthService {
 
     @Override
     public void revokeToken(String userid) {
-        Optional<User> authUser = repository.findUserById(UUID.fromString(userid));
+        Optional<User> authUser = userRepository.findUserById(UUID.fromString(userid));
         if (authUser.isPresent()) {
             UserDetails userDetails = new AuthUserDetails(authUser.get());
-            redis.opsForValue().getAndDelete(userDetails.getUsername());
+            tokenRepository.deleteToken(userDetails.getUsername());
         }
     }
 }

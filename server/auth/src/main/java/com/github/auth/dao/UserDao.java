@@ -1,7 +1,7 @@
 package com.github.auth.dao;
 
-import com.github.auth.domain.model.User;
-import com.github.auth.domain.repository.AuthRepository;
+import com.github.auth.domain.account.model.User;
+import com.github.auth.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.cache.annotation.Cacheable;
@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @Repository
 @RequiredArgsConstructor
-public class UserDao implements AuthRepository {
+public class UserDao implements UserRepository {
     private final JdbcTemplate template;
 
     public Optional<User> findUserById(UUID userid) {
@@ -26,7 +26,7 @@ public class UserDao implements AuthRepository {
         }
     }
 
-    public Optional<User> getUserByName(String username) {
+    public Optional<User> findUserByName(String username) {
         try {
             return Optional.ofNullable(template.queryForObject(
                     "SELECT * FROM users WHERE username = ?", new UserRowMapper(), username));

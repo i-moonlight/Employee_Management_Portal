@@ -1,4 +1,4 @@
-package com.github.auth.domain.dto;
+package com.github.auth.domain.account.dto;
 
 import lombok.Builder;
 import lombok.Data;
