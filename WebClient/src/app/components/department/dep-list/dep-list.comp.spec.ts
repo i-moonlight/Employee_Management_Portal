@@ -139,4 +139,11 @@ describe('DepartmentListComponent', () => {
     component.deleteDepartment(mock);
     expect(spy.calls.any()).toBeTruthy();
   });
+
+  it('should call alert window when delete department', () => {
+    const spy = spyOn(window, 'alert');
+    spyOn(service, 'deleteDepartmentFromDB').and.returnValue(of('Delete successful'));
+    component.deleteDepartment(mock);
+    expect(spy).toHaveBeenCalledWith('Delete successful');
+  });
 });
