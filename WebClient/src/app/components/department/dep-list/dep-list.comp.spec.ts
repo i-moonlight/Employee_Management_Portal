@@ -4,7 +4,7 @@ import { SharedService } from '../../../services/shared/shared.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { IDepartment } from '../dep.comp';
 import { By } from '@angular/platform-browser';
 
@@ -152,5 +152,12 @@ describe('DepartmentListComponent', () => {
     spyOn(service, 'deleteDepartmentFromDB').and.returnValue(of('Delete successful'));
     component.deleteDepartment(mock);
     expect(spy).toHaveBeenCalled();
+  });
+
+  it('should call warn console when delete department', () => {
+    const spy = spyOn(console, 'warn');
+    spyOn(service, 'deleteDepartmentFromDB').and.returnValue(of('Delete successful'));
+    component.deleteDepartment(mock);
+    expect(spy).toHaveBeenCalledWith('Delete successful');
   });
 });
