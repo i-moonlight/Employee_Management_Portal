@@ -160,4 +160,11 @@ describe('DepartmentListComponent', () => {
     component.deleteDepartment(mock);
     expect(spy).toHaveBeenCalledWith('Delete successful');
   });
+
+  it('should call error console when delete department exception', () => {
+    const spy = spyOn(console, 'error');
+    spyOn(service, 'deleteDepartmentFromDB').and.returnValue(throwError('Delete was not successful'));
+    component.deleteDepartment(mock);
+    expect(spy).toHaveBeenCalledWith('Delete was not successful');
+  });
 });
