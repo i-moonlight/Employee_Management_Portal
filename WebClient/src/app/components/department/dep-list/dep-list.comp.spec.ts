@@ -167,4 +167,11 @@ describe('DepartmentListComponent', () => {
     component.deleteDepartment(mock);
     expect(spy).toHaveBeenCalledWith('Delete was not successful');
   });
+
+  it('should call department list filter method when input data', () => {
+    const spy = spyOn(component, 'toFilterDepartmentList');
+    const btn = fixture.debugElement.query(By.css('.form-control'));
+    btn.triggerEventHandler('keyup', null);
+    expect(spy).toHaveBeenCalled();
+  });
 });
