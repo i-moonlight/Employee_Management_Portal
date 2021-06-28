@@ -174,4 +174,9 @@ describe('DepartmentListComponent', () => {
     btn.triggerEventHandler('keyup', null);
     expect(spy).toHaveBeenCalled();
   });
+
+  it('should set department list value when filter department list', () => {
+    component.toFilterDepartmentList();
+    expect(component.departmentList).toEqual(mockList);
+  });
 });
