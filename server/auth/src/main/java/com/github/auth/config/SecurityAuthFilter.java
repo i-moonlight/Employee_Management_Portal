@@ -1,6 +1,6 @@
 package com.github.auth.config;
 
-import com.github.auth.domain.account.service.JwtService;
+import com.github.auth.domain.account.service.JwtTokenService;
 import com.github.auth.domain.account.service.RepositoryUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -20,7 +20,7 @@ import java.io.IOException;
 @Component
 @RequiredArgsConstructor
 public class SecurityAuthFilter extends OncePerRequestFilter {
-    private final JwtService jwtService;
+    private final JwtTokenService jwtTokenService;
     private final RepositoryUserDetailsService userDetailsService;
 
     @Override
@@ -32,13 +32,13 @@ public class SecurityAuthFilter extends OncePerRequestFilter {
 
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             token = authHeader.substring(7);
-            username = jwtService.extractUsername(token);
+            username = jwtTokenService.extractUsername(token);
         }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-            if (jwtService.isTokenValid(token, userDetails)) {
+            if (jwtTokenService.isTokenValid(token, userDetails)) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

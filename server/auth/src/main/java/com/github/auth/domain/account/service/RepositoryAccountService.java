@@ -23,7 +23,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class RepositoryAccountService implements AccountService {
-    private final JwtService jwtService;
+    private final JwtTokenService jwtTokenService;
     private final PasswordEncoder passwordEncoder;
     private final TokenRepository<String, String> tokenRepository;
     private final UserRepository userRepository;
@@ -43,8 +43,8 @@ public class RepositoryAccountService implements AccountService {
         }
 
         UserDetails userDetails = new AuthUserDetails(authUser.get());
-        String accessToken = jwtService.generateToken(userDetails);
-        String refreshToken = jwtService.generateRefreshToken(userDetails);
+        String accessToken = jwtTokenService.generateToken(userDetails);
+        String refreshToken = jwtTokenService.generateRefreshToken(userDetails);
         tokenRepository.saveToken(userDetails.getUsername(), refreshToken);
 
         UserInfoData userInfo = UserInfoData.builder()
@@ -66,11 +66,14 @@ public class RepositoryAccountService implements AccountService {
         Optional<User> authUser = userRepository.findUserByName(request.getUsername());
 
         if (authUser.isPresent()) {
-            return new ResponseEntity<>("Пользователь " + request.getUsername() + " уже существует", HttpStatus.BAD_REQUEST);
+            return ResponseEntity.ok(AuthResponse.builder()
+                    .status(HttpStatus.BAD_REQUEST.value())
+                    .message("Пользователь " + request.getUsername() + " уже существует")
+                    .build()
+            );
         }
 
         UUID uuid = UUID.randomUUID();
-
         User user = User.builder()
                 .id(uuid)
                 .firstname(request.getFirstname())
@@ -83,8 +86,8 @@ public class RepositoryAccountService implements AccountService {
         userRepository.saveUser(user);
 
         UserDetails userDetails = new AuthUserDetails(user);
-        String accessToken = jwtService.generateToken(userDetails);
-        String refreshToken = jwtService.generateRefreshToken(userDetails);
+        String accessToken = jwtTokenService.generateToken(userDetails);
+        String refreshToken = jwtTokenService.generateRefreshToken(userDetails);
         tokenRepository.saveToken(userDetails.getUsername(), refreshToken);
 
         UserInfoData userInfo = UserInfoData.builder()
@@ -96,10 +99,12 @@ public class RepositoryAccountService implements AccountService {
                 .build();
 
         return ResponseEntity.ok(AuthResponse.builder()
+                .status(HttpStatus.OK.value())
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .userInfoData(userInfo)
-                .build());
+                .build()
+        );
     }
 
     @Override

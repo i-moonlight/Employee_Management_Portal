@@ -4,7 +4,7 @@ import com.github.auth.domain.account.dto.AuthResponse;
 import com.github.auth.domain.account.dto.UserInfoData;
 import com.github.auth.domain.account.model.AuthUserDetails;
 import com.github.auth.domain.account.model.User;
-import com.github.auth.domain.account.service.JwtService;
+import com.github.auth.domain.account.service.JwtTokenService;
 import com.github.auth.domain.password.dto.ResetPasswordRequest;
 import com.github.auth.domain.repository.TokenRepository;
 import com.github.auth.domain.repository.UserRepository;
@@ -24,7 +24,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class RepositoryPasswordService implements PasswordService {
     private final EmailService emailService;
-    private final JwtService jwtService;
+    private final JwtTokenService jwtTokenService;
     private final PasswordEncoder passwordEncoder;
     private final TokenRepository<String, String> tokenRepository;
     private final UserRepository userRepository;
@@ -41,7 +41,7 @@ public class RepositoryPasswordService implements PasswordService {
         String token = UUID.randomUUID().toString();
 
         UserDetails userDetails = new AuthUserDetails(user);
-        String accessToken = jwtService.generateToken(userDetails);
+        String accessToken = jwtTokenService.generateToken(userDetails);
         tokenRepository.saveToken(user.getEmail(), accessToken);
 
         String link = "http://localhost:4200/api/auth/" + process + "?token=" + token;
@@ -66,8 +66,8 @@ public class RepositoryPasswordService implements PasswordService {
         userRepository.saveUser(authUser.get());
 
         UserDetails userDetails = new AuthUserDetails(authUser.get());
-        String accessToken = jwtService.generateToken(userDetails);
-        String refreshToken = jwtService.generateRefreshToken(userDetails);
+        String accessToken = jwtTokenService.generateToken(userDetails);
+        String refreshToken = jwtTokenService.generateRefreshToken(userDetails);
         tokenRepository.saveToken(userDetails.getPassword(), refreshToken);
 
         UserInfoData userInfo = UserInfoData.builder()

@@ -21,7 +21,7 @@ import java.util.function.Function;
 
 @Service
 @RequiredArgsConstructor
-public class JwtService {
+public class JwtTokenService {
     private final JwtProperties jwtExpiration;
 
     public String generateToken(UserDetails userDetails) {
