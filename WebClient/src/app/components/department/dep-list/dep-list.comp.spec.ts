@@ -179,4 +179,10 @@ describe('DepartmentListComponent', () => {
     component.toFilterDepartmentList();
     expect(component.departmentList).toEqual(mockList);
   });
+
+  it('should call filter method when filter department list', () => {
+    const spy = spyOn(component.departmentListWithoutFilter, 'filter');
+    component.toFilterDepartmentList();
+    expect(spy).toHaveBeenCalled();
+  });
 });
