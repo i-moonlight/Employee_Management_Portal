@@ -10,6 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebAPI.DataBase;
+using WebAPI.Models;
+using WebAPI.Repositories.Implementations;
+using WebAPI.Repositories.Interfaces;
 
 namespace WebAPI
 {
@@ -27,6 +30,11 @@ namespace WebAPI
             //Enable application context
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            
+            // Dependency injection.
+            services.AddScoped<ICrudRepository<Employee>, EmployeeRepository>();
+
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
