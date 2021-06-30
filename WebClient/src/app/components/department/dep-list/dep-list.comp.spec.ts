@@ -192,4 +192,9 @@ describe('DepartmentListComponent', () => {
     btn.triggerEventHandler('click', null);
     expect(spy).toHaveBeenCalled();
   });
+
+  it('should set department list value when sort department list', () => {
+    component.toSortDepartmentList('test', true);
+    expect(component.departmentList).toEqual(mockList);
+  });
 });
