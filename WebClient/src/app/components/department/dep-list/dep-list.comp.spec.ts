@@ -185,4 +185,11 @@ describe('DepartmentListComponent', () => {
     component.toFilterDepartmentList();
     expect(spy).toHaveBeenCalled();
   });
+
+  it('should call department list sort method when click on sort button', () => {
+    const spy = spyOn(component, 'toSortDepartmentList');
+    const btn = fixture.debugElement.query(By.css('.sort'));
+    btn.triggerEventHandler('click', null);
+    expect(spy).toHaveBeenCalled();
+  });
 });
