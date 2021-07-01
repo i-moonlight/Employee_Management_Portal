@@ -1,10 +1,11 @@
 package com.github.auth.domain.service;
 
-import com.github.auth.domain.account.dto.AuthRequest;
-import org.springframework.http.ResponseEntity;
+import com.github.auth.domain.account.dto.AccountRequest;
+import com.github.auth.domain.account.dto.AuthResponse;
+import com.github.auth.domain.account.dto.LoginRequest;
 
 public interface AccountService {
-    ResponseEntity<?> login(AuthRequest request);
-    ResponseEntity<?> register(AuthRequest request);
+    AuthResponse login(LoginRequest request);
+    AuthResponse register(AccountRequest request);
     void revokeToken(String userid);
 }

@@ -45,3 +45,6 @@ security:
       secret: ${JWT_SECRET}
       access-token:  15 # 15 min
       refresh-token: 1440 # a day
+
+springdoc:
+    override-with-generic-response: false

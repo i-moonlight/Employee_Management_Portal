@@ -12,7 +12,6 @@ import com.github.auth.domain.service.PasswordService;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -49,18 +48,18 @@ public class RepositoryPasswordService implements PasswordService {
     }
 
     @Override
-    public ResponseEntity<?> changePasswordByEmail(@NotNull ResetPasswordRequest request) {
+    public AuthResponse changePasswordByEmail(@NotNull ResetPasswordRequest request) {
         String token = tokenRepository.getToken(request.getEmail());
 
         if (token == null) {
-            return new ResponseEntity<>("Неверный токен", HttpStatus.BAD_REQUEST);
+            return new AuthResponse(HttpStatus.BAD_REQUEST.value(),"Invalid token");
         }
 
         Optional<User> authUser = userRepository.findUserByEmail(request.getEmail());
         String newPasswordEncode = passwordEncoder.encode(request.getNewPassword());
 
         if (authUser.isEmpty()) {
-            return new ResponseEntity<>("Введите email", HttpStatus.BAD_REQUEST);
+            return new AuthResponse(HttpStatus.BAD_REQUEST.value(),"Enter email");
         }
         authUser.get().setPassword(newPasswordEncode);
         userRepository.saveUser(authUser.get());
@@ -78,10 +77,12 @@ public class RepositoryPasswordService implements PasswordService {
                 .email(authUser.get().getEmail())
                 .build();
 
-        return ResponseEntity.ok(AuthResponse.builder()
+        return AuthResponse.builder()
+                .status(HttpStatus.OK.value())
+                .message("Password changed successful")
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .userInfoData(userInfo)
-                .build());
+                .build();
     }
 }

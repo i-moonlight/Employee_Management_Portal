@@ -77,7 +77,7 @@ public class ExceptionInterceptor {
 
     @ExceptionHandler(AuthenticationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ExceptionBody handleAuthentication() {
+    public ExceptionBody handleAuthenticationException() {
         return new ExceptionBody(HttpStatus.BAD_REQUEST.value(), "Authentication failed");
     }
 

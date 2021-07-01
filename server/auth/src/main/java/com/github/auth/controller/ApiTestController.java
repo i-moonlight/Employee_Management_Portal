@@ -1,13 +1,17 @@
 package com.github.auth.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class ApiRestController {
+@RequestMapping("/api")
+@Tag(name = "Api test Controller", description = "Test API")
+public class ApiTestController {
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/greet/user")
     public ResponseEntity<String> greetingUser() {
