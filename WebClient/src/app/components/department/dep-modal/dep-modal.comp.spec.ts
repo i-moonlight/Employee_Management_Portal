@@ -40,4 +40,11 @@ describe('DepartmentModalComponent', () => {
     component.addDepartment();
     expect(spy.calls.any()).toBeTruthy();
   });
+
+  it('should call alert window when add department', () => {
+    const spy = spyOn(window, 'alert');
+    spyOn(service, 'addDepartmentToDB').and.returnValue(of('Create successful'));
+    component.addDepartment();
+    expect(spy).toHaveBeenCalledWith('Create successful');
+  });
 });
