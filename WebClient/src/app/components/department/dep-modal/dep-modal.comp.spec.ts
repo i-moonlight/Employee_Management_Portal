@@ -6,6 +6,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { IDepartment } from '../dep.comp';
 import { SharedService } from '../../../services/shared/shared.service';
 import { of } from 'rxjs';
+import { By } from '@angular/platform-browser';
 
 describe('DepartmentModalComponent', () => {
   let component: DepartmentModalComponent;
@@ -46,5 +47,12 @@ describe('DepartmentModalComponent', () => {
     spyOn(service, 'addDepartmentToDB').and.returnValue(of('Create successful'));
     component.addDepartment();
     expect(spy).toHaveBeenCalledWith('Create successful');
+  });
+
+  it('should call update department method when click on button', () => {
+    const spy = spyOn(component, 'updateDepartment');
+    const btn = fixture.debugElement.query(By.css('.btn'));
+    btn.triggerEventHandler('click', null);
+    expect(spy).toHaveBeenCalled();
   });
 });
