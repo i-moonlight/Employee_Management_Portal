@@ -8,6 +8,34 @@ spring:
       type: redis
       cache-names: redis-cache
 
+  profiles:
+    active: dev
+
+  mail:
+    host: smtp.gmail.com
+    username: ${EMAIL_ADDRESS}
+    password: ${EMAIL_KEY}
+    port: 587
+    protocol: smtp
+    default-encoding: UTF-8
+  #    properties:
+  #      mail: default-encoding=UTF-8
+  #      mail.smtp.auth: true
+  #      mail.smtp.starttls.enable: true
+  #      mail.smtp.starttls.required: false
+  #      mail.smtp.socketFactory.class: javax.net.ssl.SSLSocketFactory
+  #      mail.debug: true
+
+  #    properties:
+  #      mail.smtp:
+  #        ssl.enable: true
+  #        debug: true
+  #        auth: true
+  #        timeout: 5000
+  #        write timeout: 5000
+  #        connection timeout: 5000
+  #      test-connection: false
+
   data:
     redis:
       host: ${REDIS_HOST}
@@ -16,7 +44,7 @@ spring:
       password: ${REDIS_PASSWORD}
 
   datasource:
-    url: jdbc:postgresql://${POSTGRES_HOST}:5432/${POSTGRES_DATABASE}
+    jdbc-url: jdbc:postgresql://${POSTGRES_HOST}:5432/${POSTGRES_DATABASE}
     username: ${POSTGRES_USERNAME}
     password: ${POSTGRES_PASSWORD}
     driver-class-name: org.postgresql.Driver
@@ -25,26 +53,12 @@ spring:
     init:
       platform: postgres
 
-  spring.mail:
-    host: smtp.gmail.com
-    port: 465
-    protocol: smtp
-    username: xyz@gmail.com
-    password: abc
-    test-connection: true
-    properties:
-      mail.smtp.auth: true
-      mail.smtp.starttls.enable: true
-      mail.smtp.starttls.required: true
-      mail.smtp.socketFactory.class: javax.net.ssl.SSLSocketFactory
-      mail.debug: true
-
 security:
   jwt:
     expiration:
       secret: ${JWT_SECRET}
-      access-token:  15 # 15 min
+      access-token: 15 # 15 min
       refresh-token: 1440 # a day
 
 springdoc:
-    override-with-generic-response: false
+  override-with-generic-response: false

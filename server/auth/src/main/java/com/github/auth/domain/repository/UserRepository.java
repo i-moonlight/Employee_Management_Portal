@@ -1,6 +1,6 @@
 package com.github.auth.domain.repository;
 
-import com.github.auth.domain.account.model.User;
+import com.github.auth.domain.model.User;
 
 import java.util.Optional;
 import java.util.UUID;

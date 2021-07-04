@@ -1,4 +1,4 @@
-package com.github.auth.domain.account.model;
+package com.github.auth.domain.model;
 
 public enum Role {
     ADMIN,

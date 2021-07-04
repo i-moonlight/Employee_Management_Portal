@@ -3,6 +3,7 @@ package com.github.auth.controller;
 import com.github.auth.domain.account.dto.AccountRequest;
 import com.github.auth.domain.account.dto.AuthResponse;
 import com.github.auth.domain.account.dto.LoginRequest;
+import com.github.auth.domain.password.dto.EmailMessage;
 import com.github.auth.domain.password.dto.ResetPasswordRequest;
 import com.github.auth.domain.service.AccountService;
 import com.github.auth.domain.service.PasswordService;
@@ -41,7 +42,7 @@ public class AuthController {
 
     @Operation(summary = "User forgot password")
     @PostMapping("/forgot-password")
-    public String processForgotPassword(@Validated String email) {
+    public AuthResponse processForgotPassword(@Validated @RequestBody EmailMessage email) {
         return passwordService.sendResetPasswordToken(email);
     }
 

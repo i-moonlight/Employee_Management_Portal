@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -11,23 +13,30 @@ import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactor
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
 
 @Configuration
 public class DatabaseConfig {
-    @Bean
-    public NamedParameterJdbcTemplate template(DataSource dataSource) {
-        return new NamedParameterJdbcTemplate(dataSource);
+
+    @Bean(name = "dataSource")
+    @ConfigurationProperties(prefix = "spring.datasource")
+    public DataSource getDataSource() {
+        return DataSourceBuilder.create().build();
+    }
+
+    @Bean(name = "jdbcTemplate")
+    public JdbcTemplate jdbcTemplate(DataSource dataSource) {
+        return new JdbcTemplate(dataSource);
     }
 
     @Bean
-    LettuceConnectionFactory redisConnectionFactory() {
+    protected LettuceConnectionFactory redisConnectionFactory() {
         return new LettuceConnectionFactory();
     }
 
-    @Bean
+    @Bean(name = "redisTemplate")
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(factory);
@@ -41,7 +50,7 @@ public class DatabaseConfig {
         // Укажите тип сериализованного ввода, класс не должен быть изменен окончательно,
         // классы с окончательным изменением, такие как String, Integer и т. Д., Выйдут из исключения
         //om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-        om.activateDefaultTyping(LaissezFaireSubTypeValidator.instance,ObjectMapper.DefaultTyping.NON_FINAL);
+        om.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL);
 
         // Значение сериализуется в json
         template.setValueSerializer(serializer);

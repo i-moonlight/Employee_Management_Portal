@@ -1,7 +1,7 @@
 package com.github.auth.dao;
 
-import com.github.auth.domain.account.model.Role;
-import com.github.auth.domain.account.model.User;
+import com.github.auth.domain.model.Role;
+import com.github.auth.domain.model.User;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.jdbc.core.RowMapper;
 

@@ -1,5 +1,6 @@
 package com.github.auth.config;
 
+import com.github.auth.config.props.EmailProperties;
 import com.github.auth.domain.account.service.RepositoryUserDetailsService;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -9,6 +10,7 @@ import io.swagger.v3.oas.models.security.SecurityScheme;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -21,11 +23,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import java.util.Properties;
+
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final SecurityAuthFilter securityAuthFilter;
+    private final EmailProperties emailProperties;
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -49,7 +54,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/auth/signin", "/auth/signup", "/auth/signout/**").permitAll().and()
+                .requestMatchers("/auth/signin", "/auth/signup", "/auth/signout/**", "/auth/forgot-password/**").permitAll().and()
                 .authorizeHttpRequests()
                 .requestMatchers("/products/**").permitAll().and()
                 .authorizeHttpRequests()
@@ -64,12 +69,20 @@ public class SecurityConfig {
     }
 
     @Bean
-    public JavaMailSenderImpl mailSender() {
+    public JavaMailSender javaMailService() {
         JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
-        javaMailSender.setProtocol("SMTP");
-        javaMailSender.setHost("127.0.0.1");
-        javaMailSender.setPort(25);
+        javaMailSender.setPort(emailProperties.getPort());
+        javaMailSender.setHost(emailProperties.getHost());
+        javaMailSender.setUsername(emailProperties.getUsername());
+        javaMailSender.setPassword(emailProperties.getPassword());
+        javaMailSender.setJavaMailProperties(getMailProperties());
         return javaMailSender;
+    }
+
+    private Properties getMailProperties() {
+        Properties properties = new Properties();
+        properties.setProperty("mail.smtp.starttls.enable", "true");
+        return properties;
     }
 
     @Bean

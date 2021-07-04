@@ -1,6 +1,6 @@
 package com.github.auth.dao;
 
-import com.github.auth.domain.account.model.User;
+import com.github.auth.domain.model.User;
 import com.github.auth.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;

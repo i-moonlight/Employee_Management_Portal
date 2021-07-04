@@ -1,7 +1,7 @@
 package com.github.auth.domain.account.service;
 
-import com.github.auth.domain.account.model.AuthUserDetails;
-import com.github.auth.domain.account.model.User;
+import com.github.auth.domain.model.AuthUserDetails;
+import com.github.auth.domain.model.User;
 import com.github.auth.domain.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
