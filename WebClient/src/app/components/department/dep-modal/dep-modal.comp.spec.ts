@@ -61,4 +61,11 @@ describe('DepartmentModalComponent', () => {
     component.updateDepartment();
     expect(spy.calls.any()).toBeTruthy();
   });
+
+  it('should call alert window when update department', () => {
+    const spy = spyOn(window, 'alert');
+    spyOn(service, 'updateDepartmentToDB').and.returnValue(of('Update successful'));
+    component.updateDepartment();
+    expect(spy).toHaveBeenCalledWith('Update successful');
+  });
 });
