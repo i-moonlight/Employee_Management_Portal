@@ -22,6 +22,7 @@ export class DepartmentListComponent implements OnInit {
     this.activateDepModalComp = false;
     this.departmentIdFilter = '';
     this.departmentNameFilter = '';
+    this.departmentList = [];
     this.departmentListWithoutFilter = [];
     this.updateDepartmentList();
   }
@@ -87,7 +88,7 @@ export class DepartmentListComponent implements OnInit {
   }
 
   toSortDepartmentList(prop: string, asc: boolean): void {
-    this.departmentList = this.departmentListWithoutFilter.sort((a, b) => {
+    this.departmentList = this.departmentList.sort((a, b) => {
       if (asc) {
         return (a[prop] > b[prop]) ? 1 : ((a[prop] < b[prop]) ? -1 : 0);
       } else {
