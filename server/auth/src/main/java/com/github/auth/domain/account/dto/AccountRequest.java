@@ -1,7 +1,10 @@
 package com.github.auth.domain.account.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Data;
 
@@ -45,6 +48,14 @@ public class AccountRequest {
     @Pattern(message = "Password is not valid",
             regexp = "^(?=.*\\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\\w\\s:])(\\S){8,30}$",
             flags = Pattern.Flag.CASE_INSENSITIVE)
-    @Size(min = 8, max = 30, message = "Password should be between 8 and 30 characters")
+    @Size(min = 8, max = 30, message = "Password should be between {min} and {min} characters")
     private String password;
+
+    @Schema(description = "Password confirm", example = "123456789")
+    @NotBlank(message = "Password confirm should not be empty")
+    @Pattern(message = "Password confirm is not valid",
+            regexp = "^(?=.*\\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\\w\\s:])(\\S){8,30}$",
+            flags = Pattern.Flag.CASE_INSENSITIVE)
+    @Size(min = 8, max = 30, message = "Password should be between {min} and {min} characters")
+    private String passwordConfirm;
 }

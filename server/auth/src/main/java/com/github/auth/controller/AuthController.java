@@ -4,7 +4,7 @@ import com.github.auth.domain.account.dto.AccountRequest;
 import com.github.auth.domain.account.dto.AuthResponse;
 import com.github.auth.domain.account.dto.LoginRequest;
 import com.github.auth.domain.password.dto.EmailMessage;
-import com.github.auth.domain.password.dto.ResetPasswordRequest;
+import com.github.auth.domain.password.dto.PasswordResetRequest;
 import com.github.auth.domain.service.AccountService;
 import com.github.auth.domain.service.PasswordService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/auth")
+@RequestMapping("/api/auth/")
 @Tag(name = "Auth Controller", description = "Auth API")
 @Validated
 public class AuthController {
@@ -40,15 +40,16 @@ public class AuthController {
         accountService.revokeToken(userid);
     }
 
-    @Operation(summary = "User forgot password")
-    @PostMapping("/forgot-password")
-    public AuthResponse processForgotPassword(@Validated @RequestBody EmailMessage email) {
-        return passwordService.sendResetPasswordToken(email);
+    @Operation(summary = "User password reset")
+    @PostMapping("/reset-password")
+    public AuthResponse resetPassword(@Validated @RequestBody EmailMessage email) {
+        return passwordService.sendResetPasswordLink(email);
     }
 
-    @Operation(summary = "User change password")
-    @PostMapping("/change-password")
-    public AuthResponse changePassword(@Validated ResetPasswordRequest request) {
-        return passwordService.changePasswordByEmail(request);
+    @Operation(summary = "User password change")
+    @PatchMapping("/change-password")
+    public AuthResponse changePassword(@RequestBody PasswordResetRequest passwordResetRequest,
+                                       @RequestParam("token") String resetToken) {
+        return passwordService.changePasswordByToken(passwordResetRequest, resetToken);
     }
 }

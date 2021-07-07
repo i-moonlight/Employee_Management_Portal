@@ -13,9 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Schema(description = "Request for reset password")
 @NoArgsConstructor
-public class ResetPasswordRequest {
-    @Schema(description = "access token", example = "token")
-    private String accessToken;
+public class PasswordResetRequest {
 
     @Schema(description = "email", example = "jonnydeep@gmail.com")
     @NotBlank(message = "Email should not be empty")
@@ -29,6 +27,14 @@ public class ResetPasswordRequest {
     @Pattern(message = "New password is not valid",
             regexp = "^(?=.*\\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\\w\\s:])(\\S){8,30}$",
             flags = Pattern.Flag.CASE_INSENSITIVE)
-    @Size(min = 8, max = 30, message = "Password should be between 8 and 30 characters")
+    @Size(min = 8, max = 30, message = "Password should be between {min} and {min} characters")
     private String newPassword;
+
+    @Schema(description = "confirm password", example = "125535789")
+    @NotBlank(message = "Confirm password should not be empty")
+    @Pattern(message = "Confirm password is not valid",
+            regexp = "^(?=.*\\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\\w\\s:])(\\S){8,30}$",
+            flags = Pattern.Flag.CASE_INSENSITIVE)
+    @Size(min = 8, max = 30, message = "Password should be between {min} and {min} characters")
+    private String passwordConfirm;
 }

@@ -43,8 +43,12 @@ public class UserDao implements UserRepository {
         }
     }
 
+    public void updateUserPassword(@NotNull User user) {
+        template.update("UPDATE users SET password = ? WHERE id = ?", user.getPassword(), user.getId());
+    }
+
     public void saveUser(@NotNull User user) {
-        template.update("INSERT INTO users(id, firstname, lastname, username, email, password, role)" +
+        template.update("INSERT INTO users (id, firstname, lastname, username, email, password, role)" +
                         " VALUES (?, ?, ?, ?, ?, ?, ?)",
                 user.getId(),
                 user.getFirstname(), user.getLastname(), user.getUsername(),
