@@ -48,6 +48,12 @@ describe('EmployeeListComponent', () => {
     expect(component.employeeList).toEqual(mockList);
   });
 
+  it('should call show employee photo method with param', () => {
+    const spy = spyOn(component, 'showEmployeePhoto').and.returnValue('path');
+    component.showEmployeePhoto(mock);
+    expect(spy).toHaveBeenCalledWith(mock);
+  });
+
   it('should call confirm window when show confirm', () => {
     const spy = spyOn(window, 'confirm');
     component.showConfirmDeleteEmployee(mock);
