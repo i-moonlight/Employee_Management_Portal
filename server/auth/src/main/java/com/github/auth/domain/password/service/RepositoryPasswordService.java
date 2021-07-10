@@ -3,7 +3,7 @@ package com.github.auth.domain.password.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.auth.domain.account.dto.AuthResponse;
-import com.github.auth.domain.account.dto.UserInfoData;
+import com.github.auth.domain.account.dto.UserInfoObject;
 import com.github.auth.domain.account.service.JwtTokenService;
 import com.github.auth.domain.model.AuthUserDetails;
 import com.github.auth.domain.model.User;
@@ -88,7 +88,7 @@ public class RepositoryPasswordService implements PasswordService {
         tokenRepository.saveToken(userDetails.getUsername(), refreshToken);
         tokenRepository.deleteToken(resetPasswordToken);
 
-        UserInfoData userInfo = UserInfoData.builder()
+        UserInfoObject userInfo = UserInfoObject.builder()
                 .id(user.getId())
                 .firstname(user.getFirstname())
                 .lastname(user.getLastname())
@@ -101,11 +101,11 @@ public class RepositoryPasswordService implements PasswordService {
                 .message("Password changed successfully")
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
-                .userInfoData(userInfo)
+                .userInfoObject(userInfo)
                 .build();
     }
 
-    private @NonNull Object[] validatePasswordResetToken(@NonNull String resetToken) {
+    private Object[] validatePasswordResetToken(@NonNull String resetToken) {
         String json = tokenRepository.getToken(resetToken);
         PasswordResetObject object;
         try {

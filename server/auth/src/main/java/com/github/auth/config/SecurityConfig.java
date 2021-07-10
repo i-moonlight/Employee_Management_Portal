@@ -57,6 +57,7 @@ public class SecurityConfig {
                 .requestMatchers(
                         "/api/auth/signin",
                         "/api/auth/signup",
+                        "/api/auth/token",
                         "/api/auth/signout/**",
                         "/api/auth/forgot-password/**",
                         "/api/auth/reset-password/**")
@@ -64,7 +65,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers("/products/**").permitAll().and()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/auth/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                .requestMatchers(
+                        "/api/v1/auth/**",
+                        "/swagger-ui/**",
+                        "/v3/api-docs/**").permitAll()
                 .anyRequest()
                 .authenticated().and()
                 .sessionManagement()
@@ -96,9 +100,9 @@ public class SecurityConfig {
         return new OpenAPI().addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
                 .components(new Components()
                         .addSecuritySchemes("bearerAuth", new SecurityScheme()
-                                .type(SecurityScheme.Type.HTTP)
-                                .scheme("bearer")
-                                .bearerFormat("JWT")))
+                        .type(SecurityScheme.Type.HTTP)
+                        .scheme("bearer")
+                        .bearerFormat("JWT")))
                 .info(new Info()
                         .title("Task list API")
                         .description("Auth application")

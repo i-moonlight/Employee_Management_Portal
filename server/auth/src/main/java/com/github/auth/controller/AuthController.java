@@ -3,13 +3,19 @@ package com.github.auth.controller;
 import com.github.auth.domain.account.dto.AccountRequest;
 import com.github.auth.domain.account.dto.AuthResponse;
 import com.github.auth.domain.account.dto.LoginRequest;
+import com.github.auth.domain.account.dto.RefreshJwtRequest;
 import com.github.auth.domain.password.dto.EmailMessage;
 import com.github.auth.domain.password.dto.PasswordResetRequest;
 import com.github.auth.domain.service.AccountService;
 import com.github.auth.domain.service.PasswordService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,5 +57,30 @@ public class AuthController {
     public AuthResponse changePassword(@RequestBody PasswordResetRequest passwordResetRequest,
                                        @RequestParam("token") String resetToken) {
         return passwordService.changePasswordByToken(passwordResetRequest, resetToken);
+    }
+
+    @Operation(summary = "Get New Access Token",
+            description = "The endpoint accepts a RefreshJwtRequest with a single refreshToken field and returns a JwtResponse with a new access token.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Request completed successfully", content =
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = AuthResponse.class))),
+                    @ApiResponse(responseCode = "400", description = "Invalid client request format", content =
+                    @Content(mediaType = "application/json", examples =
+                    @ExampleObject(value = "{" +
+                            "\"status\":400," +
+                            "\"message\":\"Refresh token is not valid\"," +
+                            "\"accessToken\":\"null\"," +
+                            "\"refreshToken\":\"null\"," +
+                            "\"userInfoObject\":\"null\"" +
+                            "}"))),
+                    @ApiResponse(responseCode = "500", description = "Server error", content =
+                    @Content(mediaType = "application/json", schema =
+                    @Schema()))
+            })
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/token")
+    public AuthResponse getNewAccessToken(@RequestBody RefreshJwtRequest request) {
+        return accountService.getAccessToken(request.getRefreshToken());
     }
 }

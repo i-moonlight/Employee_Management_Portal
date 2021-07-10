@@ -57,8 +57,8 @@ security:
   jwt:
     expiration:
       secret: ${JWT_SECRET}
-      access-token: 15 # 15 min
-      refresh-token: 1440 # a day
+      expireAccessToken: 15 # 15 min
+      expireRefreshToken: 43200 # a month
 
 springdoc:
   override-with-generic-response: false

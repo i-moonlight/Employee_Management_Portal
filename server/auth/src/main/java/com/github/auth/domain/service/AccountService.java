@@ -7,5 +7,6 @@ import com.github.auth.domain.account.dto.LoginRequest;
 public interface AccountService {
     AuthResponse login(LoginRequest request);
     AuthResponse register(AccountRequest request);
+    AuthResponse getAccessToken(String refreshToken);
     void revokeToken(String userid);
 }

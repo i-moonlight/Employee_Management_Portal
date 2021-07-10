@@ -3,22 +3,27 @@ package com.github.auth.domain.account.service;
 import com.github.auth.domain.account.dto.AccountRequest;
 import com.github.auth.domain.account.dto.AuthResponse;
 import com.github.auth.domain.account.dto.LoginRequest;
-import com.github.auth.domain.account.dto.UserInfoData;
+import com.github.auth.domain.account.dto.UserInfoObject;
 import com.github.auth.domain.model.AuthUserDetails;
 import com.github.auth.domain.model.Role;
 import com.github.auth.domain.model.User;
 import com.github.auth.domain.repository.TokenRepository;
 import com.github.auth.domain.repository.UserRepository;
 import com.github.auth.domain.service.AccountService;
+import io.jsonwebtoken.Claims;
+import jakarta.security.auth.message.AuthException;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.jetbrains.annotations.NotNull;
-import org.springframework.http.HttpStatus;
+import lombok.SneakyThrows;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.UUID;
+
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.OK;
 
 @Service
 @RequiredArgsConstructor
@@ -28,19 +33,16 @@ public class RepositoryAccountService implements AccountService {
     private final TokenRepository<String, String> tokenRepository;
     private final UserRepository userRepository;
 
-    public AuthResponse login(@NotNull LoginRequest request) {
+    public AuthResponse login(@NonNull LoginRequest request) {
+        // Auth user check by username
         Optional<User> authUser = userRepository.findUserByName(request.getUsername());
-
-        // Auth username check
-        if (authUser.isEmpty()) {
-            return new AuthResponse(HttpStatus.BAD_REQUEST.value(),
-                    "User " + request.getUsername() + " doesn't exist");
-        }
+        if (authUser.isEmpty())
+            return new AuthResponse(BAD_REQUEST.value(), "User " + request.getUsername() + " doesn't exist");
 
         // Auth password check
         boolean passChecker = passwordEncoder.matches(request.getPassword(), authUser.get().getPassword());
         if (!passChecker) {
-            return new AuthResponse(HttpStatus.BAD_REQUEST.value(), "Incorrect password");
+            return new AuthResponse(BAD_REQUEST.value(), "Incorrect password");
         }
 
         UserDetails userDetails = new AuthUserDetails(authUser.get());
@@ -48,7 +50,7 @@ public class RepositoryAccountService implements AccountService {
         String refreshToken = jwtTokenService.generateRefreshToken(userDetails);
         tokenRepository.saveToken(userDetails.getUsername(), refreshToken);
 
-        UserInfoData userInfo = UserInfoData.builder()
+        UserInfoObject userInfo = UserInfoObject.builder()
                 .id(authUser.get().getId())
                 .firstname(authUser.get().getFirstname())
                 .lastname(authUser.get().getLastname())
@@ -57,20 +59,24 @@ public class RepositoryAccountService implements AccountService {
                 .build();
 
         return AuthResponse.builder()
-                .status(HttpStatus.OK.value())
+                .status(OK.value())
                 .message("Login successful")
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
-                .userInfoData(userInfo)
+                .userInfoObject(userInfo)
                 .build();
     }
 
-    public AuthResponse register(@NotNull AccountRequest request) {
+    public AuthResponse register(@NonNull AccountRequest request) {
+        // Auth user check by username
         Optional<User> authUser = userRepository.findUserByName(request.getUsername());
-
         if (authUser.isPresent()) {
-            return new AuthResponse(HttpStatus.BAD_REQUEST.value(),
-                    "User " + request.getUsername() + " already exists");
+            return new AuthResponse(BAD_REQUEST.value(), "User " + request.getUsername() + " already exists");
+        }
+
+        // Auth user password check by compare
+        if (!request.getPassword().equals(request.getPasswordConfirm())) {
+            return new AuthResponse(BAD_REQUEST.value(), "Password and password confirmation do not match");
         }
 
         UUID uuid = UUID.randomUUID();
@@ -90,7 +96,7 @@ public class RepositoryAccountService implements AccountService {
         String refreshToken = jwtTokenService.generateRefreshToken(userDetails);
         tokenRepository.saveToken(userDetails.getUsername(), refreshToken);
 
-        UserInfoData userInfo = UserInfoData.builder()
+        UserInfoObject userInfo = UserInfoObject.builder()
                 .id(uuid)
                 .firstname(user.getFirstname())
                 .lastname(user.getLastname())
@@ -99,12 +105,38 @@ public class RepositoryAccountService implements AccountService {
                 .build();
 
         return AuthResponse.builder()
-                .status(HttpStatus.OK.value())
+                .status(OK.value())
                 .message("Registration successful")
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
-                .userInfoData(userInfo)
+                .userInfoObject(userInfo)
                 .build();
+    }
+
+    @SneakyThrows
+    public AuthResponse getAccessToken(String refreshToken) {
+        if (jwtTokenService.validateRefreshToken(refreshToken)) {
+            final Claims claims = jwtTokenService.getRefreshClaims(refreshToken);
+            final String login = claims.getSubject();
+            final String saveRefreshToken = tokenRepository.getToken(login);
+
+            // Refresh token check by compare
+            if (saveRefreshToken != null && saveRefreshToken.equals(refreshToken)) {
+                final User user;
+                user = userRepository.findUserByName(login).orElseThrow(() -> new AuthException("User not found"));
+                final String accessToken = jwtTokenService.generateAccessToken(user);
+
+                return AuthResponse.builder()
+                        .status(OK.value())
+                        .message("accessToken")
+                        .accessToken(accessToken)
+                        //.refreshToken(refreshToken)
+                        //.userInfoObject(null)
+                        .build();
+            }
+        }
+
+        return new AuthResponse(BAD_REQUEST.value(), "Refresh token is not valid");
     }
 
     @Override

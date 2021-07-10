@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Builder
 @Data
-public class UserInfoData {
+public class UserInfoObject {
     private UUID id;
     private String username;
     private String firstname;

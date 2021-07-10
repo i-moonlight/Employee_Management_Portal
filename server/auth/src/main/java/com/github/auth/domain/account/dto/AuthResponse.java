@@ -13,16 +13,18 @@ public class AuthResponse {
     @Schema(description = "code status", example = "200")
     private int status;
 
-    @Schema(description = "message", example = "Registration successful")
+    @Schema(description = "message", example = "message")
     private String message;
 
-    @Schema(description = "access token", example = "token")
+    @Schema(description = "access token",
+            example = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbeyJhdXRogur5s")
     private String accessToken;
 
-    @Schema(description = "refresh token", example = "token")
+    @Schema(description = "refreshToken",
+            example = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbeyJhdXRob3Jpd")
     private String refreshToken;
-    
-    private UserInfoData userInfoData;
+
+    private UserInfoObject userInfoObject;
 
     public AuthResponse(int status, String message) {
         this.status = status;
