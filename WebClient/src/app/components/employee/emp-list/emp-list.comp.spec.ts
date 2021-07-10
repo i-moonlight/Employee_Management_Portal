@@ -54,6 +54,11 @@ describe('EmployeeListComponent', () => {
     expect(spy).toHaveBeenCalledWith(mock);
   });
 
+  it('should set employee value when show employee photo', () => {
+    component.showEmployeePhoto(mock);
+    expect(component.employee).toEqual(mock);
+  });
+
   it('should call confirm window when show confirm', () => {
     const spy = spyOn(window, 'confirm');
     component.showConfirmDeleteEmployee(mock);
