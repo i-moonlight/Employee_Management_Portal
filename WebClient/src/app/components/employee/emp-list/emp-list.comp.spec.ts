@@ -28,7 +28,9 @@ describe('EmployeeListComponent', () => {
     component = fixture.componentInstance;
     service = fixture.debugElement.injector.get<SharedService>(SharedService as any);
     mockList = [];
-    mock = <IEmployee>{};
+    mock = <IEmployee>{
+      EmployeeId: 0, EmployeeName: '', Department: '', DateOfJoining: '', PhotoFileName: 'anonymous.png'
+    };
     fixture.detectChanges();
   });
 
@@ -56,6 +58,11 @@ describe('EmployeeListComponent', () => {
 
   it('should set employee value when show employee photo', () => {
     component.showEmployeePhoto(mock);
+    expect(component.employee).toEqual(mock);
+  });
+
+  it('should set employee value when add employee', () => {
+    component.addEmployee();
     expect(component.employee).toEqual(mock);
   });
 
