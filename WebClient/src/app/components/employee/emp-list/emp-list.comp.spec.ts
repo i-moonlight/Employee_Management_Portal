@@ -71,6 +71,11 @@ describe('EmployeeListComponent', () => {
     expect(component.activateAddEditEmpComp).toBeTrue();
   });
 
+  it('should set modal title value as `Add Employee` when add employee', () => {
+    component.addEmployee();
+    expect(component.modalTitle).toEqual('Add Employee');
+  });
+
   it('should call confirm window when show confirm', () => {
     const spy = spyOn(window, 'confirm');
     component.showConfirmDeleteEmployee(mock);
