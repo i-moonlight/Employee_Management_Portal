@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { of } from 'rxjs';
 import { IEmployee } from '../emp.comp';
+import { By } from '@angular/platform-browser';
 
 describe('EmployeeListComponent', () => {
   let component: EmployeeListComponent;
@@ -74,6 +75,13 @@ describe('EmployeeListComponent', () => {
   it('should set modal title value as `Add Employee` when add employee', () => {
     component.addEmployee();
     expect(component.modalTitle).toEqual('Add Employee');
+  });
+
+  it('should call close employee modal method when click on button', () => {
+    const spy = spyOn(component, 'closeEmployeeModal');
+    const btn = fixture.debugElement.query(By.css('.btn-close'));
+    btn.triggerEventHandler('click', null);
+    expect(spy).toHaveBeenCalled();
   });
 
   it('should call confirm window when show confirm', () => {
