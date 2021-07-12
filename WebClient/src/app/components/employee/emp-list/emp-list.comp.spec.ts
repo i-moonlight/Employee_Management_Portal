@@ -88,6 +88,12 @@ describe('EmployeeListComponent', () => {
     component.closeEmployeeModal();
     expect(component.activateAddEditEmpComp).toBeFalse();
   });
+
+  it('should call update employee list when close employee modal', () => {
+    const spy = spyOn(component, 'updateEmployeeList');
+    component.closeEmployeeModal();
+    expect(spy).toHaveBeenCalled();
+  });
   
   it('should call confirm window when show confirm', () => {
     const spy = spyOn(window, 'confirm');
