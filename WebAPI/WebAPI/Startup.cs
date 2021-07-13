@@ -1,13 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using WebAPI.DataBase;
 using WebAPI.Models;
@@ -27,10 +24,10 @@ namespace WebAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
-            //Enable application context
+            // Enable application context.
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            
+
             // Dependency injection.
             services.AddScoped<ICrudRepository<Employee>, EmployeeRepository>();
             services.AddScoped<ICrudRepository<Department>, DepartmentRepository>();
@@ -45,6 +42,13 @@ namespace WebAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            // This middleware is used to returns static files and short-circuits further request processing.   
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Photos")),
+                RequestPath = "/Photos"
+            });
 
             app.UseRouting();
 

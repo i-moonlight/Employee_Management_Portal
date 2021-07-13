@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Models;
 using WebAPI.Repositories.Interfaces;
@@ -10,10 +12,12 @@ namespace WebAPI.Controllers
     public class EmployeeController : ControllerBase
     {
         private readonly ICrudRepository<Employee> _empRepository;
+        private readonly IWebHostEnvironment _env;
 
-        public EmployeeController(ICrudRepository<Employee> empRepository)
+        public EmployeeController(ICrudRepository<Employee> empRepository, IWebHostEnvironment env)
         {
             _empRepository = empRepository;
+            _env = env;
         }
 
         [HttpGet]
@@ -61,6 +65,30 @@ namespace WebAPI.Controllers
             return success
                 ? new JsonResult("Delete successful")
                 : new JsonResult("Delete was not successful");
+        }
+        
+        [Route("SaveFile")]
+        [HttpPost]
+        public JsonResult SaveFile()
+        {
+            try
+            {
+                var httpRequest = Request.Form;
+                var postedFile = httpRequest.Files[0];
+                var filename = postedFile.FileName;
+                var physicalPath = _env.ContentRootPath + "/Photos/" + filename;
+
+                using(var stream = new FileStream(physicalPath, FileMode.Create))
+                {
+                    postedFile.CopyTo(stream);
+                }
+
+                return new JsonResult(filename);
+            }
+            catch (Exception)
+            {
+                return new JsonResult("anonymous.png");
+            }
         }
     }
 }
