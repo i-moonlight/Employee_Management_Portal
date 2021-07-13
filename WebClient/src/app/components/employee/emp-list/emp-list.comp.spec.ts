@@ -95,6 +95,11 @@ describe('EmployeeListComponent', () => {
     expect(spy).toHaveBeenCalled();
   });
   
+  it('should set component activate value when edit employee', () => {
+    component.editEmployee(mock);
+    expect(component.activateAddEditEmpComp).toBeTrue();
+  });
+
   it('should call confirm window when show confirm', () => {
     const spy = spyOn(window, 'confirm');
     component.showConfirmDeleteEmployee(mock);
