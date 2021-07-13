@@ -105,6 +105,11 @@ describe('EmployeeListComponent', () => {
     expect(component.employee).toEqual(mock);
   });
 
+  it('should set modal title value as `Edit Employee` when edit employee', () => {
+    component.editEmployee(mock);
+    expect(component.modalTitle).toEqual('Edit Employee');
+  });
+
   it('should call confirm window when show confirm', () => {
     const spy = spyOn(window, 'confirm');
     component.showConfirmDeleteEmployee(mock);
