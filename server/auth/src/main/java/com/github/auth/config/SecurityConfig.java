@@ -2,6 +2,7 @@ package com.github.auth.config;
 
 import com.github.auth.config.props.EmailProperties;
 import com.github.auth.domain.account.service.RepositoryUserDetailsService;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
@@ -28,6 +29,7 @@ import java.util.Properties;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@OpenAPIDefinition
 public class SecurityConfig {
     private final SecurityAuthFilter securityAuthFilter;
     private final EmailProperties emailProperties;
@@ -58,6 +60,7 @@ public class SecurityConfig {
                         "/api/auth/signin",
                         "/api/auth/signup",
                         "/api/auth/token",
+                        "/api/auth/refresh",
                         "/api/auth/signout/**",
                         "/api/auth/forgot-password/**",
                         "/api/auth/reset-password/**")

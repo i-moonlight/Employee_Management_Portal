@@ -12,7 +12,7 @@ public class TokenDao implements TokenRepository<String, String> {
     private final RedisTemplate<String, Object> template;
 
     /**
-     * Работа с данными строкового типа Redis
+     * Working with Redis String Data
      */
     @Override
     public void saveToken(@NotNull String key, String value) {

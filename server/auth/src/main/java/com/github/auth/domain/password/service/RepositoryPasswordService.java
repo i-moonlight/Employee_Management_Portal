@@ -84,7 +84,7 @@ public class RepositoryPasswordService implements PasswordService {
 
         UserDetails userDetails = new AuthUserDetails(user);
         String accessToken = jwtTokenService.generateToken(userDetails);
-        String refreshToken = jwtTokenService.generateRefreshToken(userDetails);
+        String refreshToken = jwtTokenService.generateToken(userDetails);
         tokenRepository.saveToken(userDetails.getUsername(), refreshToken);
         tokenRepository.deleteToken(resetPasswordToken);
 

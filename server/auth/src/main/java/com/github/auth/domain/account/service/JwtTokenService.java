@@ -1,7 +1,6 @@
 package com.github.auth.domain.account.service;
 
 import com.github.auth.domain.account.props.JwtProperties;
-import com.github.auth.domain.model.User;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -13,8 +12,6 @@ import org.springframework.stereotype.Service;
 import javax.crypto.SecretKey;
 import java.security.Key;
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.HashMap;
@@ -55,52 +52,19 @@ public class JwtTokenService {
         return false;
     }
 
-    public Claims getAccessClaims(@NonNull String refreshToken) {
-        return getClaims(refreshToken, jwtSecret);
-    }
-
     public Claims getRefreshClaims(@NonNull String refreshToken) {
         return getClaims(refreshToken, jwtSecret);
     }
 
     private Claims getClaims(@NonNull String refreshToken, @NonNull Key secret) {
-        return Jwts.parserBuilder()
-                .setSigningKey(secret)
-                .build()
-                .parseClaimsJws(refreshToken)
-                .getBody();
-    }
-
-    public String generateAccessToken(@NonNull User user) {
-        final LocalDateTime now = LocalDateTime.now();
-        final Instant accessExpirationInstant = now
-                .plusMinutes(5)
-                .atZone(ZoneId.systemDefault())
-                .toInstant();
-        final Date accessExpiration = Date
-                .from(accessExpirationInstant);
-        return Jwts.builder()
-                .setSubject(user.getUsername())
-                .setExpiration(accessExpiration)
-                .signWith(jwtSecret)
-                .claim("roles", user.getRole())
-                .claim("firstName", user.getUsername())
-                .compact();
+        return Jwts.parserBuilder().setSigningKey(secret).build().parseClaimsJws(refreshToken).getBody();
     }
 
     public String generateToken(UserDetails userDetails) {
-        return generateToken(new HashMap<>(), userDetails);
+        return buildToken(new HashMap<>(), userDetails, jwtExpiration.getExpireAccessToken());
     }
 
-    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
-        return buildToken(extraClaims, userDetails, jwtExpiration.getExpireAccessToken());
-    }
-
-    public String generateRefreshToken(UserDetails userDetails) {
-        return buildToken(new HashMap<>(), userDetails, jwtExpiration.getExpireRefreshToken());
-    }
-
-    private String buildToken(Map<String, Object> extraClaims, @NonNull UserDetails userDetails, long expiration) {
+    public String buildToken(Map<String, Object> extraClaims, @NonNull UserDetails userDetails, long expiration) {
         Instant validity = Instant.now()
                 .plus(expiration, ChronoUnit.MINUTES);
         return Jwts.builder()
@@ -136,11 +100,7 @@ public class JwtTokenService {
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(getSignInKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+        return Jwts.parserBuilder().setSigningKey(getSignInKey()).build().parseClaimsJws(token).getBody();
     }
 
     private @NonNull Key getSignInKey() {

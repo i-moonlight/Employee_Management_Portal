@@ -8,5 +8,6 @@ public interface AccountService {
     AuthResponse login(LoginRequest request);
     AuthResponse register(AccountRequest request);
     AuthResponse getAccessToken(String refreshToken);
+    AuthResponse getRefreshToken(String refreshToken);
     void revokeToken(String userid);
 }

@@ -22,16 +22,15 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.*;
 
 @Service
 @RequiredArgsConstructor
 public class RepositoryAccountService implements AccountService {
-    private final JwtTokenService jwtTokenService;
     private final PasswordEncoder passwordEncoder;
     private final TokenRepository<String, String> tokenRepository;
     private final UserRepository userRepository;
+    private final JwtTokenService jwtTokenService;
 
     public AuthResponse login(@NonNull LoginRequest request) {
         // Auth user check by username
@@ -47,7 +46,7 @@ public class RepositoryAccountService implements AccountService {
 
         UserDetails userDetails = new AuthUserDetails(authUser.get());
         String accessToken = jwtTokenService.generateToken(userDetails);
-        String refreshToken = jwtTokenService.generateRefreshToken(userDetails);
+        String refreshToken = jwtTokenService.generateToken(userDetails);
         tokenRepository.saveToken(userDetails.getUsername(), refreshToken);
 
         UserInfoObject userInfo = UserInfoObject.builder()
@@ -93,7 +92,7 @@ public class RepositoryAccountService implements AccountService {
 
         UserDetails userDetails = new AuthUserDetails(user);
         String accessToken = jwtTokenService.generateToken(userDetails);
-        String refreshToken = jwtTokenService.generateRefreshToken(userDetails);
+        String refreshToken = jwtTokenService.generateToken(userDetails);
         tokenRepository.saveToken(userDetails.getUsername(), refreshToken);
 
         UserInfoObject userInfo = UserInfoObject.builder()
@@ -116,27 +115,49 @@ public class RepositoryAccountService implements AccountService {
     @SneakyThrows
     public AuthResponse getAccessToken(String refreshToken) {
         if (jwtTokenService.validateRefreshToken(refreshToken)) {
-            final Claims claims = jwtTokenService.getRefreshClaims(refreshToken);
-            final String login = claims.getSubject();
-            final String saveRefreshToken = tokenRepository.getToken(login);
+            Claims claims = jwtTokenService.getRefreshClaims(refreshToken);
+            String login = claims.getSubject();
+            String saveRefreshToken = tokenRepository.getToken(login);
 
-            // Refresh token check by compare
             if (saveRefreshToken != null && saveRefreshToken.equals(refreshToken)) {
-                final User user;
-                user = userRepository.findUserByName(login).orElseThrow(() -> new AuthException("User not found"));
-                final String accessToken = jwtTokenService.generateAccessToken(user);
+                User authUser = userRepository.findUserByName(login)
+                        .orElseThrow(() -> new AuthException("User not found"));
+                UserDetails userDetails = new AuthUserDetails(authUser);
+                String newAccessToken = jwtTokenService.generateToken(userDetails);
 
-                return AuthResponse.builder()
-                        .status(OK.value())
+                return AuthResponse.builder().status(OK.value())
                         .message("accessToken")
-                        .accessToken(accessToken)
-                        //.refreshToken(refreshToken)
-                        //.userInfoObject(null)
-                        .build();
+                        .accessToken(newAccessToken).build();
             }
         }
 
         return new AuthResponse(BAD_REQUEST.value(), "Refresh token is not valid");
+    }
+
+
+    @SneakyThrows
+    public AuthResponse getRefreshToken(@NonNull String refreshToken) {
+        if (jwtTokenService.validateRefreshToken(refreshToken)) {
+            Claims claims = jwtTokenService.getRefreshClaims(refreshToken);
+            String username = claims.getSubject();
+            String saveRefreshToken = tokenRepository.getToken(username);
+
+            if (saveRefreshToken != null && saveRefreshToken.equals(refreshToken)) {
+                User authUser = userRepository.findUserByName(username)
+                        .orElseThrow(() -> new AuthException("User is not found"));
+                UserDetails userDetails = new AuthUserDetails(authUser);
+                String newAccessToken = jwtTokenService.generateToken(userDetails);
+                final String newRefreshToken = jwtTokenService.generateToken(userDetails);
+                tokenRepository.saveToken(userDetails.getUsername(), refreshToken);
+
+                return AuthResponse.builder().status(OK.value())
+                        .message("get new tokens")
+                        .accessToken(newAccessToken)
+                        .refreshToken(newRefreshToken)
+                        .build();
+            }
+        }
+        return new AuthResponse(FORBIDDEN.value(), "Invalid JWT token. You need to register!");
     }
 
     @Override

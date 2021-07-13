@@ -2,8 +2,9 @@ package com.github.auth.controller;
 
 import com.github.auth.domain.account.dto.AccountRequest;
 import com.github.auth.domain.account.dto.AuthResponse;
+import com.github.auth.domain.account.dto.JwtRequest;
 import com.github.auth.domain.account.dto.LoginRequest;
-import com.github.auth.domain.account.dto.RefreshJwtRequest;
+import com.github.auth.domain.exeption.response.ValidationErrorResponse;
 import com.github.auth.domain.password.dto.EmailMessage;
 import com.github.auth.domain.password.dto.PasswordResetRequest;
 import com.github.auth.domain.service.AccountService;
@@ -15,7 +16,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -78,9 +78,50 @@ public class AuthController {
                     @Content(mediaType = "application/json", schema =
                     @Schema()))
             })
-    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/token")
-    public AuthResponse getNewAccessToken(@RequestBody RefreshJwtRequest request) {
+    public AuthResponse getNewAccessToken(@Validated @RequestBody JwtRequest request) {
         return accountService.getAccessToken(request.getRefreshToken());
+    }
+
+    @Operation(
+            summary = "Get new access and refresh tokens",
+            description = "The endpoint accepts a RefreshJwtRequest with a single refreshToken field and returns a JwtResponse with new tokens.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Request completed successfully.", content =
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = AuthResponse.class))),
+
+                    @ApiResponse(responseCode = "400", description = "Invalid client request format.", content =
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = ValidationErrorResponse.class), examples =
+                    @ExampleObject(
+                            //name = "review", summary = "External review example",
+                            //description = "This example exemplifies the content on our site.",
+                            //externalValue = "http://foo.bar/examples/review-example.json",
+                            value = "{" +
+                                    "\"status\":400," +
+                                    "\"message\":\"Validation failed\"," +
+                                    "\"violations\":[{\"fieldName\":\"refreshToken\"," +
+                                    "\"message\":\"Refresh token can't be blank\"}]}"
+                    ))),
+
+                    @ApiResponse(responseCode = "403", description = "Using the token after the expiration date is prohibited.", content =
+                    @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = AuthResponse.class), examples =
+                    @ExampleObject(value = "{" +
+                            "\"status\":403," +
+                            "\"message\":\"Invalid JWT token.You need to register!\"," +
+                            "\"accessToken\":\"null\"," +
+                            "\"refreshToken\":\"null\"," +
+                            "\"userInfoObject\":\"null\"}"
+                    ))),
+
+                    @ApiResponse(responseCode = "500", description = "Server error.", content =
+                    @Content(mediaType = "application/json", schema =
+                    @Schema()))
+            })
+    @GetMapping("/refresh")
+    public AuthResponse getNewRefreshToken(@Validated @RequestBody JwtRequest request) {
+        return accountService.getRefreshToken(request.getRefreshToken());
     }
 }
