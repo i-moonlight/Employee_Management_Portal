@@ -116,6 +116,12 @@ describe('EmployeeListComponent', () => {
     expect(spy).toHaveBeenCalled();
   });
 
+  it('should call delete employee method when positive result confirm', () => {
+   const spy = spyOn(component, 'deleteEmployee');
+    component.showConfirmDeleteEmployee(mock);
+    expect(spy).toHaveBeenCalledWith(mock);
+  });
+
   it('should call shared service when delete employee', () => {
     const spy = spyOn(service, 'deleteEmployeeFromDB').and.returnValue(of('Delete successful'));
     component.deleteEmployee(mock);
