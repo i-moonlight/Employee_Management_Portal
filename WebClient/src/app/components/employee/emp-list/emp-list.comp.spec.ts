@@ -4,7 +4,7 @@ import { SharedService } from '../../../services/shared/shared.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { IEmployee } from '../emp.comp';
 import { By } from '@angular/platform-browser';
 
@@ -126,5 +126,12 @@ describe('EmployeeListComponent', () => {
     const spy = spyOn(service, 'deleteEmployeeFromDB').and.returnValue(of('Delete successful'));
     component.deleteEmployee(mock);
     expect(spy.calls.any()).toBeTruthy();
+  });
+
+  it('should call error console when delete employee', () => {
+    const spy = spyOn(console, 'error');
+    spyOn(service, 'deleteEmployeeFromDB').and.returnValue(throwError('Delete was not successful'));
+    component.deleteEmployee(mock);
+    expect(spy).toHaveBeenCalledWith('Delete was not successful');
   });
 });
