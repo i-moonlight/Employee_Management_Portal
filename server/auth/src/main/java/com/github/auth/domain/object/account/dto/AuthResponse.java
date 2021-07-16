@@ -1,9 +1,10 @@
-package com.github.auth.domain.account.dto;
+package com.github.auth.domain.object.account.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.http.HttpStatus;
 
 @AllArgsConstructor
 @Schema(description = "Response for create account")
@@ -11,7 +12,7 @@ import lombok.Data;
 @Data
 public class AuthResponse {
     @Schema(description = "code status", example = "200")
-    private int status;
+    private HttpStatus status;
 
     @Schema(description = "message", example = "message")
     private String message;
@@ -26,7 +27,7 @@ public class AuthResponse {
 
     private UserInfoObject userInfoObject;
 
-    public AuthResponse(int status, String message) {
+    public AuthResponse(HttpStatus status, String message) {
         this.status = status;
         this.message = message;
     }

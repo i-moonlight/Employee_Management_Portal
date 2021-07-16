@@ -1,4 +1,4 @@
-package com.github.auth.domain.account.dto;
+package com.github.auth.domain.object.account.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
@@ -28,7 +28,7 @@ public class AccountRequest {
     @Size(min = 3, max = 30, message = "Username should be between 3 and 30 characters")
     private String username;
 
-    @Schema(description = "email", example = "jonnydeep@gmail.com")
+    @Schema(description = "email", example = "username@gmail.com")
     @NotBlank(message = "Email should not be empty")
     @Email(message = "Email is not valid",
             regexp = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}",

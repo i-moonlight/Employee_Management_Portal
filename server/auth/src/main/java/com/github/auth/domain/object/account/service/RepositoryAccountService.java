@@ -1,20 +1,18 @@
-package com.github.auth.domain.account.service;
+package com.github.auth.domain.object.account.service;
 
-import com.github.auth.domain.account.dto.AccountRequest;
-import com.github.auth.domain.account.dto.AuthResponse;
-import com.github.auth.domain.account.dto.LoginRequest;
-import com.github.auth.domain.account.dto.UserInfoObject;
 import com.github.auth.domain.model.AuthUserDetails;
 import com.github.auth.domain.model.Role;
 import com.github.auth.domain.model.User;
+import com.github.auth.domain.object.account.dto.AccountRequest;
+import com.github.auth.domain.object.account.dto.AuthResponse;
+import com.github.auth.domain.object.account.dto.LoginRequest;
+import com.github.auth.domain.object.account.dto.UserInfoObject;
+import com.github.auth.domain.object.jwt.service.JwtTokenService;
 import com.github.auth.domain.repository.TokenRepository;
 import com.github.auth.domain.repository.UserRepository;
 import com.github.auth.domain.service.AccountService;
-import io.jsonwebtoken.Claims;
-import jakarta.security.auth.message.AuthException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -36,12 +34,12 @@ public class RepositoryAccountService implements AccountService {
         // Auth user check by username
         Optional<User> authUser = userRepository.findUserByName(request.getUsername());
         if (authUser.isEmpty())
-            return new AuthResponse(BAD_REQUEST.value(), "User " + request.getUsername() + " doesn't exist");
+            return new AuthResponse(OK, "User " + request.getUsername() + " doesn't exist");
 
         // Auth password check
         boolean passChecker = passwordEncoder.matches(request.getPassword(), authUser.get().getPassword());
         if (!passChecker) {
-            return new AuthResponse(BAD_REQUEST.value(), "Incorrect password");
+            return new AuthResponse(BAD_REQUEST, "Incorrect password");
         }
 
         UserDetails userDetails = new AuthUserDetails(authUser.get());
@@ -58,8 +56,8 @@ public class RepositoryAccountService implements AccountService {
                 .build();
 
         return AuthResponse.builder()
-                .status(OK.value())
-                .message("Login successful")
+                .status(OK)
+                .message("Login successfully")
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .userInfoObject(userInfo)
@@ -70,12 +68,12 @@ public class RepositoryAccountService implements AccountService {
         // Auth user check by username
         Optional<User> authUser = userRepository.findUserByName(request.getUsername());
         if (authUser.isPresent()) {
-            return new AuthResponse(BAD_REQUEST.value(), "User " + request.getUsername() + " already exists");
+            return new AuthResponse(BAD_REQUEST, "User " + request.getUsername() + " already exists");
         }
 
         // Auth user password check by compare
         if (!request.getPassword().equals(request.getPasswordConfirm())) {
-            return new AuthResponse(BAD_REQUEST.value(), "Password and password confirmation do not match");
+            return new AuthResponse(BAD_REQUEST, "Password and password confirmation do not match");
         }
 
         UUID uuid = UUID.randomUUID();
@@ -104,68 +102,10 @@ public class RepositoryAccountService implements AccountService {
                 .build();
 
         return AuthResponse.builder()
-                .status(OK.value())
-                .message("Registration successful")
+                .status(OK)
+                .message("Registration successfully")
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
-                .userInfoObject(userInfo)
-                .build();
-    }
-
-    @SneakyThrows
-    public AuthResponse getAccessToken(String refreshToken) {
-        if (jwtTokenService.validateRefreshToken(refreshToken)) {
-            Claims claims = jwtTokenService.getRefreshClaims(refreshToken);
-            String login = claims.getSubject();
-            String saveRefreshToken = tokenRepository.getToken(login);
-
-            if (saveRefreshToken != null && saveRefreshToken.equals(refreshToken)) {
-                User authUser = userRepository.findUserByName(login)
-                        .orElseThrow(() -> new AuthException("User not found"));
-                UserDetails userDetails = new AuthUserDetails(authUser);
-                String newAccessToken = jwtTokenService.generateToken(userDetails);
-
-                return AuthResponse.builder().status(OK.value())
-                        .message("accessToken")
-                        .accessToken(newAccessToken).build();
-            }
-        }
-
-        return new AuthResponse(BAD_REQUEST.value(), "Refresh token is not valid");
-    }
-
-
-    @SneakyThrows
-    public AuthResponse getRefreshToken(@NonNull String refreshToken) {
-        if (jwtTokenService.validateRefreshToken(refreshToken)) {
-            Claims claims = jwtTokenService.getRefreshClaims(refreshToken);
-            String username = claims.getSubject();
-            String saveRefreshToken = tokenRepository.getToken(username);
-
-            if (saveRefreshToken != null && saveRefreshToken.equals(refreshToken)) {
-                User authUser = userRepository.findUserByName(username)
-                        .orElseThrow(() -> new AuthException("User is not found"));
-                UserDetails userDetails = new AuthUserDetails(authUser);
-                String newAccessToken = jwtTokenService.generateToken(userDetails);
-                final String newRefreshToken = jwtTokenService.generateToken(userDetails);
-                tokenRepository.saveToken(userDetails.getUsername(), refreshToken);
-
-                return AuthResponse.builder().status(OK.value())
-                        .message("get new tokens")
-                        .accessToken(newAccessToken)
-                        .refreshToken(newRefreshToken)
-                        .build();
-            }
-        }
-        return new AuthResponse(FORBIDDEN.value(), "Invalid JWT token. You need to register!");
-    }
-
-    @Override
-    public void revokeToken(String userid) {
-        Optional<User> authUser = userRepository.findUserById(UUID.fromString(userid));
-        if (authUser.isPresent()) {
-            UserDetails userDetails = new AuthUserDetails(authUser.get());
-            tokenRepository.deleteToken(userDetails.getUsername());
-        }
+                .userInfoObject(userInfo).build();
     }
 }

@@ -1,13 +1,13 @@
 package com.github.auth.config;
 
-import com.github.auth.domain.account.service.JwtTokenService;
-import com.github.auth.domain.account.service.RepositoryUserDetailsService;
+import com.github.auth.domain.object.account.service.RepositoryUserDetailsService;
+import com.github.auth.domain.object.jwt.service.JwtTokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.jetbrains.annotations.NotNull;
+import lombok.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,7 +24,7 @@ public class SecurityAuthFilter extends OncePerRequestFilter {
     private final RepositoryUserDetailsService userDetailsService;
 
     @Override
-    protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain filterChain)
+    protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain)
             throws ServletException, IOException {
         String authHeader = request.getHeader("Authorization");
         String token = null;

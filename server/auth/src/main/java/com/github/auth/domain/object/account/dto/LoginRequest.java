@@ -1,4 +1,4 @@
-package com.github.auth.domain.account.dto;
+package com.github.auth.domain.object.account.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 @Schema(description = "Request on user login")
 public class LoginRequest {
-    @Schema(description = "username", example = "jonnydeep")
+    @Schema(description = "username", example = "username")
     @NotBlank(message = "Username should not be empty")
     @Size(min = 3, max = 30, message = "Username should be between 3 and 30 characters")
     private String username;

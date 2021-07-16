@@ -1,8 +1,8 @@
 package com.github.auth.domain.service;
 
-import com.github.auth.domain.account.dto.AuthResponse;
-import com.github.auth.domain.password.dto.EmailMessage;
-import com.github.auth.domain.password.dto.PasswordResetRequest;
+import com.github.auth.domain.object.account.dto.AuthResponse;
+import com.github.auth.domain.object.password.dto.EmailMessage;
+import com.github.auth.domain.object.password.dto.PasswordResetRequest;
 
 public interface PasswordService {
     AuthResponse sendResetPasswordLink(EmailMessage email);

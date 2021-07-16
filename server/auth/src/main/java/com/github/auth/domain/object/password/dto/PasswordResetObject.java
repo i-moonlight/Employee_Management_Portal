@@ -1,4 +1,4 @@
-package com.github.auth.domain.password.dto;
+package com.github.auth.domain.object.password.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.github.auth.domain.model.User;
@@ -12,7 +12,6 @@ import java.util.Date;
 @NoArgsConstructor
 @Setter
 public class PasswordResetObject {
-    private Long id;
     private String token;
     private User user;
     private Date expiry;
@@ -21,8 +20,7 @@ public class PasswordResetObject {
     public String from;
 
     @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-    public PasswordResetObject(Long id, String token, User user, Date expiry, String from) {
-        this.id = id;
+    public PasswordResetObject(String token, User user, Date expiry, String from) {
         this.token = token;
         this.user = user;
         this.expiry = expiry;

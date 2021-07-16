@@ -1,4 +1,4 @@
-package com.github.auth.domain.account.service;
+package com.github.auth.domain.object.account.service;
 
 import com.github.auth.domain.model.AuthUserDetails;
 import com.github.auth.domain.model.User;

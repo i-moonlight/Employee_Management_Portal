@@ -1,15 +1,15 @@
-package com.github.auth.domain.password.service;
+package com.github.auth.domain.object.password.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.auth.domain.account.dto.AuthResponse;
-import com.github.auth.domain.account.dto.UserInfoObject;
-import com.github.auth.domain.account.service.JwtTokenService;
 import com.github.auth.domain.model.AuthUserDetails;
 import com.github.auth.domain.model.User;
-import com.github.auth.domain.password.dto.EmailMessage;
-import com.github.auth.domain.password.dto.PasswordResetObject;
-import com.github.auth.domain.password.dto.PasswordResetRequest;
+import com.github.auth.domain.object.account.dto.AuthResponse;
+import com.github.auth.domain.object.account.dto.UserInfoObject;
+import com.github.auth.domain.object.jwt.service.JwtTokenService;
+import com.github.auth.domain.object.password.dto.EmailMessage;
+import com.github.auth.domain.object.password.dto.PasswordResetObject;
+import com.github.auth.domain.object.password.dto.PasswordResetRequest;
 import com.github.auth.domain.repository.TokenRepository;
 import com.github.auth.domain.repository.UserRepository;
 import com.github.auth.domain.service.EmailService;
@@ -24,8 +24,7 @@ import java.util.Calendar;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.*;
 
 @Service
 @RequiredArgsConstructor
@@ -41,10 +40,10 @@ public class RepositoryPasswordService implements PasswordService {
     public AuthResponse sendResetPasswordLink(@NonNull EmailMessage email) {
         Optional<User> user = userRepository.findUserByEmail(email.getTo());
         if (user.isEmpty()) {
-            return new AuthResponse(BAD_REQUEST.value(), "User with email " + email + " not found");
+            return new AuthResponse(BAD_REQUEST, "User with email " + email + " not found");
         }
         sendEmailToken(user.get(), "change-password");
-        return new AuthResponse(OK.value(), "Please check your email for password reset");
+        return new AuthResponse(OK, "Please check your email for password reset");
     }
 
     public void sendEmailToken(@NonNull User user, String process) {
@@ -72,11 +71,11 @@ public class RepositoryPasswordService implements PasswordService {
         User user = (User) tokenVerificationResult[1];
 
         if (!result.equalsIgnoreCase("valid")) {
-            return new AuthResponse(BAD_REQUEST.value(), "Invalid token password reset token");
+            return new AuthResponse(BAD_REQUEST, "Invalid token password reset token");
         }
 
         if (!request.getNewPassword().equals(request.getPasswordConfirm())) {
-            return new AuthResponse(BAD_REQUEST.value(), "Password and password confirmation do not match");
+            return new AuthResponse(BAD_REQUEST, "Password and password confirmation do not match");
         }
 
         user.setPassword(passwordEncoder.encode(request.getNewPassword()));
@@ -97,7 +96,7 @@ public class RepositoryPasswordService implements PasswordService {
                 .build();
 
         return AuthResponse.builder()
-                .status(OK.value())
+                .status(OK)
                 .message("Password changed successfully")
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)

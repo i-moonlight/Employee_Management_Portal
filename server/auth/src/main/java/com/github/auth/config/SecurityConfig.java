@@ -1,7 +1,7 @@
 package com.github.auth.config;
 
 import com.github.auth.config.props.EmailProperties;
-import com.github.auth.domain.account.service.RepositoryUserDetailsService;
+import com.github.auth.domain.object.account.service.RepositoryUserDetailsService;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;

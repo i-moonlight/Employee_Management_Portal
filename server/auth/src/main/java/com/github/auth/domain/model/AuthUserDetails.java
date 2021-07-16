@@ -1,6 +1,6 @@
 package com.github.auth.domain.model;
 
-import org.jetbrains.annotations.NotNull;
+import lombok.NonNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,7 +13,7 @@ public class AuthUserDetails implements UserDetails {
     private final String password;
     private final List<GrantedAuthority> authorities;
 
-    public AuthUserDetails(@NotNull User user) {
+    public AuthUserDetails(@NonNull User user) {
         name = user.getUsername();
         password = user.getPassword();
         authorities = List.of(new SimpleGrantedAuthority(user.getRole().name()));
