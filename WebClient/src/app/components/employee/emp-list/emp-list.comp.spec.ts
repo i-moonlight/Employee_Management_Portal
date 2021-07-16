@@ -134,4 +134,11 @@ describe('EmployeeListComponent', () => {
     component.deleteEmployee(mock);
     expect(spy).toHaveBeenCalledWith('Delete was not successful');
   });
+
+  it('should call employee list filter method when input data', () => {
+    const spy = spyOn(component, 'toFilterEmployeeList');
+    const btn = fixture.debugElement.query(By.css('.form-control'));
+    btn.triggerEventHandler('keyup', null);
+    expect(spy).toHaveBeenCalled();
+  });
 });
