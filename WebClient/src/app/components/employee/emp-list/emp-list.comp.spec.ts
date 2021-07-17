@@ -146,4 +146,10 @@ describe('EmployeeListComponent', () => {
     component.toFilterEmployeeList();
     expect(component.employeeList).toEqual(mockList);
   });
+
+  it('should call filter method when filter employee list', () => {
+    const spy = spyOn(component.employeeListWithoutFilter, 'filter');
+    component.toFilterEmployeeList();
+    expect(spy).toHaveBeenCalled();
+  });
 });
