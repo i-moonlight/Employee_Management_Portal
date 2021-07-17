@@ -21,6 +21,11 @@ namespace WebAPI.Repositories.Implementations
             return _context.Departments.OrderBy(x => x.DepartmentId);
         }
 
+        public IEnumerable ReadAll()
+        {
+            throw new NotImplementedException();
+        }
+        
         public Department Create(Department model)
         {
             _context.Departments.Add(model);
