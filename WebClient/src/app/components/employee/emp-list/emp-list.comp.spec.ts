@@ -141,4 +141,9 @@ describe('EmployeeListComponent', () => {
     btn.triggerEventHandler('keyup', null);
     expect(spy).toHaveBeenCalled();
   });
+
+  it('should set employee list value when filter employee list', () => {
+    component.toFilterEmployeeList();
+    expect(component.employeeList).toEqual(mockList);
+  });
 });
