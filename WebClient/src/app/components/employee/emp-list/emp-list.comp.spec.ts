@@ -152,4 +152,11 @@ describe('EmployeeListComponent', () => {
     component.toFilterEmployeeList();
     expect(spy).toHaveBeenCalled();
   });
+
+  it('should call employee list sort method when click on button', () => {
+    const spy = spyOn(component, 'toSortEmployeeList');
+    const btn = fixture.debugElement.query(By.css('.sort'));
+    btn.triggerEventHandler('click', null);
+    expect(spy).toHaveBeenCalled();
+  });
 });
