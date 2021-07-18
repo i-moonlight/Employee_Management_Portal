@@ -159,4 +159,9 @@ describe('EmployeeListComponent', () => {
     btn.triggerEventHandler('click', null);
     expect(spy).toHaveBeenCalled();
   });
+
+  it('should set employee list value when sort employee list', () => {
+    component.toSortEmployeeList('test', true)
+    expect(component.employeeList).toEqual(mockList);
+  });
 });
