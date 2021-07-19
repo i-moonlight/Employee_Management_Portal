@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json.Serialization;
 using WebAPI.DataBase;
 using WebAPI.Models;
 using WebAPI.Repositories.Implementations;
@@ -15,18 +16,24 @@ namespace WebAPI
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-
         private IConfiguration Configuration { get; }
+        
+        public Startup(IConfiguration config) => Configuration = config;
 
         public void ConfigureServices(IServiceCollection services)
         {
+            // JSON Serializer.
+            services
+                .AddControllersWithViews()
+                .AddNewtonsoftJson(opts => opts
+                    .SerializerSettings
+                    .ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
+                .AddNewtonsoftJson(opts => opts
+                    .SerializerSettings
+                    .ContractResolver = new DefaultContractResolver());
+            
             // Enable application context.
-            services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<AppDbContext>(opts => opts.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             // Dependency injection.
             services.AddScoped<ICrudRepository<Employee>, EmployeeRepository>();
@@ -53,6 +60,14 @@ namespace WebAPI
             app.UseRouting();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+
+            // Enable CORS.
+            app.UseCors(opts => opts
+                .WithOrigins("http://localhost:4200")
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+            
+            app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
     }
 }
