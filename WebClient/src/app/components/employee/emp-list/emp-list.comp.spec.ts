@@ -164,4 +164,10 @@ describe('EmployeeListComponent', () => {
     component.toSortEmployeeList('test', true)
     expect(component.employeeList).toEqual(mockList);
   });
+
+  it('should call sort method when sort employee list', () => {
+    const spy = spyOn(component.employeeList, 'sort');
+    component.toSortEmployeeList(' ', true);
+    expect(spy).toHaveBeenCalled();
+  });
 });
