@@ -87,21 +87,36 @@ namespace WebAPI.Tests
             Assert.AreEqual(new JsonResult(_model).GetType(), result.GetType(), "Return type mismatch");
             Assert.AreEqual(typeof(string), result.Value.GetType(), "Return value type mismatch");
         }
-        
+
         [Test]
-        public void SaveFile_ShouldSaveFile()
+        public void UploadPhoto_Should_Returns_JsonResult_String_Value()
         {
             // Act
-            JsonResult result = _controller.SaveFile();
+            JsonResult result = _controller.UploadPhoto();
 
             // Assert
             Assert.NotNull(result, "Result is null");
             Assert.AreEqual(new JsonResult(_model).GetType(), result.GetType(), "Return type mismatch");
             Assert.AreEqual(typeof(string), result.Value.GetType(), "Return value type mismatch");
         }
-        
+
         [Test]
-        public void GetAllDepartmentNames_ShouldReturnValueTypeNotNull()
+        public void UpdatePhoto_Should_Returns_JsonResult_String_Value()
+        {
+            // Arrange   
+            _mockEmpRepo.Setup(x => x.GetFileName(_model.EmployeeId)).Returns("PhotoFileName");
+
+            // Act
+            JsonResult result = _controller.UpdatePhoto(_model.EmployeeId);
+
+            // Assert
+            Assert.NotNull(result, "Result is null");
+            Assert.AreEqual(new JsonResult(_model).GetType(), result.GetType(), "Return type mismatch");
+            Assert.AreEqual(typeof(string), result.Value.GetType(), "Return value type mismatch");
+        }
+
+        [Test]
+        public void GetAllDepartmentNames_Should_Returns_ValueType_NotNull()
         {
             // Arrange.   
             _mockEmpRepo.Setup(x => x.ReadAll()).Returns(_fakeCategories);
