@@ -46,5 +46,10 @@ namespace WebAPI.Repositories.Implementations
             _context.Departments.Remove(model ?? throw new InvalidOperationException());
             _context.SaveChanges();
         }
+
+        public string GetFileName(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
