@@ -57,6 +57,7 @@ public class SecurityConfig {
         return http.csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers(
+                        "/api/greet/hello",
                         "/api/auth/signin",
                         "/api/auth/signup",
                         "/api/auth/token",
