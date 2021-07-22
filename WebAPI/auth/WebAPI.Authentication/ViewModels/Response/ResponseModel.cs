@@ -1,4 +1,4 @@
-﻿namespace WebAPI.Authentication.ViewModels
+﻿namespace WebAPI.Authentication.ViewModels.Response
 {
     /// <summary>
     /// Response model.

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WebAPI.Authentication.ViewModels
+namespace WebAPI.Authentication.ViewModels.DTO
 {
     /// <summary>
     /// User data transfer object.

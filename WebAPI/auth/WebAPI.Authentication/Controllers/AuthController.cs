@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using WebAPI.Authentication.ViewModels;
+using WebAPI.Authentication.ViewModels.DTO;
+using WebAPI.Authentication.ViewModels.Request;
+using WebAPI.Authentication.ViewModels.Response;
 
 namespace WebAPI.Authentication.Controllers
 {
@@ -16,10 +18,14 @@ namespace WebAPI.Authentication.Controllers
     public class AuthController : ControllerBase
     {
         private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
 
-        public AuthController(UserManager<User> userManager)
+        public AuthController(
+            UserManager<User> userManager,
+            SignInManager<User> signManager)
         {
             _userManager = userManager;
+            _signInManager = signManager;
         }
 
         /// <summary>
@@ -90,6 +96,42 @@ namespace WebAPI.Authentication.Controllers
 
                 return await Task.FromResult(
                     new ResponseModel(ResponseCode.Ok, "", allUsersDto));
+            }
+            catch (Exception ex)
+            {
+                return await Task.FromResult(
+                    new ResponseModel(ResponseCode.Error, ex.Message, null));
+            }
+        }
+        
+        /// <summary>
+        /// Validate login into App.  
+        /// </summary>
+        /// <param name="viewModel"></param>
+        /// <returns>Response model</returns>
+        // [AllowAnonymous]
+        [HttpPost("Login")]
+        public async Task<object> Login([FromBody] LoginViewModel viewModel)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var result = await _signInManager
+                        .PasswordSignInAsync(viewModel.Email, viewModel.Password, true, false);
+
+                    if (!result.Succeeded)
+                    {
+                        var appUser = await _userManager.FindByEmailAsync(viewModel.Email);
+                        var roles = (await _userManager.GetRolesAsync(appUser)).ToList();
+                        var user = new UserDto(
+                            appUser.FullName, appUser.Email, appUser.UserName, appUser.DateCreated, roles);
+                        return await Task.FromResult(new ResponseModel(ResponseCode.Ok, "", user));
+                    }
+                }
+
+                return await Task.FromResult(
+                    new ResponseModel(ResponseCode.Error, "invalid Email or password", null));
             }
             catch (Exception ex)
             {
