@@ -26,12 +26,15 @@
 <div class="ml-3 bd-highlight">
   <div class="container">
     <img [src]="photoFilePath">
-    <input type="file" class="input" id="file" multiple="multiple" (change)="onFileSelected($event)">
-    <button type="button" class="btn btn-primary but"
-            (click)="uploadPhoto()" *ngIf="emp.EmployeeId==0">Upload
-    </button>
-    <button type="button" class="btn btn-primary but update"
-            (click)="updatePhoto(employeeId)" *ngIf="emp.EmployeeId!=0">Update
-    </button>
+    <input class="input" id="file" type="file" multiple="multiple"
+           (change)="onFileSelected($event)">
   </div>
 </div>
+
+<!-- Upload button -->
+<button class="btn btn-primary" *ngIf="emp.EmployeeId==0" [disabled]="!buttonClicked"
+        (click)="uploadEmployeeData()">ADD</button>
+
+<!-- Update button -->
+<button class="btn btn-primary update" *ngIf="emp.EmployeeId!=0"
+        (click)="updateEmployeeData(emp.EmployeeId)">UPDATE</button>
