@@ -93,6 +93,14 @@ describe('EmployeeModalComponent', () => {
     expect(component.photoFileName).toEqual(mockResponse);
   });
 
+  it('should call warn console when upload photo file', () => {
+    const mockResponse = 'photo file name';
+    const spy = spyOn(console, 'warn');
+    spyOn(service, 'uploadPhotoToStorage').and.returnValue(of(mockResponse));
+    component.uploadEmployeeData();
+    expect(spy).toHaveBeenCalledWith(mockResponse);
+  });
+
   it('should call update employee method when click on update button', () => {
     const spy = spyOn(component, 'updateEmployeeData');
     const btn = fixture.debugElement.query(By.css('.update'));
