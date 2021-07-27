@@ -3,13 +3,11 @@ package com.github.auth.dao;
 import com.github.auth.domain.model.User;
 import com.github.auth.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Repository
 @RequiredArgsConstructor
@@ -43,11 +41,11 @@ public class UserDao implements UserRepository {
         }
     }
 
-    public void updateUserPassword(@NotNull User user) {
+    public void updateUserPassword(User user) {
         template.update("UPDATE users SET password = ? WHERE id = ?", user.getPassword(), user.getId());
     }
 
-    public void saveUser(@NotNull User user) {
+    public void saveUser(User user) {
         template.update("INSERT INTO users (id, firstname, lastname, username, email, password, role)" +
                         " VALUES (?, ?, ?, ?, ?, ?, ?)",
                 user.getId(),
