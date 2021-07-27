@@ -4,7 +4,7 @@ import { SharedService } from '../../../services/shared/shared.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { IEmployee } from '../emp.comp';
 import { By } from '@angular/platform-browser';
 
@@ -97,6 +97,14 @@ describe('EmployeeModalComponent', () => {
     const mockResponse = 'photo file name';
     const spy = spyOn(console, 'warn');
     spyOn(service, 'uploadPhotoToStorage').and.returnValue(of(mockResponse));
+    component.uploadEmployeeData();
+    expect(spy).toHaveBeenCalledWith(mockResponse);
+  });
+
+  it('should call error console when upload photo exception', () => {
+    const mockResponse = 'anonymous.png';
+    const spy = spyOn(console, 'error');
+    spyOn(service, 'uploadPhotoToStorage').and.returnValue(throwError(mockResponse));
     component.uploadEmployeeData();
     expect(spy).toHaveBeenCalledWith(mockResponse);
   });
