@@ -135,4 +135,12 @@ describe('EmployeeModalComponent', () => {
     component.updateEmployeeData(mock.EmployeeId);
     expect(spy).toHaveBeenCalled();
   });
+
+  it('should call update employee method when response value as `anonymous`', () => {
+    const mockResponse = 'anonymous.png';
+    const spy = spyOn(component, 'updateEmployee');
+    spyOn(service, 'updatePhotoToStorage').and.returnValue(of(mockResponse));
+    component.updateEmployeeData(mock.EmployeeId);
+    expect(spy).toHaveBeenCalled();
+  });
 });
