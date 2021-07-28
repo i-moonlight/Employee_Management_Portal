@@ -128,4 +128,11 @@ describe('EmployeeModalComponent', () => {
     component.updateEmployeeData(mock.EmployeeId);
     expect(component.photoFileName).toEqual(mockResponse);
   });
+
+  it('should call update employee method when update photo file', () => {
+    const spy = spyOn(component, 'updateEmployee');
+    spyOn(service, 'updatePhotoToStorage').and.returnValue(of(''));
+    component.updateEmployeeData(mock.EmployeeId);
+    expect(spy).toHaveBeenCalled();
+  });
 });
