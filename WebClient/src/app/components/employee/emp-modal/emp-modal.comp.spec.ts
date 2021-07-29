@@ -143,4 +143,12 @@ describe('EmployeeModalComponent', () => {
     component.updateEmployeeData(mock.EmployeeId);
     expect(spy).toHaveBeenCalled();
   });
+
+  it('should call warn console when update photo file', () => {
+    const mockResponse = 'photo file name';
+    const spy = spyOn(console, 'warn');
+    spyOn(service, 'updatePhotoToStorage').and.returnValue(of(mockResponse));
+    component.updateEmployeeData(mock.EmployeeId);
+    expect(spy).toHaveBeenCalledWith(mockResponse);
+  });
 });
