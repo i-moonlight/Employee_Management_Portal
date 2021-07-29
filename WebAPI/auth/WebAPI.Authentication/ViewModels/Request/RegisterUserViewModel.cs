@@ -1,4 +1,4 @@
-﻿namespace WebAPI.Authentication.ViewModels
+﻿namespace WebAPI.Authentication.ViewModels.Request
 {
     public class RegisterUserViewModel
     {
