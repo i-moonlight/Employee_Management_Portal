@@ -151,4 +151,12 @@ describe('EmployeeModalComponent', () => {
     component.updateEmployeeData(mock.EmployeeId);
     expect(spy).toHaveBeenCalledWith(mockResponse);
   });
+
+  it('should call error console when update photo exception', () => {
+    const mockResponse = 'anonymous.png';
+    const spy = spyOn(console, 'error');
+    spyOn(service, 'updatePhotoToStorage').and.returnValue(throwError(mockResponse));
+    component.updateEmployeeData(mock.EmployeeId);
+    expect(spy).toHaveBeenCalledWith(mockResponse);
+  });
 });
