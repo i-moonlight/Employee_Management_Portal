@@ -29,8 +29,9 @@ describe('SharedService', () => {
     // tslint:disable-next-line:no-shadowed-variable
     (service: SharedService, backend: HttpTestingController) => {
       const mockDepartmentList: Department[] = [];
-      service.getDepartmentListFromDB().subscribe((response: Department[]) =>
-        expect(response).toEqual(mockDepartmentList));
+      service
+        .getDepartmentListFromDB()
+        .subscribe((response: Department[]) => expect(response).toEqual(mockDepartmentList));
       backend.expectOne({
         method: 'GET',
         url: 'http://localhost:8080/department'
@@ -43,8 +44,9 @@ describe('SharedService', () => {
     // tslint:disable-next-line:no-shadowed-variable
     (service: SharedService, backend: HttpTestingController) => {
       const mockResponse = 'Create successful';
-      service.addDepartmentToDB(mockDepartment).subscribe((response: string) =>
-        expect(response).toEqual(mockResponse));
+      service
+        .addDepartmentToDB(mockDepartment)
+        .subscribe((response: string) => expect(response).toEqual(mockResponse));
       backend.expectOne({
         method: 'POST',
         url: 'http://localhost:8080/department'
@@ -57,8 +59,9 @@ describe('SharedService', () => {
     // tslint:disable-next-line:no-shadowed-variable
     (service: SharedService, backend: HttpTestingController) => {
       const mockResponse = 'Update successful';
-      service.updateDepartmentToDB(mockDepartment).subscribe((response: string) =>
-        expect(response).toEqual(mockResponse));
+      service
+        .updateDepartmentToDB(mockDepartment)
+        .subscribe((response: string) => expect(response).toEqual(mockResponse));
       backend.expectOne({
         method: 'PUT',
         url: 'http://localhost:8080/department'
@@ -72,12 +75,14 @@ describe('SharedService', () => {
     (service: SharedService, backend: HttpTestingController) => {
       const mockDepartmentID: number = mockDepartment.DepartmentId;
       const mockResponse = 'Delete successful';
-      service.deleteDepartmentFromDB(mockDepartmentID).subscribe((response: string) =>
-          expect(response).toEqual(mockResponse));
-      backend.expectOne({
-        method: 'DELETE',
-        url: 'http://localhost:8080/department/' + mockDepartmentID
-      })
+      service
+        .deleteDepartmentFromDB(mockDepartmentID)
+        .subscribe((response: string) => expect(response).toEqual(mockResponse));
+      backend
+        .expectOne({
+          method: 'DELETE',
+          url: 'http://localhost:8080/department/' + mockDepartmentID
+        })
         .flush(mockResponse);
     })
   );
@@ -86,13 +91,64 @@ describe('SharedService', () => {
     // tslint:disable-next-line:no-shadowed-variable
     (service: SharedService, backend: HttpTestingController) => {
       const mockEmployeeList: Employee[] = [];
-      service.getEmployeeListFromDB().subscribe((response: Employee[]) =>
-        expect(response).toEqual(mockEmployeeList));
-      backend.expectOne({
-        method: 'GET',
-        url: 'http://localhost:8080/employee'
-      })
+      service
+        .getEmployeeListFromDB()
+        .subscribe((response: Employee[]) => expect(response).toEqual(mockEmployeeList));
+      backend
+        .expectOne({
+          method: 'GET',
+          url: 'http://localhost:8080/employee'
+        })
         .flush(mockEmployeeList);
+    })
+  );
+
+  it('should return response when add employee to database', inject([SharedService, HttpTestingController],
+    // tslint:disable-next-line:no-shadowed-variable
+    (service: SharedService, backend: HttpTestingController) => {
+      const mockResponse = 'Create successful';
+      service
+        .addEmployeeToDB(mockEmployee)
+        .subscribe((response: string) => expect(response).toEqual(mockResponse));
+      backend
+        .expectOne({
+          method: 'POST',
+          url: 'http://localhost:8080/employee'
+        })
+        .flush(mockResponse);
+    })
+  );
+
+  it('should return response when update employee to database', inject([SharedService, HttpTestingController],
+    // tslint:disable-next-line:no-shadowed-variable
+    (service: SharedService, backend: HttpTestingController) => {
+      const mockResponse = 'Update successful';
+      service
+        .updateEmployeeToDB(mockEmployee)
+        .subscribe((response: string) => expect(response).toEqual(mockResponse));
+      backend
+        .expectOne({
+          method: 'PUT',
+          url: 'http://localhost:8080/employee'
+        })
+        .flush(mockResponse);
+    })
+  );
+
+  it('should return response when delete employee to database', inject([SharedService, HttpTestingController],
+    // tslint:disable-next-line:no-shadowed-variable
+    (service: SharedService, backend: HttpTestingController) => {
+      const mockEmployeeID: number = mockEmployee.EmployeeId;
+      const mockResponse = 'Delete successful';
+      service
+        .deleteEmployeeFromDB(mockEmployeeID)
+        .subscribe((response: string) => expect(response).toEqual(mockResponse));
+      backend
+        .expectOne({
+          method: 'DELETE',
+          url: 'http://localhost:8080/employee/' + mockEmployeeID
+        })
+        .flush(mockResponse);
     })
   );
 });
