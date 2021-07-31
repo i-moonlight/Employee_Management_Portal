@@ -26,5 +26,6 @@ namespace WebAPI.Authentication.ViewModels.DTO
         public string UserName { get; set; }
         public DateTime DateCreated { get; set; }
         public List<string> Roles { get; set; }
+        public string Token { get; set; }
     }
 }
