@@ -7,6 +7,7 @@ import { IDepartment } from '../../components/department/dep.comp';
 describe('SharedService', () => {
   let service: SharedService;
   let formData: FormData;
+  let mockDepartment: IDepartment;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -14,6 +15,7 @@ describe('SharedService', () => {
     });
     service = TestBed.inject(SharedService);
     formData = new FormData();
+    mockDepartment = <IDepartment>{};
   });
 
   it('should create shared service', () => {
@@ -30,6 +32,20 @@ describe('SharedService', () => {
         url: 'http://localhost:5000/api/department'
       })
         .flush(mockDepartmentList);
+    })
+  );
+
+  it('should return response when add department to database', inject([SharedService, HttpTestingController],
+    (service: SharedService, backend: HttpTestingController) => {
+      const mockDepartment: IDepartment = <IDepartment>{};
+      const mockResponse: string = 'Create successful';
+      service.addDepartmentToDB(mockDepartment).subscribe((response: string) =>
+        expect(response).toEqual(mockResponse));
+      backend.expectOne({
+        method: 'POST',
+        url: 'http://localhost:5000/api/department'
+      })
+        .flush(mockResponse);
     })
   );
 });
