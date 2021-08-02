@@ -37,12 +37,24 @@ describe('SharedService', () => {
 
   it('should return response when add department to database', inject([SharedService, HttpTestingController],
     (service: SharedService, backend: HttpTestingController) => {
-      const mockDepartment: IDepartment = <IDepartment>{};
       const mockResponse: string = 'Create successful';
       service.addDepartmentToDB(mockDepartment).subscribe((response: string) =>
         expect(response).toEqual(mockResponse));
       backend.expectOne({
         method: 'POST',
+        url: 'http://localhost:5000/api/department'
+      })
+        .flush(mockResponse);
+    })
+  );
+
+  it('should return response when update department to database', inject([SharedService, HttpTestingController],
+    (service: SharedService, backend: HttpTestingController) => {
+      const mockResponse: string = 'Update successful';
+      service.updateDepartmentToDB(mockDepartment).subscribe((response: string) =>
+        expect(response).toEqual(mockResponse));
+      backend.expectOne({
+        method: 'PUT',
         url: 'http://localhost:5000/api/department'
       })
         .flush(mockResponse);
