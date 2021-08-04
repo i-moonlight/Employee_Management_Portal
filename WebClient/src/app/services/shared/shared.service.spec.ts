@@ -3,6 +3,7 @@ import { SharedService } from './shared.service';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { IDepartment } from '../../components/department/dep.comp';
+import { IEmployee } from '../../components/employee/emp.comp';
 
 describe('SharedService', () => {
   let service: SharedService;
@@ -72,6 +73,19 @@ describe('SharedService', () => {
         url: 'http://localhost:5000/api/department/' + mockDepartmentID
       })
         .flush(mockResponse);
+    })
+  );
+
+  it('should return employee list from database', inject([SharedService, HttpTestingController],
+    (service: SharedService, backend: HttpTestingController) => {
+      const mockEmployeeList: IEmployee[] = [];
+      service.getEmployeeListFromDB().subscribe((response: IEmployee[]) =>
+        expect(response).toEqual(mockEmployeeList));
+      backend.expectOne({
+        method: 'GET',
+        url: 'http://localhost:5000/api/employee'
+      })
+        .flush(mockEmployeeList);
     })
   );
 });
