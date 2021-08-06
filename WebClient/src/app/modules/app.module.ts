@@ -12,14 +12,16 @@ import { DepartmentModalComponent} from '../components/department/dep-modal/dep-
 import { SharedService } from '../services/shared/shared.service';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
-import { environment } from "../../environments/environment";
-import { AUTH_API_URL } from "../app-injection-tokens";
-import { JwtModule } from "@auth0/angular-jwt";
-import { ACCESS_TOKEN_KEY } from "../services/authentication/auth.service";
+import { environment } from '../../environments/environment';
+import { AUTH_API_URL } from '../app-injection-tokens';
+import { JwtModule } from '@auth0/angular-jwt';
+import { ACCESS_TOKEN_KEY } from '../services/authentication/auth.service';
+import { AuthComponent } from '../components/authentication/auth.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    AuthComponent,
     EmployeeComponent,
     EmployeeListComponent,
     EmployeeModalComponent,
@@ -39,13 +41,13 @@ import { ACCESS_TOKEN_KEY } from "../services/authentication/auth.service";
     JwtModule.forRoot({
       config: {
         tokenGetter: () => localStorage.getItem(ACCESS_TOKEN_KEY),
-        allowedDomains: ['localhost:5000'],
-        disallowedRoutes: ['localhost:5000/api/auth']
+        allowedDomains: ['localhost:9090'],
+        disallowedRoutes: ['localhost:9090/api/auth']
       }
     })
   ],
 
-  providers: [{provide: AUTH_API_URL, useValue: environment.authApi}, SharedService],
+  providers: [{ provide: AUTH_API_URL, useValue: environment.authApi }, SharedService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
