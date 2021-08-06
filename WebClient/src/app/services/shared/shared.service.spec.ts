@@ -103,4 +103,17 @@ describe('SharedService', () => {
         .flush(mockResponse);
     })
   );
+
+  it('should return response when update employee to database', inject([SharedService, HttpTestingController],
+    (service: SharedService, backend: HttpTestingController) => {
+      const mockResponse: string = 'Update successful';
+      service.updateEmployeeToDB(mockEmployee).subscribe((response: string) =>
+        expect(response).toEqual(mockResponse));
+      backend.expectOne({
+        method: 'PUT',
+        url: 'http://localhost:5000/api/employee'
+      })
+        .flush(mockResponse);
+    })
+  );
 });
