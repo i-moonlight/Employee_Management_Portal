@@ -18,7 +18,7 @@ describe('SharedService', () => {
     service = TestBed.inject(SharedService);
     formData = new FormData();
     mockDepartment = <IDepartment>{};
-    mockEmployee = <IEmployee>{};
+    mockEmployee = <IEmployee>{EmployeeId: 0};
   });
 
   it('should create shared service', () => {
@@ -112,6 +112,20 @@ describe('SharedService', () => {
       backend.expectOne({
         method: 'PUT',
         url: 'http://localhost:5000/api/employee'
+      })
+        .flush(mockResponse);
+    })
+  );
+
+  it('should return response when delete employee to database', inject([SharedService, HttpTestingController],
+    (service: SharedService, backend: HttpTestingController) => {
+      const mockEmployeeID: number = mockEmployee.EmployeeId;
+      const mockResponse: string = 'Delete successful';
+      service.deleteEmployeeFromDB(mockEmployeeID).subscribe((response: string) =>
+        expect(response).toEqual(mockResponse));
+      backend.expectOne({
+        method: 'DELETE',
+        url: 'http://localhost:5000/api/employee/' + mockEmployeeID
       })
         .flush(mockResponse);
     })
