@@ -17,6 +17,7 @@ import { AUTH_API_URL } from '../app-injection-tokens';
 import { JwtModule } from '@auth0/angular-jwt';
 import { ACCESS_TOKEN_KEY } from '../services/authentication/auth.service';
 import { AuthComponent } from '../components/authentication/auth.component';
+import { RegisterComponent } from '../components/registration/register.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { AuthComponent } from '../components/authentication/auth.component';
     EmployeeModalComponent,
     DepartmentComponent,
     DepartmentListComponent,
-    DepartmentModalComponent
+    DepartmentModalComponent,
+    RegisterComponent
   ],
 
   imports: [

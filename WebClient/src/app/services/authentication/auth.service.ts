@@ -31,7 +31,8 @@ export class AuthService {
   And in case of successful authentication, writes the token to the storage.
   */
   toLogin(email: string, password: string): Observable<Token> {
-    return this.http.post<Token>(`${this.apiUrl} api/auth/login`, {email, password})
+    return this.http
+      .post<Token>(`${this.apiUrl} api/auth/login`, {email, password})
       .pipe(tap(token => localStorage.setItem(ACCESS_TOKEN_KEY, token.accessToken)));
   }
 
@@ -45,5 +46,22 @@ export class AuthService {
   toLogout(): void {
     localStorage.removeItem(ACCESS_TOKEN_KEY);
     this.router.navigate(['']).then(() => window.location.reload());
+  };
+
+  public toAuthentication(email: string, password: string) {
+    const body = {
+      Email: email,
+      Password: password
+    };
+    return this.http.post('https://localhost:4021/api/auth/', body);
+  }
+
+  public toRegistration(fullName: string, email: string, password: string) {
+    const body = {
+      FullName: fullName,
+      Email: email,
+      Password: password
+    };
+    return this.http.post('https://localhost:4021/api/auth/RegisterUser', body);
   }
 }
