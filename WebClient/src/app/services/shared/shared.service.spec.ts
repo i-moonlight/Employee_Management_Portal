@@ -143,4 +143,17 @@ describe('SharedService', () => {
         .flush(mockResponse);
     })
   );
+
+  it('should return update photo file name from database', inject([SharedService, HttpTestingController],
+    (service: SharedService, backend: HttpTestingController) => {
+      const mockResponse: string = 'photo file name';
+      service.updatePhotoToStorage(mockEmployee.EmployeeId, formData).subscribe((response: string) =>
+        expect(response).toEqual(mockResponse));
+      backend.expectOne({
+        method: 'POST',
+        url: 'http://localhost:5000/api/employee/0/UpdatePhoto'
+      })
+        .flush(mockResponse);
+    })
+  );
 });
