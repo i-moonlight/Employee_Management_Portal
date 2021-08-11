@@ -13,6 +13,11 @@ describe('workspace-project App', () => {
     expect(await page.getTitleText()).toEqual('Employee Management Portal');
   });
 
+  it('should display departments button on page', async () => {
+    await page.navigateTo();
+    expect(await page.getDepartmentsButtonDisplayed()).toBeTruthy('Departments button is display');
+  });
+
   afterEach(async () => {
     // Assert that there are no errors emitted from the browser
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
