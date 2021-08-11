@@ -17,4 +17,8 @@ export class AppPage {
   async getDepartmentsButtonDisplayed(): Promise<boolean> {
     return (await this.getDepartmentsButton()).isDisplayed();
   }
+
+  async getDepartmentsButtonTitle(): Promise<string> {
+    return (await this.getDepartmentsButton()).getText();
+  }
 }
