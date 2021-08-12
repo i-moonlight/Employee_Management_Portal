@@ -21,4 +21,13 @@ export class AppPage {
   async getDepartmentsButtonTitle(): Promise<string> {
     return (await this.getDepartmentsButton()).getText();
   }
+
+  // Employees button.
+  getEmployeesButton(): ElementFinder {
+    return element(by.css('[routerlink="employee"]'));
+  }
+
+  async getEmployeesButtonDisplayed(): Promise<boolean> {
+    return (await this.getEmployeesButton()).isDisplayed();
+  }
 }
