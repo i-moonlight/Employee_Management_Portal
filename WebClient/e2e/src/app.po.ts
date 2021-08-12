@@ -30,4 +30,8 @@ export class AppPage {
   async getEmployeesButtonDisplayed(): Promise<boolean> {
     return (await this.getEmployeesButton()).isDisplayed();
   }
+
+  async getEmployeesButtonTitle(): Promise<string> {
+    return (await this.getEmployeesButton()).getText();
+  }
 }
