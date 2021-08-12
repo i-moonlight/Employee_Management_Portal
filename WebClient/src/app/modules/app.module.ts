@@ -18,6 +18,7 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { ACCESS_TOKEN_KEY } from '../services/authentication/auth.service';
 import { AuthComponent } from '../components/authentication/auth.component';
 import { RegisterComponent } from '../components/registration/register.component';
+import { LoginComponent } from '../components/authentication/login/login.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,9 @@ import { RegisterComponent } from '../components/registration/register.component
     DepartmentComponent,
     DepartmentListComponent,
     DepartmentModalComponent,
-    RegisterComponent
+    RegisterComponent,
+    RegisterComponent,
+    LoginComponent
   ],
 
   imports: [
@@ -52,4 +55,5 @@ import { RegisterComponent } from '../components/registration/register.component
   providers: [{ provide: AUTH_API_URL, useValue: environment.authApi }, SharedService],
   bootstrap: [AppComponent]
 })
+
 export class AppModule {}

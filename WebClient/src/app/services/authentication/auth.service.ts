@@ -1,11 +1,12 @@
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Token } from '../../models/token';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AUTH_API_URL } from '../../app-injection-tokens';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
+import { Constants } from '../../common/constants';
 
 export const ACCESS_TOKEN_KEY = 'access_token';
 
@@ -24,7 +25,7 @@ export class AuthService {
     this.apiUrl = apiUrl;
     this.jwtHelper = jwtHelper;
     this.router = router;
-  };
+  }
 
   /*
   This method refers to the authorization server with mail and password.
@@ -46,7 +47,7 @@ export class AuthService {
   toLogout(): void {
     localStorage.removeItem(ACCESS_TOKEN_KEY);
     this.router.navigate(['']).then(() => window.location.reload());
-  };
+  }
 
   public toAuthentication(email: string, password: string) {
     const body = {
@@ -54,6 +55,14 @@ export class AuthService {
       Password: password
     };
     return this.http.post('https://localhost:4021/api/auth/', body);
+  }
+
+  toUserAuthentication(userName, password) {
+    const data = 'username=' + userName + '&password=' + password + '&grant_type=password';
+    const reqHeader = new HttpHeaders({
+      'Content-Type': 'application/x-www-urlencoded', 'No-Auth': 'True'
+    });
+    return this.http.post(Constants.AUTH_URL, data, {headers: reqHeader});
   }
 
   public toRegistration(fullName: string, email: string, password: string) {
