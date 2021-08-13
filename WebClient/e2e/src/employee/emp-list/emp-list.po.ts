@@ -13,4 +13,8 @@ export class EmployeeListPage {
   async getAddEmpButtonDisplayed(): Promise<boolean> {
     return (await this.getAddEmployeeButton()).isDisplayed();
   }
+
+  async getAddEmpButtonTitle(): Promise<string> {
+    return (await this.getAddEmployeeButton()).getText();
+  }
 }

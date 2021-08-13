@@ -12,6 +12,11 @@ describe('EmployeeListPage ', () => {
     expect(await page.getAddEmpButtonDisplayed()).toBeTruthy('Add button is display');
   });
 
+  it('should display add employee button title as `Add Employee`', async () => {
+    await page.navigateTo();
+    expect(await page.getAddEmpButtonTitle()).toEqual('Add Employee');
+  });
+
   afterEach(async () => {
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
     expect(logs).not.toContain(jasmine.objectContaining(
