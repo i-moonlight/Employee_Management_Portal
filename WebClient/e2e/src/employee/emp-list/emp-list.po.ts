@@ -17,4 +17,13 @@ export class EmployeeListPage {
   async getAddEmpButtonTitle(): Promise<string> {
     return (await this.getAddEmployeeButton()).getText();
   }
+
+  // Modal window.
+  getModal(): ElementFinder {
+    return element(by.id('exampleModal'));
+  }
+
+  async getModalDisplayed(): Promise<boolean> {
+    return (await this.getModal()).isDisplayed();
+  }
 }
