@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
 using WebAPI.DataBase;
 using WebAPI.Models;
@@ -40,6 +41,20 @@ namespace WebAPI
             services.AddScoped<ICrudRepository<Department>, DepartmentRepository>();
 
             services.AddControllers();
+            
+            #region Enable logging
+
+            services.AddLogging(loggingBuilder =>
+            {
+                // Enable logging.
+                loggingBuilder.AddConsole()
+                    // Display sql commands.
+                    .AddFilter(DbLoggerCategory.Database.Command.Name, LogLevel.Information);
+                // Display output IDE.
+                loggingBuilder.AddDebug();
+            });
+
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
