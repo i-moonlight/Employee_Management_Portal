@@ -24,6 +24,13 @@ describe('EmployeeListPage ', () => {
     expect(await page.getModalDisplayed()).toBeTruthy('Modal window is open');
   });
 
+  it('should display modal title on page as `Add Employee` when click on add button', async () => {
+    await page.navigateTo();
+    await page.getAddEmployeeButton().click();
+    await browser.sleep(1000);
+    expect(await page.getModalTitleText()).toEqual('Add Employee');
+  });
+
   afterEach(async () => {
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
     expect(logs).not.toContain(jasmine.objectContaining(

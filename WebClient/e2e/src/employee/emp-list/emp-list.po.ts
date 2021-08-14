@@ -26,4 +26,13 @@ export class EmployeeListPage {
   async getModalDisplayed(): Promise<boolean> {
     return (await this.getModal()).isDisplayed();
   }
+
+  // Modal title.
+  getModalTitle(): ElementFinder {
+    return element(by.className('modal-title'));
+  }
+
+  async getModalTitleText(): Promise<string> {
+    return (await this.getModalTitle()).getText();
+  }
 }
