@@ -48,7 +48,11 @@ li:hover {
 }
 
 input[type="text"], input[type="password"], .btn {
-  border-radius: 0px;
+  border-radius: 2px;
+}
+
+.btn {
+  margin-top: 1em;
 }
 
 .btn-danger, .btn-danger:hover {
@@ -59,4 +63,59 @@ input[type="text"], input[type="password"], .btn {
 .btn-primary, .btn-primary:hover {
   background-color: #3366CC !important;
   border-color: #3366CC !important;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.form {
+  margin: 1rem 0;
+}
+
+.form__title {
+  text-transform: uppercase;
+  line-height: 1.1;
+  margin: 2px 0;
+  font-weight: 600;
+}
+
+.form__item, .form-check {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  padding-top: 3%;
+}
+
+.form__label {
+  position: relative;
+  width: 100%;
+  margin: 16px 0 0 0;
+}
+
+.form__label span {
+  position: absolute;
+  bottom: 2px;
+  left: 5px;
+  opacity: .5;
+  visibility: hidden;
+  transition: .4s;
+}
+
+.form__label input:placeholder-shown ~ span {
+  visibility: visible;
+}
+
+.form__label input:placeholder-shown:focus ~ span,
+.form__label input:not(:placeholder-shown) ~ span {
+  bottom: 100%;
+  opacity: 1;
+  font-size: 80%;
+  visibility: visible;
+  color: #0650ca;
 }

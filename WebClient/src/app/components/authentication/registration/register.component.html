@@ -1,0 +1,36 @@
+<!-- Tab form section -->
+<form class="form" #RegistrationForm="ngForm" (ngSubmit)="onSubmit(RegistrationForm)">
+  <div class="container">
+    <!-- Tab form header -->
+    <h4 class="form__title">Registration</h4>
+    <!-- Username input field -->
+    <div class="form__item">
+      <label class="form__label" data-error="Required field!">
+        <input class="form-control" type="text" name="UserName" placeholder="&nbsp;"
+               [(ngModel)]="account.UserName" #UserName="ngModel" required>
+        <span>Enter your username</span>
+      </label>
+    </div>
+    <!-- Email input field -->
+    <div class="form__item">
+      <label class="form__label" data-error="Invalid email!">
+        <input class="form-control" type="text" name="Email" placeholder="&nbsp;"
+               [(ngModel)]="account.Email" #Email="ngModel" [pattern]="emailPattern">
+        <span>Enter your email</span>
+      </label>
+    </div>
+    <!-- Password input field -->
+    <div class="form__item">
+      <label class="form__label" [attr.data-error]="Password.errors!=null?
+      (Password.errors.required?'Required field!':'Minimum 3 characters needed') :''">
+        <input class="form-control" type="password" name="Password" placeholder="&nbsp;"
+               [(ngModel)]="account.Password" #Password="ngModel" required minlength="3">
+        <span>Enter your password</span>
+      </label>
+    </div>
+    <!-- Login button -->
+    <div class="form__item">
+      <button class="btn btn-primary" type="submit" [disabled]="!RegistrationForm.valid">Submit</button>
+    </div>
+  </div>
+</form>
