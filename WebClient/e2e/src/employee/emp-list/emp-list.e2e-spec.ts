@@ -31,6 +31,13 @@ describe('EmployeeListPage ', () => {
     expect(await page.getModalTitleText()).toEqual('Add Employee');
   });
 
+  it('should display modal close button on page when click on add employee button', async () => {
+    await page.navigateTo();
+    await page.getAddEmployeeButton().click();
+    await browser.sleep(1000);
+    expect(await page.getCloseModalButtonDisplayed()).toBeTruthy('Add button is display');
+  });
+
   afterEach(async () => {
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
     expect(logs).not.toContain(jasmine.objectContaining(

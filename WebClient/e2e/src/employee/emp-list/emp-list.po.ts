@@ -35,4 +35,13 @@ export class EmployeeListPage {
   async getModalTitleText(): Promise<string> {
     return (await this.getModalTitle()).getText();
   }
+
+  // Close modal button.
+  getCloseModalButton(): ElementFinder {
+    return element(by.className('btn-close'));
+  }
+
+  async getCloseModalButtonDisplayed(): Promise<boolean> {
+    return (await this.getCloseModalButton()).isDisplayed();
+  }
 }
