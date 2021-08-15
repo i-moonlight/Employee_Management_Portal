@@ -38,6 +38,15 @@ describe('EmployeeListPage ', () => {
     expect(await page.getCloseModalButtonDisplayed()).toBeTruthy('Add button is display');
   });
 
+  it('should close modal window on page when click on close button', async () => {
+    await page.navigateTo();
+    await page.getAddEmployeeButton().click();
+    await browser.sleep(1000);
+    await page.getCloseModalButton().click();
+    await browser.sleep(1000);
+    expect(await page.getModalDisplayed()).toBeFalsy('Modal window is close');
+  });
+
   afterEach(async () => {
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
     expect(logs).not.toContain(jasmine.objectContaining(
