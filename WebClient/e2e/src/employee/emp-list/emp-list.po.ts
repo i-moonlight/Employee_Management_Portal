@@ -44,4 +44,9 @@ export class EmployeeListPage {
   async getCloseModalButtonDisplayed(): Promise<boolean> {
     return (await this.getCloseModalButton()).isDisplayed();
   }
+
+  // Modal component.
+  async getComponentDisplayed(): Promise<boolean> {
+    return element(by.tagName('app-emp-modal')).isDisplayed();
+  }
 }

@@ -47,6 +47,13 @@ describe('EmployeeListPage ', () => {
     expect(await page.getModalDisplayed()).toBeFalsy('Modal window is close');
   });
 
+  it('should display component modal window on page when click on add button', async () => {
+    await page.navigateTo();
+    await page.getAddEmployeeButton().click();
+    await browser.sleep(1000);
+    expect(await page.getComponentDisplayed()).toBeTruthy('Modal component is display');
+  });
+
   afterEach(async () => {
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
     expect(logs).not.toContain(jasmine.objectContaining(
