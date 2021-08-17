@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../services/authentication/auth.service';
 import { Router } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
-import { Constants } from '../../../common/constants';
+import { ToastrService } from 'ngx-toastr';
+import { Login } from '../../../models/login.model';
+import { Response } from '../../../models/response.model';
 
 @Component({
   selector: 'app-login',
@@ -11,19 +12,23 @@ import { Constants } from '../../../common/constants';
 })
 export class LoginComponent implements OnInit {
 
-  isLoginError: boolean = false;
-
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private toastr: ToastrService, private router: Router) {}
 
   ngOnInit() {}
 
   onSubmit(userName, password) {
-    this.authService.toUserAuthentication(userName, password).subscribe((data: any) => {
-        localStorage.setItem('userToken', data.access_token);
-        this.router.navigate([Constants.BASE_URL + 'employee']);
-      },
-      (err: HttpErrorResponse) => {
-        this.isLoginError = true;
-      });
+    const login: Login = {
+      UserName: userName,
+      Password: password,
+    }
+    this.authService.getLoginToken(login).subscribe((res: Response) => {
+      if (res.DateSet != null) {
+        this.toastr.success('Login Successful', null, {timeOut: 50000});
+        localStorage.setItem('token', res.DateSet.Token);
+        this.router.navigate(['/employee']).then(() => window.location.reload());
+      } else {
+        this.toastr.error('Login Failed');
+      }
+    });
   }
 }
