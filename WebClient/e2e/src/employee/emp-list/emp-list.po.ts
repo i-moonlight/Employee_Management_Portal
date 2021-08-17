@@ -49,4 +49,13 @@ export class EmployeeListPage {
   async getComponentDisplayed(): Promise<boolean> {
     return element(by.tagName('app-emp-modal')).isDisplayed();
   }
+
+  // Employee table.
+  getTable(): ElementFinder {
+    return element(by.tagName('table'));
+  }
+
+  async getTableDisplayed(): Promise<boolean> {
+    return (await this.getTable()).isDisplayed();
+  }
 }
