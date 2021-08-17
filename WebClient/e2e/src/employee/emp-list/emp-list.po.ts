@@ -58,4 +58,9 @@ export class EmployeeListPage {
   async getTableDisplayed(): Promise<boolean> {
     return (await this.getTable()).isDisplayed();
   }
+
+  // Employee list.
+  async getListDisplayed(): Promise<boolean> {
+    return element(by.css('app-show-emp tbody tr')).isDisplayed();
+  }
 }

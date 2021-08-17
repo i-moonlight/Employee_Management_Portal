@@ -59,6 +59,11 @@ describe('EmployeeListPage ', () => {
     expect(await page.getTableDisplayed()).toBeTruthy('Employee table is display');
   });
 
+  it('should display employee list on page', async () => {
+    await page.navigateTo();
+    expect(await page.getListDisplayed()).toBeTruthy("Employee list is display");
+  });
+
   afterEach(async () => {
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
     expect(logs).not.toContain(jasmine.objectContaining(
