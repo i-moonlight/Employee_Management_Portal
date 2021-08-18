@@ -25,20 +25,14 @@
   <thead>
   <tr>
     <th>
-      <!-- ID filter -->
-      <div class="d-flex flex-row">
-        <label>
-          <input class="form-control" [(ngModel)]="employeeIdFilter"
-                 (keyup)="toFilterEmployeeList()" placeholder="Filter ID">
-        </label>
-      </div>
+      <!-- Photo-->
       Photo
     </th>
     <th>
       <!-- ID filter -->
       <div class="d-flex flex-row">
         <label>
-          <input class="form-control" id="filterId" [(ngModel)]="employeeIdFilter"
+          <input class="form-control" id="idFilter" [(ngModel)]="employeeIdFilter"
                  (keyup)="toFilterEmployeeList()" placeholder="Filter ID">
         </label>
         <!-- Sort button-->
@@ -61,7 +55,7 @@
       <!-- Name filter -->
       <div class="d-flex flex-row">
         <label>
-          <input class="form-control" [(ngModel)]="employeeNameFilter"
+          <input class="form-control" id="nameFilter" [(ngModel)]="employeeNameFilter"
                  (keyup)="toFilterEmployeeList()" placeholder="Filter name">
         </label>
         <!-- Sort button-->
@@ -84,7 +78,7 @@
       <!-- Department filter -->
       <div class="d-flex flex-row">
         <label>
-          <input class="form-control" [(ngModel)]="employeeDepartmentFilter"
+          <input class="form-control" id="departmentFilter" [(ngModel)]="employeeDepartmentFilter"
                  (keyup)="toFilterEmployeeList()" placeholder="Filter department">
         </label>
         <!-- Sort button-->
@@ -104,11 +98,11 @@
       Department
     </th>
     <th>
-      <!-- Date filter -->
+      <!-- DateOfJoining filter -->
       <div class="d-flex flex-row">
         <label>
-          <input class="form-control" [(ngModel)]="employeeDateOfJoiningFilter"
-                 (keyup)="toFilterEmployeeList()" placeholder="Filter data">
+          <input class="form-control" id="dateFilter" [(ngModel)]="employeeDateOfJoiningFilter"
+                 (keyup)="toFilterEmployeeList()" placeholder="Filter date">
         </label>
         <!-- Sort button-->
         <button type="button" class="btn btn-light sort" (click)="toSortEmployeeList('dateOfJoining', true)">

@@ -41,6 +41,7 @@ export class EmployeeListComponent implements OnInit {
   }
 
   addEmployee(): void {
+    this.activateAddEditEmpComp = true;
     this.employee = {
       EmployeeId: 0,
       EmployeeName: '',
@@ -49,7 +50,6 @@ export class EmployeeListComponent implements OnInit {
       PhotoFileName: 'anonymous.png'
     }
     this.modalTitle = 'Add Employee';
-    this.activateAddEditEmpComp = true;
   }
 
   closeEmployeeModal(): void {
