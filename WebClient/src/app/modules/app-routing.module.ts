@@ -5,22 +5,16 @@ import { DepartmentComponent } from '../components/department/department.compone
 import { AuthComponent } from '../components/authentication/auth.component';
 import { RegisterComponent } from '../components/authentication/registration/register.component';
 import { LoginComponent } from '../components/authentication/login/login.component';
+import { AuthGuard } from '../guards/auth.guard';
 
 const routes: Routes = [
   { path: 'auth', component: AuthComponent },
-  { path: 'employee', component: EmployeeComponent },
   { path: 'department', component: DepartmentComponent },
-  { path: 'auth', component: AuthComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'employee', component: EmployeeComponent },
-  { path: 'department', component: DepartmentComponent },
-  { path: 'employee', component: EmployeeComponent },
-  { path: 'department', component: DepartmentComponent },
-  { path: 'auth', component: AuthComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: AuthComponent, children: [{path: '', component: LoginComponent}]},
   { path: '', redirectTo: '/login', pathMatch: 'full' },
-  {path: 'registration', component: AuthComponent, children: [{path: '', component: RegisterComponent}]}
+  { path: 'employee', component: EmployeeComponent, canActivate: [AuthGuard] },
+  { path: 'registration', component: AuthComponent, children: [{path: '', component: RegisterComponent}] }
 ];
 
 @NgModule({
