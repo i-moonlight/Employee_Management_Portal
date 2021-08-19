@@ -63,4 +63,13 @@ export class EmployeeListPage {
   async getListDisplayed(): Promise<boolean> {
     return element(by.css('app-show-emp tbody tr')).isDisplayed();
   }
+
+  // Table Id filter.
+  getIdFilter(): ElementFinder {
+    return element(by.id('idFilter'));
+  }
+
+  async getIdFilterDisplayed(): Promise<boolean> {
+    return (await this.getIdFilter()).isDisplayed();
+  }
 }
