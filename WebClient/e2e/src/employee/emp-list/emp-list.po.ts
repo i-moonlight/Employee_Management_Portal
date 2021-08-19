@@ -72,4 +72,8 @@ export class EmployeeListPage {
   async getIdFilterDisplayed(): Promise<boolean> {
     return (await this.getIdFilter()).isDisplayed();
   }
+
+  async getIdFilterPlaceholder(): Promise<ElementFinder> {
+    return (await this.getIdFilter()).getAttribute('placeholder');
+  }
 }

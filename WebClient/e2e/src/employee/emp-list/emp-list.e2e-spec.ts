@@ -69,6 +69,11 @@ describe('EmployeeListPage ', () => {
     expect(await page.getIdFilterDisplayed()).toBeTruthy('Id filter is display');
   });
 
+  it('should display table id filter placeholder value as `Filter ID` on page', async () => {
+    await page.navigateTo();
+    expect(await page.getIdFilterPlaceholder()).toEqual('Filter ID');
+  });
+
   afterEach(async () => {
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
     expect(logs).not.toContain(jasmine.objectContaining(
