@@ -74,6 +74,11 @@ describe('EmployeeListPage ', () => {
     expect(await page.getIdFilterPlaceholder()).toEqual('Filter ID');
   });
 
+  it('should display table name filter on page', async () => {
+    await page.navigateTo();
+    expect(await page.getNameFilterDisplayed()).toBeTruthy('Name filter is display');
+  });
+
   afterEach(async () => {
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
     expect(logs).not.toContain(jasmine.objectContaining(
