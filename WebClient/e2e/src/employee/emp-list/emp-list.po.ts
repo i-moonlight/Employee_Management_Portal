@@ -85,4 +85,8 @@ export class EmployeeListPage {
   async getNameFilterDisplayed(): Promise<boolean> {
     return (await this.getNameFilter()).isDisplayed();
   }
+
+  async getNameFilterPlaceholder(): Promise<ElementFinder> {
+    return (await this.getNameFilter()).getAttribute('placeholder');
+  }
 }
