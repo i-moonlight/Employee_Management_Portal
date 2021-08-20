@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Linq;
 using WebAPI.DataBase;
-using WebAPI.Models;
+using WebAPI.Domain.Entities;
 using WebAPI.Repositories.Interfaces;
 
 namespace WebAPI.Repositories.Implementations
@@ -25,7 +25,7 @@ namespace WebAPI.Repositories.Implementations
         {
             throw new NotImplementedException();
         }
-        
+
         public Department Create(Department model)
         {
             _context.Departments.Add(model);

@@ -7,6 +7,7 @@ using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Serilog;
 using Serilog.Sinks.Elasticsearch;
+using WebAPI.Domain.Identity;
 
 namespace WebAPI
 {
@@ -37,7 +38,7 @@ namespace WebAPI
                     .CreateScope();
 
 #pragma warning disable 4014
-                SeedData.Initializer(scope.ServiceProvider);
+                ClaimRoleManager.Initializer(scope.ServiceProvider);
 #pragma warning restore 4014
 
                 #endregion

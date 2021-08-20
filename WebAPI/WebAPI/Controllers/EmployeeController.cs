@@ -2,8 +2,8 @@
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI.Domain.Entities;
 using WebAPI.Helpers;
-using WebAPI.Models;
 using WebAPI.Repositories.Interfaces;
 
 namespace WebAPI.Controllers

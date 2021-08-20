@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
 using WebAPI.Controllers;
-using WebAPI.Models;
+using WebAPI.Domain.Entities;
 using WebAPI.Repositories.Interfaces;
 
 namespace WebAPI.Tests
@@ -42,7 +42,7 @@ namespace WebAPI.Tests
             Assert.AreEqual(new JsonResult(new Employee()).GetType(), result.GetType(), "Return type mismatch");
             Assert.AreEqual(typeof(List<Employee>), result.Value.GetType(), "Return value type mismatch");
         }
-        
+
         [Test]
         public void Post_ShouldCreateEmployee()
         {
@@ -57,7 +57,7 @@ namespace WebAPI.Tests
             Assert.AreEqual(new JsonResult(_model).GetType(), result.GetType(), "Return type mismatch");
             Assert.AreEqual(typeof(string), result.Value.GetType(), "Return value type mismatch");
         }
-        
+
         [Test]
         public void Put_ShouldUpdateEmployee()
         {
@@ -72,7 +72,7 @@ namespace WebAPI.Tests
             Assert.AreEqual(new JsonResult(_model).GetType(), result.GetType(), "Return type mismatch");
             Assert.AreEqual(typeof(string), result.Value.GetType(), "Return value type mismatch");
         }
-        
+
         [Test]
         public void Delete_ShouldDeleteEmployee()
         {

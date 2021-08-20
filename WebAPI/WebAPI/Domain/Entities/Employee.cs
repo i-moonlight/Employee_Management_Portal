@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WebAPI.Models
+namespace WebAPI.Domain.Entities
 {
     public class Employee
     {

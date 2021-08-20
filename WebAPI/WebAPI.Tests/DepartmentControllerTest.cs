@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
 using WebAPI.Controllers;
-using WebAPI.Models;
+using WebAPI.Domain.Entities;
 using WebAPI.Repositories.Interfaces;
 
 namespace WebAPI.Tests
@@ -40,7 +40,7 @@ namespace WebAPI.Tests
             Assert.AreEqual(new JsonResult(new Department()).GetType(), result.GetType(), "Return type mismatch");
             Assert.AreEqual(typeof(List<Department>), result.Value.GetType(), "Return value type mismatch");
         }
-        
+
         [Test]
         public void Post_ShouldCreateDepartment()
         {
@@ -54,8 +54,8 @@ namespace WebAPI.Tests
             Assert.NotNull(result, "Result is null");
             Assert.AreEqual(new JsonResult(_model).GetType(), result.GetType(), "Return type mismatch");
             Assert.AreEqual(typeof(string), result.Value.GetType(), "Return value type mismatch");
-        }    
-        
+        }
+
         [Test]
         public void Put_ShouldUpdateDepartment()
         {
@@ -70,7 +70,7 @@ namespace WebAPI.Tests
             Assert.AreEqual(new JsonResult(_model).GetType(), result.GetType(), "Return type mismatch");
             Assert.AreEqual(typeof(string), result.Value.GetType(), "Return value type mismatch");
         }
-        
+
         [Test]
         public void Delete_ShouldDeleteDepartment()
         {

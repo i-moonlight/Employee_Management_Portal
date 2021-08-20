@@ -9,7 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
 using WebAPI.DataBase;
-using WebAPI.Models;
+using WebAPI.Domain.Entities;
 using WebAPI.Repositories.Implementations;
 using WebAPI.Repositories.Interfaces;
 
