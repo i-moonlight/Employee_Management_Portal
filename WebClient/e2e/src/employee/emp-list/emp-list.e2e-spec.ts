@@ -89,6 +89,11 @@ describe('EmployeeListPage ', () => {
     expect(await page.getDepInputFilterDisplayed()).toBeTruthy('Department filter is display');
   });
 
+  it('should display table department filter placeholder value as `Filter department` on page', async () => {
+    await page.navigateTo();
+    expect(await page.getDepartmentFilterPlaceholder()).toEqual('Filter department');
+  });
+
   afterEach(async () => {
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
     expect(logs).not.toContain(jasmine.objectContaining(

@@ -98,4 +98,8 @@ export class EmployeeListPage {
   async getDepInputFilterDisplayed(): Promise<boolean> {
     return (await this.getDepartmentFilter()).isDisplayed();
   }
+
+  async getDepartmentFilterPlaceholder(): Promise<ElementFinder> {
+    return (await this.getDepartmentFilter()).getAttribute('placeholder');
+  }
 }
