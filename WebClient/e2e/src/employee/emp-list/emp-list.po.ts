@@ -89,4 +89,13 @@ export class EmployeeListPage {
   async getNameFilterPlaceholder(): Promise<ElementFinder> {
     return (await this.getNameFilter()).getAttribute('placeholder');
   }
+
+  // Table department filter.
+  getDepartmentFilter(): ElementFinder {
+    return element(by.id('departmentFilter'));
+  }
+
+  async getDepInputFilterDisplayed(): Promise<boolean> {
+    return (await this.getDepartmentFilter()).isDisplayed();
+  }
 }
