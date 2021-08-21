@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-6">
@@ -21,7 +22,22 @@
           </div>
           <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">Login</button>
         </form>
+=======
+<section class="nav-tabs">
+  <div class="container">
+    <div class="card shadows">
+      <div class="card-body shadows">
+        <ul class="nav nav-tabs nav-fill">
+          <li class="nav-item">
+            <a class="nav-link active" data-bs-toggle="tab" routerLink='/login'>Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" routerLink='/registration'>Registration</a>
+          </li>
+        </ul>
+        <router-outlet></router-outlet>
+>>>>>>> 1985e27 (refactor: authentication component)
       </div>
     </div>
   </div>
-</div>
+</section>

@@ -9,14 +9,12 @@ import { SharedService } from '../../services/shared/shared.service';
 })
 export class AuthComponent implements OnInit {
 
-<<<<<<< HEAD
   public loginForm = this.formBuilder.group({
     email: ['', Validators.required],
     password: ['', Validators.required]
   });
-=======
+
   private authForm;
->>>>>>> 9d8de63 (feat: registration component)
 
   constructor(private formBuilder: FormBuilder, private sharedService: SharedService) {}
 
@@ -24,25 +22,24 @@ export class AuthComponent implements OnInit {
     this.authForm = this.formBuilder.group({
       email: ['', Validators.required],
       password: ['', Validators.required]
-    })
+    });
   }
 
   onSubmit() {
-<<<<<<< HEAD
     console.log('on submit');
     const email = this.loginForm.controls.email.value;
     const password = this.loginForm.controls.password.value;
-=======
-    console.log('on submit')
-    let email = this.authForm.controls['email'].value;
-    let password = this.authForm.controls['password'].value;
 
-    this.sharedService.toAuthentication(email, password).subscribe((data) => {
+    console.log('on submit');
+    const email = this.authForm.controls.email.value;
+    const password = this.authForm.controls.password.value;
+
+    this.sharedService.toAuthentication(email, password).subscribe(
+      (data) => {
         console.log("response", data);
-      },
-      error => {
-        console.log("error", error)
-      })
->>>>>>> 9d8de63 (feat: registration component)
+        },
+        error => {
+        console.log("error", error);
+      });
   }
 }

@@ -7,11 +7,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { Account } from '../../models/account.model';
-import { Constants } from '../../common/constants';
 import { Login } from '../../models/login.model';
 import { Response } from '../../models/response.model';
-
-export const ACCESS_TOKEN_KEY = 'access_token';
 
 @Injectable({
   providedIn: 'root'
@@ -39,10 +36,14 @@ export class AuthService {
       .post<Token>(`${this.apiUrl} api/auth/login`, {email, password})
       .pipe(tap(token => localStorage.setItem(ACCESS_TOKEN_KEY, token.accessToken)));
   }
+=======
+  private readonly AUTH_URL: string = 'https://localhost:4021/api/auth/'
+
+  constructor(private http: HttpClient) {}
 
   // Provides an access token from the authentication server.
   public getLoginToken(loginForm: Login): Observable<Response> {
-    return this.http.post<Response>(Constants.AUTH_URL + 'SignIn', loginForm);
+    return this.http.post<Response>(this.AUTH_URL + 'SignIn', loginForm);
   };
 
   // This method reads the token and, if it exists, checks if it has expired.
@@ -89,25 +90,6 @@ export class AuthService {
 
   // Method of user registration.
   public registerUser(accountForm: Account): Observable<Response> {
-    return this.http.post<Response>(Constants.AUTH_URL + 'RegisterUser', accountForm);
+    return this.http.post<Response>(this.AUTH_URL + 'RegisterUser', accountForm);
   }
-
-  // public getUserList() {
-  //   let userInfo = JSON.parse(localStorage.getItem(Constants.USER_KEY));
-  //   const headers = new HttpHeaders({
-  //     'Authorization': `Bearer ${userInfo?.token}`
-  //   });
-  //
-  //   return this.http.get<ResponseModel>(Constants.AUTH_URL + 'GetAllUsers', {headers: headers}).pipe(map(res => {
-  //     let userList = new Array<User>();
-  //     if (res.responseCode == ResponseCode.OK) {
-  //       if (res.dateSet) {
-  //         res.dateSet.map((x: User) => {
-  //           userList.push(new User(x.userId, x.fullName, x.email, x.userName, x.roles));
-  //         })
-  //       }
-  //     }
-  //     return userList;
-  //   }));
-  // }
 }

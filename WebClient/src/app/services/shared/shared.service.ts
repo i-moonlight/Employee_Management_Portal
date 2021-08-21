@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Employee } from '../../components/employee/employee.component';
 import { Department } from '../../components/department/department.component';
@@ -29,15 +29,20 @@ export class SharedService {
     return this.http.delete<string>(this.APIUrl + '/department/' + departmentId);
   }
 
-  getEmployeeListFromDB(): Observable<Employee[]> {
-    return this.http.get<Employee[]>(this.APIUrl + '/employee');
+  deleteDepartmentFromDB(departmentId: number): Observable<string> {
+    return this.http.delete<string>(this.APIUrl + '/department/' + departmentId);
+  }
 
-  // Retrieves a list of employees from the resource server database using an access token.
+  // Retrieves a list of employees from the resource server database using an access token
   public getEmployeeListFromDB(): Observable<Employee[]> {
-    const headers = new HttpHeaders({
-      'Authorization': 'Bearer' + localStorage.getItem('token')
-    });
-    return this.http.get<Employee[]>(this.APIUrl + '/employee', { headers: headers });
+      const headers = new HttpHeaders({
+        'Authorization': 'Bearer' + localStorage.getItem('token')
+      });
+      return this.http.get<Employee[]>(this.APIUrl + '/employee', {headers: headers});
+    }
+
+  public getEmployeeListFromDB(): Observable<Employee[]> {
+    return this.http.get<Employee[]>(this.APIUrl + '/employee');
   }
 
   getAllDepartmentNamesFromDB(): Observable<string[]> {
