@@ -94,6 +94,11 @@ describe('EmployeeListPage ', () => {
     expect(await page.getDepartmentFilterPlaceholder()).toEqual('Filter department');
   });
 
+  it('should display table date of joining filter on page', async () => {
+    await page.navigateTo();
+    expect(await page.getDateFilterDisplayed()).toBeTruthy('Date of joining filter is display');
+  });
+
   afterEach(async () => {
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
     expect(logs).not.toContain(jasmine.objectContaining(

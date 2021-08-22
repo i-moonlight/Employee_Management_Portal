@@ -102,4 +102,13 @@ export class EmployeeListPage {
   async getDepartmentFilterPlaceholder(): Promise<ElementFinder> {
     return (await this.getDepartmentFilter()).getAttribute('placeholder');
   }
+
+  // Table date filter.
+  getDateFilter(): ElementFinder {
+    return element(by.id('dateFilter'));
+  }
+
+  async getDateFilterDisplayed(): Promise<boolean> {
+    return (await this.getDateFilter()).isDisplayed();
+  }
 }
