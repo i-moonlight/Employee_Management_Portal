@@ -99,6 +99,11 @@ describe('EmployeeListPage ', () => {
     expect(await page.getDateFilterDisplayed()).toBeTruthy('Date of joining filter is display');
   });
 
+  it('should display table date of joining filter placeholder value as `Filter date` on page', async () => {
+    await page.navigateTo();
+    expect(await page.getDateFilterPlaceholder()).toEqual('Filter date');
+  });
+
   afterEach(async () => {
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
     expect(logs).not.toContain(jasmine.objectContaining(

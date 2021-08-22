@@ -111,4 +111,8 @@ export class EmployeeListPage {
   async getDateFilterDisplayed(): Promise<boolean> {
     return (await this.getDateFilter()).isDisplayed();
   }
+
+  async getDateFilterPlaceholder(): Promise<ElementFinder> {
+    return (await this.getDateFilter()).getAttribute('placeholder');
+  }
 }
