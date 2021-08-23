@@ -104,6 +104,11 @@ describe('EmployeeListPage ', () => {
     expect(await page.getDateFilterPlaceholder()).toEqual('Filter date');
   });
 
+  it('should display table sort button on page', async () => {
+    await page.navigateTo();
+    expect(await page.getSortButton()).toBeTruthy('Sort button is display');
+  });
+
   afterEach(async () => {
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
     expect(logs).not.toContain(jasmine.objectContaining(

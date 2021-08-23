@@ -115,4 +115,9 @@ export class EmployeeListPage {
   async getDateFilterPlaceholder(): Promise<ElementFinder> {
     return (await this.getDateFilter()).getAttribute('placeholder');
   }
+
+  // Table sort button.
+  async getSortButton(): Promise<boolean> {
+    return element(by.css('.sort')).isDisplayed();
+  }
 }
