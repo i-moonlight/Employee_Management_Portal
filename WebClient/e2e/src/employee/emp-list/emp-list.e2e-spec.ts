@@ -109,6 +109,11 @@ describe('EmployeeListPage ', () => {
     expect(await page.getSortButton()).toBeTruthy('Sort button is display');
   });
 
+  it('should display edit button on page', async () => {
+    await page.navigateTo();
+    expect(await page.getEditButtonDisplayed()).toBeTruthy('Edit button is display');
+  });
+
   afterEach(async () => {
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
     expect(logs).not.toContain(jasmine.objectContaining(

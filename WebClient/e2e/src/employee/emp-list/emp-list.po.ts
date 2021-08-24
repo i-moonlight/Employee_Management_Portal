@@ -120,4 +120,13 @@ export class EmployeeListPage {
   async getSortButton(): Promise<boolean> {
     return element(by.css('.sort')).isDisplayed();
   }
+
+  // Edit employee button as trigger modal.
+  getEditButton(): ElementFinder {
+    return element(by.css('.btn-green'));
+  }
+
+  async getEditButtonDisplayed(): Promise<boolean> {
+    return (await this.getEditButton()).isDisplayed();
+  }
 }
