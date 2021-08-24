@@ -8,31 +8,17 @@ using WebAPI.Authentication.Models;
 
 namespace WebAPI.Authentication.Controllers
 {
-    [Route("api/[controller]")]
+    /// <summary>
+    /// Authentication controller.
+    /// </summary>
     [ApiController]
     public class RegistrationController : ControllerBase
     {
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        //private readonly IOptions<EmailOptionsDTO> _emailOptions;
-        //private readonly IEmail _email;
-        //private readonly ICloudStorage _cloudStorage;
-        //private readonly IMapper _mapper;
 
-        public RegistrationController(
-            UserManager<User> userManager,
-            RoleManager<IdentityRole> roleManager
-            //IOptions<EmailOptionsDTO> emailOptions,
-            //IEmail email,
-            //ICloudStorage cloudStorage,
-            //IMapper mapper
-            )
+        public RegistrationController(UserManager<User> userManager)
         {
-            //_mapper = mapper;
-            //_email = email;
-            //_emailOptions = emailOptions;
-            //_cloudStorage = cloudStorage;
-            _roleManager = roleManager;
             _userManager = userManager;
         }
 

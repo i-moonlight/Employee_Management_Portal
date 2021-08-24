@@ -23,6 +23,8 @@ namespace WebAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();
+            
             // JSON Serializer.
             services
                 .AddControllersWithViews()
@@ -40,8 +42,6 @@ namespace WebAPI
             services.AddScoped<ICrudRepository<Employee>, EmployeeRepository>();
             services.AddScoped<ICrudRepository<Department>, DepartmentRepository>();
 
-            services.AddControllers();
-            
             #region Enable logging
 
             services.AddLogging(loggingBuilder =>
@@ -52,6 +52,18 @@ namespace WebAPI
                     .AddFilter(DbLoggerCategory.Database.Command.Name, LogLevel.Information);
                 // Display output IDE.
                 loggingBuilder.AddDebug();
+            });
+
+            #endregion
+            
+            #region CORS
+
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder =>
+                {
+                    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                });
             });
 
             #endregion
@@ -76,11 +88,7 @@ namespace WebAPI
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
-            // Enable CORS.
-            app.UseCors(opts => opts
-                .WithOrigins("http://localhost:4200")
-                .AllowAnyMethod()
-                .AllowAnyHeader());
+            app.UseCors();
             
             app.UseEndpoints(endpoints => endpoints.MapControllers());
         }

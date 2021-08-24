@@ -1,90 +1,124 @@
-using System;
-using System.IO;
-using System.Reflection;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
-using Newtonsoft.Json.Serialization;
+using Microsoft.IdentityModel.Tokens;
 using WebAPI.Authentication.Data;
 using WebAPI.Authentication.Data.Entities;
+using WebAPI.Authentication.Infrastructure;
 
 namespace WebAPI.Authentication
 {
     public class Startup
     {
+        private IConfiguration Configuration { get; }
+        
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-
-        private IConfiguration Configuration { get; }
-
+        /// <summary>
+        /// This method gets called by the runtime.
+        /// Use this method to add services to the container.
+        /// </summary>
+        /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            
-            // JSON Serializer.
-            services.AddControllersWithViews()
-                .AddNewtonsoftJson(opts =>
-                    opts.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
-                .AddNewtonsoftJson(opts =>
-                    opts.SerializerSettings.ContractResolver = new DefaultContractResolver());
 
-            services.AddDbContext<AppDbContext>(opts =>
-                opts.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
-            );
+            #region Role Identity
 
-            services
-                .AddIdentity<User, IdentityRole>(opts => {})
-                .AddEntityFrameworkStores<AppDbContext>();
-            
-            services.AddSwaggerGen(opts =>
-            {
-                opts.SwaggerDoc("v1", new OpenApiInfo
+            services.AddIdentity<User, IdentityRole>(options =>
                 {
-                    Version = "v1",
-                    Title = "WebAPI.Authentication",
-                    Description = "An ASP.NET Core Web API for managing API documentation"
-                });
-
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                opts.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFile));
-            });
-            
-            services.AddIdentity<User,IdentityRole>(opts =>
-                {
-                    opts.Password.RequireDigit = true;
-                    opts.Password.RequiredLength = 5;
-                    opts.Password.RequireUppercase = true;
-                    opts.Lockout.MaxFailedAccessAttempts = 6;
-                    opts.User.RequireUniqueEmail = true;
-                    opts.SignIn.RequireConfirmedEmail = false;
+                    options.Password.RequireDigit = true;
+                    options.Password.RequiredLength = 5;
+                    options.Password.RequireUppercase = true;
+                    options.Lockout.MaxFailedAccessAttempts = 6;
+                    options.User.RequireUniqueEmail = true;
+                    options.SignIn.RequireConfirmedAccount = true;
+                    options.SignIn.RequireConfirmedEmail = false;
                 })
                 .AddRoles<IdentityRole>()
+                .AddRoleManager<RoleManager<IdentityRole>>()
+                .AddSignInManager<SignInManager<User>>()
                 .AddEntityFrameworkStores<AppDbContext>();
+
+            #endregion
+            
+            #region Authentication JWT
+
+            services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig"));
+
+            services.AddAuthentication(options =>
+                {
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(options =>
+                {
+                    var key = Encoding.ASCII.GetBytes(Configuration["JwtConfig:Secret"]);
+                    var issuer = Configuration["JwtConfig:Issuer"];
+                    var audience = Configuration["JwtConfig:Audience"];
+
+                    options.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = true,
+                        ValidIssuer = issuer,
+                        ValidateAudience = true,
+                        ValidAudience = audience,
+                        RequireExpirationTime = true,
+                    };
+                    options.SaveToken = true;
+                    options.RequireHttpsMetadata = true;
+                });
+
+            // services.AddDefaultIdentity<IdentityUser>(opts => 
+            //         opts.SignIn.RequireConfirmedAccount = true)
+            //     .AddEntityFrameworkStores<AppDbContext>();
+
+            #endregion
+
+            #region CORS
+
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder =>
+                {
+                    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                });
+            });
+
+            #endregion
         }
-        
+
+        /// <summary>
+        /// This method gets called by the runtime.
+        /// Use this method to configure the HTTP request pipeline.
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="env"></param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(opts =>
-                {
-                    opts.RoutePrefix = string.Empty;
-                    opts.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPI.Authentication v1");
-                });
             }
-            app.UseHttpsRedirection();
+
             app.UseRouting();
+
             app.UseAuthentication();
+
             app.UseAuthorization();
+
+            app.UseCors();
+
             app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
     }
