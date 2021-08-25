@@ -114,6 +114,13 @@ describe('EmployeeListPage ', () => {
     expect(await page.getEditButtonDisplayed()).toBeTruthy('Edit button is display');
   });
 
+  it('should display open edit modal on page when click on edit button', async () => {
+    await page.navigateTo();
+    await page.getEditButton().click();
+    await browser.sleep(1000);
+    expect(await page.getModalDisplayed()).toBeTruthy('Modal window is open');
+  });
+
   afterEach(async () => {
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
     expect(logs).not.toContain(jasmine.objectContaining(
