@@ -9,8 +9,4 @@ import { AuthService } from './services/authentication/auth.service';
 export class AppComponent {
   appTitle = 'Employee Management Portal';
   private as: AuthService;
-
-  public get isLoggedIn(): boolean {
-    return this.as.isAuthenticated();
-  }
 }
