@@ -133,6 +133,14 @@ describe('EmployeeListPage ', () => {
     expect(await page.getDelAlertButtonDisplayed()).toBeTruthy('Delete alert button is display');
   });
 
+  it('should display alert dialog then click on delete alert button', async () => {
+    await page.navigateTo();
+    await page.getDelAlertButton().click();
+    await browser.sleep(1000);
+    let alertDialog = browser.switchTo().alert();
+    await expect(alertDialog).toBeTruthy('Alert dialog is display');
+  });
+
   afterEach(async () => {
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
     expect(logs).not.toContain(jasmine.objectContaining(
