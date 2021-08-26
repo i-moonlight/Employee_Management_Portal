@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace WebAPI.Authentication.Infrastructure.DependencyInjection
+namespace WebAPI.Authentication.Infrastructure
 {
     public static class ClaimRoleManager
     {

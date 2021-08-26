@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace WebAPI.Authentication.Infrastructure.DependencyInjection
+namespace WebAPI.Authentication.Infrastructure
 {
     public static class RoleNames
     {

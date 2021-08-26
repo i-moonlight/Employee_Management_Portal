@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 
-namespace WebAPI.Authentication.Infrastructure.DependencyInjection
+namespace WebAPI.Authentication.Infrastructure
 {
     public static class DefaultUsers
     {

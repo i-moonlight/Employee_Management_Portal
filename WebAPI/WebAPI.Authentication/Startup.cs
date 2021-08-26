@@ -16,11 +16,9 @@ namespace WebAPI.Authentication
     public class Startup
     {
         private IConfiguration Configuration { get; }
-        
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+
+        public Startup(IConfiguration config) => Configuration = config;
+
         /// <summary>
         /// This method gets called by the runtime.
         /// Use this method to add services to the container.
@@ -48,7 +46,7 @@ namespace WebAPI.Authentication
                 .AddEntityFrameworkStores<AppDbContext>();
 
             #endregion
-            
+
             #region Authentication JWT
 
             services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig"));
