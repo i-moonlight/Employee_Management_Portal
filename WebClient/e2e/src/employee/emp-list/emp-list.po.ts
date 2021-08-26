@@ -129,4 +129,13 @@ export class EmployeeListPage {
   async getEditButtonDisplayed(): Promise<boolean> {
     return (await this.getEditButton()).isDisplayed();
   }
+
+  // Delete alert button.
+  getDelAlertButton(): ElementFinder {
+    return element(by.css('.btn-red'));
+  }
+
+  async getDelAlertButtonDisplayed(): Promise<boolean> {
+    return (await this.getDelAlertButton()).isDisplayed();
+  }
 }
