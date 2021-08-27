@@ -34,12 +34,11 @@ export class AuthComponent implements OnInit {
     const email = this.authForm.controls.email.value;
     const password = this.authForm.controls.password.value;
 
-    this.sharedService.toAuthentication(email, password).subscribe(
-      (data) => {
-        console.log("response", data);
-        },
+    this.sharedService.toAuthentication(email, password).subscribe((data) => {
+      console.log("response", data);
+      },
         error => {
-        console.log("error", error);
-      });
+      console.log("error", error);
+    });
   }
 }

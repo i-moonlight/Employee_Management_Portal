@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-// import { User } from '../../models/user.model';
+import { Account } from '../../models/account.model';
 import { AuthService } from '../../services/authentication/auth.service';
 
 @Component({
@@ -8,17 +8,17 @@ import { AuthService } from '../../services/authentication/auth.service';
   styleUrls: ['./manager.component.css']
 })
 export class ManagerComponent implements OnInit {
-  // public userList: User[] = [];
+  public userList: Account[] = [];
 
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    // this.getAllUser();
+    this.getAllUser();
   }
 
-  // private getAllUser() {
-  //   this.authService.getUserList().subscribe((response: User[]) => {
-  //     this.userList = response;
-  //   })
-  // }
+  private getAllUser() {
+    // this.authService.getUserList().subscribe((response: User[]) => {
+    //   this.userList = response;
+    // })
+  }
 }

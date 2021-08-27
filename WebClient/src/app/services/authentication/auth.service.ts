@@ -36,7 +36,7 @@ export class AuthService {
       .post<Token>(`${this.apiUrl} api/auth/login`, {email, password})
       .pipe(tap(token => localStorage.setItem(ACCESS_TOKEN_KEY, token.accessToken)));
   }
-=======
+
   private readonly AUTH_URL: string = 'https://localhost:4021/api/auth/'
 
   constructor(private http: HttpClient) {}

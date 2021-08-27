@@ -22,8 +22,9 @@ export class RegisterComponent implements OnInit {
     this.resetForm();
   }
 
+  // tslint:disable-next-line:typedef
   private resetForm(form?: NgForm) {
-    if (form != null) form.reset();
+    if (form != null) { form.reset(); }
     this.account = {
       UserName: '',
       Password: '',
@@ -31,6 +32,7 @@ export class RegisterComponent implements OnInit {
     };
   }
 
+  // tslint:disable-next-line:typedef
   onSubmit(form: NgForm) {
     this.account = {
       UserName: form.value.UserName,

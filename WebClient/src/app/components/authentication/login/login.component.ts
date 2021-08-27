@@ -12,15 +12,19 @@ import { Response } from '../../../models/response.model';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private authService: AuthService, private toastr: ToastrService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private toastr: ToastrService,
+    private router: Router) {}
 
   ngOnInit() {}
 
+  // tslint:disable-next-line:typedef
   onSubmit(userName, password) {
     const login: Login = {
       UserName: userName,
       Password: password,
-    }
+    };
     this.authService.getLoginToken(login).subscribe((res: Response) => {
       if (res.DateSet != null) {
         this.toastr.success('Login Successful', null, {timeOut: 50000});
