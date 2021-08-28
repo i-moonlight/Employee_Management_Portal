@@ -19,21 +19,13 @@ export class EmployeeListPage {
   }
 
   // Modal window.
-  getModal(): ElementFinder {
-    return element(by.id('exampleModal'));
-  }
-
   async getModalDisplayed(): Promise<boolean> {
-    return (await this.getModal()).isDisplayed();
+    return element(by.id('exampleModal')).isDisplayed();
   }
 
   // Modal title.
-  getModalTitle(): ElementFinder {
-    return element(by.className('modal-title'));
-  }
-
   async getModalTitleText(): Promise<string> {
-    return (await this.getModalTitle()).getText();
+    return element(by.className('modal-title')).getText();
   }
 
   // Close modal button.
@@ -51,12 +43,8 @@ export class EmployeeListPage {
   }
 
   // Employee table.
-  getTable(): ElementFinder {
-    return element(by.tagName('table'));
-  }
-
   async getTableDisplayed(): Promise<boolean> {
-    return (await this.getTable()).isDisplayed();
+    return element(by.tagName('table')).isDisplayed();
   }
 
   // Employee list.
