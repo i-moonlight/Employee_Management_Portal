@@ -2,8 +2,10 @@
 
 namespace WebAPI.Authentication.Models
 {
-    public class RegistrationEmployeeModel
+    public class RegistrationModel
     {
+        public string FullName { get; set; }
+        
         [Required]
         public string Username { get; set; }
         

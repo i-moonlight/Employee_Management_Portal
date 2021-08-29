@@ -26,7 +26,7 @@ namespace WebAPI.Authentication
                     .CreateScope();
 
 #pragma warning disable 4014
-                ClaimRoleManager.ClaimRole(scope.ServiceProvider);
+                RoleManager.Initialize(scope.ServiceProvider);
 #pragma warning restore 4014
 
                 #endregion
