@@ -79,6 +79,8 @@ export class EmployeeModalComponent implements OnInit {
       (response: string) => {
         this.photoFileName = response;
         this.photoFilePath = this.service.PhotoUrl + this.photoFileName;
+        this.buttonClicked = false;
+        this.addEmployee();
         console.warn(response)
       },
       (error: string) => console.error(error)
