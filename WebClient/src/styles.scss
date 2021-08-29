@@ -1,6 +1,6 @@
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+//@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
-/* color variables */
+// color variables
 $clr-primary: #1266f1;
 $clr-primary-light: #adffff;
 $clr-primary-dark: #091034;
@@ -14,9 +14,10 @@ $clr-gray600: #2a324b;
 $clr-gray700: #161d34;
 $clr-bg: #060b23;
 $clr-dark: #010309;
-$clr-eror: #da2f59;
+$clr-error: #da2f59;
+$clr-succes: #408132;
 
-/* border radius */
+// border radius
 $radius: 0.5rem;
 
 *,
@@ -80,17 +81,22 @@ li:hover {
   box-shadow: -11px 9px 35px -11px rgba(42, 71, 94, 0.58);
 }
 
-.shadows {
+.shadows-light {
   -webkit-box-shadow: 3px 5px 48px -4px rgba(42, 71, 94, 0.21);
   -moz-box-shadow: 3px 5px 48px -4px rgba(42, 71, 94, 0.21);
   box-shadow: 3px 5px 48px -4px rgba(42, 71, 94, 0.21);
   border: 1px solid #dee2e6;
 }
 
+.shadows-middle {
+  box-shadow: -5px -5px 11px rgba(113, 113, 113, 0.15), 5px 5px 11px rgba(0, 0, 0, 0.15);
+  border: 1px solid #dee2e6;
+  border-radius: $radius;
+}
+
 input[type="text"], input[type="password"], .btn {
   //border-radius: 2px;
 }
-
 
 .btn-danger, .btn-danger:hover {
   background-color: #333399 !important;
@@ -109,29 +115,26 @@ input[type="text"], input[type="password"], .btn {
   text-align: center;
 }
 
-form {
+.form {
   margin: 1rem 0;
-}
 
-.form__title {
-  text-transform: uppercase;
-  line-height: 1.1;
-  margin: 2px 0;
-  font-weight: 600;
+  &__title {
+    text-transform: uppercase;
+    line-height: 1.1;
+    margin: 2px 0;
+    font-weight: 600;
+  }
 }
 
 .form-field {
   display: flex;
   position: relative;
+  flex-wrap: wrap;
   font-size: 14px;
   height: 50px;
   border-top: 10px solid transparent;
-  //margin-bottom: 10px;
-  //padding: 1em 0;
-  //margin: 1em 0;
-  //margin-bottom: 5px;
-  //--field-padding: 12px;
-  //padding: 1rem;
+  margin: 5px 0;
+  border-radius: $radius;
 
   &__input {
     position: relative;
@@ -148,10 +151,6 @@ form {
     padding: 1.25rem;
     background: none;
 
-    //&[required]:placeholder-shown {
-    //  border-color: $clr-eror;
-    //}
-
     &:hover {
       border-color: $clr-gray600;
     }
@@ -165,6 +164,64 @@ form {
     }
   }
 
+  &__input[type=text]:valid:not(:focus) {
+    color: $clr-succes;
+    border-color: $clr-succes;
+  }
+
+  &__input[type=text]:valid:not(:focus) + label {
+    color: $clr-succes;
+  }
+
+  &__input[type=text]:invalid:focus {
+    border: 1px solid $clr-error;
+  }
+
+  &__input[type=text]:invalid:focus + label {
+    color: $clr-error;
+  }
+
+  &__input[type=text]:invalid:not(:focus) {
+    border: 1px solid $clr-error;
+    transition: all 0.6s;
+  }
+
+  &__input[type=text]:invalid:not(:focus) + label {
+    color: $clr-error;
+  }
+
+  &__input[type=password]:valid:not(:focus) {
+    color: $clr-succes;
+    border-color: $clr-succes;
+  }
+
+  &__input[type=password]:valid:not(:focus) + label {
+    color: $clr-succes;
+  }
+
+  &__input[type=password]:invalid:focus {
+    border: 1px solid $clr-error;
+  }
+
+  &__input[type=password]:invalid:focus + label {
+    color: $clr-error;
+  }
+
+  &__input[type=password]:invalid:not(:focus) {
+    border: 1px solid $clr-error;
+  }
+
+  &__input[type=password]:invalid:not(:focus) + label {
+    color: $clr-error;
+  }
+
+  &__input:focus ~ &__label,
+  &__input:not(:placeholder-shown).form-field__input:not(:focus) ~ &__label {
+    top: -0.5rem;
+    font-size: 0.8rem;
+    left: 0.8rem;
+  }
+
   &__label {
     position: absolute;
     left: 1rem;
@@ -174,17 +231,28 @@ form {
     transition: top 200ms ease-in, left 200ms ease-in, font-size 200ms ease-in;
     background-color: white;
   }
-}
 
-.form-field__input:focus ~ .form-field__label,
-.form-field__input:not(:placeholder-shown).form-field__input:not(:focus) ~ .form-field__label {
-  top: -0.5rem;
-  font-size: 0.8rem;
-  left: 0.8rem;
-}
+  &__hint {
+    display: table-row;
+    flex-basis: 100%;
+    color: $clr-error;
+    max-height: 0;
+    opacity: 0;
+    animation: ani 1s forwards;
 
-.indent {
-  margin-bottom: .7em;
+    @keyframes ani {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    & > span {
+      font-size: small;
+    }
+  }
 }
 
 /*.form__label {*/

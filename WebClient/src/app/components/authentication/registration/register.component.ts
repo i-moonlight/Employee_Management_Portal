@@ -51,6 +51,7 @@ export class RegisterComponent implements OnInit {
     });
   }
 
+  // tslint:disable-next-line:typedef
   private authenticationUser(account) {
     const login: Login = {
       UserName: account.UserName,

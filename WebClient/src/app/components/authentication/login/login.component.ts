@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Login } from '../../../models/login.model';
 import { Response } from '../../../models/response.model';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -12,12 +13,20 @@ import { Response } from '../../../models/response.model';
 })
 export class LoginComponent implements OnInit {
 
+  form: FormGroup;
+
   constructor(
+    private formBuilder: FormBuilder,
     private authService: AuthService,
     private toastr: ToastrService,
-    private router: Router) {}
+    private router: Router
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit(): void {
+    this.form = this.formBuilder.group({
+      username: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(16)]],
+    });
+  }
 
   // tslint:disable-next-line:typedef
   onSubmit(userName, password) {
@@ -34,5 +43,10 @@ export class LoginComponent implements OnInit {
         this.toastr.error('Login Failed');
       }
     });
+  }
+
+  // tslint:disable-next-line:typedef
+  get username() {
+    return this.form.get('username').errors;
   }
 }
