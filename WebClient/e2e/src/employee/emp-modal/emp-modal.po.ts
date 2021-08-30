@@ -1,0 +1,21 @@
+import { browser, by, element, ElementFinder } from 'protractor';
+
+export class EmployeeModalPage {
+  async navigateTo(): Promise<unknown> {
+    return browser.get('http://localhost:4200/employee');
+  }
+
+  // Add employee button.
+  getAddEmployeeButton(): ElementFinder {
+    return element(by.css('.btn-float'));
+  }
+
+  // Employee name.
+  getEmployeeName(): ElementFinder {
+    return element(by.id('name'));
+  }
+
+  async getEmployeeNameTitle(): Promise<string> {
+    return (await this.getEmployeeName()).getText();
+  }
+}
