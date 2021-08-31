@@ -27,4 +27,8 @@ export class EmployeeModalPage {
   async getEmployeeNameInputDisplayed(): Promise<ElementFinder> {
     return (await this.getEmployeeNameInput()).isDisplayed();
   }
+
+  async getEmployeeNamePlaceholder(): Promise<ElementFinder> {
+    return (await this.getEmployeeNameInput()).getAttribute('placeholder');
+  }
 }

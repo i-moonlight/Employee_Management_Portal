@@ -21,6 +21,13 @@ describe('EmployeeModalPage', () => {
     expect(await page.getEmployeeNameInputDisplayed()).toBeTruthy('Employee name input is display');
   });
 
+  it('should display employee name placeholder value as `Enter Employee Name` on page', async () => {
+    await page.navigateTo();
+    await page.getAddEmployeeButton().click();
+    await browser.sleep(1000);
+    expect(await page.getEmployeeNamePlaceholder()).toEqual('Enter Employee Name');
+  });
+
   afterEach(async () => {
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
     expect(logs).not.toContain(jasmine.objectContaining(
