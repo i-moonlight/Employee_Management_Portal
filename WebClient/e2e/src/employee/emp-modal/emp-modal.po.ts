@@ -18,4 +18,13 @@ export class EmployeeModalPage {
   async getEmployeeNameTitle(): Promise<string> {
     return (await this.getEmployeeName()).getText();
   }
+
+  // Employee name input.
+  getEmployeeNameInput(): ElementFinder {
+    return element(by.id('employeeName'));
+  }
+
+  async getEmployeeNameInputDisplayed(): Promise<ElementFinder> {
+    return (await this.getEmployeeNameInput()).isDisplayed();
+  }
 }

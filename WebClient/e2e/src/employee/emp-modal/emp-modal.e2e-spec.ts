@@ -14,6 +14,13 @@ describe('EmployeeModalPage', () => {
     expect(await page.getEmployeeNameTitle()).toEqual('Employee Name');
   });
 
+  it('should display employee name input form on page', async () => {
+    await page.navigateTo();
+    await page.getAddEmployeeButton().click();
+    await browser.sleep(1000);
+    expect(await page.getEmployeeNameInputDisplayed()).toBeTruthy('Employee name input is display');
+  });
+
   afterEach(async () => {
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
     expect(logs).not.toContain(jasmine.objectContaining(
