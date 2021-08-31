@@ -86,3 +86,7 @@
 .social-area__links li a i.fa-google-plus-g:hover {
   filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.7));
 }
+
+.form-button{
+  display: flex;
+}
