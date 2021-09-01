@@ -31,4 +31,13 @@ export class EmployeeModalPage {
   async getEmployeeNamePlaceholder(): Promise<ElementFinder> {
     return (await this.getEmployeeNameInput()).getAttribute('placeholder');
   }
+
+  // Department title.
+  getDepartment(): ElementFinder {
+    return element(by.id('dep'));
+  }
+
+  async getDepartmentTitle(): Promise<string> {
+    return (await this.getDepartment()).getText();
+  }
 }

@@ -28,6 +28,13 @@ describe('EmployeeModalPage', () => {
     expect(await page.getEmployeeNamePlaceholder()).toEqual('Enter Employee Name');
   });
 
+  it('should display department name select on modal window', async () => {
+    await page.navigateTo();
+    await page.getAddEmployeeButton().click();
+    await browser.sleep(1000);
+    expect(await page.getDepartmentTitle()).toEqual('Department');
+  });
+
   afterEach(async () => {
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
     expect(logs).not.toContain(jasmine.objectContaining(
