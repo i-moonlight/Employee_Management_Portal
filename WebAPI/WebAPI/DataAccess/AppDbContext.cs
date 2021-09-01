@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using WebAPI.Domain.Entities;
 
-namespace WebAPI.DataBase
+namespace WebAPI.DataAccess
 {
     public class AppDbContext : IdentityDbContext<User>
     {

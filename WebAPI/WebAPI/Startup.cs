@@ -1,4 +1,5 @@
 using System.IO;
+using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -9,10 +10,11 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
-using WebAPI.DataBase;
+using WebAPI.DataAccess;
+using WebAPI.DataAccess.Infrastructure;
 using WebAPI.Domain.Entities;
-using WebAPI.Repositories.Implementations;
 using WebAPI.Repositories.Interfaces;
+using WebAPI.UseCases.Mappings;
 
 namespace WebAPI
 {
@@ -25,6 +27,7 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddMvc();
             
             // JSON Serializer.
             services
@@ -40,8 +43,7 @@ namespace WebAPI
             services.AddDbContext<AppDbContext>(opts => opts.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             // Dependency injection.
-            services.AddScoped<ICrudRepository<Employee>, EmployeeRepository>();
-            services.AddScoped<ICrudRepository<Department>, DepartmentRepository>();
+   
 
             #region Enable logging
 
@@ -75,6 +77,18 @@ namespace WebAPI
                 });
             });
 
+            #endregion
+            
+            #region Mapper
+            
+            services.AddAutoMapper(config =>
+            {
+                config.AddProfile(new AssemblyMappingProfile(Assembly.GetExecutingAssembly()));
+                config.AddProfile(new AssemblyMappingProfile(typeof(IEmployeeDbContext).Assembly));
+            });
+
+            services.AddAutoMapper(typeof(AssemblyMappingProfile));
+            
             #endregion
         }
 

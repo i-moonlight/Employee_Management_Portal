@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace WebAPI.Migrations
+namespace WebAPI.DataAccess.Migrations
 {
     public partial class _initial : Migration
     {
