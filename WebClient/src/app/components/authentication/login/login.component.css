@@ -1,5 +1,5 @@
 /** {*/
-/*  border: 1px solid #f3c4c4;*/
+/*  border: 1px solid #150303;*/
 /*}*/
 
 .social-area {
@@ -85,8 +85,4 @@
 
 .social-area__links li a i.fa-google-plus-g:hover {
   filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.7));
-}
-
-.form-button{
-  display: flex;
 }

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Login } from '../../../models/login.model';
 import { Response } from '../../../models/response.model';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { FormGroup, Validators, FormControl, AbstractControl, ValidationErrors, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -61,8 +61,6 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      username: ['',
-        [Validators.required, Validators.minLength(6), Validators.maxLength(16)]],
       username: ['', Validators.compose([
         Validators.required,
         Validators.minLength(6),
@@ -82,6 +80,33 @@ export class LoginComponent implements OnInit {
       UserName: userName,
       Password: password,
     };
+
+  public loginForm: FormGroup;
+  private readonly usernamePattern = /^[\S][\w\d]{6,16}$/;
+  private readonly passwordPattern = /^((?!.*[\s])(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{12,25})$/;
+
+  ngOnInit(): void {
+    this.loginForm = new FormGroup({
+      userName: new FormControl('', [
+        Validators.required,
+        Validators.minLength(7),
+        Validators.pattern(this.usernamePattern),
+      ]),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.pattern(this.passwordPattern),
+      ]),
+    });
+  }
+
+  onSubmit(loginForm: any) {
+    const username = loginForm.controls.userName.value;
+    const password = loginForm.controls.password.value;
+
+    const login: Login = {
+      UserName: username,
+      Password: password
+    };
     this.authService.getLoginToken(login).subscribe((res: Response) => {
       if (res.DateSet != null) {
         this.toastr.success('Login Successful', null, {timeOut: 50000});
@@ -91,5 +116,13 @@ export class LoginComponent implements OnInit {
         this.toastr.error('Login Failed');
       }
     });
+  }
+
+  public get username() {
+    return this.loginForm.controls.userName;
+  }
+
+  public get password() {
+    return this.loginForm.controls.password;
   }
 }
