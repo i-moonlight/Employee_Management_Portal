@@ -1,4 +1,4 @@
-import { browser, by, element, ElementFinder } from 'protractor';
+import { browser, by, element, ElementArrayFinder, ElementFinder } from 'protractor';
 
 export class EmployeeModalPage {
   async navigateTo(): Promise<unknown> {
@@ -39,5 +39,18 @@ export class EmployeeModalPage {
 
   async getDepartmentTitle(): Promise<string> {
     return (await this.getDepartment()).getText();
+  }
+
+  // Department option select.
+  getDepartmentOptions(): ElementArrayFinder {
+    return element.all(by.tagName('option'));
+  }
+
+  getOptionSelected(): ElementFinder {
+    return element(by.id('department'));
+  }
+
+  async isOptionSelectDisplayed(): Promise<boolean> {
+    return (await this.getOptionSelected()).getAttribute('ng-reflect-model').isDisplayed();
   }
 }

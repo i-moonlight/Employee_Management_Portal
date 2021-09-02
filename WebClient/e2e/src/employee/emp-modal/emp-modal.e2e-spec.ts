@@ -35,6 +35,15 @@ describe('EmployeeModalPage', () => {
     expect(await page.getDepartmentTitle()).toEqual('Department');
   });
 
+  it('should display selected department on select form when option selected', async () => {
+    await page.navigateTo();
+    await page.getAddEmployeeButton().click();
+    await browser.sleep(1000);
+    await page.getDepartmentOptions().then((options) => options[1].click());
+    await browser.sleep(1000);
+    expect(await page.isOptionSelectDisplayed()).toBeTruthy('Selected department is display');
+  });
+
   afterEach(async () => {
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
     expect(logs).not.toContain(jasmine.objectContaining(
