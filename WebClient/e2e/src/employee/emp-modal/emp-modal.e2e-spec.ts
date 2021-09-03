@@ -44,6 +44,13 @@ describe('EmployeeModalPage', () => {
     expect(await page.isOptionSelectDisplayed()).toBeTruthy('Selected department is display');
   });
 
+  it('should display date of joining title text as `Date` on page', async () => {
+    await page.navigateTo();
+    await page.getAddEmployeeButton().click();
+    await browser.sleep(1000);
+    expect(await page.getDateTitle()).toEqual('Date');
+  });
+
   afterEach(async () => {
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
     expect(logs).not.toContain(jasmine.objectContaining(

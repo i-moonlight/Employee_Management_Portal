@@ -53,4 +53,9 @@ export class EmployeeModalPage {
   async isOptionSelectDisplayed(): Promise<boolean> {
     return (await this.getOptionSelected()).getAttribute('ng-reflect-model').isDisplayed();
   }
+
+  // Date of joining title.
+  async getDateTitle(): Promise<string> {
+    return element(by.id('date')).getText();
+  }
 }
