@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace WebAPI.Repositories.Interfaces
+namespace WebAPI.UseCases.Services
 {
     public interface ICrudRepository<T>
     {

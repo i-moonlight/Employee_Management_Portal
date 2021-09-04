@@ -5,8 +5,9 @@ using WebAPI.Domain.Entities;
 
 namespace WebAPI.DataAccess.Infrastructure
 {
-    public interface IEmployeeDbContext
+    public interface IAppDbContext
     {
+        DbSet<Department> Departments { get; set; }
         DbSet<Employee> Employees { get; set; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }

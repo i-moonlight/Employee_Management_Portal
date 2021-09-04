@@ -24,6 +24,7 @@
 
     <ItemGroup>
       <Folder Include="Photos" />
+      <Folder Include="UseCases\Queries" />
     </ItemGroup>
 
 </Project>

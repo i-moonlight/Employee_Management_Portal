@@ -5,7 +5,7 @@ using Moq;
 using NUnit.Framework;
 using WebAPI.Controllers;
 using WebAPI.Domain.Entities;
-using WebAPI.Repositories.Interfaces;
+using WebAPI.UseCases.Services;
 
 namespace WebAPI.Tests
 {

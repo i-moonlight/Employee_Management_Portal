@@ -13,7 +13,6 @@ using Newtonsoft.Json.Serialization;
 using WebAPI.DataAccess;
 using WebAPI.DataAccess.Infrastructure;
 using WebAPI.Domain.Entities;
-using WebAPI.Repositories.Interfaces;
 using WebAPI.UseCases.Mappings;
 
 namespace WebAPI
@@ -40,9 +39,11 @@ namespace WebAPI
                     .ContractResolver = new DefaultContractResolver());
             
             // Enable application context.
-            services.AddDbContext<AppDbContext>(opts => opts.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddDbContext<AppDbContext>(opts => opts.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            // Dependency injection.
+            services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), 
+                    x => x.MigrationsAssembly("WebAPI.DataAccess")));
    
 
             #region Enable logging
@@ -84,7 +85,7 @@ namespace WebAPI
             services.AddAutoMapper(config =>
             {
                 config.AddProfile(new AssemblyMappingProfile(Assembly.GetExecutingAssembly()));
-                config.AddProfile(new AssemblyMappingProfile(typeof(IEmployeeDbContext).Assembly));
+                config.AddProfile(new AssemblyMappingProfile(typeof(IAppDbContext).Assembly));
             });
 
             services.AddAutoMapper(typeof(AssemblyMappingProfile));

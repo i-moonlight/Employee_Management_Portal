@@ -1,16 +1,18 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Domain.Entities;
 using WebAPI.Helpers;
-using WebAPI.Repositories.Interfaces;
+using WebAPI.UseCases.Requests.Employees.Queries;
+using WebAPI.UseCases.Services;
 
 namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EmployeeController : ControllerBase
+    public class EmployeeController : BaseController
     {
         private readonly ICrudRepository<Employee> _empRepository;
         private readonly IWebHostEnvironment _env;
@@ -21,10 +23,25 @@ namespace WebAPI.Controllers
             _env = env;
         }
 
+        /// <summary>
+        /// Gets the list of Employee
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// GET /employee
+        /// </remarks>
+        /// <returns>Returns EmployeeListViewModel</returns>
+        /// <response code="200">Success</response>
+        /// <response code="401">If the user is unauthorized</response>
         [HttpGet]
-        public JsonResult Get()
+        // [Authorize (Roles = "Manager")]
+        // [ProducesResponseType(StatusCodes.Status200OK)]
+        // [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<EmployeeListViewModel>> GetEmployeeList()
         {
-            return new JsonResult(_empRepository.Read());
+            var query = new EmployeeListQuery() { EmployeeId = EmployeeId };
+            var view = await Mediator.Send(query);
+            return Ok(view);
         }
 
         [HttpPost]

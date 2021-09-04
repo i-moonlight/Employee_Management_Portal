@@ -1,13 +1,13 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Domain.Entities;
-using WebAPI.Repositories.Interfaces;
+using WebAPI.UseCases.Services;
 
 namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DepartmentController : ControllerBase
+    public class DepartmentController : BaseController
     {
         private readonly ICrudRepository<Department> _depRepository;
 
