@@ -51,6 +51,13 @@ describe('EmployeeModalPage', () => {
     expect(await page.getDateTitle()).toEqual('Date');
   });
 
+  it('should display date of joining on form when date input', async () => {
+    await page.navigateTo();
+    await page.getAddEmployeeButton().click();
+    await browser.sleep(1000);
+    expect(await page.isDateInputDisplayed()).toBeTruthy('Date of joining input is display');
+  });
+
   afterEach(async () => {
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
     expect(logs).not.toContain(jasmine.objectContaining(

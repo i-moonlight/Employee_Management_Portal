@@ -58,4 +58,13 @@ export class EmployeeModalPage {
   async getDateTitle(): Promise<string> {
     return element(by.id('date')).getText();
   }
+
+  // Date of joining input.
+  getDateSelected(): ElementFinder {
+    return element(by.id('dateOfJoining'));
+  }
+
+  async isDateInputDisplayed(): Promise<boolean> {
+    return (await this.getDateSelected()).getAttribute('ng-reflect-model').isDisplayed();
+  }
 }
