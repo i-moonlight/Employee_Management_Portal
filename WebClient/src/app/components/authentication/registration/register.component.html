@@ -1,36 +1,55 @@
 <!-- Tab form section -->
-<form class="form" #RegistrationForm="ngForm" (ngSubmit)="onSubmit(RegistrationForm)">
+<form class="form" [formGroup]="registrationForm" novalidate (submit)="onSubmit(registrationForm)">
   <div class="container">
     <!-- Tab form header -->
     <h4 class="form__title">Registration</h4>
     <!-- Username input field -->
-    <div class="form__item">
-      <label class="form__label" data-error="Required field!">
-        <input class="form-control" type="text" name="UserName" placeholder="&nbsp;"
-               [(ngModel)]="account.UserName" #UserName="ngModel" required>
-        <span>Enter your username</span>
-      </label>
+    <div class="form__wrapper">
+      <div class="form-field form-field__item">
+        <input class="form-field__input" id="username" type="text" placeholder=" "
+               formControlName="userName"
+               minlength="7" maxlength="16" required/>
+        <label class="form-field__label" for="username">UserName</label>
+      </div>
+      <!-- Username input field validation-->
+      <div class="form-hint" *ngIf="username.invalid">
+        <span *ngIf="username.errors.required"> * Please enter your username</span>
+        <span *ngIf="username.errors.minlength"> * Username must be minimum 6 characters</span>
+        <span *ngIf="username.errors?.pattern"> * Username is not valid</span>
+        <span *ngIf="username.errors.shouldBeUnique"> * Username is already taken</span>
+      </div>
     </div>
     <!-- Email input field -->
-    <div class="form__item">
-      <label class="form__label" data-error="Invalid email!">
-        <input class="form-control" type="text" name="Email" placeholder="&nbsp;"
-               [(ngModel)]="account.Email" #Email="ngModel" [pattern]="emailPattern">
-        <span>Enter your email</span>
-      </label>
+    <div class="form__wrapper">
+      <div class="form-field form-field__item">
+        <input class="form-field__input" id="email" type="email" placeholder=" "
+               formControlName="email" maxlength="25" required/>
+        <label class="form-field__label" for="email">Email</label>
+      </div>
+      <!-- Username input field validation-->
+      <div class="form-hint" *ngIf="email.invalid">
+        <span *ngIf="email.errors.required"> * Please enter your email</span>
+        <span *ngIf="email.errors?.pattern"> * Email is not valid</span>
+        <span *ngIf="email.errors.email"> * Email format</span>
+      </div>
     </div>
     <!-- Password input field -->
-    <div class="form__item">
-      <label class="form__label" [attr.data-error]="Password.errors!=null?
-      (Password.errors.required?'Required field!':'Minimum 3 characters needed') :''">
-        <input class="form-control" type="password" name="Password" placeholder="&nbsp;"
-               [(ngModel)]="account.Password" #Password="ngModel" required minlength="3">
-        <span>Enter your password</span>
-      </label>
+    <div class="form__inner">
+      <div class="form-field form-field__item">
+        <input class="form-field__input" id="password" type="password" placeholder=" "
+               formControlName="password"
+               minlength="12" maxlength="25" required/>
+        <label class="form-field__label" for="password">Password</label>
+      </div>
+      <!-- Password input field validation-->
+      <div class="form-hint" *ngIf="password.invalid">
+        <span *ngIf="password.errors.required"> * Please enter your password</span>
+        <span *ngIf="password.errors?.pattern"> * Min 8 chars, one number, letter and special character</span>
+      </div>
     </div>
-    <!-- Login button -->
-    <div class="form__item">
-      <button class="btn btn-primary" type="submit" [disabled]="!RegistrationForm.valid">Submit</button>
+    <!-- Registration button -->
+    <div class="form__button">
+      <button class="btn btn-primary" type="submit" [disabled]="registrationForm.invalid">Registration</button>
     </div>
   </div>
 </form>
