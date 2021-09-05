@@ -67,4 +67,13 @@ export class EmployeeModalPage {
   async isDateInputDisplayed(): Promise<boolean> {
     return (await this.getDateSelected()).getAttribute('ng-reflect-model').isDisplayed();
   }
+
+  // Photo file.
+  getPhoto(): ElementFinder {
+    return element(by.className('photo'));
+  }
+
+  async isPhotoDisplayed(): Promise<boolean> {
+    return (await this.getPhoto()).isDisplayed();
+  }
 }
