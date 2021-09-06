@@ -10,6 +10,11 @@ export class EmployeeModalPage {
     return element(by.css('.btn-float'));
   }
 
+  // Edit employee button.
+  getEditEmployeeButton(): ElementFinder {
+    return element(by.css('.btn-green'));
+  }
+
   // Employee name.
   getEmployeeName(): ElementFinder {
     return element(by.id('name'));
