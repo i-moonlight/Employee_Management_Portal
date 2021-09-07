@@ -9,10 +9,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+
 using WebAPI.DataAccess;
 using WebAPI.DataAccess.Infrastructure;
+using WebAPI.DataAccess.Persistence;
 using WebAPI.Domain.Entities;
+using WebAPI.UseCases;
 using WebAPI.UseCases.Mappings;
 
 namespace WebAPI
@@ -20,31 +24,34 @@ namespace WebAPI
     public class Startup
     {
         private IConfiguration Configuration { get; }
-        
+
         public Startup(IConfiguration config) => Configuration = config;
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-            services.AddMvc();
+            #region Dependency Injection
             
-            // JSON Serializer.
+            services.AddControllers();
+            services.AddUseCases();
+            services.AddDataAccess(Configuration);
+            
+            #endregion
+
+            #region JSON Serializer
+            
             services
                 .AddControllersWithViews()
-                .AddNewtonsoftJson(opts => opts
-                    .SerializerSettings
-                    .ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
-                .AddNewtonsoftJson(opts => opts
-                    .SerializerSettings
-                    .ContractResolver = new DefaultContractResolver());
+                .AddNewtonsoftJson(opts => opts.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore)
+                .AddNewtonsoftJson(opts => opts.SerializerSettings.ContractResolver = new DefaultContractResolver());
             
+            #endregion
+
             // Enable application context.
             //services.AddDbContext<AppDbContext>(opts => opts.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), 
-                    x => x.MigrationsAssembly("WebAPI.DataAccess")));
-   
+            services.AddDbContext<AppDbContext>(opts => opts
+                .UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
+                    builder => builder.MigrationsAssembly("WebAPI.DataAccess")));
 
             #region Enable logging
 
@@ -59,15 +66,15 @@ namespace WebAPI
             });
 
             #endregion
-            
+
             #region Role Identity
 
             services
                 .AddIdentity<User, IdentityRole>(_ => {})
                 .AddEntityFrameworkStores<AppDbContext>();
-            
+
             #endregion Role Identity
-            
+
             #region CORS
 
             services.AddCors(options =>
@@ -79,9 +86,9 @@ namespace WebAPI
             });
 
             #endregion
-            
+
             #region Mapper
-            
+
             services.AddAutoMapper(config =>
             {
                 config.AddProfile(new AssemblyMappingProfile(Assembly.GetExecutingAssembly()));
@@ -89,7 +96,7 @@ namespace WebAPI
             });
 
             services.AddAutoMapper(typeof(AssemblyMappingProfile));
-            
+
             #endregion
         }
 
@@ -113,7 +120,7 @@ namespace WebAPI
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
             app.UseCors();
-            
+
             app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
     }
