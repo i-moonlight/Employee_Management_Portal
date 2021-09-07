@@ -10,7 +10,6 @@ export class EmployeeModalPage {
     return element(by.css('.btn-float'));
   }
 
-  // Edit employee button.
   getEditEmployeeButton(): ElementFinder {
     return element(by.css('.btn-green'));
   }
@@ -80,5 +79,9 @@ export class EmployeeModalPage {
 
   async isPhotoDisplayed(): Promise<boolean> {
     return (await this.getPhoto()).isDisplayed();
+  }
+
+  async isPhotoPathPresent(): Promise<boolean> {
+    return (await this.getPhoto()).getAttribute('src').isPresent();
   }
 }
