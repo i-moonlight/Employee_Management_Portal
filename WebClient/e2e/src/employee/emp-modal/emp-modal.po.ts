@@ -84,4 +84,13 @@ export class EmployeeModalPage {
   async isPhotoPathPresent(): Promise<boolean> {
     return (await this.getPhoto()).getAttribute('src').isPresent();
   }
+
+  // Photo file input.
+  getPhotoFileInput(): ElementFinder {
+    return element(by.className('input'));
+  }
+
+  async isPhotoFileInputDisplayed(): Promise<boolean> {
+    return (await this.getPhotoFileInput()).isDisplayed();
+  }
 }
