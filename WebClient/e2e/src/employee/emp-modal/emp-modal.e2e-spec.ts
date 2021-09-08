@@ -86,6 +86,13 @@ describe('EmployeeModalPage', () => {
     expect(await page.isPhotoPathPresent()).toBeTruthy('Photo file path is display');
   });
 
+  it('should display photo file input on modal window when click on edit employee button', async () => {
+    await page.navigateTo();
+    await page.getEditEmployeeButton().click();
+    await browser.sleep(1000);
+    expect(await page.isPhotoFileInputDisplayed()).toBeTruthy('Photo input is display');
+  });
+
   afterEach(async () => {
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
     expect(logs).not.toContain(jasmine.objectContaining(
