@@ -5,17 +5,18 @@
 .nav-link {
   border: 0;
   margin: 0;
-  padding: 10px 0;
+  /*padding: 10px 0;*/
   text-align: center;
   border-radius: 0;
   color: #fff;
-  background: #143250
+  background: #143250;
+  font-size: 1rem;
 }
 
 .nav-tabs .nav-link {
   border: 0;
   margin: 0;
-  padding: 10px 0;
+  /*padding: 10px 0;*/
   text-align: center;
   border-radius: 0;
   color: #fff;
