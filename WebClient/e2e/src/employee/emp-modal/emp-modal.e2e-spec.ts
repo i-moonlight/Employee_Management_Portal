@@ -72,6 +72,13 @@ describe('EmployeeModalPage', () => {
     expect(await page.isPhotoFileInputDisplayed()).toBeTruthy('Photo input is display');
   });
 
+  it('should display add button on modal window when click on add employee button', async () => {
+    await page.navigateTo();
+    await page.getAddEmployeeButton().click();
+    await browser.sleep(1000);
+    expect(await page.isAddButtonDisplayed()).toBeTruthy('Add button is display');
+  });
+
   it('should display photo on modal window when click on edit employee button', async () => {
     await page.navigateTo();
     await page.getEditEmployeeButton().click();

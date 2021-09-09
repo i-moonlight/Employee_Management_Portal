@@ -93,4 +93,13 @@ export class EmployeeModalPage {
   async isPhotoFileInputDisplayed(): Promise<boolean> {
     return (await this.getPhotoFileInput()).isDisplayed();
   }
+
+  // Employee add button.
+  getAddButton(): ElementFinder {
+    return element(by.css('.add'));
+  }
+
+  async isAddButtonDisplayed(): Promise<boolean> {
+    return (await this.getAddButton()).isDisplayed();
+  }
 }
