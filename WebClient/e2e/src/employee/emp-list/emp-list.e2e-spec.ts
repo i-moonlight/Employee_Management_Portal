@@ -139,13 +139,6 @@ describe('EmployeeListPage ', () => {
     await browser.sleep(1000);
     let alertDialog = browser.switchTo().alert();
     await expect(alertDialog).toBeTruthy('Alert dialog is display');
-  });
-
-  it('should display alert dialog text then click on delete alert button', async () => {
-    await page.navigateTo();
-    await page.getDelAlertButton().click();
-    await browser.sleep(1000);
-    const alertDialog = browser.switchTo().alert();
     await expect(alertDialog.getText()).toContain('Are you sure??');
   });
 
@@ -155,4 +148,3 @@ describe('EmployeeListPage ', () => {
       {level: logging.Level.SEVERE} as logging.Entry))
   });
 });
-

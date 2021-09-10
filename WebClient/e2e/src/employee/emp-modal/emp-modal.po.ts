@@ -28,7 +28,7 @@ export class EmployeeModalPage {
     return element(by.id('employeeName'));
   }
 
-  async getEmployeeNameInputDisplayed(): Promise<ElementFinder> {
+  async isEmployeeNameInputDisplayed(): Promise<ElementFinder> {
     return (await this.getEmployeeNameInput()).isDisplayed();
   }
 
@@ -37,12 +37,8 @@ export class EmployeeModalPage {
   }
 
   // Department title.
-  getDepartment(): ElementFinder {
-    return element(by.id('dep'));
-  }
-
   async getDepartmentTitle(): Promise<string> {
-    return (await this.getDepartment()).getText();
+    return element(by.id('dep')).getText();
   }
 
   // Department option select.
@@ -86,17 +82,13 @@ export class EmployeeModalPage {
   }
 
   // Photo file input.
-  getPhotoFileInput(): ElementFinder {
-    return element(by.className('input'));
-  }
-
   async isPhotoFileInputDisplayed(): Promise<boolean> {
-    return (await this.getPhotoFileInput()).isDisplayed();
+    return element(by.className('input')).isDisplayed();
   }
 
   // Employee add button.
   getAddButton(): ElementFinder {
-    return element(by.css('.add'));
+    return element(by.css('btn add'));
   }
 
   async isAddButtonDisplayed(): Promise<boolean> {

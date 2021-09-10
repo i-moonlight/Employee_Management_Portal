@@ -18,7 +18,7 @@ describe('EmployeeModalPage', () => {
     await page.navigateTo();
     await page.getAddEmployeeButton().click();
     await browser.sleep(1000);
-    expect(await page.getEmployeeNameInputDisplayed()).toBeTruthy('Employee name input is display');
+    expect(await page.isEmployeeNameInputDisplayed()).toBeTruthy('Employee name input is display');
   });
 
   it('should display employee name placeholder value as `Enter Employee Name` on page', async () => {
@@ -32,7 +32,7 @@ describe('EmployeeModalPage', () => {
     await page.navigateTo();
     await page.getAddEmployeeButton().click();
     await browser.sleep(1000);
-    expect(await page.getDepartmentTitle()).toEqual('Department');
+    expect(await page.getDepartmentTitle()).toEqual('test');
   });
 
   it('should display selected department on select form when option selected', async () => {

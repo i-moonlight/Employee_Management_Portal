@@ -49,7 +49,7 @@ export class EmployeeListPage {
 
   // Employee list.
   async getListDisplayed(): Promise<boolean> {
-    return element(by.css('app-show-emp tbody tr')).isDisplayed();
+    return element(by.tagName('table tbody tr')).isDisplayed();
   }
 
   // Table Id filter.
