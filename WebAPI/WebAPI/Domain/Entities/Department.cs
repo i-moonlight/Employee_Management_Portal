@@ -1,8 +1,11 @@
-﻿namespace WebAPI.Domain.Entities
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace WebAPI.Domain.Entities
 {
     public class Department
     {
-        public int DepartmentId { get; set; }
-        public string DepartmentName { get; set; }
+        [Required] public Guid Id { get; set; }
+        [Required] public string Name { get; set; }
     }
 }

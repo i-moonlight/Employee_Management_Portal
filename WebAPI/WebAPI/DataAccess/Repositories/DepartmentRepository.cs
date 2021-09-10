@@ -15,7 +15,12 @@ namespace WebAPI.DataAccess.Repositories
 
         public IEnumerable Read()
         {
-            return _context.Departments.OrderBy(x => x.DepartmentId);
+            return _context.Departments.OrderBy(d => d.Id);
+        }
+
+        public Department Read(Guid id)
+        {
+            throw new NotImplementedException();
         }
 
         public IEnumerable ReadAll()
@@ -39,7 +44,7 @@ namespace WebAPI.DataAccess.Repositories
 
         public void Delete(int id)
         {
-            var model = _context.Departments.FirstOrDefault(x => x.DepartmentId == id);
+            var model = _context.Departments.FirstOrDefault(d => d.Id == id);
             _context.Departments.Remove(model ?? throw new InvalidOperationException());
             _context.SaveChanges();
         }

@@ -1,13 +1,14 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebAPI.Domain.Entities
 {
     public class Employee
     {
-        public int EmployeeId { get; set; }
-        public string EmployeeName { get; set; }
-        public string Department { get; set; }
-        public DateTime DateOfJoining { get; set; }
-        public string PhotoFileName { get; set; }
+        [Required] public Guid Id { get; set; }
+        [Required] public string Name { get; set; }
+        [Required] public string Department { get; set; }
+        [Required] public DateTime DateOfJoining { get; set; }
+        [Required] public string PhotoFileName { get; set; }
     }
 }

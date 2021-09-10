@@ -19,14 +19,32 @@ namespace WebAPI.DataAccess.Repositories
 
         public EmployeeRepository(AppDbContext ctx) => _context = ctx;
 
+        /// <summary>
+        /// Gets a list of employees ordered by ID.
+        /// </summary>
+        /// <returns>Returns employees list.</returns>
         public IEnumerable Read()
         {
-            return _context.Employees.OrderBy(x => x.EmployeeId);
+            return _context.Employees.OrderBy(e => e.Id).ToList();
         }
 
+        /// <summary>
+        /// Gets the employee by ID.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Returns employee.</returns>
+        public Employee Read(Guid id)
+        {
+            return _context.Employees.Find(id);
+        }
+
+        /// <summary>
+        /// Gets department names list sorted alphabetically.
+        /// </summary>
+        /// <returns>Returns department names list.</returns>
         public IEnumerable ReadAll()
         {
-            return _context.Departments.OrderBy(x => x.DepartmentId);
+            return _context.Departments.OrderBy(d => d.Name).Select(d => d.Name).ToList();
         }
 
         public Employee Create(Employee model)
@@ -45,7 +63,7 @@ namespace WebAPI.DataAccess.Repositories
 
         public void Delete(int id)
         {
-            var model = _context.Employees.FirstOrDefault(x => x.EmployeeId == id);
+            var model = _context.Employees.FirstOrDefault(e => e.Id == id);
             _context.Employees.Remove(model ?? throw new InvalidOperationException());
             _context.SaveChanges();
 

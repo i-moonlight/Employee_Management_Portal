@@ -17,7 +17,7 @@ namespace WebAPI.UseCases.Mappings
             var types = assembly.GetExportedTypes()
                 .Where(type => type.GetInterfaces().Any(t =>
                     t.IsGenericType &&
-                    t.GetGenericTypeDefinition() == typeof(IMapWith<>)))
+                    t.GetGenericTypeDefinition() == typeof(IMapFrom<>)))
                 .ToList();
 
             foreach (var type in types)

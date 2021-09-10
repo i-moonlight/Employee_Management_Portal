@@ -1,5 +1,7 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -28,20 +30,15 @@ namespace WebAPI.Tests
             _model = new Employee();
         }
 
-        // [Test]
-        // public void Get_ShouldReturnAllEmployees()
-        // {
-        //     // Arrange   
-        //     _mockEmpRepo.Setup(x => x.Read()).Returns(_fakeCategories);
-        //
-        //     // Act
-        //     JsonResult result = _controller.Get();
-        //
-        //     // Assert
-        //     Assert.NotNull(result, "Result is null");
-        //     Assert.AreEqual(new JsonResult(new Employee()).GetType(), result.GetType(), "Return type mismatch");
-        //     Assert.AreEqual(typeof(List<Employee>), result.Value.GetType(), "Return value type mismatch");
-        // }
+        [Test]
+        public void GetEmployeeList_Method_Should_Returns_ActionResult_IEnumerable_Type()
+        {
+            // Act
+            var result = _controller.GetEmployeeList();
+
+            // Assert
+            Assert.AreEqual(typeof(Task<ActionResult<IEnumerable>>), result.GetType());
+        }
 
         [Test]
         public void Post_ShouldCreateEmployee()

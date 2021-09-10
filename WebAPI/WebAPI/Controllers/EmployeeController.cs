@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Domain.Entities;
 using WebAPI.Helpers;
+using WebAPI.UseCases.Dto;
 using WebAPI.UseCases.Requests.Employees.Queries;
 using WebAPI.UseCases.Services;
 
@@ -17,31 +20,50 @@ namespace WebAPI.Controllers
         private readonly ICrudRepository<Employee> _empRepository;
         private readonly IWebHostEnvironment _env;
 
-        public EmployeeController(ICrudRepository<Employee> empRepository, IWebHostEnvironment env)
+        public EmployeeController(ICrudRepository<Employee> repo, IWebHostEnvironment env)
         {
-            _empRepository = empRepository;
+            _empRepository = repo;
             _env = env;
         }
 
         /// <summary>
-        /// Gets the list of Employee
+        /// Gets the list of Employee.
         /// </summary>
         /// <remarks>
         /// Sample request:
-        /// GET /employee
+        /// GET /employee.
         /// </remarks>
-        /// <returns>Returns EmployeeListViewModel</returns>
-        /// <response code="200">Success</response>
-        /// <response code="401">If the user is unauthorized</response>
+        /// <returns>Returns employee list.</returns>
+        /// <response code="200">Success.</response>
+        /// <response code="401">If the user is unauthorized.</response>
         [HttpGet]
         // [Authorize (Roles = "Manager")]
-        // [ProducesResponseType(StatusCodes.Status200OK)]
-        // [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<EmployeeListViewModel>> GetEmployeeList()
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<IEnumerable>> GetEmployeeList()
         {
-            var query = new EmployeeListQuery() { EmployeeId = EmployeeId };
-            var view = await Mediator.Send(query);
-            return Ok(view);
+            return Ok(await Mediator.Send(new GetEmployeeListQuery()));
+        }
+
+        /// <summary>
+        /// Gets the employee by id.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// GET /employee/D34D349E-43B8-429E-BCA4-793C932FD580.
+        /// </remarks>
+        /// <param name="id">Employee id (guid).</param>
+        /// <returns>Returns employee dto.</returns>
+        /// <response code="200">Success.</response>
+        /// <response code="401">If the user in unauthorized.</response>
+        [HttpGet("{id}")]
+        // [Authorize (Roles = "Manager")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<EmployeeDto>> GetEmployeeById(Guid id)
+        {
+            var request = new GetEmployeeQuery {Id = id};
+            return Ok(await Mediator.Send(request));
         }
 
         [HttpPost]
@@ -63,6 +85,7 @@ namespace WebAPI.Controllers
             {
                 success = false;
             }
+
             return success
                 ? new JsonResult("Update successful")
                 : new JsonResult("Update was not successful");
@@ -80,11 +103,12 @@ namespace WebAPI.Controllers
             {
                 success = false;
             }
+
             return success
                 ? new JsonResult("Delete successful")
                 : new JsonResult("Delete was not successful");
         }
-        
+
         [HttpPost]
         [Route("UploadPhoto")]
         public JsonResult UploadPhoto()
@@ -108,7 +132,7 @@ namespace WebAPI.Controllers
                 return new JsonResult("anonymous.png");
             }
         }
-        
+
         [HttpPost]
         [Route("{Id}/UpdatePhoto")]
         public JsonResult UpdatePhoto(int id)
@@ -137,7 +161,7 @@ namespace WebAPI.Controllers
                 return new JsonResult("anonymous.png");
             }
         }
-        
+
         [Route("GetAllDepartmentNames")]
         public JsonResult GetAllDepartmentNames()
         {
