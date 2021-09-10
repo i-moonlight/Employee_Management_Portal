@@ -1,7 +1,5 @@
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 @Injectable()
@@ -9,28 +7,16 @@ export class AuthInterceptor implements HttpInterceptor {
 
   constructor(private router: Router) {}
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // tslint:disable-next-line:triple-equals
-    if (req.headers.get('No-Auth') == 'True') {
-      return next.handle(req.clone());
-    }
-
-    if (localStorage.getItem('token') != null) {
-      const clonedReq = req.clone({
-        headers: req.headers.set('Authorization', 'Bearer ' + localStorage.getItem('token'))
-      });
-      return next.handle(clonedReq).pipe(tap(
-        succ => {},
-        err => {
-          // tslint:disable-next-line:triple-equals
-          if (err.status == 401) {
-            localStorage.removeItem('token');
-            this.router.navigate(['/login']).then(() => window.location.reload());
-          }
-        })
-      );
+  // tslint:disable-next-line:typedef
+  intercept(req: HttpRequest<any>, next: HttpHandler) {
+    if (req.url.includes('api')) {
+      let newHeaders = req.headers.append('Accept', 'application/json');
+      if (req.method === 'POST') {
+        newHeaders = newHeaders.append('Content-Type', 'application/json');
+      }
+      return next.handle(req.clone({headers: newHeaders}));
     } else {
-      this.router.navigate(['/login']).then(() => window.location.reload());
+      return next.handle(req);
     }
   }
 }

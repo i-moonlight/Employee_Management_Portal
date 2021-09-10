@@ -29,20 +29,12 @@ export class SharedService {
     return this.http.delete<string>(this.APIUrl + '/department/' + departmentId);
   }
 
-  deleteDepartmentFromDB(departmentId: number): Observable<string> {
-    return this.http.delete<string>(this.APIUrl + '/department/' + departmentId);
-  }
-
   // Retrieves a list of employees from the resource server database using an access token
   public getEmployeeListFromDB(): Observable<Employee[]> {
-      const headers = new HttpHeaders({
-        'Authorization': 'Bearer' + localStorage.getItem('token')
-      });
-      return this.http.get<Employee[]>(this.APIUrl + '/employee', {headers: headers});
-    }
-
-  public getEmployeeListFromDB(): Observable<Employee[]> {
-    return this.http.get<Employee[]>(this.APIUrl + '/employee');
+    const headers = new HttpHeaders({
+      Authorization: 'Bearer' + localStorage.getItem('token')
+    });
+    return this.http.get<Employee[]>(this.APIUrl + '/employee', {headers});
   }
 
   getAllDepartmentNamesFromDB(): Observable<string[]> {
