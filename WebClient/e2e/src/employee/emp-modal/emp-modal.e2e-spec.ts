@@ -100,6 +100,13 @@ describe('EmployeeModalPage', () => {
     expect(await page.isPhotoFileInputDisplayed()).toBeTruthy('Photo input is display');
   });
 
+  it('should display add button is disable on modal window when click on add employee button', async () => {
+    await page.navigateTo();
+    await page.getAddEmployeeButton().click();
+    await browser.sleep(1000);
+    expect(await page.isAddButtonDisabled()).toBeTruthy('Add button is disable');
+  });
+
   afterEach(async () => {
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
     expect(logs).not.toContain(jasmine.objectContaining(

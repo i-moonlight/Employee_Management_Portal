@@ -86,12 +86,16 @@ export class EmployeeModalPage {
     return element(by.className('input')).isDisplayed();
   }
 
-  // Employee add button.
+  // Add employee button as upload employee data.
   getAddButton(): ElementFinder {
     return element(by.css('btn add'));
   }
 
   async isAddButtonDisplayed(): Promise<boolean> {
     return (await this.getAddButton()).isDisplayed();
+  }
+
+  async isAddButtonDisabled(): Promise<boolean> {
+    return (await this.getAddButton()).isPresent();
   }
 }
