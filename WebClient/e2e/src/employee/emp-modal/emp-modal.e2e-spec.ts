@@ -107,6 +107,13 @@ describe('EmployeeModalPage', () => {
     expect(await page.isAddButtonDisabled()).toBeTruthy('Add button is disable');
   });
 
+  it('should display add button title text as `ADD` on modal window when click on add employee button', async () => {
+    await page.navigateTo();
+    await page.getAddEmployeeButton().click();
+    await browser.sleep(1000);
+    expect(await page.getAddButton().getText()).toEqual('ADD');
+  });
+
   afterEach(async () => {
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
     expect(logs).not.toContain(jasmine.objectContaining(
