@@ -63,6 +63,23 @@
         </span>
       </div>
     </div>
+    <!-- Password confirm input field -->
+    <div class="form__wrapper">
+      <div class="form-field form-field__item">
+        <input class="form-field__input" id="confirm" type="password" placeholder=" "
+               formControlName="confirmPassword" minlength="12" maxlength="25" required/>
+        <label class="form-field__label" for="confirm">Repeat password</label>
+      </div>
+      <!-- Password confirm input validation -->
+      <div class="form-hint" *ngIf="confirmPassword.invalid">
+        <span class="form-hint__item" *ngIf="confirmPassword.errors.required">
+          * Please enter your password to confirm
+        </span>
+        <span class="form-hint__item" *ngIf="confirmPassword.errors?.matching">
+          * Password confirm does not match
+        </span>
+      </div>
+    </div>
     <!-- Registration button -->
     <div class="form__button">
       <button class="btn btn-primary" type="submit" [disabled]="registerForm.invalid">

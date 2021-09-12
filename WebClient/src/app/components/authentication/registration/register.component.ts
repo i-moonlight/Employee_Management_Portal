@@ -5,7 +5,8 @@ import { ToastrService } from 'ngx-toastr';
 import { Response } from '../../../models/response.model';
 import { Router } from '@angular/router';
 import { Login } from '../../../models/login.model';
-import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import Validation from 'src/app/utils/validation';
 
 @Component({
   selector: 'app-register',
@@ -36,7 +37,8 @@ export class RegisterComponent implements OnInit {
       password: new FormControl('', [
         Validators.required,
         Validators.pattern(this.passwordPattern)
-      ])
+      ]),
+      validators: [Validation.match('password', 'confirmPassword')]
     });
   }
 
@@ -58,41 +60,22 @@ export class RegisterComponent implements OnInit {
       Email: form.value.Email,
     };
 
-  onSubmit(registerForm: FormGroup) {
-<<<<<<< HEAD
-    const username = registerForm.controls['userName'].value;
-    const email = registerForm.controls['email'].value;
-    const password = registerForm.controls['password'].value;
-=======
-    let username = registerForm.value.userName;
-    let email = registerForm.value.email;
-    let password = registerForm.value.password;
->>>>>>> db7a5ce (refactor: authentication interceptor)
-
     const account: Account = {
       UserName: username,
-      Email: email,
+      Email:    email,
       Password: password,
     };
 
     this.authService.registerUser(account).subscribe((res: Response) => {
       if (res.DateSet == null) {
-        this.toastr.success('Registration Successful', null, {timeOut: 8000});
+        this.toastr.success('Registration Successful', null, { timeOut: 8000 });
         this.authenticationUser(account);
-        // this.resetForm(registrForm);
       } else {
-        this.toastr.error('Registration Failed', null, {timeOut: 8000});
+        this.toastr.error('Registration Failed', null, { timeOut: 8000 });
         console.warn(res.ResponseMessage);
       }
     });
   }
-
-  // tslint:disable-next-line:typedef
-  private authenticationUser(account) {
-    const login: Login = {
-      UserName: account.UserName,
-      Password: account.Password
-    };
 
   private authenticationUser(registeredAccount: Account) {
     const login: Login = {
@@ -111,27 +94,19 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  public get username() {
-<<<<<<< HEAD
-    return this.registrationForm.controls.userName;
+  public get username(): AbstractControl {
+    return this.registerForm.controls.userName;
   }
 
-  public get email() {
-    return this.registrationForm.controls.email;
+  public get email(): AbstractControl {
+    return this.registerForm.controls.email;
   }
 
-  public get password() {
-    return this.registrationForm.controls.password;
-=======
-    return this.registerForm.controls['userName'];
+  public get password(): AbstractControl {
+    return this.registerForm.controls.password;
   }
 
-  public get email() {
-    return this.registerForm.controls['email'];
-  }
-
-  public get password() {
-    return this.registerForm.controls['password'];
->>>>>>> db7a5ce (refactor: authentication interceptor)
+  public get confirmPassword(): AbstractControl {
+    return this.registerForm.controls.confirmPassword;
   }
 }
