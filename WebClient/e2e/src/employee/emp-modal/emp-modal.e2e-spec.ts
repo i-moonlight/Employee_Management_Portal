@@ -114,6 +114,13 @@ describe('EmployeeModalPage', () => {
     expect(await page.getAddButton().getText()).toEqual('ADD');
   });
 
+  it('should display update employee modal button on page when click on update button', async () => {
+    await page.navigateTo();
+    await page.getEditEmployeeButton().click();
+    await browser.sleep(1000);
+    expect(await page.isUpdateButtonDisplayed()).toBeTruthy('Update button is display');
+  });
+
   afterEach(async () => {
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
     expect(logs).not.toContain(jasmine.objectContaining(

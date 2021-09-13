@@ -98,4 +98,13 @@ export class EmployeeModalPage {
   async isAddButtonDisabled(): Promise<boolean> {
     return (await this.getAddButton()).isPresent();
   }
+
+  // Update employee button.
+  getUpdateButton(): ElementFinder {
+    return element(by.css('.update'));
+  }
+
+  async isUpdateButtonDisplayed(): Promise<boolean> {
+    return (await this.getUpdateButton()).isDisplayed();
+  }
 }
