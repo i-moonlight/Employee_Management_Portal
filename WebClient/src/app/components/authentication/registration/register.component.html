@@ -80,10 +80,14 @@
         </span>
       </div>
     </div>
-    <!-- Registration button -->
     <div class="form__button">
+      <!-- Form registration button -->
       <button class="btn btn-primary" type="submit" [disabled]="registerForm.invalid">
         Registration
+      </button>
+      <!-- Form reset button -->
+      <button class="btn btn-primary" (click)="onCancel()">
+        Reset
       </button>
     </div>
   </div>

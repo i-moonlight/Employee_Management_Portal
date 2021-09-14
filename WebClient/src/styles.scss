@@ -154,6 +154,7 @@ input[type="text"], input[type="password"], .btn {
 }
 
 .btn-primary, .btn-primary:hover {
+  padding: 6px 20px;
   background-color: #3366CC !important;
   border-color: #3366CC !important;
 }
@@ -205,6 +206,12 @@ input[type="text"], input[type="password"], .btn {
     //  display: contents;
     //  font-size: small;
     //}
+  }
+
+  &__button {
+    display: flex;
+    justify-content: right;
+    gap: 0.9rem;
   }
 }
 
