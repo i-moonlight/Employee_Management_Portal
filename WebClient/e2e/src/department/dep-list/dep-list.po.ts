@@ -13,4 +13,8 @@ export class DepartmentListPage {
   async isAddDepButtonDisplayed(): Promise<boolean> {
     return (await this.getAddDepButton()).isDisplayed();
   }
+
+  async getAddDepartmentButtonName(): Promise<string> {
+    return (await this.getAddDepButton()).getText();
+  }
 }
