@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+
 using WebAPI.Domain.Entities;
 using WebAPI.Helpers;
 using WebAPI.UseCases.Dto;
+using WebAPI.UseCases.Requests.Employees.Commands;
 using WebAPI.UseCases.Requests.Employees.Queries;
+using WebAPI.UseCases.Requests.Employees.Validators;
 using WebAPI.UseCases.Services;
 
 namespace WebAPI.Controllers
@@ -65,12 +69,33 @@ namespace WebAPI.Controllers
             var request = new GetEmployeeQuery {Id = id};
             return Ok(await Mediator.Send(request));
         }
-
+        
+        /// <summary>
+        /// Creates the employee.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// POST /employee.
+        /// </remarks>
+        /// <param name="employee">EmployeeDto.</param>
+        /// <returns>Returns response about success.</returns>
+        /// <response code="201">Success.</response>
+        /// <response code="401">If the user is unauthorized.</response>
         [HttpPost]
-        public JsonResult Post(Employee emp)
+        //[Authorize (Roles = "Manager")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<string>> CreateEmployee([FromBody] EmployeeDto employee)
         {
-            _empRepository.Create(emp);
-            return new JsonResult("Created Successfully");
+            var request = new CreateEmployeeCommand() {EmployeeDto = employee};
+            var validationResult = new CreateEmployeeCommandValidator().Validate(request);
+            
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(validationResult.Errors.First().ErrorMessage);
+            }
+
+            return Ok(await Mediator.Send(request));
         }
 
         [HttpPut]
