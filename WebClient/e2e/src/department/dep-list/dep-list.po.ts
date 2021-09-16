@@ -17,4 +17,13 @@ export class DepartmentListPage {
   async getAddDepartmentButtonName(): Promise<string> {
     return (await this.getAddDepButton()).getText();
   }
+
+  // Modal window.
+  getModal(): ElementFinder {
+    return element(by.id('exampleModal'));
+  }
+
+  async isModalDisplayed(): Promise<boolean> {
+    return (await this.getModal()).isDisplayed();
+  }
 }
