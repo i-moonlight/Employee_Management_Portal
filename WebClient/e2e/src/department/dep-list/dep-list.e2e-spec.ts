@@ -24,6 +24,13 @@ describe('DepartmentListPage', () => {
     expect(await page.isModalDisplayed()).toBeTruthy('Modal window is open');
   });
 
+  it('should display modal title as `Add Department` on page when click on add department button', async () => {
+    await page.navigateTo();
+    await page.getAddDepButton().click();
+    await browser.sleep(1000);
+    expect(await page.getModalTitle()).toEqual('Add Department');
+  });
+
   afterEach(async () => {
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
     expect(logs).not.toContain(jasmine.objectContaining(

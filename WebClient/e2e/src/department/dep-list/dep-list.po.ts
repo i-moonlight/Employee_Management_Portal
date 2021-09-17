@@ -26,4 +26,8 @@ export class DepartmentListPage {
   async isModalDisplayed(): Promise<boolean> {
     return (await this.getModal()).isDisplayed();
   }
+
+  async getModalTitle(): Promise<string> {
+    return element(by.className('modal-title')).getText();
+  }
 }
