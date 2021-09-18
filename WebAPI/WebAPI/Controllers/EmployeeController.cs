@@ -98,22 +98,31 @@ namespace WebAPI.Controllers
             return Ok(await Mediator.Send(request));
         }
 
+        /// <summary>
+        /// Updates the employee.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// PUT /employee.
+        /// </remarks>
+        /// <param name="command">UpdateEmployeeCommand object.</param>
+        /// <returns>Returns response about success.</returns>
+        /// <response code="204">Success.</response>
+        /// <response code="401">If the user is unauthorized.</response>
         [HttpPut]
-        public JsonResult Put(Employee emp)
+        // [Authorize]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<string>> UpdateEmployee([FromBody] EmployeeDto employee)
         {
-            var success = true;
-            try
-            {
-                _empRepository.Update(emp);
-            }
-            catch (Exception)
-            {
-                success = false;
-            }
+            var request = new UpdateEmployeeCommand() {EmployeeDto = employee};
+            var validationResult = new UpdateEmployeeCommandValidator().Validate(request);
 
-            return success
-                ? new JsonResult("Update successful")
-                : new JsonResult("Update was not successful");
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(validationResult.Errors.First().ErrorMessage);
+            }
+            return Ok(await Mediator.Send(request));
         }
 
         [HttpDelete("{id}")]

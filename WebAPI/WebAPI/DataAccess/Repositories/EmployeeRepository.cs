@@ -47,18 +47,18 @@ namespace WebAPI.DataAccess.Repositories
             return _context.Departments.OrderBy(d => d.Name).Select(d => d.Name).ToList();
         }
 
-        public Employee Create(Employee model)
+        public Employee Create(Employee employee)
         {
-            _context.Employees.Add(model);
+            _context.Employees.Add(employee);
             _context.SaveChanges();
-            return model;
+            return employee;
         }
 
-        public Employee Update(Employee model)
+        public Employee Update(Employee employee)
         {
-            _context.Employees.Update(model);
+            _context.Employees.Update(employee);
             _context.SaveChanges();
-            return model;
+            return employee;
         }
 
         public void Delete(int id)
