@@ -30,4 +30,9 @@ export class DepartmentListPage {
   async getModalTitle(): Promise<string> {
     return element(by.className('modal-title')).getText();
   }
+
+  // Close modal button.
+  async isCloseModalButtonDisplayed(): Promise<boolean> {
+    return element(by.className('btn-close')).isDisplayed();
+  }
 }
