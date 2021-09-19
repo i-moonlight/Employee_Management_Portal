@@ -32,7 +32,11 @@ export class DepartmentListPage {
   }
 
   // Close modal button.
+  getCloseModalButton(): ElementFinder {
+    return element(by.className('btn-close'));
+  }
+
   async isCloseModalButtonDisplayed(): Promise<boolean> {
-    return element(by.className('btn-close')).isDisplayed();
+    return (await this.getCloseModalButton()).isDisplayed();
   }
 }
