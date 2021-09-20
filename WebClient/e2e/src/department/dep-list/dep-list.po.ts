@@ -39,4 +39,13 @@ export class DepartmentListPage {
   async isCloseModalButtonDisplayed(): Promise<boolean> {
     return (await this.getCloseModalButton()).isDisplayed();
   }
+
+  // Modal component.
+  getModalComponent(): ElementFinder {
+    return element(by.tagName('app-dep-modal'));
+  }
+
+  async isModalComponentDisplayed(): Promise<boolean> {
+    return (await this.getModalComponent()).isDisplayed();
+  }
 }

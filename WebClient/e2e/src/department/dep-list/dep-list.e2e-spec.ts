@@ -47,6 +47,13 @@ describe('DepartmentListPage', () => {
     expect(await page.isModalDisplayed()).toBeFalsy('Modal window is close');
   });
 
+  it('should display modal component when click on add department button', async () => {
+    await page.navigateTo();
+    await page.getAddDepButton().click();
+    await browser.sleep(1000);
+    expect(await page.isModalComponentDisplayed()).toBeTruthy('Modal component is display');
+  });
+
   afterEach(async () => {
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
     expect(logs).not.toContain(jasmine.objectContaining(
