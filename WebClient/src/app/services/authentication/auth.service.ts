@@ -93,4 +93,13 @@ export class AuthService {
   public registerUser(accountForm: Account): Observable<Response> {
     return this.http.post<Response>(this.AUTH_URL + 'RegisterUser', accountForm);
   }
+
+  /**
+   * Method of user forgot registration password.
+   *
+   * @return An `Observable` of the response, with the response body as a result execution RememberPassword method.
+   */
+  public forgotPassword(email: Account): Observable<Response> {
+    return this.http.post<Response>(this.AUTH_URL + 'ForgotPassword', email);
+  }
 }
