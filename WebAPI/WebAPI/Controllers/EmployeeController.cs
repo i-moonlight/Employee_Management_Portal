@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
 using WebAPI.Domain.Entities;
 using WebAPI.Helpers;
 using WebAPI.UseCases.Dto;
@@ -69,7 +68,7 @@ namespace WebAPI.Controllers
             var request = new GetEmployeeQuery {Id = id};
             return Ok(await Mediator.Send(request));
         }
-        
+
         /// <summary>
         /// Creates the employee.
         /// </summary>
@@ -89,7 +88,7 @@ namespace WebAPI.Controllers
         {
             var request = new CreateEmployeeCommand() {EmployeeDto = employee};
             var validationResult = new CreateEmployeeCommandValidator().Validate(request);
-            
+
             if (!validationResult.IsValid)
             {
                 return BadRequest(validationResult.Errors.First().ErrorMessage);
@@ -122,25 +121,29 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(validationResult.Errors.First().ErrorMessage);
             }
+
             return Ok(await Mediator.Send(request));
         }
 
+        /// <summary>
+        /// Deletes the employee by id.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// DELETE /employee/88DEB432-062F-43DE-8DCD-8B6EF79073D3.
+        /// </remarks>
+        /// <param name="id">Id of the employee (guid).</param>
+        /// <returns>Returns response about success.</returns>
+        /// <response code="204">Success.</response>
+        /// <response code="401">If the user is unauthorized.</response>
         [HttpDelete("{id}")]
-        public JsonResult Delete(int id)
+        // [Authorize (Roles = "Manager")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<string>> DeleteEmployeeById(Guid id)
         {
-            var success = true;
-            try
-            {
-                _empRepository.Delete(id);
-            }
-            catch (Exception)
-            {
-                success = false;
-            }
-
-            return success
-                ? new JsonResult("Delete successful")
-                : new JsonResult("Delete was not successful");
+            var request = new DeleteEmployeeCommand {Id = id};
+            return Ok(await Mediator.Send(request));
         }
 
         [HttpPost]

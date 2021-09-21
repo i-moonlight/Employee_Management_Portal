@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections;
-using System.IO;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-
 using WebAPI.DataAccess.Persistence;
 using WebAPI.Domain.Entities;
-using WebAPI.Helpers;
 using WebAPI.UseCases.Services;
 
 namespace WebAPI.DataAccess.Repositories
@@ -61,14 +58,15 @@ namespace WebAPI.DataAccess.Repositories
             return employee;
         }
 
-        public void Delete(int id)
+        /// <summary>
+        /// Deletes an employee by ID.
+        /// </summary>
+        /// <param name="id">Id of the employee (guid).</param>
+        public void Delete(Guid id)
         {
-            var model = _context.Employees.FirstOrDefault(e => e.Id == id);
-            _context.Employees.Remove(model ?? throw new InvalidOperationException());
+            var employee = _context.Employees.FirstOrDefault(e => e.Id == id);
+            _context.Employees.Remove(employee ?? throw new InvalidOperationException());
             _context.SaveChanges();
-
-            var path = Constants.StoragePath + model.PhotoFileName;
-            if (File.Exists(path)) File.Delete(path);
         }
 
         public string GetFileName(int id)

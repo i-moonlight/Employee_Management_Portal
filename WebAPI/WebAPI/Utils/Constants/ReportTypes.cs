@@ -6,5 +6,7 @@ namespace WebAPI.Utils.Constants
         public const string CreatedFailed = "Created failed.";
         public const string UpdatedSuccessfull = "Updated successfully.";
         public const string UpdatedFailed = "Updated failed.";
+        public const string DeletedSuccessfull = "Deleted successfully.";
+        public const string DeletedFailed = "Deleted failed.";
     }
 }
