@@ -54,6 +54,11 @@ describe('DepartmentListPage', () => {
     expect(await page.isModalComponentDisplayed()).toBeTruthy('Modal component is display');
   });
 
+  it('should display departments table on page', async () => {
+    await page.navigateTo();
+    expect(await page.isDepartmentsTableDisplayed()).toBeTruthy('Departments table is display');
+  });
+
   afterEach(async () => {
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
     expect(logs).not.toContain(jasmine.objectContaining(

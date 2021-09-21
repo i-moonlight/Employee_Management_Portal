@@ -48,4 +48,9 @@ export class DepartmentListPage {
   async isModalComponentDisplayed(): Promise<boolean> {
     return (await this.getModalComponent()).isDisplayed();
   }
+
+  // Departments table.
+  async isDepartmentsTableDisplayed(): Promise<boolean> {
+    return element(by.tagName('table')).isDisplayed();
+  }
 }
