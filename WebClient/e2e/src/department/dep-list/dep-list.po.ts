@@ -53,4 +53,9 @@ export class DepartmentListPage {
   async isDepartmentsTableDisplayed(): Promise<boolean> {
     return element(by.tagName('table')).isDisplayed();
   }
+
+  // Employee list.
+  async isListDisplayed(): Promise<boolean> {
+    return element(by.css('table tbody tr')).isDisplayed();
+  }
 }
