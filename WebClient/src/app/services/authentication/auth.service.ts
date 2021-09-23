@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+
 import { Token } from '../../models/token';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AUTH_API_URL } from '../../app-injection-tokens';
@@ -9,7 +10,8 @@ import { tap } from 'rxjs/operators';
 import { Account } from '../../models/account.model';
 import { Login } from '../../models/login.model';
 import { Response } from '../../models/response.model';
-import { Constants } from "../../common/constants";
+import { Constants } from '../../common/constants';
+import { Dto } from '@models/dto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -97,9 +99,12 @@ export class AuthService {
   /**
    * Method of user forgot registration password.
    *
-   * @return An `Observable` of the response, with the response body as a result execution RememberPassword method.
+   * @return An `Observable` of the response, with the response body as a result execution ForgotPassword api method.
    */
-  public forgotPassword(email: Account): Observable<Response> {
-    return this.http.post<Response>(this.AUTH_URL + 'ForgotPassword', email);
+  public sendForgotPasswordEmail(body: Dto): Observable<Response> {
+    const headers = new HttpHeaders({
+      'ChangePasswordUrl': 'url'
+    });
+    return this.http.post<Response>(this.AUTH_URL + 'ForgotPassword', body, {headers: headers});
   }
 }

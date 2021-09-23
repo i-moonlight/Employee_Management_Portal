@@ -1,12 +1,11 @@
-import { ToastrService } from 'ngx-toastr';
-
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-
-import { Account } from '@models/account.model';
+import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '@services/authentication/auth.service';
-import { Pattern } from '@constants/app.constants';
+import { Dto } from '@models/dto.model';
+import { Pattern } from '@app/app.constants';
+import { ProgressBarService } from '@services/progress-bar/progress-bar.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -14,13 +13,15 @@ import { Pattern } from '@constants/app.constants';
   styleUrls: ['./forgot-password.component.css']
 })
 export class ForgotPasswordComponent implements OnInit {
+  public emailForm!: FormGroup;
 
-  public forgotPasswordForm!: FormGroup;
-
-  constructor(private authService: AuthService, private toasterService: ToastrService) {}
+  constructor(
+    private authService: AuthService,
+    public progressBar: ProgressBarService,
+    private toaster: ToastrService) {}
 
   ngOnInit(): void {
-    this.forgotPasswordForm = new FormGroup({
+    this.emailForm = new FormGroup({
       email: new FormControl('', [
         Validators.email,
         Validators.required,
@@ -30,23 +31,36 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   public get email(): AbstractControl {
-    return this.forgotPasswordForm.controls['email'];
+    return this.emailForm.controls['email'];
   }
 
   public forgotPassword(forgotPas: Account) {
     const email: { Email: string } = {
       Email: forgotPas.Email
     };
+  }
 
-    this.authService.forgotPassword(email).subscribe({
-      next: (_) => {
-        // this.showSuccess = true;
-        // this.successMessage = 'The link has been sent, please check your email to reset your password.'
+  public forgotPassword(emailFormValue): void {
+    this.progressBar.startLoading();
+
+    const dto: Dto = {
+      Email: emailFormValue.email,
+      ResetPasswordUrl: 'http://localhost:4200/auth/forgot-password'
+    };
+
+    this.authService.sendForgotPasswordEmail(dto).subscribe(
+      (response) => {
+        this.progressBar.setSuccess();
+        this.progressBar.completeLoading();
+        console.warn(response);
       },
-      error: (err: HttpErrorResponse) => {
-        // this.showError = true;
-        // this.errorMessage = err.message;
-      }
+      error: (err: HttpErrorResponse) => {}
     });
+
+      (err: HttpErrorResponse) => {
+        this.progressBar.setError();
+        this.progressBar.completeLoading();
+        console.error(err);
+      });
   }
 }

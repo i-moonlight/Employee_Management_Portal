@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../../services/authentication/auth.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+
 import { ToastrService } from 'ngx-toastr';
-import { Login } from '../../../models/login.model';
-import { Response } from '../../../models/response.model';
-import { FormGroup, Validators, FormControl } from '@angular/forms';
-import { Pattern } from 'src/app/app.constants';
+
+import { AuthService } from '@services/authentication/auth.service';
+import { Login } from '@models/login.model';
+import { Pattern } from '@app/app.constants';
+import { Response } from '@models/response.model';
 
 @Component({
   selector: 'app-login',

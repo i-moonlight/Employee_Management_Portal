@@ -33,8 +33,12 @@ const routes: Routes = [
   {path: 'auth', component: AuthComponent},
   {path: 'auth/login', component: AuthComponent, children: [{path: '', component: LoginComponent}]},
   {path: 'auth/registration', component: AuthComponent, children: [{path: '', component: RegisterComponent}]},
+<<<<<<< HEAD
   {path: 'forgot-password', component: ForgotPasswordComponent}
 >>>>>>> c14fb54 (feat: forgot password component)
+=======
+  {path: 'auth/forgot-password', component: ForgotPasswordComponent}
+>>>>>>> c0039a8 (refactor(client): forgot password component)
 ];
 
 @NgModule({

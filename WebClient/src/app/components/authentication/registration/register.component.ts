@@ -6,10 +6,10 @@ import { Response } from '../../../models/response.model';
 import { Router } from '@angular/router';
 import { Login } from '../../../models/login.model';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import Validation from 'src/app/utils/validation';
 import { Subject } from 'rxjs';
-import { autoSave, autoSaveClear } from '../../../utils/auto-save';
-import { Pattern } from '../../../app.constants';
+import Validation from '@utils/validation';
+import { autoSave, autoSaveClear } from '@utils/auto-save';
+import { Pattern } from '@app/app.constants';
 
 const Key = new Subject<string>();
 
@@ -57,9 +57,9 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(registerForm: FormGroup) {
-    let username = registerForm.value.userName;
-    let email = registerForm.value.email;
-    let password = registerForm.value.password;
+    const username = registerForm.value.userName;
+    const email = registerForm.value.email;
+    const password = registerForm.value.password;
 
     const account: Account = {
       UserName: username,
