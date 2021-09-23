@@ -58,4 +58,13 @@ export class DepartmentListPage {
   async isListDisplayed(): Promise<boolean> {
     return element(by.css('table tbody tr')).isDisplayed();
   }
+
+  // Employees table Id filter.
+  getIdFilter(): ElementFinder {
+    return element(by.id('filterId'));
+  }
+
+  async isIdFilterDisplayed(): Promise<boolean> {
+    return (await this.getIdFilter()).isDisplayed();
+  }
 }
