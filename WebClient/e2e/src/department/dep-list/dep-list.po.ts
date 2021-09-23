@@ -67,4 +67,8 @@ export class DepartmentListPage {
   async isIdFilterDisplayed(): Promise<boolean> {
     return (await this.getIdFilter()).isDisplayed();
   }
+
+  async getFilterIdPlaceholder(): Promise<ElementFinder> {
+    return (await this.getIdFilter()).getAttribute('placeholder');
+  }
 }
