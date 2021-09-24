@@ -80,4 +80,8 @@ export class DepartmentListPage {
   async isNameFilterDisplayed(): Promise<boolean> {
     return (await this.getNameFilter()).isDisplayed();
   }
+
+  async getNameFilterPlaceholderValue(): Promise<string> {
+    return (await this.getNameFilter()).getAttribute('placeholder').getText();
+  }
 }
