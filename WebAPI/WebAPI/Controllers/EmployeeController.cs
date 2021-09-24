@@ -146,28 +146,24 @@ namespace WebAPI.Controllers
             return Ok(await Mediator.Send(request));
         }
 
+        /// <summary>
+        /// Upload photo the employee.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// POST /employee/UploadPhoto.
+        /// </remarks>
+        /// <returns>Returns photo file name.</returns>
+        /// <response code="204">Success.</response>
+        /// <response code="401">If the user is unauthorized.</response>
         [HttpPost]
         [Route("UploadPhoto")]
-        public JsonResult UploadPhoto()
+        // [Authorize (Roles = "Manager")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<string>> UploadEmployeePhoto()
         {
-            try
-            {
-                var httpRequest = Request.Form;
-                var postedFile = httpRequest.Files[0];
-                var filename = postedFile.FileName;
-                var selectPath = _env.ContentRootPath + "/Photos/" + filename;
-
-                using (var stream = new FileStream(selectPath, FileMode.Create))
-                {
-                    postedFile.CopyTo(stream);
-                }
-
-                return new JsonResult(filename);
-            }
-            catch (Exception)
-            {
-                return new JsonResult("anonymous.png");
-            }
+            return Ok(await Mediator.Send(new UploadPhotoCommand()));
         }
 
         [HttpPost]
