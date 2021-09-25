@@ -84,4 +84,9 @@ export class DepartmentListPage {
   async getNameFilterPlaceholderValue(): Promise<string> {
     return (await this.getNameFilter()).getAttribute('placeholder').getText();
   }
+
+  // Table sort button.
+  async isSortButton(): Promise<boolean> {
+    return element(by.css('.sort')).isDisplayed();
+  }
 }
