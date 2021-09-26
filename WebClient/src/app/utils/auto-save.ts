@@ -18,11 +18,13 @@ export function autoSave(
            replacer?: (this: any, key: string, value: any) => any,
            space?: string | number) => string) = JSON.stringify
 ): PropertyDecorator {
+  // tslint:disable-next-line:ban-types
   return (target: Object, propertyKey: string | symbol) => {
     const view = target as OnDestroy;
     let subs: Subscription | undefined;
     const originalOnDestroy = view.ngOnDestroy;
 
+    // tslint:disable-next-line:typedef
     view.ngOnDestroy = function() {
       subs?.unsubscribe();
       originalOnDestroy?.apply(this);
@@ -35,14 +37,17 @@ export function autoSave(
       subs?.unsubscribe();
       val = form;
 
-      if (!form) return;
+      if (!form) { return; }
 
-      if (typeof key === 'string')
+      if (typeof key === 'string') {
         subs = createSetter(storage, key, form, object, value, subs);
-      else if (key instanceof Observable)
+      }
+      else if (key instanceof Observable) {
         key.subscribe({next: k => subs = createSetter(storage, k, form, object, value, subs)});
-      else if (key instanceof Promise)
+      }
+      else if (key instanceof Promise) {
         key.then(k => subs = createSetter(storage, k, form, object, value, subs));
+      }
     };
 
     Object.defineProperty(target, propertyKey, {
