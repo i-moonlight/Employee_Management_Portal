@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Linq;
-using System.Threading.Tasks;
-using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.DataAccess.Persistence;
 using WebAPI.Domain.Entities;
-using WebAPI.UseCases.Requests.Employees.Commands;
 using WebAPI.UseCases.Services;
 
 namespace WebAPI.DataAccess.Repositories
@@ -48,6 +44,10 @@ namespace WebAPI.DataAccess.Repositories
             return _context.Departments.OrderBy(d => d.Name).Select(d => d.Name).ToList();
         }
 
+        /// <summary>
+        /// Adds an employee to the database.
+        /// </summary>
+        /// <param name="model"></param>
         public Employee Create(Employee employee)
         {
             _context.Employees.Add(employee);
@@ -55,6 +55,10 @@ namespace WebAPI.DataAccess.Repositories
             return employee;
         }
 
+        /// <summary>
+        /// Updates the employee.
+        /// </summary>
+        /// <param name="model">Employee model</param>
         public Employee Update(Employee employee)
         {
             _context.Employees.Update(employee);
@@ -73,7 +77,12 @@ namespace WebAPI.DataAccess.Repositories
             _context.SaveChanges();
         }
 
-        public string GetFileName(int id)
+        /// <summary>
+        /// Gets the photo name by ID.
+        /// </summary>
+        /// <param name="id">Employee id</param>
+        /// <returns>Returns the file name of the employee's photo.</returns>
+        public string GetPhotoName(Guid id)
         {
             return _context.Employees.Find(id).PhotoFileName;
         }

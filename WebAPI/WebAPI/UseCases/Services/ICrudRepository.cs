@@ -11,6 +11,6 @@ namespace WebAPI.UseCases.Services
         public T Create(T model);
         public T Update(T model);
         public void Delete(Guid id);
-        public string GetFileName(int id);
+        public string GetPhotoName(Guid id);
     }
 }

@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Domain.Entities;
-using WebAPI.Helpers;
 using WebAPI.UseCases.Dto;
 using WebAPI.UseCases.Requests.Employees.Commands;
 using WebAPI.UseCases.Requests.Employees.Queries;
@@ -166,33 +164,25 @@ namespace WebAPI.Controllers
             return Ok(await Mediator.Send(new UploadPhotoCommand()));
         }
 
+        /// <summary>
+        /// Update photo the employee by id.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// POST /employee/UpdatePhoto.
+        /// </remarks>
+        /// <returns>Returns photo file name.</returns>
+        /// <response code="204">Success.</response>
+        /// <response code="401">If the user is unauthorized.</response>
         [HttpPost]
-        [Route("{Id}/UpdatePhoto")]
-        public JsonResult UpdatePhoto(int id)
+        [Route("UpdatePhoto")]
+        // [Authorize (Roles = "Manager")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<string>> UpdateEmployeePhoto(Guid id)
         {
-            try
-            {
-                var photoName = _empRepository.GetFileName(id);
-                var httpRequest = Request.Form;
-                var postedFile = httpRequest.Files[0];
-                var filename = postedFile.FileName;
-                var selectPath = _env.ContentRootPath + "/Photos/" + filename;
-                var storagePath = Constants.StoragePath + photoName;
-
-                if (System.IO.File.Exists(selectPath)) System.IO.File.Copy(storagePath, selectPath, true);
-
-                using (var stream = new FileStream(selectPath, FileMode.Create))
-                {
-                    postedFile.CopyTo(stream);
-                    if (System.IO.File.Exists(selectPath)) System.IO.File.Delete(storagePath);
-                }
-
-                return new JsonResult(filename);
-            }
-            catch (Exception)
-            {
-                return new JsonResult("anonymous.png");
-            }
+            var request = new UpdatePhotoCommand {Id = id};
+            return Ok(await Mediator.Send(request));
         }
 
         [Route("GetAllDepartmentNames")]

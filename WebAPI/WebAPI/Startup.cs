@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -39,10 +40,11 @@ namespace WebAPI
 
             #region JSON Serializer
             
-            services
-                .AddControllersWithViews()
-                .AddNewtonsoftJson(opts => opts.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore)
-                .AddNewtonsoftJson(opts => opts.SerializerSettings.ContractResolver = new DefaultContractResolver());
+            services.AddControllersWithViews().AddNewtonsoftJson(opts =>
+            {
+                opts.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                opts.SerializerSettings.ContractResolver = new DefaultContractResolver();
+            });
             
             #endregion
 
@@ -98,22 +100,25 @@ namespace WebAPI
             services.AddAutoMapper(typeof(AssemblyMappingProfile));
 
             #endregion
+            
+            #region Static Files
+
+            services.Configure<StaticFileOptions>(opts =>
+            {
+                var fileDirectory = new DirectoryInfo(Path.Combine(Directory.GetCurrentDirectory(), "Photos"));
+                if (!fileDirectory.Exists) fileDirectory.Create();
+                opts.RequestPath = "/Photos";
+            });
+
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
-            // This middleware is used to returns static files and short-circuits further request processing.   
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Photos")),
-                RequestPath = "/Photos"
-            });
+            app.UseStaticFiles(app.ApplicationServices.GetRequiredService<IOptions<StaticFileOptions>>().Value);
 
             app.UseRouting();
 

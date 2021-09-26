@@ -25,7 +25,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Photos" />
+      <Folder Include="wwwroot" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="wwwroot\Photos\anonymous.png" />
     </ItemGroup>
 
 </Project>
