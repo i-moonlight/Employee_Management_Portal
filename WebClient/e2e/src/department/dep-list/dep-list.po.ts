@@ -89,4 +89,13 @@ export class DepartmentListPage {
   async isSortButton(): Promise<boolean> {
     return element(by.css('.sort')).isDisplayed();
   }
+
+  // Edit employee button.
+  getEditEmpButton(): ElementFinder {
+    return element(by.css('.btn-green'));
+  }
+
+  async isEditEmpButtonDisplayed(): Promise<boolean> {
+    return (await this.getEditEmpButton()).isDisplayed();
+  }
 }
