@@ -2,15 +2,12 @@
 using System.Collections;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using WebAPI.Domain.Entities;
 using WebAPI.UseCases.Dto;
 using WebAPI.UseCases.Requests.Employees.Commands;
 using WebAPI.UseCases.Requests.Employees.Queries;
 using WebAPI.UseCases.Requests.Employees.Validators;
-using WebAPI.UseCases.Services;
 
 namespace WebAPI.Controllers
 {
@@ -18,15 +15,6 @@ namespace WebAPI.Controllers
     [ApiController]
     public class EmployeeController : BaseController
     {
-        private readonly ICrudRepository<Employee> _empRepository;
-        private readonly IWebHostEnvironment _env;
-
-        public EmployeeController(ICrudRepository<Employee> repo, IWebHostEnvironment env)
-        {
-            _empRepository = repo;
-            _env = env;
-        }
-
         /// <summary>
         /// Gets the list of Employee.
         /// </summary>
@@ -68,6 +56,26 @@ namespace WebAPI.Controllers
         }
 
         /// <summary>
+        /// Gets the list of all department names.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// POST /employee/GetDepartmentNames.
+        /// </remarks>
+        /// <returns>Returns get all department names.</returns>
+        /// <response code="200">Success.</response>
+        /// <response code="401">If the user is unauthorized.</response>
+        [HttpGet]
+        [Route("DepartmentNames")]
+        // [Authorize(Roles = "Manager")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<IEnumerable>> GetDepartmentNameList()
+        {
+            return Ok(await Mediator.Send(new GetDepartmentNameListQuery()));
+        }
+
+        /// <summary>
         /// Creates the employee.
         /// </summary>
         /// <remarks>
@@ -92,6 +100,47 @@ namespace WebAPI.Controllers
                 return BadRequest(validationResult.Errors.First().ErrorMessage);
             }
 
+            return Ok(await Mediator.Send(request));
+        }
+        
+        /// <summary>
+        /// Upload photo the employee.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// POST /employee/UploadPhoto.
+        /// </remarks>
+        /// <returns>Returns photo file name.</returns>
+        /// <response code="204">Success.</response>
+        /// <response code="401">If the user is unauthorized.</response>
+        [HttpPost]
+        [Route("UploadPhoto")]
+        // [Authorize (Roles = "Manager")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<string>> UploadEmployeePhoto()
+        {
+            return Ok(await Mediator.Send(new UploadPhotoCommand()));
+        }
+
+        /// <summary>
+        /// Update photo the employee by id.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// POST /employee/UpdatePhoto.
+        /// </remarks>
+        /// <returns>Returns photo file name.</returns>
+        /// <response code="204">Success.</response>
+        /// <response code="401">If the user is unauthorized.</response>
+        [HttpPost]
+        [Route("UpdatePhoto")]
+        // [Authorize (Roles = "Manager")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<string>> UpdateEmployeePhoto(Guid id)
+        {
+            var request = new UpdatePhotoCommand {Id = id};
             return Ok(await Mediator.Send(request));
         }
 
@@ -142,53 +191,6 @@ namespace WebAPI.Controllers
         {
             var request = new DeleteEmployeeCommand {Id = id};
             return Ok(await Mediator.Send(request));
-        }
-
-        /// <summary>
-        /// Upload photo the employee.
-        /// </summary>
-        /// <remarks>
-        /// Sample request:
-        /// POST /employee/UploadPhoto.
-        /// </remarks>
-        /// <returns>Returns photo file name.</returns>
-        /// <response code="204">Success.</response>
-        /// <response code="401">If the user is unauthorized.</response>
-        [HttpPost]
-        [Route("UploadPhoto")]
-        // [Authorize (Roles = "Manager")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<string>> UploadEmployeePhoto()
-        {
-            return Ok(await Mediator.Send(new UploadPhotoCommand()));
-        }
-
-        /// <summary>
-        /// Update photo the employee by id.
-        /// </summary>
-        /// <remarks>
-        /// Sample request:
-        /// POST /employee/UpdatePhoto.
-        /// </remarks>
-        /// <returns>Returns photo file name.</returns>
-        /// <response code="204">Success.</response>
-        /// <response code="401">If the user is unauthorized.</response>
-        [HttpPost]
-        [Route("UpdatePhoto")]
-        // [Authorize (Roles = "Manager")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<string>> UpdateEmployeePhoto(Guid id)
-        {
-            var request = new UpdatePhotoCommand {Id = id};
-            return Ok(await Mediator.Send(request));
-        }
-
-        [Route("GetAllDepartmentNames")]
-        public JsonResult GetAllDepartmentNames()
-        {
-            return new JsonResult(_empRepository.ReadAll());
         }
     }
 }

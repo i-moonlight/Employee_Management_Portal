@@ -39,7 +39,7 @@ namespace WebAPI.DataAccess.Repositories
         /// Gets department names list sorted alphabetically.
         /// </summary>
         /// <returns>Returns department names list.</returns>
-        public IEnumerable ReadAll()
+        public IEnumerable GetDepartmentNameList()
         {
             return _context.Departments.OrderBy(d => d.Name).Select(d => d.Name).ToList();
         }

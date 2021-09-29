@@ -7,7 +7,7 @@ namespace WebAPI.UseCases.Services
     {
         public IEnumerable Read();
         public T Read(Guid id);
-        public IEnumerable ReadAll();
+        public IEnumerable GetDepartmentNameList();
         public T Create(T model);
         public T Update(T model);
         public void Delete(Guid id);

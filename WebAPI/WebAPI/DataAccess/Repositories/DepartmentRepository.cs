@@ -23,7 +23,7 @@ namespace WebAPI.DataAccess.Repositories
             throw new NotImplementedException();
         }
 
-        public IEnumerable ReadAll()
+        public IEnumerable GetDepartmentNameList()
         {
             throw new NotImplementedException();
         }
