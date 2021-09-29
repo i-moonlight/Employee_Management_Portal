@@ -1,9 +1,9 @@
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '@services/authentication/auth.service';
 import { Dto } from '@models/dto.model';
+import { NotificationService } from '@services/notification.service';
 import { Pattern } from '@app/app.constants';
 import { ProgressBarService } from '@services/progress-bar/progress-bar.service';
 
@@ -17,8 +17,8 @@ export class ForgotPasswordComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    public progressBar: ProgressBarService,
-    private toaster: ToastrService) {}
+    private progressBar: ProgressBarService,
+    private notificationService: NotificationService) {}
 
   ngOnInit(): void {
     this.emailForm = new FormGroup({
@@ -49,10 +49,18 @@ export class ForgotPasswordComponent implements OnInit {
     };
 
     this.authService.sendForgotPasswordEmail(dto).subscribe(
-      (response) => {
-        this.progressBar.setSuccess();
-        this.progressBar.completeLoading();
-        console.warn(response);
+      (res) => {
+        if (res.DateSet == null) {
+          this.progressBar.setSuccess();
+          this.progressBar.completeLoading();
+          this.notificationService.setSuccessMessage(res.Message);
+          console.warn(res);
+        } else {
+          this.progressBar.setError();
+          this.progressBar.completeLoading();
+          this.notificationService.setErrorMessage(res.Message);
+          console.error(res);
+        }
       },
       error: (err: HttpErrorResponse) => {}
     });
@@ -60,6 +68,7 @@ export class ForgotPasswordComponent implements OnInit {
       (err: HttpErrorResponse) => {
         this.progressBar.setError();
         this.progressBar.completeLoading();
+        this.notificationService.setErrorMessage('Server connection failed');
         console.error(err);
       });
   }
