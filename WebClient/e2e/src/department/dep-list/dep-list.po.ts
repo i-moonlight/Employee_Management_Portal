@@ -98,4 +98,13 @@ export class DepartmentListPage {
   async isEditEmpButtonDisplayed(): Promise<boolean> {
     return (await this.getEditEmpButton()).isDisplayed();
   }
+
+  // Delete alert button.
+  getDelAlertButton(): ElementFinder {
+    return element(by.css('.btn-red'));
+  }
+
+  async isDelAlertButtonDisplayed(): Promise<boolean> {
+    return (await this.getDelAlertButton()).isDisplayed();
+  }
 }

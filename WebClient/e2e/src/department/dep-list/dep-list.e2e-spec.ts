@@ -108,6 +108,11 @@ describe('DepartmentListPage', () => {
     expect(await page.getModalTitle()).toEqual('Edit Department');
   });
 
+  it('should display delete alert button on page', async () => {
+    await page.navigateTo();
+    expect(await page.isDelAlertButtonDisplayed()).toBeTruthy('Delete alert button is display');
+  });
+
   afterEach(async () => {
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
     expect(logs).not.toContain(jasmine.objectContaining(
