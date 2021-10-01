@@ -50,7 +50,7 @@ export class ForgotPasswordComponent implements OnInit {
 
     this.authService.sendForgotPasswordEmail(dto).subscribe(
       (res) => {
-        if (res.DateSet == null) {
+        if (res.IsValid == true) {
           this.progressBar.setSuccess();
           this.progressBar.completeLoading();
           this.notificationService.setSuccessMessage(res.Message);
