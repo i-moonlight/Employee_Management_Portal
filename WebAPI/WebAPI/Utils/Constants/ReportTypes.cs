@@ -9,5 +9,7 @@ namespace WebAPI.Utils.Constants
         public const string DeletedSuccessfull = "Deleted successfully.";
         public const string DeletedFailed = "Deleted failed.";
         public const string NamePhotoDefault = "anonymous.png";
+        
+        public const string Error = @"An error occured seeding the database with test messages, Error:";
     }
 }
