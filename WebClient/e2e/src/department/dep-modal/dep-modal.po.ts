@@ -14,4 +14,13 @@ export class DepartmentModalPage {
   async getAddDepartmentLabel(): Promise<string> {
     return element(by.css('.col-form-label')).getText();
   }
+
+  // Employee name input.
+  getDepartmentNameInput(): ElementFinder {
+    return element(by.css('.form-control'));
+  }
+
+  async isDepartmentNameInputDisplayed(): Promise<ElementFinder> {
+    return (await this.getDepartmentNameInput()).isDisplayed();
+  }
 }
