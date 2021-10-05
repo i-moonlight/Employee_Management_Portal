@@ -33,7 +33,7 @@ export class AuthService {
     const headers = new HttpHeaders({
       ChangePasswordUrl: body.ResetPasswordUrl
     });
-    return this.http.post<Response>(this.AUTH_URL + 'ForgotPassword', body, {headers: headers});
+    return this.http.post<Response>(this.AUTH_URL + 'ForgotPassword', body, {headers});
   }
 
   /**
