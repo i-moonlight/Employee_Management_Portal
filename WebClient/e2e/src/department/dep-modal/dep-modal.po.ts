@@ -23,4 +23,8 @@ export class DepartmentModalPage {
   async isDepartmentNameInputDisplayed(): Promise<ElementFinder> {
     return (await this.getDepartmentNameInput()).isDisplayed();
   }
+
+  async getDepNameInputPlaceholder(): Promise<ElementFinder> {
+    return (await this.getDepartmentNameInput()).getAttribute('placeholder');
+  }
 }
