@@ -1,8 +1,8 @@
 export class Response {
   public ResponseCode: ResponseCode = ResponseCode.NotSet;
-  public IsValid!: boolean; // Flag
+  public IsValid!: boolean;
   public Message!: string;
-  public DateSet: any
+  public DateSet: any;
 }
 
 export enum ResponseCode {

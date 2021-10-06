@@ -24,6 +24,7 @@
     "@auth0/angular-jwt": "^5.0.2",
     "@full-fledged/alerts": "^14.0.0",
     "@ngx-progressbar/core": "^5.3.2",
+    "ngx-cookie-service": "^14.0.1",
     "ngx-progressbar": "^9.0.0",
     "ngx-toastr": "^15.0.0",
     "rxjs": "~7.5.6",

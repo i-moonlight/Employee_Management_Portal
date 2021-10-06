@@ -31,35 +31,9 @@ export class LoginComponent implements OnInit {
       Validators.required,
       Validators.pattern(Pattern.PASSWORD_PATTERN)
     ]),
-  })
+  });
 
   ngOnInit(): void {}
-
-  // private static cannotContainSpace(control: AbstractControl): ValidationErrors | null {
-  //   let password = control.value as string;
-  //   if (password.indexOf(' ') >= 0) {
-  //     return {
-  //       cannotContainSpace: true
-  //     };
-  //   }
-  //   return null;
-  // }
-  //
-  // private static shouldBeUniqueUserName(control: AbstractControl): Promise<ValidationErrors | null> {
-  //   return new Promise<ValidationErrors | null>((resolve, _reject) => {
-  //     return setTimeout(() => {
-  //         console.log('ok')
-  //         if ((control.value as string) !== 'mosh') {
-  //           resolve(null)
-  //         } else {
-  //           return resolve({
-  //             shouldBeUniqueUserName: true
-  //           });
-  //         }
-  //       },
-  //       2000)
-  //   });
-  // }
 
   onSubmit(loginForm: FormGroup) {
     const username = loginForm.value.userName;

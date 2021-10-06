@@ -1,5 +1,7 @@
 export class Account {
-  public UserName: string;
-  public Email: string;
-  public Password: string;
+  public UserId?: string;
+  public UserName?: string;
+  public Email?: string;
+  public Password?: string;
+  public ResetPasswordUrl?: string;
 }
