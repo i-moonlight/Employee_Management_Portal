@@ -28,6 +28,13 @@ describe('DepartmentModalPage', () => {
     expect(await page.getDepNameInputPlaceholder()).toEqual('Enter Department Name');
   });
 
+  it('should display add department modal button on page when click on button', async () => {
+    await page.navigateTo();
+    await page.getAddDepartmentButton().click();
+    await browser.sleep(1000);
+    expect(await page.isAddDepModalButtonDisplayed()).toBeTruthy('Add department modal button is display');
+  });
+
   afterEach(async () => {
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
     expect(logs).not.toContain(jasmine.objectContaining(

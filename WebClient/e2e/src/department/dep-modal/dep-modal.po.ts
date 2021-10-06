@@ -27,4 +27,13 @@ export class DepartmentModalPage {
   async getDepNameInputPlaceholder(): Promise<ElementFinder> {
     return (await this.getDepartmentNameInput()).getAttribute('placeholder');
   }
+
+  // Add department modal button.
+  getAddDepartmentModalButton(): ElementFinder {
+    return element(by.css('.add'));
+  }
+
+  async isAddDepModalButtonDisplayed(): Promise<boolean> {
+    return (await this.getAddDepartmentModalButton()).isDisplayed();
+  }
 }
