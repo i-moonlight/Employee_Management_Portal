@@ -36,4 +36,8 @@ export class DepartmentModalPage {
   async isAddDepModalButtonDisplayed(): Promise<boolean> {
     return (await this.getAddDepartmentModalButton()).isDisplayed();
   }
+
+  async getAddDepModalLabel(): Promise<string> {
+    return (await this.getAddDepartmentModalButton()).getText();
+  }
 }
