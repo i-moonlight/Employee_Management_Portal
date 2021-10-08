@@ -14,6 +14,10 @@ export class DepartmentModalPage {
   async getAddDepartmentLabel(): Promise<string> {
     return element(by.css('.col-form-label')).getText();
   }
+  // Edit department button.
+  getEditDepartmentButton(): ElementFinder {
+    return element(by.css('.btn-green'));
+  }
 
   // Employee name input.
   getDepartmentNameInput(): ElementFinder {
