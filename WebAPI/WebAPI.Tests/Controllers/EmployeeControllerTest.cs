@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
@@ -35,6 +37,17 @@ namespace WebAPI.Tests.Controllers
         }
 
         [Test]
+        public async Task GetEmployeeList_Method_Should_Returns_Success_Http_Status_Code()
+        {
+            // Act
+            var response = await base.HttpClient.GetAsync("api/employee");
+
+            // Assert
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.AreEqual("text/html; charset=utf-8", response.Content.Headers.ContentType?.ToString());
+        }
+
+        [Test]
         public void GetEmployeeById_Method_Should_Returns_ActionResult_EmployeeDto_Type()
         {
             // Arrange
@@ -48,6 +61,20 @@ namespace WebAPI.Tests.Controllers
         }
 
         [Test]
+        public async Task GetEmployeeById_Method_Should_Returns_Success_Http_Status_Code()
+        {
+            // Arrange
+            var employeeId = base.FakeDbContext.Employees?.FirstOrDefault()?.Id;
+
+            // Act
+            var response = await base.HttpClient.GetAsync($"api/employee/{employeeId}");
+
+            // Assert
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.AreEqual("text/html; charset=utf-8", response.Content.Headers.ContentType?.ToString());
+        }
+
+        [Test]
         public void GetDepartmentNameList_Method_Should_Returns_ActionResult_IEnumerable_Type()
         {
             // Act
@@ -58,6 +85,17 @@ namespace WebAPI.Tests.Controllers
         }
 
         [Test]
+        public async Task GetDepartmentNameList_Method_Should_Returns_Success_Http_Status_Code()
+        {
+            // Act
+            var response = await base.HttpClient.GetAsync("api/employee/DepartmentNames");
+
+            // Assert
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.AreEqual("text/html; charset=utf-8", response.Content.Headers.ContentType?.ToString());
+        }
+
+        [Test]
         public void CreateEmployee_Method_Should_Returns_ActionResult_String_Type()
         {
             // Act
@@ -65,6 +103,21 @@ namespace WebAPI.Tests.Controllers
 
             // Assert
             Assert.AreEqual(typeof(Task<ActionResult<string>>), result.GetType());
+        }
+
+        [Test]
+        public async Task CreateEmployee_Method_Should_Returns_Success_Http_Status_Code()
+        {
+            // Arrange
+            var content = FakeTestContent.GetRequestContent(FakeEmployeeDto);
+
+            // Act
+            var response = await base.HttpClient.PostAsync("api/employee", content);
+            var stringResponse = await response.Content.ReadAsStringAsync();
+
+            // Assert
+            response.EnsureSuccessStatusCode();
+            Assert.AreEqual(ReportTypes.CreatedSuccessfully, stringResponse);
         }
 
         [Test]
@@ -93,6 +146,20 @@ namespace WebAPI.Tests.Controllers
         }
 
         [Test]
+        public async Task UploadEmployeePhoto_Method_Should_Returns_Success_Http_Status_Code()
+        {
+            // Arrange
+            var content = FakeTestContent.GetRequestContent(FakeEmployeeDto);
+
+            // Act
+            var response = await base.HttpClient.PostAsync("api/employee/UploadPhoto", content);
+
+            // Assert
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.AreEqual("text/html; charset=utf-8", response.Content.Headers.ContentType?.ToString());
+        }
+
+        [Test]
         public void UpdateEmployeePhoto_Method_Should_Returns_ActionResult_String_Type()
         {
             // Arrange
@@ -106,6 +173,20 @@ namespace WebAPI.Tests.Controllers
         }
 
         [Test]
+        public async Task UpdateEmployeePhoto_Method_Should_Returns_Success_Http_Status_Code()
+        {
+            // Arrange
+            var content = FakeTestContent.GetRequestContent(FakeEmployeeDto);
+
+            // Act
+            var response = await base.HttpClient.PostAsync("api/employee/UpdatePhoto", content);
+
+            // Assert
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.AreEqual("text/html; charset=utf-8", response.Content.Headers.ContentType?.ToString());
+        }
+
+        [Test]
         public void UpdateEmployee_Method_Should_Returns_ActionResult_String_Type()
         {
             // Act
@@ -113,6 +194,22 @@ namespace WebAPI.Tests.Controllers
 
             // Assert
             Assert.AreEqual(typeof(Task<ActionResult<string>>), result.GetType());
+        }
+
+        [Test]
+        public async Task UpdateEmployee_Method_Should_Returns_Success_Http_Status_Code()
+        {
+            // Arrange
+            var content = FakeTestContent.GetRequestContent(FakeEmployeeDto);
+
+            // Act
+            var response = await base.HttpClient.PutAsync("api/employee", content);
+            var stringResponse = await response.Content.ReadAsStringAsync();
+
+            // Assert
+            response.EnsureSuccessStatusCode();
+            Assert.AreEqual(ReportTypes.UpdatedSuccessfull, stringResponse);
+            Assert.AreEqual("text/html; charset=utf-8", response.Content.Headers.ContentType?.ToString());
         }
 
         [Test]
@@ -141,6 +238,22 @@ namespace WebAPI.Tests.Controllers
 
             // Assert
             Assert.AreEqual(typeof(Task<ActionResult<string>>), result.GetType());
+        }
+
+        [Test]
+        public async Task DeleteEmployee_Method_Should_Returns_Success_Http_Status_Code()
+        {
+            // Arrange
+            var employeeId = base.FakeDbContext.Employees?.FirstOrDefault()?.Id;
+
+            // Act
+            var response = await base.HttpClient.DeleteAsync($"api/employee/{employeeId}");
+            var stringResponse = await response.Content.ReadAsStringAsync();
+
+            // Assert
+            response.EnsureSuccessStatusCode();
+            Assert.AreEqual(ReportTypes.DeletedSuccessfull, stringResponse);
+            Assert.AreEqual("text/html; charset=utf-8", response.Content.Headers.ContentType?.ToString());
         }
     }
 }
