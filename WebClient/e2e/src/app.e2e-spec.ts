@@ -8,9 +8,29 @@ describe('workspace-project App', () => {
     page = new AppPage();
   });
 
-  it('should display welcome message', async () => {
+  it('should display title app as `Employee Management Portal`', async () => {
     await page.navigateTo();
-    expect(await page.getTitleText()).toEqual('WebClient app is running!');
+    expect(await page.getTitleText()).toEqual('Employee Management Portal');
+  });
+
+  it('should display departments button on page', async () => {
+    await page.navigateTo();
+    expect(await page.getDepartmentsButtonDisplayed()).toBeTruthy('Departments button is display');
+  });
+
+  it('should display departments button title as `Departments`', async () => {
+    await page.navigateTo();
+    expect(await page.getDepartmentsButtonTitle()).toEqual('Departments');
+  });
+
+  it('should display employees button on page', async () => {
+    await page.navigateTo();
+    expect(await page.getEmployeesButtonDisplayed()).toBeTruthy('Employees button is display');
+  });
+
+  it('should display employees button title as `Employees`', async () => {
+    await page.navigateTo();
+    expect(await page.getEmployeesButtonTitle()).toEqual('Employees');
   });
 
   afterEach(async () => {
