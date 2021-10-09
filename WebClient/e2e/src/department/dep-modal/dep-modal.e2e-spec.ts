@@ -49,6 +49,13 @@ describe('DepartmentModalPage', () => {
     expect(await page.getAddDepartmentLabel()).toEqual('Department Name');
   });
 
+  it('should display department name input on page when click on edit button', async () => {
+    await page.navigateTo();
+    await page.getEditDepartmentButton().click();
+    await browser.sleep(1000);
+    expect(await page.isDepartmentNameInputDisplayed()).toBeTruthy('Department name input is display');
+  });
+
   afterEach(async () => {
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
     expect(logs).not.toContain(jasmine.objectContaining(
