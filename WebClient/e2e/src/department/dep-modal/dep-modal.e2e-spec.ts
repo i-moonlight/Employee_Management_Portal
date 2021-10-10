@@ -56,6 +56,13 @@ describe('DepartmentModalPage', () => {
     expect(await page.isDepartmentNameInputDisplayed()).toBeTruthy('Department name input is display');
   });
 
+  it('should display department name placeholder as `Enter Department Name` on page when click on edit button', async () => {
+    await page.navigateTo();
+    await page.getEditDepartmentButton().click();
+    await browser.sleep(1000);
+    expect(await page.getDepartmentNameInputPlaceholder()).toEqual('Enter Department Name');
+  });
+
   afterEach(async () => {
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
     expect(logs).not.toContain(jasmine.objectContaining(
