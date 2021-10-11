@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Domain.Entities;
-using WebAPI.UseCases.Services;
+using WebAPI.UseCases.Requests.Departments.Queries;
 
 namespace WebAPI.Controllers
 {
@@ -9,17 +12,23 @@ namespace WebAPI.Controllers
     [ApiController]
     public class DepartmentController : BaseController
     {
-        private readonly ICrudRepository<Department> _depRepository;
-
-        public DepartmentController(ICrudRepository<Department> depRepository)
-        {
-            _depRepository = depRepository;
-        }
-
+        /// <summary>
+        /// Gets the list of departments.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// GET /department.
+        /// </remarks>
+        /// <returns>Returns department list.</returns>
+        /// <response code="200">Success.</response>
+        /// <response code="401">If the user is unauthorized.</response>
         [HttpGet]
-        public JsonResult Get()
+        // [Authorize (Roles = "Manager")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<IEnumerable>> GetDepartmentList()
         {
-            return new JsonResult(_depRepository.Read());
+            return Ok(await Mediator.Send(new GetDepartmentListQuery()));
         }
 
         [HttpPost]
