@@ -44,4 +44,13 @@ export class DepartmentModalPage {
   async getAddDepModalLabel(): Promise<string> {
     return (await this.getAddDepartmentModalButton()).getText();
   }
+
+  // Edit department modal button.
+  getUpdateDepartmentModalButton(): ElementFinder {
+    return element(by.css('.update'));
+  }
+
+  async isUpdateDepartmentButtonDisplayed(): Promise<boolean> {
+    return (await this.getUpdateDepartmentModalButton()).isDisplayed();
+  }
 }
