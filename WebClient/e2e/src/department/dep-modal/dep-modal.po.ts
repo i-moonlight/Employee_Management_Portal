@@ -53,4 +53,8 @@ export class DepartmentModalPage {
   async isUpdateDepartmentButtonDisplayed(): Promise<boolean> {
     return (await this.getUpdateDepartmentModalButton()).isDisplayed();
   }
+
+  async getUpdateDepartmentButtonName(): Promise<string> {
+    return (await this.getUpdateDepartmentModalButton()).getText();
+  }
 }

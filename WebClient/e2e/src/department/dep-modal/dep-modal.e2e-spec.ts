@@ -70,6 +70,13 @@ describe('DepartmentModalPage', () => {
     expect(await page.isUpdateDepartmentButtonDisplayed()).toBeTruthy('Update department modal button is display');
   });
 
+  it('should display update department modal button name as `UPDATE` on page when click on edit button', async () => {
+    await page.navigateTo();
+    await page.getEditDepartmentButton().click();
+    await browser.sleep(1000);
+    expect(await page.getUpdateDepartmentButtonName()).toEqual('UPDATE');
+  });
+
   afterEach(async () => {
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
     expect(logs).not.toContain(jasmine.objectContaining(
