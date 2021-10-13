@@ -19,7 +19,7 @@ export class DepartmentModalPage {
     return element(by.css('.btn-green'));
   }
 
-  // Employee name input.
+  // Department name input.
   getDepartmentNameInput(): ElementFinder {
     return element(by.css('.form-control'));
   }
@@ -28,7 +28,7 @@ export class DepartmentModalPage {
     return (await this.getDepartmentNameInput()).isDisplayed();
   }
 
-  async getDepNameInputPlaceholder(): Promise<ElementFinder> {
+  async getDepartmentNameInputPlaceholder(): Promise<ElementFinder> {
     return (await this.getDepartmentNameInput()).getAttribute('placeholder');
   }
 
@@ -37,7 +37,7 @@ export class DepartmentModalPage {
     return element(by.css('.add'));
   }
 
-  async isAddDepModalButtonDisplayed(): Promise<boolean> {
+  async isAddModalButtonDisplayed(): Promise<boolean> {
     return (await this.getAddDepartmentModalButton()).isDisplayed();
   }
 
@@ -45,7 +45,7 @@ export class DepartmentModalPage {
     return (await this.getAddDepartmentModalButton()).getText();
   }
 
-  // Edit department modal button.
+  // Update department modal button.
   getUpdateDepartmentModalButton(): ElementFinder {
     return element(by.css('.update'));
   }
@@ -55,6 +55,6 @@ export class DepartmentModalPage {
   }
 
   async getUpdateDepartmentButtonName(): Promise<string> {
-    return (await this.getUpdateDepartmentModalButton()).getText();
+    return (await this.getUpdateDepartmentModalButton()).isDisplayed();
   }
 }

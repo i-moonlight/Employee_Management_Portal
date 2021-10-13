@@ -1,4 +1,4 @@
-import {browser, logging} from 'protractor';
+import { browser, logging } from 'protractor';
 import { DepartmentModalPage } from './dep-modal.po';
 
 describe('DepartmentModalPage', () => {
@@ -7,32 +7,32 @@ describe('DepartmentModalPage', () => {
   beforeEach(() =>
     page = new DepartmentModalPage());
 
-  it('should display department name label as `Department Name` on page', async () => {
+  it('should display department name label as `Department Name` on page when click on add button', async () => {
     await page.navigateTo();
     await page.getAddDepartmentButton().click();
     await browser.sleep(1000);
     expect(await page.getAddDepartmentLabel()).toEqual('Department Name');
   });
 
-  it('should display department name input on page', async () => {
+  it('should display department name input on page when click on add button', async () => {
     await page.navigateTo();
     await page.getAddDepartmentButton().click();
     await browser.sleep(1000);
     expect(await page.isDepartmentNameInputDisplayed()).toBeTruthy('Department name input is display');
   });
 
-  it('should display department name placeholder as `Enter Department Name` on page', async () => {
+  it('should display department name placeholder as `Enter Department Name` on page when click on add button', async () => {
     await page.navigateTo();
     await page.getAddDepartmentButton().click();
     await browser.sleep(1000);
-    expect(await page.getDepNameInputPlaceholder()).toEqual('Enter Department Name');
+    expect(await page.getDepartmentNameInputPlaceholder()).toEqual('Enter Department Name');
   });
 
-  it('should display add department modal button on page when click on button', async () => {
+  it('should display add department modal button on page when click on add button', async () => {
     await page.navigateTo();
     await page.getAddDepartmentButton().click();
     await browser.sleep(1000);
-    expect(await page.isAddDepModalButtonDisplayed()).toBeTruthy('Add department modal button is display');
+    expect(await page.isAddModalButtonDisplayed()).toBeTruthy('Add department modal button is display');
   });
 
   it('should display add department modal button label as `ADD` on page when click on button', async () => {
