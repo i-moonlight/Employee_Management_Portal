@@ -13,14 +13,23 @@ namespace WebAPI.DataAccess.Repositories
 
         public DepartmentRepository(AppDbContext ctx) => _context = ctx;
 
+        /// <summary>
+        /// Gets a list of departments ordered by ID.
+        /// </summary>
+        /// <returns>Returns departments list.</returns>
         public IEnumerable Read()
         {
             return _context.Departments.OrderBy(d => d.Id);
         }
 
+        /// <summary>
+        /// Gets the department by ID.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Returns department.</returns>
         public Department Read(Guid id)
         {
-            throw new NotImplementedException();
+            return _context.Departments.Find(id);
         }
 
         public IEnumerable GetDepartmentNameList()
