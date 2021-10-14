@@ -134,6 +134,49 @@ describe('EmployeeListPage ', () => {
     expect(await page.getDateFilterPlaceholder()).toEqual('Filter date');
   });
 
+  it('should display table sort button on page', async () => {
+    await page.navigateTo();
+    expect(await page.isSortButton()).toBeTruthy('Sort button is display');
+  });
+
+  it('should display edit button on page', async () => {
+    await page.navigateTo();
+    expect(await page.isEditButtonDisplayed()).toBeTruthy('Edit button is display');
+  });
+
+  it('should display open edit modal on page when click on edit button', async () => {
+    await page.navigateTo();
+    await page.getEditButton().click();
+    await browser.sleep(1000);
+    expect(await page.isModalDisplayed()).toBeTruthy('Modal window is open');
+  });
+
+  it('should display modal title as `Edit Employee` on page when click on edit button', async () => {
+    await page.navigateTo();
+    await page.getEditButton().click();
+    await browser.sleep(1000);
+    expect(await page.getModalTitle()).toEqual('Edit Employee');
+  });
+
+  it('should display delete employee alert button on page', async () => {
+    await page.navigateTo();
+    expect(await page.isDeleteAlertButtonDisplayed()).toBeTruthy('Delete alert button is display');
+  });
+
+  it('should display alert dialog when click on delete employee alert button', async () => {
+    await page.navigateTo();
+    await page.getDeleteAlertButton().click();
+    await expect(browser.switchTo().alert()).toBeTruthy('Alert dialog is display');
+    await browser.restart();
+  });
+
+  it('should display alert dialog title `Are you sure??` when click on delete employee alert button', async () => {
+    await page.navigateTo();
+    await page.getDeleteAlertButton().click();
+    await expect(browser.switchTo().alert().getText()).toContain('Are you sure??');
+    await browser.restart();
+  });
+
   afterEach(async () => {
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
     expect(logs).not.toContain(jasmine.objectContaining(
