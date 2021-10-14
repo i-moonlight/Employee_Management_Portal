@@ -19,7 +19,7 @@ export class EmployeeModalPage {
     return element(by.id('name'));
   }
 
-  async getEmployeeNameTitle(): Promise<string> {
+  async getEmployeeNameLabel(): Promise<string> {
     return (await this.getEmployeeName()).getText();
   }
 
@@ -36,8 +36,8 @@ export class EmployeeModalPage {
     return (await this.getEmployeeNameInput()).getAttribute('placeholder');
   }
 
-  // Department title.
-  async getDepartmentTitle(): Promise<string> {
+  // Department label.
+  async getDepartmentLabel(): Promise<string> {
     return element(by.id('dep')).getText();
   }
 
@@ -50,12 +50,16 @@ export class EmployeeModalPage {
     return element(by.id('department'));
   }
 
-  async isOptionSelectDisplayed(): Promise<boolean> {
-    return (await this.getOptionSelected()).getAttribute('ng-reflect-model').isDisplayed();
+  async getOptionSelectDisplayed(): Promise<string> {
+    return (await this.getOptionSelected()).getAttribute('ng-reflect-model');
+  }
+
+  async getOptionSelectValue(): Promise<string> {
+    return (await this.getOptionSelected()).getAttribute('value');
   }
 
   // Date of joining title.
-  async getDateTitle(): Promise<string> {
+  async getDateLabel(): Promise<string> {
     return element(by.id('date')).getText();
   }
 
@@ -86,9 +90,9 @@ export class EmployeeModalPage {
     return element(by.className('input')).isDisplayed();
   }
 
-  // Add employee button as upload employee data.
+  // Add employee modal button as upload employee data.
   getAddButton(): ElementFinder {
-    return element(by.css('btn add'));
+    return element(by.css('.upload'));
   }
 
   async isAddButtonDisplayed(): Promise<boolean> {
@@ -99,7 +103,7 @@ export class EmployeeModalPage {
     return (await this.getAddButton()).isPresent();
   }
 
-  // Update employee button.
+  // Employee update button as update employee data.
   getUpdateButton(): ElementFinder {
     return element(by.css('.update'));
   }
