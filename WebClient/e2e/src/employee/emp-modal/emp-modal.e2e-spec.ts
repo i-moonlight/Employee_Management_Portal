@@ -86,6 +86,13 @@ describe('EmployeeModalPage', () => {
     expect(await page.getEmployeeNameLabel()).toEqual('Employee Name');
   });
 
+  it('should display employee name as input value on page when click on edit employee button', async () => {
+    await page.navigateTo();
+    await page.getEditEmployeeCurrentButton();
+    await browser.sleep(1000);
+    expect(await page.getEmployeeNameInputDisplayed()).toEqual(await page.getEmployeeNameInputValue());
+  });
+
   it('should display photo on page when click on edit employee button', async () => {
     await page.navigateTo();
     await page.getEditEmployeeButton().click();

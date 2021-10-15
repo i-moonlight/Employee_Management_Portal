@@ -14,6 +14,11 @@ export class EmployeeModalPage {
     return element(by.css('.btn-green'));
   }
 
+  getEditEmployeeCurrentButton(): any {
+    const item = element.all(by.id('list')).get(1);
+    item.element(by.css('.btn-green')).click();
+  }
+
   // Employee name.
   getEmployeeName(): ElementFinder {
     return element(by.id('name'));
@@ -39,6 +44,14 @@ export class EmployeeModalPage {
   // Department label.
   async getDepartmentLabel(): Promise<string> {
     return element(by.id('dep')).getText();
+  }
+
+  async getEmployeeNameInputDisplayed(): Promise<string> {
+    return (await this.getEmployeeNameInput()).getAttribute('ng-reflect-model');
+  }
+
+  async getEmployeeNameInputValue(): Promise<string> {
+    return (await this.getEmployeeNameInput()).getAttribute('value');
   }
 
   // Department option select.
