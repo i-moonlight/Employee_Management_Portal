@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Domain.Entities;
 using WebAPI.UseCases.Dto;
+using WebAPI.UseCases.Requests.Departments.Commands;
 using WebAPI.UseCases.Requests.Departments.Queries;
+using WebAPI.UseCases.Requests.Departments.Validators;
 
 namespace WebAPI.Controllers
 {
@@ -53,11 +56,32 @@ namespace WebAPI.Controllers
             return Ok(await Mediator.Send(request));
         }
 
+        /// <summary>
+        /// Creates the department.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// POST /department.
+        /// </remarks>
+        /// <param name="department">DepartmentDto.</param>
+        /// <returns>Returns response about success.</returns>
+        /// <response code="201">Success.</response>
+        /// <response code="401">If the user is unauthorized.</response>
         [HttpPost]
-        public JsonResult Post(Department dep)
+        //[Authorize (Roles = "Manager")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<string>> CreateDepartment([FromBody] DepartmentDto department)
         {
-            _depRepository.Create(dep);
-            return new JsonResult("Created Successfully");
+            var request = new CreateDepartmentCommand() {DepartmentDto = department};
+            var validationResult = new CreateDepartmentCommandValidator().Validate(request);
+
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(validationResult.Errors.First().ErrorMessage);
+            }
+
+            return Ok(await Mediator.Send(request));
         }
 
         [HttpPut]

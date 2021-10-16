@@ -48,11 +48,10 @@ namespace WebAPI.DataAccess.Repositories
         /// Adds an employee to the database.
         /// </summary>
         /// <param name="model"></param>
-        public Employee Create(Employee employee)
+        public void Create(Employee employee)
         {
             _context.Employees.Add(employee);
             _context.SaveChanges();
-            return employee;
         }
 
         /// <summary>

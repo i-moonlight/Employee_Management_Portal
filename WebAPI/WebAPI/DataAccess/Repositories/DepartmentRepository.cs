@@ -37,11 +37,14 @@ namespace WebAPI.DataAccess.Repositories
             throw new NotImplementedException();
         }
 
-        public Department Create(Department model)
+        /// <summary>
+        /// Adds an department to the database.
+        /// </summary>
+        /// <param name="model"></param>
+        public void Create(Department model)
         {
             _context.Departments.Add(model);
             _context.SaveChanges();
-            return model;
         }
 
         public Department Update(Department model)
