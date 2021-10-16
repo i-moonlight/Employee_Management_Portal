@@ -35,6 +35,13 @@ describe('EmployeeModalPage', () => {
     expect(await page.getDepartmentLabel()).toEqual('Department');
   });
 
+  it('should display selected option default value as `--Select--` when click on add employee button', async () => {
+    await page.navigateTo();
+    await page.getAddEmployeeButton().click();
+    await browser.sleep(1000);
+    expect(await page.getDepartmentOptions().first().getText()).toEqual('--Select--');
+  });
+
  it('should display selected department on form when option selected when click on add employee button', async () => {
     await page.navigateTo();
     await page.getAddEmployeeButton().click();
