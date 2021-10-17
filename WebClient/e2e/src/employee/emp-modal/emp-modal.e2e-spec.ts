@@ -142,6 +142,13 @@ describe('EmployeeModalPage', () => {
     expect(await page.isUpdateButtonDisplayed()).toBeTruthy('Update button is display');
   });
 
+  it('should display add button name as `UPDATE` on page when click on edit employee button', async () => {
+    await page.navigateTo();
+    await page.getEditEmployeeButton().click();
+    await browser.sleep(1000);
+    expect(await page.getUpdateButtonName()).toEqual('UPDATE');
+  });
+
   afterEach(async () => {
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
     expect(logs).not.toContain(jasmine.objectContaining(

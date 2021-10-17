@@ -124,4 +124,8 @@ export class EmployeeModalPage {
   async isUpdateButtonDisplayed(): Promise<boolean> {
     return (await this.getUpdateButton()).isDisplayed();
   }
+
+  async getUpdateButtonName(): Promise<string> {
+    return (await this.getUpdateButton()).getText();
+  }
 }
