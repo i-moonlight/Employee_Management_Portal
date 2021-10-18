@@ -1,48 +1,52 @@
-*,
-*::before,
-*::after {
-  box-sizing: content-box;
+.form-froup {
+  width: 60%;
+}
+
+.row {
+  display: block;
+  margin-left: 0;
+}
+
+.col-sm-10 {
+  padding-left: 4px;
+  padding-right: 4px;
+  margin-right: 5rem;
+  width: 100%;
 }
 
 .col-form-label {
   width: auto;
 }
 
-.form-control {
-  margin-bottom: 1.5rem;
-}
-
-.form-froup {
-  width: 60%;
-}
-
-.photo {
-  height: 280px;
-  width: 260px;
-}
-
-.but {
-  display: block;
-  width: 128px;
-  height: 30px;
-  padding: initial;
-  margin-top: 10px;
-}
-
-.input {
-  margin-top: 30px;
+label{
+  font-weight: bold;
 }
 
 .container {
   width: 100%;
-  max-width: 60%;
+  max-width: 1170px;
   margin: 0 auto;
+  padding: 0 0 0 4px;
 }
 
-.form-froup[_ngcontent-ssx-c46] {
-  width: 70%;
+.container-btn {
+  text-align: end;
 }
 
-.row {
-  display: block;
+.photo {
+  height: 280px;
+  width: 270px;
+}
+
+.input {
+  margin-top: 5%;
+  width: 100%;
+}
+
+.form-control {
+  margin-bottom: 1.5rem;
+}
+
+.btn {
+  text-transform: uppercase;
 }

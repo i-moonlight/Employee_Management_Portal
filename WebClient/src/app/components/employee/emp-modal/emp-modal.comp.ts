@@ -66,6 +66,7 @@ export class EmployeeModalComponent implements OnInit {
   onFileSelected(event: any): void {
     this.fileToUpload = event.target.files[0];
     this.formData.append('File', this.fileToUpload, this.fileToUpload.name);
+    this.buttonClicked = true;
 
     // Show image preview.
     const reader = new FileReader();
