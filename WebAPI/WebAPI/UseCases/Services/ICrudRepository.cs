@@ -9,7 +9,7 @@ namespace WebAPI.UseCases.Services
         public T Read(Guid id);
         public IEnumerable GetDepartmentNameList();
         public void Create(T model);
-        public T Update(T model);
+        public void Update(T model);
         public void Delete(Guid id);
         public string GetPhotoName(Guid id);
     }

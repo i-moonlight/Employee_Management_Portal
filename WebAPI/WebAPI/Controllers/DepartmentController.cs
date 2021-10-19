@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using WebAPI.Domain.Entities;
 using WebAPI.UseCases.Dto;
 using WebAPI.UseCases.Requests.Departments.Commands;
 using WebAPI.UseCases.Requests.Departments.Queries;
@@ -84,22 +83,30 @@ namespace WebAPI.Controllers
             return Ok(await Mediator.Send(request));
         }
 
+        /// <summary>
+        /// Updates the department.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// PUT /department.
+        /// </remarks>
+        /// <param name="department">DepartmentDto.</param>
+        /// <returns>Returns response about success.</returns>
+        /// <response code="204">Success.</response>
+        /// <response code="401">If the user is unauthorized.</response>
         [HttpPut]
-        public JsonResult Put(Department dep)
+        // [Authorize]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<string>> UpdateDepartment([FromBody] DepartmentDto employee)
         {
-            var success = true;
-            try
-            {
-                _depRepository.Update(dep);
-            }
-            catch (Exception)
-            {
-                success = false;
-            }
+            var request = new UpdateDepartmentCommand() {DepartmentDto = employee};
+            var validationResult = new UpdateDepartmentCommandValidator().Validate(request);
 
-            return success
-                ? new JsonResult("Update successful")
-                : new JsonResult("Update was not successful");
+            if (!validationResult.IsValid)
+                return BadRequest(validationResult.Errors.First().ErrorMessage);
+
+            return Ok(await Mediator.Send(request));
         }
 
         [HttpDelete("{id}")]

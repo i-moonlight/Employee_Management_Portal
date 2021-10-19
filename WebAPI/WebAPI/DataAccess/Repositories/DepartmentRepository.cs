@@ -47,11 +47,14 @@ namespace WebAPI.DataAccess.Repositories
             _context.SaveChanges();
         }
 
-        public Department Update(Department model)
+        /// <summary>
+        /// Updates the department.
+        /// </summary>
+        /// <param name="model">Department model.</param>
+        public void Update(Department department)
         {
-            _context.Departments.Update(model);
+            _context.Departments.Update(department);
             _context.SaveChanges();
-            return model;
         }
 
         public void Delete(int id)
