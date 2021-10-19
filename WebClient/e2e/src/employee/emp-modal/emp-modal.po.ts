@@ -75,4 +75,56 @@ export class EmployeeModalPage {
   async getDateLabel(): Promise<string> {
     return element(by.id('date')).getText();
   }
+  // Date of joining input
+  getDateSelected(): ElementFinder {
+    return element(by.id('dateOfJoining'));
+  }
+
+  async isDateInputDisplayed(): Promise<boolean> {
+    return (await this.getDateSelected()).getAttribute('ng-reflect-model').isDisplayed();
+  }
+
+  // Photo file
+  getPhoto(): ElementFinder {
+    return element(by.className('photo'));
+  }
+
+  async isPhotoDisplayed(): Promise<boolean> {
+    return (await this.getPhoto()).isDisplayed();
+  }
+
+  async isPhotoPathPresent(): Promise<boolean> {
+    return (await this.getPhoto()).getAttribute('src').isPresent();
+  }
+
+  // Photo file input
+  async isPhotoFileInputDisplayed(): Promise<boolean> {
+    return element(by.className('input')).isDisplayed();
+  }
+
+  // Add employee modal button as upload employee data
+  getAddButton(): ElementFinder {
+    return element(by.id('uploadButton'));
+  }
+
+  async isAddButtonDisplayed(): Promise<boolean> {
+    return (await this.getAddButton()).isDisplayed();
+  }
+
+  async isAddButtonDisabled(): Promise<boolean> {
+    return (await this.getAddButton()).isPresent();
+  }
+
+  // Employee update button as update employee data
+  getUpdateButton(): ElementFinder {
+    return element(by.id('updateButton'));
+  }
+
+  async isUpdateButtonDisplayed(): Promise<boolean> {
+    return (await this.getUpdateButton()).isDisplayed();
+  }
+
+  async getUpdateButtonName(): Promise<string> {
+    return (await this.getUpdateButton()).getText();
+  }
 }
