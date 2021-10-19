@@ -1,6 +1,19 @@
+h5{
+  font-weight: bold;
+}
+
 .btn-float {
   margin: 1rem;
   float: right;
+}
+
+img {
+  height: 40px;
+  width: 40px;
+}
+
+.modal-body{
+  width: 100%;
 }
 
 .btn-green {
@@ -9,13 +22,4 @@
 
 .btn-red {
   background: indianred;
-}
-
-.modal-body{
-  width: 100%;
-}
-
-img {
-  height: 40px;
-  width: 40px;
 }

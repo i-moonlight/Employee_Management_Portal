@@ -6,7 +6,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
+  <div class="modal-dialog modal-dialog-centered modal-md">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">{{modalTitle}}</h5>
@@ -36,13 +36,13 @@
                  (keyup)="toFilterEmployeeList()" placeholder="Filter ID">
         </label>
         <!-- Sort button-->
-        <button type="button" class="btn btn-light sort" (click)="toSortEmployeeList('employeeId', true)">
+        <button type="button" class="btn btn-light sort" (click)="toSortEmployeeList('EmployeeId', true)">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                class="bi bi-arrow-down-square-fill" viewBox="0 0 16 16">
             <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5a.5.5 0 0 1 1 0z"/>
           </svg>
         </button>
-        <button type="button" class="btn btn-light sort" (click)="toSortEmployeeList('employeeId', false)">
+        <button type="button" class="btn btn-light sort" (click)="toSortEmployeeList('EmployeeId', false)">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                class="bi bi-arrow-up-square-fill" viewBox="0 0 16 16">
             <path d="M2 16a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2zm6.5-4.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 1 0z"/>
@@ -59,13 +59,14 @@
                  (keyup)="toFilterEmployeeList()" placeholder="Filter name">
         </label>
         <!-- Sort button-->
-        <button type="button" class="btn btn-light sort" (click)="toSortEmployeeList('employeeName', true)">
+        <button type="button" class="btn btn-light sort" (click)="toSortEmployeeList('EmployeeName', true)">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                class="bi bi-arrow-down-square-fill" viewBox="0 0 16 16">
             <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5a.5.5 0 0 1 1 0z"/>
           </svg>
         </button>
-        <button type="button" class="btn btn-light sort" (click)="toSortEmployeeList('employeeName', false)">
+        <!-- Sort button-->
+        <button type="button" class="btn btn-light sort" (click)="toSortEmployeeList('EmployeeName', false)">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                class="bi bi-arrow-up-square-fill" viewBox="0 0 16 16">
             <path d="M2 16a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2zm6.5-4.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 1 0z"/>
@@ -82,13 +83,14 @@
                  (keyup)="toFilterEmployeeList()" placeholder="Filter department">
         </label>
         <!-- Sort button-->
-        <button type="button" class="btn btn-light sort" (click)="toSortEmployeeList('department', true)">
+        <button type="button" class="btn btn-light sort" (click)="toSortEmployeeList('Department', true)">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                class="bi bi-arrow-down-square-fill" viewBox="0 0 16 16">
             <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5a.5.5 0 0 1 1 0z"/>
           </svg>
         </button>
-        <button type="button" class="btn btn-light sort" (click)="toSortEmployeeList('department', false)">
+        <!-- Sort button-->
+        <button type="button" class="btn btn-light sort" (click)="toSortEmployeeList('Department', false)">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                class="bi bi-arrow-up-square-fill" viewBox="0 0 16 16">
             <path d="M2 16a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2zm6.5-4.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 1 0z"/>
@@ -105,13 +107,14 @@
                  (keyup)="toFilterEmployeeList()" placeholder="Filter date">
         </label>
         <!-- Sort button-->
-        <button type="button" class="btn btn-light sort" (click)="toSortEmployeeList('dateOfJoining', true)">
+        <button type="button" class="btn btn-light sort" (click)="toSortEmployeeList('DateOfJoining', true)">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                class="bi bi-arrow-down-square-fill" viewBox="0 0 16 16">
             <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5a.5.5 0 0 1 1 0z"/>
           </svg>
         </button>
-        <button type="button" class="btn btn-light sort" (click)="toSortEmployeeList('dateOfJoining', false)">
+        <!-- Sort button-->
+        <button type="button" class="btn btn-light sort" (click)="toSortEmployeeList('DateOfJoining', false)">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                class="bi bi-arrow-up-square-fill" viewBox="0 0 16 16">
             <path d="M2 16a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2zm6.5-4.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 1 0z"/>
@@ -124,13 +127,14 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let dataItem of employeeList">
+  <tr id="list" *ngFor="let dataItem of employeeList">
     <td><img [src]=showEmployeePhoto(dataItem)></td>
-    <td>{{dataItem["EmployeeId"]}}</td>
-    <td>{{dataItem["EmployeeName"]}}</td>
-    <td>{{dataItem["Department"]}}</td>
-    <td>{{dataItem["DateOfJoining"]}}</td>
+    <td>{{dataItem.EmployeeId}}</td>
+    <td>{{dataItem.EmployeeName}}</td>
+    <td>{{dataItem.Department}}</td>
+    <td>{{dataItem.DateOfJoining | date}}</td>
     <td>
+      <!-- Edit employee button-->
       <button type="button" class="btn btn-light mr-1 btn-green" data-bs-toggle="modal"
               data-bs-target="#exampleModal" data-backdrop="static" data-keyboard="false"
               (click)="editEmployee(dataItem)">
@@ -140,6 +144,7 @@
           <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
         </svg>
       </button>
+      <!-- Confirm delete button-->
       <button type="button" class="btn btn-light mr-1 btn-red"
               (click)="showConfirmDeleteEmployee(dataItem)">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"

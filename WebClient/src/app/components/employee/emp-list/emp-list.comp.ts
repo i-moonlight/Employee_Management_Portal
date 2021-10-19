@@ -23,6 +23,10 @@ export class EmployeeListComponent implements OnInit {
 
   ngOnInit(): void {
     this.activateAddEditEmpComp = false;
+    this.employeeIdFilter = '';
+    this.employeeNameFilter = '';
+    this.employeeDepartmentFilter = '';
+    this.employeeDateOfJoiningFilter = '';
     this.employeeList = [];
     this.employeeListWithoutFilter = [];
     this.updateEmployeeList();
@@ -31,12 +35,12 @@ export class EmployeeListComponent implements OnInit {
   updateEmployeeList(): void {
     this.service.getEmployeeListFromDB().subscribe((response: IEmployee[]) => {
       this.employeeList = response
+      this.employeeListWithoutFilter = response;
     });
   }
 
   showEmployeePhoto(dataItem: IEmployee): string {
-    this.employee = dataItem;
-    this.photoFilePath = this.service.PhotoUrl + this.employee.PhotoFileName;
+    this.photoFilePath = this.service.PhotoUrl + dataItem.PhotoFileName;
     return this.photoFilePath;
   }
 
@@ -48,13 +52,13 @@ export class EmployeeListComponent implements OnInit {
       Department: '',
       DateOfJoining: '',
       PhotoFileName: 'anonymous.png'
-    }
+    };
     this.modalTitle = 'Add Employee';
   }
 
   closeEmployeeModal(): void {
-    this.updateEmployeeList();
     this.activateAddEditEmpComp = false;
+    this.updateEmployeeList();
   }
 
   editEmployee(dataItem: IEmployee): void {
@@ -75,9 +79,7 @@ export class EmployeeListComponent implements OnInit {
         this.updateEmployeeList();
         console.warn(response);
       },
-      (error: string) => {
-        console.error(error);
-      })
+      (error: string) => console.error(error))
   };
 
   toFilterEmployeeList(): void {
@@ -86,14 +88,25 @@ export class EmployeeListComponent implements OnInit {
     let empDepartmentFilter = this.employeeDepartmentFilter;
     let empNameDateOfJoiningFilter = this.employeeDateOfJoiningFilter;
 
-    this.employeeList = this.employeeListWithoutFilter.filter((employee) => {
-      return employee.EmployeeId.toString().toLowerCase()
+    this.employeeList = this.employeeListWithoutFilter.filter((employee:IEmployee) => {
+      return employee.EmployeeId
+          .toString()
+          .toLowerCase()
           .includes(empIdFilter.toString().trim().toLowerCase())
-        && employee.EmployeeName.toString().toLowerCase()
+        &&
+        employee.EmployeeName
+          .toString()
+          .toLowerCase()
           .includes(empNameFilter.toString().trim().toLowerCase())
-        && employee.Department.toString().toLowerCase()
+        &&
+        employee.Department
+          .toString()
+          .toLowerCase()
           .includes(empDepartmentFilter.toString().trim().toLowerCase())
-        && employee.DateOfJoining.toString().toLowerCase()
+        &&
+        employee.DateOfJoining
+          .toString()
+          .toLowerCase()
           .includes(empNameDateOfJoiningFilter.toString().trim().toLowerCase())
     });
   }
