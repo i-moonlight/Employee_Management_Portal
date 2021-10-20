@@ -10,7 +10,7 @@ export class EmployeeListPage {
     return element(by.css('.btn-float'));
   }
 
-  async getAddEmpButtonDisplayed(): Promise<boolean> {
+  async isAddEmpButtonDisplayed(): Promise<boolean> {
     return (await this.getAddEmployeeButton()).isDisplayed();
   }
 
@@ -19,12 +19,12 @@ export class EmployeeListPage {
   }
 
   // Modal window.
-  async getModalDisplayed(): Promise<boolean> {
+  async isModalDisplayed(): Promise<boolean> {
     return element(by.id('exampleModal')).isDisplayed();
   }
 
   // Modal title.
-  async getModalTitleText(): Promise<string> {
+  async getModalTitle(): Promise<string> {
     return element(by.className('modal-title')).getText();
   }
 
@@ -33,12 +33,12 @@ export class EmployeeListPage {
     return element(by.className('btn-close'));
   }
 
-  async getCloseModalButtonDisplayed(): Promise<boolean> {
+  async isCloseModalButtonDisplayed(): Promise<boolean> {
     return (await this.getCloseModalButton()).isDisplayed();
   }
 
   // Modal component.
-  async getComponentDisplayed(): Promise<boolean> {
+  async isComponentDisplayed(): Promise<boolean> {
     return element(by.tagName('app-emp-modal')).isDisplayed();
   }
 
@@ -48,7 +48,7 @@ export class EmployeeListPage {
   }
 
   // Employee list.
-  async getListDisplayed(): Promise<boolean> {
+  async isListDisplayed(): Promise<boolean> {
     return element(by.tagName('table tbody tr')).isDisplayed();
   }
 
@@ -57,7 +57,7 @@ export class EmployeeListPage {
     return element(by.id('idFilter'));
   }
 
-  async getIdFilterDisplayed(): Promise<boolean> {
+  async isIdFilterDisplayed(): Promise<boolean> {
     return (await this.getIdFilter()).isDisplayed();
   }
 
@@ -70,7 +70,7 @@ export class EmployeeListPage {
     return element(by.id('nameFilter'));
   }
 
-  async getNameFilterDisplayed(): Promise<boolean> {
+  async isNameFilterDisplayed(): Promise<boolean> {
     return (await this.getNameFilter()).isDisplayed();
   }
 
@@ -83,7 +83,7 @@ export class EmployeeListPage {
     return element(by.id('departmentFilter'));
   }
 
-  async getDepInputFilterDisplayed(): Promise<boolean> {
+  async isDepInputFilterDisplayed(): Promise<boolean> {
     return (await this.getDepartmentFilter()).isDisplayed();
   }
 
@@ -96,7 +96,7 @@ export class EmployeeListPage {
     return element(by.id('dateFilter'));
   }
 
-  async getDateFilterDisplayed(): Promise<boolean> {
+  async isDateFilterDisplayed(): Promise<boolean> {
     return (await this.getDateFilter()).isDisplayed();
   }
 
@@ -105,7 +105,7 @@ export class EmployeeListPage {
   }
 
   // Table sort button.
-  async getSortButton(): Promise<boolean> {
+  async isSortButton(): Promise<boolean> {
     return element(by.css('.sort')).isDisplayed();
   }
 
@@ -114,16 +114,16 @@ export class EmployeeListPage {
     return element(by.css('.btn-green'));
   }
 
-  async getEditButtonDisplayed(): Promise<boolean> {
+  async isEditButtonDisplayed(): Promise<boolean> {
     return (await this.getEditButton()).isDisplayed();
   }
 
   // Delete alert button.
-  getDelAlertButton(): ElementFinder {
+  getDeleteAlertButton(): ElementFinder {
     return element(by.css('.btn-red'));
   }
 
-  async getDelAlertButtonDisplayed(): Promise<boolean> {
-    return (await this.getDelAlertButton()).isDisplayed();
+  async isDeleteAlertButtonDisplayed(): Promise<boolean> {
+    return (await this.getDeleteAlertButton()).isDisplayed();
   }
 }
