@@ -6,7 +6,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-xl">
+  <div class="modal-dialog modal-dialog-centered modal-md">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">{{modalTitle}}</h5>
@@ -51,14 +51,14 @@
           </svg>
         </button>
       </div>
-      DepartmentId
+      ID
     </th>
     <th>
       <div class="d-flex flex-row">
         <!--  Name filter -->
         <label>
           <input class="form-control" id="nameFilter" placeholder="Filter Name"
-                 [(ngModel)]="departmentIdFilter" (keyup)="toFilterDepartmentList()">
+                 [(ngModel)]="departmentNameFilter" (keyup)="toFilterDepartmentList()">
         </label>
         <!-- Sort button -->
         <button type="button" class="btn btn-light sort"
@@ -79,14 +79,17 @@
           </svg>
         </button>
       </div>
-      Department Name</th>
-    <th>Options</th>
+      Department
+    </th>
+    <th>
+      Options
+    </th>
   </tr>
   </thead>
   <tbody>
   <tr *ngFor="let dataItem of departmentList">
-    <td>{{dataItem["DepartmentId"]}}</td>
-    <td>{{dataItem["DepartmentName"]}}</td>
+    <td>{{dataItem.DepartmentId}}</td>
+    <td>{{dataItem.DepartmentName}}</td>
     <td>
       <!-- Edit department button -->
       <button type="button" class="btn btn-light mr-1 btn-green" data-bs-toggle="modal"
@@ -100,7 +103,8 @@
         </svg>
       </button>
       <!-- Delete confirm button -->
-      <button type="button" class="btn btn-light mr-1 btn-red" (click)="showDeleteConfirm(dataItem)">
+      <button type="button" class="btn btn-light mr-1 btn-red"
+              (click)="showDeleteConfirm(dataItem)">
         <!-- Delete confirm button icon-->
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
              class="bi bi-trash-fill" viewBox="0 0 16 16">

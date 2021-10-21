@@ -66,24 +66,24 @@ export class DepartmentListComponent implements OnInit {
         this.updateDepartmentList();
         console.warn(response);
       },
-      (error: string) => {
-        console.error(error);
-      }
-    );
+      (error: string) =>
+        console.error(error));
   }
 
   toFilterDepartmentList(): void {
     let depIdFilter = this.departmentIdFilter;
     let depNameFilter = this.departmentNameFilter;
 
-    this.departmentList = this.departmentListWithoutFilter.filter((dep: IDepartment) => {
-      return dep.DepartmentId.toString()
-        .toLowerCase()
-        .includes(depIdFilter.toString().trim().toLowerCase())
-      &&
-      dep.DepartmentName.toString()
-        .toLowerCase()
-        .includes(depNameFilter.toString().trim().toLowerCase())
+    this.departmentList = this.departmentListWithoutFilter.filter((department: IDepartment) => {
+      return department.DepartmentId
+          .toString()
+          .toLowerCase()
+          .includes(depIdFilter.toString().trim().toLowerCase())
+        &&
+        department.DepartmentName
+          .toString()
+          .toLowerCase()
+          .includes(depNameFilter.toString().trim().toLowerCase())
     });
   }
 
