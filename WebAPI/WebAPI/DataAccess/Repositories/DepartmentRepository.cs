@@ -41,9 +41,9 @@ namespace WebAPI.DataAccess.Repositories
         /// Adds an department to the database.
         /// </summary>
         /// <param name="model"></param>
-        public void Create(Department model)
+        public void Create(Department department)
         {
-            _context.Departments.Add(model);
+            _context.Departments.Add(department);
             _context.SaveChanges();
         }
 
@@ -57,14 +57,18 @@ namespace WebAPI.DataAccess.Repositories
             _context.SaveChanges();
         }
 
-        public void Delete(int id)
+        /// <summary>
+        /// Deletes an department by ID.
+        /// </summary>
+        /// <param name="id">Id of the department (guid).</param>
+        public void Delete(Guid id)
         {
-            var model = _context.Departments.FirstOrDefault(d => d.Id == id);
-            _context.Departments.Remove(model ?? throw new InvalidOperationException());
+            var department = _context.Departments.FirstOrDefault(d => d.Id == id);
+            _context.Departments.Remove(department ?? throw new InvalidOperationException());
             _context.SaveChanges();
         }
 
-        public string GetFileName(int id)
+        public string GetPhotoName(Guid id)
         {
             throw new NotImplementedException();
         }

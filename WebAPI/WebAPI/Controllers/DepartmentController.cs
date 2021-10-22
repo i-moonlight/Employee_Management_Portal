@@ -109,22 +109,25 @@ namespace WebAPI.Controllers
             return Ok(await Mediator.Send(request));
         }
 
+        /// <summary>
+        /// Deletes the department by id.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// DELETE /department/88DEB432-062F-43DE-8DCD-8B6EF79073D3.
+        /// </remarks>
+        /// <param name="id">Id of the department (guid).</param>
+        /// <returns>Returns response about success.</returns>
+        /// <response code="204">Success.</response>
+        /// <response code="401">If the user is unauthorized.</response>
         [HttpDelete("{id}")]
-        public JsonResult Delete(int id)
+        // [Authorize (Roles = "Manager")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<string>> DeleteDepartmentById(Guid id)
         {
-            var success = true;
-            try
-            {
-                _depRepository.Delete(id);
-            }
-            catch (Exception)
-            {
-                success = false;
-            }
-
-            return success
-                ? new JsonResult("Delete successful")
-                : new JsonResult("Delete was not successful");
+            var request = new DeleteDepartmentCommand {Id = id};
+            return Ok(await Mediator.Send(request));
         }
     }
 }

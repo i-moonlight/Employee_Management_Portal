@@ -58,11 +58,10 @@ namespace WebAPI.DataAccess.Repositories
         /// Updates the employee.
         /// </summary>
         /// <param name="model">Employee model</param>
-        public Employee Update(Employee employee)
+        public void Update(Employee employee)
         {
             _context.Employees.Update(employee);
             _context.SaveChanges();
-            return employee;
         }
 
         /// <summary>
