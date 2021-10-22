@@ -59,37 +59,37 @@ describe('DepartmentListPage', () => {
     expect(await page.isDepartmentsTableDisplayed()).toBeTruthy('Departments table is display');
   });
 
-  it('should display employees list on page', async () => {
+  it('should display departments list on page', async () => {
     await page.navigateTo();
     expect(await page.isListDisplayed()).toBeTruthy("Employees list is display");
   });
 
-  it('should display employees table id filter on page', async () => {
+  it('should display department table id filter on page', async () => {
     await page.navigateTo();
     expect(await page.isIdFilterDisplayed()).toBeTruthy('Id filter is display');
   });
 
-  it('should display table id filter placeholder value as `Filter ID` on page', async () => {
+  it('should display table id filter placeholder as `Filter ID` on page', async () => {
     await page.navigateTo();
     expect(await page.getFilterIdPlaceholder()).toEqual('Filter ID');
   });
 
-  it('should display employees table name filter on page', async () => {
+  it('should display department table name filter on page', async () => {
     await page.navigateTo();
     expect(await page.isNameFilterDisplayed()).toBeTruthy('Name filter is display');
   });
 
-  it('should display table name filter placeholder value as `Filter Name` on page', async () => {
+  it('should display table name filter placeholder as `Filter Name` on page', async () => {
     await page.navigateTo();
-    expect(await page.getNameFilterPlaceholderValue()).toEqual('Filter Name');
+    expect(await page.getNameFilterPlaceholder()).toEqual('Filter Name');
   });
 
-  it('should display employees table sort button on page', async () => {
+  it('should display department table sort button on page', async () => {
     await page.navigateTo();
     expect(await page.isSortButton()).toBeTruthy('Sort button is display');
   });
 
-  it('should display employee edit button on page', async () => {
+  it('should display department edit button on page', async () => {
     await page.navigateTo();
     expect(await page.isEditEmpButtonDisplayed()).toBeTruthy('Edit button is display');
   });
@@ -101,25 +101,30 @@ describe('DepartmentListPage', () => {
     expect(await page.isModalDisplayed()).toBeTruthy('Modal window is open');
   });
 
-  it('should display modal title text as `Edit Department` on page when click on edit button', async () => {
+  it('should display modal title as `Edit Department` on page when click on edit button', async () => {
     await page.navigateTo();
     await page.getEditEmpButton().click();
     await browser.sleep(1000);
     expect(await page.getModalTitle()).toEqual('Edit Department');
   });
 
-  it('should display delete alert button on page', async () => {
+  it('should display delete department alert button on page', async () => {
     await page.navigateTo();
-    expect(await page.isDelAlertButtonDisplayed()).toBeTruthy('Delete alert button is display');
+    expect(await page.isDeleteAlertButtonDisplayed()).toBeTruthy('Delete alert button is display');
   });
 
-  it('should display alert dialog when click on delete alert button', async () => {
+  it('should display alert dialog when click on delete department alert button', async () => {
     await page.navigateTo();
-    await page.getDelAlertButton().click();
-    await browser.sleep(1000);
-    let alertDialog = browser.switchTo().alert();
-    await expect(alertDialog).toBeTruthy('Alert window is display');
-    await expect(alertDialog.getText()).toContain('Are you sure??');
+    await page.getDeleteAlertButton().click();
+    await expect(browser.switchTo().alert()).toBeTruthy('Alert dialog is display');
+    await browser.restart();
+  });
+
+  it('should display alert dialog title `Are you sure??` when click on delete department alert button', async () => {
+    await page.navigateTo();
+    await page.getDeleteAlertButton().click();
+    await expect(browser.switchTo().alert().getText()).toContain('Are you sure??');
+    await browser.restart();
   });
 
   afterEach(async () => {

@@ -54,14 +54,14 @@ export class DepartmentListPage {
     return element(by.tagName('table')).isDisplayed();
   }
 
-  // Employee list.
+  // Departments list.
   async isListDisplayed(): Promise<boolean> {
     return element(by.css('table tbody tr')).isDisplayed();
   }
 
-  // Employees table Id filter.
+  // Departments table Id filter.
   getIdFilter(): ElementFinder {
-    return element(by.id('filterId'));
+    return element(by.id('idFilter'));
   }
 
   async isIdFilterDisplayed(): Promise<boolean> {
@@ -72,25 +72,25 @@ export class DepartmentListPage {
     return (await this.getIdFilter()).getAttribute('placeholder');
   }
 
-  // Employees table name filter.
+  // Departments table name filter.
   getNameFilter(): ElementFinder {
-    return element(by.id('filterName'));
+    return element(by.id('nameFilter'));
   }
 
   async isNameFilterDisplayed(): Promise<boolean> {
     return (await this.getNameFilter()).isDisplayed();
   }
 
-  async getNameFilterPlaceholderValue(): Promise<string> {
-    return (await this.getNameFilter()).getAttribute('placeholder').getText();
+  async getNameFilterPlaceholder(): Promise<string> {
+    return (await this.getNameFilter()).getAttribute('placeholder');
   }
 
-  // Table sort button.
+  // Department table sort button.
   async isSortButton(): Promise<boolean> {
     return element(by.css('.sort')).isDisplayed();
   }
 
-  // Edit employee button.
+  // Edit department button.
   getEditEmpButton(): ElementFinder {
     return element(by.css('.btn-green'));
   }
@@ -100,11 +100,11 @@ export class DepartmentListPage {
   }
 
   // Delete alert button.
-  getDelAlertButton(): ElementFinder {
+  getDeleteAlertButton(): ElementFinder {
     return element(by.css('.btn-red'));
   }
 
-  async isDelAlertButtonDisplayed(): Promise<boolean> {
-    return (await this.getDelAlertButton()).isDisplayed();
+  async isDeleteAlertButtonDisplayed(): Promise<boolean> {
+    return (await this.getDeleteAlertButton()).isDisplayed();
   }
 }
