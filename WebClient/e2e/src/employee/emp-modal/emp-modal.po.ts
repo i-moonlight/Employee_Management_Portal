@@ -105,7 +105,7 @@ export class EmployeeModalPage {
 
   // Add employee modal button as upload employee data.
   getAddButton(): ElementFinder {
-    return element(by.css('.upload'));
+    return element(by.id('uploadButton'));
   }
 
   async isAddButtonDisplayed(): Promise<boolean> {
@@ -118,7 +118,7 @@ export class EmployeeModalPage {
 
   // Employee update button as update employee data.
   getUpdateButton(): ElementFinder {
-    return element(by.css('.update'));
+    return element(by.id('updateButton'));
   }
 
   async isUpdateButtonDisplayed(): Promise<boolean> {
