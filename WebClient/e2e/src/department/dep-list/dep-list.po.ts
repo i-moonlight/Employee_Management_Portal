@@ -48,4 +48,68 @@ export class DepartmentListPage {
   async isModalComponentDisplayed(): Promise<boolean> {
     return (await this.getModalComponent()).isDisplayed();
   }
+
+  // Departments table
+  async isDepartmentsTableDisplayed(): Promise<boolean> {
+    return element(by.tagName('table')).isDisplayed();
+  }
+
+  // Departments list
+  async isListDisplayed(): Promise<boolean> {
+    return element(by.css('table tbody tr')).isDisplayed();
+  }
+
+  // Departments table columns
+  async getTableColumnName(): Promise<string> {
+    return element.all(by.tagName('th')).getText();
+  }
+
+  // Departments table Id filter
+  getIdFilter(): ElementFinder {
+    return element(by.id('idFilter'));
+  }
+
+  async isIdFilterDisplayed(): Promise<boolean> {
+    return (await this.getIdFilter()).isDisplayed();
+  }
+
+  async getFilterIdPlaceholder(): Promise<ElementFinder> {
+    return (await this.getIdFilter()).getAttribute('placeholder');
+  }
+
+  // Departments table name filter
+  getNameFilter(): ElementFinder {
+    return element(by.id('nameFilter'));
+  }
+
+  async isNameFilterDisplayed(): Promise<boolean> {
+    return (await this.getNameFilter()).isDisplayed();
+  }
+
+  async getNameFilterPlaceholder(): Promise<string> {
+    return (await this.getNameFilter()).getAttribute('placeholder');
+  }
+
+  // Department table sort button
+  async isSortButton(): Promise<boolean> {
+    return element(by.css('.sort')).isDisplayed();
+  }
+
+  // Edit department button
+  getEditEmpButton(): ElementFinder {
+    return element(by.css('.btn-green'));
+  }
+
+  async isEditEmpButtonDisplayed(): Promise<boolean> {
+    return (await this.getEditEmpButton()).isDisplayed();
+  }
+
+  // Delete alert button
+  getDeleteAlertButton(): ElementFinder {
+    return element(by.css('.btn-red'));
+  }
+
+  async isDeleteAlertButtonDisplayed(): Promise<boolean> {
+    return (await this.getDeleteAlertButton()).isDisplayed();
+  }
 }
