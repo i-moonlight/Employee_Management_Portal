@@ -111,9 +111,9 @@ describe('EmployeeModalComponent', () => {
 
   it('should call update employee method when click on update button', () => {
     const spy = spyOn(component, 'updateEmployeeData');
-    const btn = fixture.debugElement.query(By.css('.update'));
+    const btn = fixture.debugElement.query(By.css('.btn-primary'));
     btn.triggerEventHandler('click', null);
-    expect(spy).toHaveBeenCalled();
+    expect(spy).toHaveBeenCalledWith(mock.EmployeeId);
   });
 
   it('should call shared service when update photo file', () => {
