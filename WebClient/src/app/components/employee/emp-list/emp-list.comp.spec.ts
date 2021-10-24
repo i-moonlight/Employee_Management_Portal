@@ -57,11 +57,6 @@ describe('EmployeeListComponent', () => {
     expect(spy).toHaveBeenCalledWith(mock);
   });
 
-  it('should set employee value when show employee photo', () => {
-    component.showEmployeePhoto(mock);
-    expect(component.employee).toEqual(mock);
-  });
-
   it('should set employee value when add employee', () => {
     component.addEmployee();
     expect(component.employee).toEqual(mock);
@@ -94,7 +89,7 @@ describe('EmployeeListComponent', () => {
     component.closeEmployeeModal();
     expect(spy).toHaveBeenCalled();
   });
-  
+
   it('should set component activate value when edit employee', () => {
     component.editEmployee(mock);
     expect(component.activateAddEditEmpComp).toBeTrue();
