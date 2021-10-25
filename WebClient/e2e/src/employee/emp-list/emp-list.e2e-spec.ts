@@ -64,6 +64,36 @@ describe('EmployeeListPage ', () => {
     expect(await page.isListDisplayed()).toBeTruthy("Employee list is display");
   });
 
+  it('should display employee photo table column name as `Photo` on page', async () => {
+    await page.navigateTo();
+    expect(await page.getTableColumnName().then((columns) => columns[0])).toEqual('Photo');
+  });
+
+  it('should display employee id table column name as `ID` on page', async () => {
+    await page.navigateTo();
+    expect(await page.getTableColumnName().then((columns) => columns[1])).toEqual('ID');
+  });
+
+  it('should display employee name table column name as `Name` on page', async () => {
+    await page.navigateTo();
+    expect(await page.getTableColumnName().then((columns) => columns[2])).toEqual('Name');
+  });
+
+  it('should display employee department table column name as `Department` on page', async () => {
+    await page.navigateTo();
+    expect(await page.getTableColumnName().then((columns) => columns[3])).toEqual('Department');
+  });
+
+  it('should display employee date of joining table column name as `DateOfJoining` on page', async () => {
+    await page.navigateTo();
+    expect(await page.getTableColumnName().then((columns) => columns[4])).toEqual('DateOfJoining');
+  });
+
+  it('should display table options column name as `Options` on page', async () => {
+    await page.navigateTo();
+    expect(await page.getTableColumnName().then((columns) => columns[5])).toEqual('Options');
+  });
+
   it('should display table id filter on page', async () => {
     await page.navigateTo();
     expect(await page.isIdFilterDisplayed()).toBeTruthy('Id filter is display');

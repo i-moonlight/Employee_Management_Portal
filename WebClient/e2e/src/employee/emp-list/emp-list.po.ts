@@ -52,6 +52,11 @@ export class EmployeeListPage {
     return element(by.tagName('table tbody tr')).isDisplayed();
   }
 
+  // Employees table columns.
+  async getTableColumnName(): Promise<string> {
+    return element.all(by.tagName('th')).getText();
+  }
+
   // Table Id filter.
   getIdFilter(): ElementFinder {
     return element(by.id('idFilter'));
