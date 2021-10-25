@@ -10,6 +10,7 @@ namespace WebAPI.Tests.Setup
     {
         protected AppDbContext FakeDbContext;
         protected EmployeeDto FakeEmployeeDto;
+        protected DepartmentDto FakeDepartmentDto;
         protected HttpClient HttpClient;
         protected TestApplicationFactory<Startup> WebHost;
 
@@ -17,6 +18,7 @@ namespace WebAPI.Tests.Setup
         public void Setup()
         {
             FakeEmployeeDto = FakeTestContent.FakeEmployeeDto;
+            FakeDepartmentDto = FakeTestContent.FakeDepartmentDto;
             WebHost = new TestApplicationFactory<Startup>();
             HttpClient = WebHost.CreateClient();
             

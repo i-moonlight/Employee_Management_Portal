@@ -34,6 +34,20 @@ namespace WebAPI.Tests.Setup
             }
         };
 
+        public static DepartmentDto FakeDepartmentDto => new()
+        {
+            Name = "Name"
+        };
+
+        public static IEnumerable FakeDepartmentList => new List<Department>
+        {
+            new()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Name"
+            }
+        };
+
         public static StringContent GetRequestContent(object obj)
         {
             return new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json");
