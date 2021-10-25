@@ -59,6 +59,11 @@ export class DepartmentListPage {
     return element(by.css('table tbody tr')).isDisplayed();
   }
 
+  // Departments table columns.
+  async getTableColumnName(): Promise<string> {
+    return element.all(by.tagName('th')).getText();
+  }
+
   // Departments table Id filter.
   getIdFilter(): ElementFinder {
     return element(by.id('idFilter'));

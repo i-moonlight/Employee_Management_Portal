@@ -64,6 +64,16 @@ describe('DepartmentListPage', () => {
     expect(await page.isListDisplayed()).toBeTruthy("Employees list is display");
   });
 
+  it('should display department id column name as `ID` on page', async () => {
+    await page.navigateTo();
+    expect(await page.getTableColumnName().then((columns) => columns[0])).toEqual('ID');
+  });
+
+  it('should display department column name as `Department` on page', async () => {
+    await page.navigateTo();
+    expect(await page.getTableColumnName().then((columns) => columns[1])).toEqual('Department');
+  });
+
   it('should display department table id filter on page', async () => {
     await page.navigateTo();
     expect(await page.isIdFilterDisplayed()).toBeTruthy('Id filter is display');
