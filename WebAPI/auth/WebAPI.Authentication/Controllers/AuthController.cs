@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using WebAPI.Authentication.ViewModels;
 using WebAPI.Authentication.ViewModels.DTO;
 using WebAPI.Authentication.ViewModels.Request;
 using WebAPI.Authentication.ViewModels.Response;

@@ -1,8 +1,12 @@
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using WebAPI.Authentication.ViewModels;
 
 namespace WebAPI.Authentication
 {
@@ -33,6 +37,41 @@ namespace WebAPI.Authentication
                 .AddRoleManager<RoleManager<IdentityRole>>()
                 .AddSignInManager<SignInManager<User>>()
                 .AddEntityFrameworkStores<AppDbContext>();
+
+            #endregion
+            
+            #region Authentication JWT
+
+            services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig"));
+
+            services.AddAuthentication(opts =>
+                {
+                    opts.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    opts.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    opts.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(opts =>
+                {
+                    var key = Encoding.ASCII.GetBytes(Configuration["JwtConfig:Secret"]);
+                    var issuer = Configuration["JwtConfig:Issuer"];
+                    var audience = Configuration["JwtConfig:Audience"];
+
+                    opts.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        RequireExpirationTime = true,
+                        ValidIssuer = issuer,
+                        ValidAudience = audience
+                    };
+                    opts.SaveToken = true;
+                });
+
+            // services.AddDefaultIdentity<IdentityUser>(opts => 
+            //         opts.SignIn.RequireConfirmedAccount = true)
+            //     .AddEntityFrameworkStores<AppDbContext>();
 
             #endregion
 
