@@ -37,6 +37,18 @@ namespace WebAPI.Tests.Controllers
         }
 
         [Test]
+        public async Task GetDepartmentList_Method_Should_Returns_Success_Http_Status_Code()
+        {
+            // Act
+            var response = await HttpClient.GetAsync("api/department");
+
+            // Assert
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.AreEqual("text/html; charset=utf-8", response.Content.Headers.ContentType?.ToString());
+
+        }
+
+        [Test]
         public void GetDepartmentById_Method_Should_Returns_ActionResult_IEnumerable_Type()
         {
             // Arrange
@@ -50,6 +62,21 @@ namespace WebAPI.Tests.Controllers
         }
 
         [Test]
+        public async Task GetDepartmentById_Method_Should_Returns_Success_Http_Status_Code()
+        {
+            // Arrange
+            var departmentId = FakeDbContext.Departments?.FirstOrDefault()?.Id;
+
+            // Act
+            var response = await HttpClient.GetAsync($"api/department/{departmentId}");
+
+            // Assert
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.AreEqual("text/html; charset=utf-8", response.Content.Headers.ContentType?.ToString());
+
+        }
+
+        [Test]
         public void CreateDepartment_Method_Should_Returns_ActionResult_String_Type()
         {
             // Act
@@ -57,6 +84,21 @@ namespace WebAPI.Tests.Controllers
 
             // Assert
             Assert.AreEqual(typeof(Task<ActionResult<string>>), result.GetType());
+        }
+
+        [Test]
+        public async Task CreateDepartment_Method_Should_Returns_Success_Http_Status_Code()
+        {
+            // Arrange
+            var content = FakeTestContent.GetRequestContent(FakeDepartmentDto);
+
+            // Act
+            var response = await HttpClient.PostAsync("api/department", content);
+            var stringResponse = await response.Content.ReadAsStringAsync();
+
+            // Assert
+            response.EnsureSuccessStatusCode();
+            Assert.AreEqual(ReportTypes.CreatedSuccessfully, stringResponse);
         }
 
         [Test]
@@ -85,6 +127,21 @@ namespace WebAPI.Tests.Controllers
         }
 
         [Test]
+        public async Task UpdateDepartment_Method_Should_Returns_Success_Http_Status_Code()
+        {
+            // Arrange
+            var content = FakeTestContent.GetRequestContent(FakeDepartmentDto);
+
+            // Act
+            var response = await HttpClient.PutAsync("api/department", content);
+            var stringResponse = await response.Content.ReadAsStringAsync();
+
+            // Assert
+            response.EnsureSuccessStatusCode();
+            Assert.AreEqual(ReportTypes.UpdatedSuccessfull, stringResponse);
+        }
+
+        [Test]
         public async Task UpdateDepartment_Method_Should_Returns_Validation_Response()
         {
             // Arrange
@@ -110,6 +167,21 @@ namespace WebAPI.Tests.Controllers
 
             // Assert
             Assert.AreEqual(typeof(Task<ActionResult<string>>), result.GetType());
+        }
+
+        [Test]
+        public async Task DeleteDepartment_Method_Should_Returns_Success_Http_Status_Code()
+        {
+            // Arrange
+            var departmentId = FakeDbContext.Departments?.FirstOrDefault()?.Id;
+
+            // Act
+            var response = await HttpClient.DeleteAsync($"api/department/{departmentId}");
+            var stringResponse = await response.Content.ReadAsStringAsync();
+
+            // Assert
+            response.EnsureSuccessStatusCode();
+            Assert.AreEqual(ReportTypes.DeletedSuccessfull, stringResponse);
         }
     }
 }
