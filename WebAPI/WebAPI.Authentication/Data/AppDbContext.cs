@@ -5,7 +5,7 @@ using WebAPI.Authentication.Data.Entities;
 
 namespace WebAPI.Authentication.Data
 {
-    public class AppDbContext : IdentityDbContext<AppUser, IdentityRole, string>
+    public class AppDbContext : IdentityDbContext<User,IdentityRole, string>
     {
         public AppDbContext(DbContextOptions options) : base(options) {}
     }
