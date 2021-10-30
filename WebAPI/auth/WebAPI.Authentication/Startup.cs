@@ -44,19 +44,19 @@ namespace WebAPI.Authentication
 
             services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig"));
 
-            services.AddAuthentication(opts =>
+            services.AddAuthentication(options =>
                 {
-                    opts.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                    opts.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                    opts.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 })
-                .AddJwtBearer(opts =>
+                .AddJwtBearer(options =>
                 {
                     var key = Encoding.ASCII.GetBytes(Configuration["JwtConfig:Secret"]);
                     var issuer = Configuration["JwtConfig:Issuer"];
                     var audience = Configuration["JwtConfig:Audience"];
 
-                    opts.TokenValidationParameters = new TokenValidationParameters()
+                    options.TokenValidationParameters = new TokenValidationParameters()
                     {
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(key),
@@ -66,7 +66,7 @@ namespace WebAPI.Authentication
                         ValidIssuer = issuer,
                         ValidAudience = audience
                     };
-                    opts.SaveToken = true;
+                    options.SaveToken = true;
                 });
 
             // services.AddDefaultIdentity<IdentityUser>(opts => 
