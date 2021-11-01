@@ -7,7 +7,7 @@ using WebAPI.Presentation.Controllers;
 using WebAPI.Domain.Core.Entities;
 using WebAPI.Domain.Core.Interfaces;
 
-namespace WebAPI.Tests
+namespace WebAPI.Tests.Controllers
 {
     [TestFixture]
     public class DepartmentControllerTest
@@ -33,11 +33,11 @@ namespace WebAPI.Tests
             _mockDepRepo.Setup(x => x.Read()).Returns(_fakeCategories);
 
             // Act.
-            JsonResult result = _controller.Get();
+            var result = _controller.Get();
 
             // Assert.
             Assert.NotNull(result, "Result is null");
-            Assert.AreEqual(new JsonResult(new Department()).GetType(), result.GetType(), "Return type mismatch");
+            Assert.AreEqual(new JsonResult(_model).GetType(), result.GetType(), "Return type mismatch");
             Assert.AreEqual(typeof(List<Department>), result.Value.GetType(), "Return value type mismatch");
         }
         
@@ -45,10 +45,10 @@ namespace WebAPI.Tests
         public void Post_Should_Returns_JsonResult_String_Value()
         {
             // Arrange.   
-            _mockDepRepo.Setup(x => x.Create(new Department())).Returns(_fakeCategories.GetEnumerator().Current);
+            _mockDepRepo.Setup(x => x.Create(_model)).Returns(_fakeCategories.First());
 
             // Act.
-            JsonResult result = _controller.Post(_model);
+            var result = _controller.Post(_fakeCategories.First());
 
             // Assert.
             Assert.NotNull(result, "Result is null");
@@ -60,10 +60,10 @@ namespace WebAPI.Tests
         public void Put_Should_Returns_JsonResult_String_Value()
         {
             // Arrange. 
-            _mockDepRepo.Setup(x => x.Update(_model)).Returns(_fakeCategories.GetEnumerator().Current);
+            _mockDepRepo.Setup(x => x.Update(_model)).Returns(_fakeCategories.First());
 
             // Act.
-            JsonResult result = _controller.Put(_model);
+            var result = _controller.Put(_fakeCategories.First());
 
             // Assert.
             Assert.NotNull(result, "Result is null");
@@ -75,10 +75,10 @@ namespace WebAPI.Tests
         public void Delete_Should_Returns_JsonResult_String_Value()
         {
             // Arrange.
-            _mockDepRepo.Setup(x => x.Delete(_model.DepartmentId));
+            _mockDepRepo.Setup(x => x.Delete(_fakeCategories.First().DepartmentId));
 
             // Act.
-            JsonResult result = _controller.Delete(_model.DepartmentId);
+            var result = _controller.Delete(_fakeCategories.First().DepartmentId);
 
             // Assert.
             Assert.NotNull(result, "Result is null");
@@ -89,9 +89,14 @@ namespace WebAPI.Tests
         private static IEnumerable<Department> GetCategories()
         {
             var fakeCategories = new List<Department>
-            {
-                new Department {DepartmentId = 1, DepartmentName = "Test1"}
-            }.AsEnumerable();
+                {
+                    new Department
+                    {
+                        DepartmentId = 1,
+                        DepartmentName = "Test"
+                    }
+                }
+                .AsEnumerable();
             return fakeCategories;
         }
     }

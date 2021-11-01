@@ -17,4 +17,8 @@
         <ProjectReference Include="..\..\src\WebAPI.Presentation\WebAPI.Presentation.csproj"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <Folder Include="Controllers"/>
+    </ItemGroup>
+    
 </Project>
