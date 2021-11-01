@@ -8,7 +8,7 @@ using WebAPI.Domain.Core.Entities;
 using WebAPI.Domain.Core.Interfaces;
 using WebAPI.Presentation.Controllers;
 
-namespace WebAPI.Tests
+namespace WebAPI.Tests.Controllers
 {
     [TestFixture]
     public class EmployeeControllerTest
@@ -29,28 +29,28 @@ namespace WebAPI.Tests
         }
 
         [Test]
-        public void Get_Should_Returns_JsonResult_String_Value()
+        public void Get_Should_Returns_JsonResult_Employee_Value()
         {
             // Arrange.   
             _mockEmpRepo.Setup(x => x.Read()).Returns(_fakeCategories);
 
             // Act.
-            JsonResult result = _controller.Get();
+            var result = _controller.Get();
 
             // Assert.
             Assert.NotNull(result, "Result is null");
-            Assert.AreEqual(new JsonResult(new Employee()).GetType(), result.GetType(), "Return type mismatch");
+            Assert.AreEqual(new JsonResult(_model).GetType(), result.GetType(), "Return type mismatch");
             Assert.AreEqual(typeof(List<Employee>), result.Value.GetType(), "Return value type mismatch");
         }
         
         [Test]
         public void Post_Should_Returns_JsonResult_String_Value()
         {
-            // Arrange.   
-            _mockEmpRepo.Setup(x => x.Create(_model)).Returns(_fakeCategories.GetEnumerator().Current);
+            // Arrange. 
+            _mockEmpRepo.Setup(x => x.Create(_model)).Returns(_fakeCategories.First());
 
             // Act.
-            JsonResult result = _controller.Post(_model);
+            var result = _controller.Post(_model);
 
             // Assert.
             Assert.NotNull(result, "Result is null");
@@ -62,10 +62,10 @@ namespace WebAPI.Tests
         public void Put_Should_Returns_JsonResult_String_Value()
         {
             // Arrange.
-            _mockEmpRepo.Setup(x => x.Update(_model)).Returns(_fakeCategories.GetEnumerator().Current);
+            _mockEmpRepo.Setup(x => x.Update(_model)).Returns(_fakeCategories.First());
 
             // Act.
-            JsonResult result = _controller.Put(_model);
+            var result = _controller.Put(_model);
 
             // Assert.
             Assert.NotNull(result, "Result is null");
@@ -77,10 +77,10 @@ namespace WebAPI.Tests
         public void Delete_Should_Returns_JsonResult_String_Value()
         {
             // Arrange.   
-            _mockEmpRepo.Setup(x => x.Delete(_model.EmployeeId));
+            _mockEmpRepo.Setup(x => x.Delete(_fakeCategories.First().EmployeeId));
 
             // Act.
-            JsonResult result = _controller.Delete(_model.EmployeeId);
+            var result = _controller.Delete(_fakeCategories.First().EmployeeId);
 
             // Assert.
             Assert.NotNull(result, "Result is null");
@@ -92,7 +92,7 @@ namespace WebAPI.Tests
         public void UploadPhoto_Should_Returns_JsonResult_String_Value()
         {
             // Act.
-            JsonResult result = _controller.UploadPhoto();
+            var result = _controller.UploadPhoto();
 
             // Assert.
             Assert.NotNull(result, "Result is null");
@@ -104,10 +104,10 @@ namespace WebAPI.Tests
         public void UpdatePhoto_Should_Returns_JsonResult_String_Value()
         {
             // Arrange.   
-            _mockEmpRepo.Setup(x => x.GetFileName(_model.EmployeeId)).Returns("PhotoFileName");
+            _mockEmpRepo.Setup(x => x.GetFileName(_fakeCategories.First().EmployeeId)).Returns("PhotoFileName");
 
             // Act.
-            JsonResult result = _controller.UpdatePhoto(_model.EmployeeId);
+            var result = _controller.UpdatePhoto(_fakeCategories.First().EmployeeId);
 
             // Assert.
             Assert.NotNull(result, "Result is null");
@@ -116,13 +116,13 @@ namespace WebAPI.Tests
         }
 
         [Test]
-        public void GetAllDepartmentNames_Should_Returns_ValueType_NotNull()
+        public void GetAllDepartmentNames_Should_Returns_JsonResult_Employee_Value()
         {
             // Arrange.   
             _mockEmpRepo.Setup(x => x.ReadAll()).Returns(_fakeCategories);
-
-            // Act.
-            JsonResult result = _controller.GetAllDepartmentNames();
+            
+            // Arrange.   
+            var result = _controller.GetAllDepartmentNames();
 
             // Assert.
             Assert.NotNull(result, "Result is null");
@@ -133,9 +133,14 @@ namespace WebAPI.Tests
         private static IEnumerable<Employee> GetCategories()
         {
             var fakeCategories = new List<Employee>
-            {
-                new Employee {EmployeeId = 1, EmployeeName = "Test1"}
-            }.AsEnumerable();
+                {
+                    new Employee
+                    {
+                        EmployeeId = 1,
+                        EmployeeName = "Test"
+                    }
+                }
+                .AsEnumerable();
             return fakeCategories;
         }
     }
