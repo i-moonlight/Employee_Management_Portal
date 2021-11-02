@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using WebAPI.Domain.Core.Entities;
@@ -86,6 +87,20 @@ namespace WebAPI.Presentation
                 options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFile));
             });
             
+            #endregion
+            
+            #region Enable logging
+
+            services.AddLogging(loggingBuilder =>
+            {
+                // Enable logging.
+                loggingBuilder.AddConsole()
+                    // Display sql commands.
+                    .AddFilter(DbLoggerCategory.Database.Command.Name, LogLevel.Information);
+                // Display output IDE.
+                loggingBuilder.AddDebug();
+            });
+
             #endregion
         }
 
