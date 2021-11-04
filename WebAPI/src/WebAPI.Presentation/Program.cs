@@ -4,10 +4,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NLog.Web;
 using WebAPI.Presentation.Identity;
-using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Serilog;
+using Serilog.Exceptions;
 using Serilog.Sinks.Elasticsearch;
+using static System.Reflection.Assembly;
 
 namespace WebAPI.Presentation
 {
@@ -56,6 +57,8 @@ namespace WebAPI.Presentation
             }
         }
 
+        #region Configure Logging
+
         /// <summary>
         /// Configure Logging.
         /// </summary>
@@ -64,12 +67,12 @@ namespace WebAPI.Presentation
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             var configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json", false, true)
-                .AddJsonFile(
-                    $"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json", true)
-                .Build();
-
+                .Build(); 
+            
+            // Create Logger
             Log.Logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()
+                .Enrich.WithExceptionDetails()
                 .Enrich.WithMachineName()
                 .WriteTo.Debug()
                 .WriteTo.Console()
@@ -79,22 +82,32 @@ namespace WebAPI.Presentation
                 .CreateLogger();
         }
 
+        #endregion
+
+        #region Configure Elasticsearch Sink
+        
         /// <summary>
-        /// Configure Elastic Sink.
+        /// Configure Elasticsearch Sink.
         /// </summary>
         /// <param name="config"></param>
         /// <param name="env"></param>
         /// <returns>Options the elasticsearch sink</returns>
         private static ElasticsearchSinkOptions ConfigureElasticSink(IConfigurationRoot config, string env)
         {
-            var sink = new ElasticsearchSinkOptions(new Uri(config["ElasticConfiguration:Uri"]));
-            sink.AutoRegisterTemplate = true;
-            sink.IndexFormat = $@"{Assembly.GetExecutingAssembly()
-                .GetName().Name
-                .ToLower().Replace(".", "-")}-{env?.ToLower()
-                .Replace(".", "-")}-{DateTime.UtcNow:yyyy-MM}";
+            var sink = new ElasticsearchSinkOptions(new Uri(config["ElasticConfiguration:Uri"]))
+            {
+                AutoRegisterTemplate = true,
+                IndexFormat =
+                $@"{GetExecutingAssembly()
+                    .GetName().Name
+                    .ToLower()
+                    .Replace(".", "-")}-{env?.ToLower()
+                    .Replace(".", "-")}-{DateTime.UtcNow:yyyy-MM}"
+            };
             return sink;
         }
+        
+        #endregion
 
         /// <summary>
         /// Create web host.
@@ -107,8 +120,6 @@ namespace WebAPI.Presentation
                 .ConfigureAppConfiguration(configuration =>
                 {
                     configuration.AddJsonFile("appsettings.json", false, true);
-                    configuration.AddJsonFile(
-                        $"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json", true);
                 })
                 .UseSerilog()
                 .UseNLog(); // NLog: Setup NLog for Dependency injection.

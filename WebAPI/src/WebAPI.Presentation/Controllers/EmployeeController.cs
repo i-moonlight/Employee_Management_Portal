@@ -2,6 +2,7 @@
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 using WebAPI.Domain.Core.Entities;
 using WebAPI.Domain.Core.Interfaces;
 using WebAPI.Infrastructure.Data.Helpers;
@@ -14,16 +15,22 @@ namespace WebAPI.Presentation.Controllers
     {
         private readonly ICrudRepository<Employee> _empRepository;
         private readonly IWebHostEnvironment _env;
+        private readonly ILogger _logger;
 
-        public EmployeeController(ICrudRepository<Employee> empRepository, IWebHostEnvironment env)
+        public EmployeeController(
+            ICrudRepository<Employee> empRepository,
+            IWebHostEnvironment env,
+            ILogger logger)
         {
             _empRepository = empRepository;
             _env = env;
+            _logger = logger;
         }
 
         [HttpGet]
         public JsonResult Get()
         {
+            _logger.Information("EmployeeController - Get All {CustomProperty}", 7);
             return new JsonResult(_empRepository.Read());
         }
         

@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
+using Serilog;
 using WebAPI.Domain.Core.Entities;
 using WebAPI.Domain.Core.Interfaces;
 using WebAPI.Infrastructure.Data.Persistence.Context;
@@ -95,11 +96,14 @@ namespace WebAPI.Presentation
             {
                 // Enable logging.
                 loggingBuilder.AddConsole()
-                    // Display sql commands.
-                    .AddFilter(DbLoggerCategory.Database.Command.Name, LogLevel.Information);
+                // Display sql commands.
+                .AddFilter(DbLoggerCategory.Database.Command.Name, LogLevel.Information);
                 // Display output IDE.
                 loggingBuilder.AddDebug();
             });
+            
+            // Enable Serilog.
+            services.AddSingleton(Log.Logger);
 
             #endregion
         }
