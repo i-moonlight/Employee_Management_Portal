@@ -3,7 +3,7 @@
 namespace WebAPI.Authentication.ViewModels.Request
 {
     /// <summary>
-    /// Login view model.
+    /// Login view model as contract form.
     /// </summary>
     public class LoginViewModel
     {
@@ -12,6 +12,7 @@ namespace WebAPI.Authentication.ViewModels.Request
         public string Username { get; set; }
 
         [Required]
+        [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
 

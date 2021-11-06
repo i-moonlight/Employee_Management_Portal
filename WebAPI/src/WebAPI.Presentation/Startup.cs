@@ -59,7 +59,8 @@ namespace WebAPI.Presentation
 
             #region Role Identity
             
-            services.AddIdentity<User,IdentityRole>(options =>
+
+            services.AddIdentity<User, IdentityRole>(options =>
                 {
                     options.Password.RequireDigit = true;
                     options.Password.RequiredLength = 5;
@@ -106,6 +107,18 @@ namespace WebAPI.Presentation
             services.AddSingleton(Log.Logger);
 
             #endregion
+            
+            #region CORS
+
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder =>
+                {
+                    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                });
+            });
+
+            #endregion
         }
 
         /// <summary>
@@ -134,10 +147,12 @@ namespace WebAPI.Presentation
             
             app.UseAuthorization();
             
-            app.UseCors(options => options
-                .WithOrigins("http://localhost:4200", "http://localhost:9876")
-                .AllowAnyMethod()
-                .AllowAnyHeader());
+            // Enable CORS.
+            // app.UseCors(options => options
+            //     .WithOrigins("http://localhost:4200", "http://localhost:9876")
+            //     .AllowAnyMethod()
+            //     .AllowAnyHeader());
+            app.UseCors();
 
             app.UseEndpoints(endpoints => endpoints.MapControllers());
         }

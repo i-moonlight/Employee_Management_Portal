@@ -13,6 +13,8 @@ using WebAPI.Authentication.ViewModels;
 using WebAPI.Authentication.ViewModels.DTO;
 using WebAPI.Authentication.ViewModels.Request;
 using WebAPI.Authentication.ViewModels.Response;
+using WebAPI.Domain.Core.Entities;
+using WebAPI.Infrastructure.Data.Identity;
 
 namespace WebAPI.Authentication.Controllers
 {
@@ -92,7 +94,7 @@ namespace WebAPI.Authentication.Controllers
         {
             try
             {
-                var allUsersDto = new List<UserDto>();
+                var allUsersDto = new List<Account>();
                 var users = _userManager.Users.ToList();
 
                 foreach (var user in users)
@@ -100,7 +102,7 @@ namespace WebAPI.Authentication.Controllers
                     var roles = (await _userManager.GetRolesAsync(user)).ToList();
 
                     allUsersDto.Add(
-                        new UserDto(user.FullName, user.Email, user.UserName, user.DateCreated, roles));
+                        new Account(user.FullName, user.Email, user.UserName, user.DateCreated, roles));
                 }
 
                 return await Task.FromResult(
@@ -129,12 +131,12 @@ namespace WebAPI.Authentication.Controllers
                     var result = await _signInManager
                         .PasswordSignInAsync(viewModel.Email, viewModel.Password, true, false);
 
-                    if (!result.Succeeded)
+                    if (result != null)
                     {
                         var appUser = await _userManager.FindByEmailAsync(viewModel.Email);
-                        var roles = (await _userManager.GetRolesAsync(appUser)).ToList();
-                        var user = new UserDto(
-                            appUser.FullName, appUser.Email, appUser.UserName, appUser.DateCreated, roles);
+                        var role = (await _userManager.GetRolesAsync(appUser)).ToList();
+                        var user = new Account(
+                            appUser.FullName, appUser.Email, appUser.UserName, appUser.DateCreated, role);
                         user.Token = GenerateToken(appUser);
                         return await Task.FromResult(new ResponseModel(ResponseCode.Ok, "", user));
                     }
@@ -163,6 +165,11 @@ namespace WebAPI.Authentication.Controllers
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
+
+            // foreach (var role in user.Roles)
+            // {
+            //     claims.Add(new Claim("role", role.ToString()));
+            // }
 
             var jwtTokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_jwtConfig.Secret);

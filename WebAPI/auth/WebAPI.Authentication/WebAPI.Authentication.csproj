@@ -14,5 +14,10 @@
     <ItemGroup>
         <Folder Include="Controllers" />
     </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\WebAPI.Domain.Core\WebAPI.Domain.Core.csproj" />
+      <ProjectReference Include="..\..\src\WebAPI.Infrastructure.Data\WebAPI.Infrastructure.Data.csproj" />
+    </ItemGroup>
     
 </Project>

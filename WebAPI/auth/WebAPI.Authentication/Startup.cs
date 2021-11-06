@@ -3,15 +3,24 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using WebAPI.Authentication.ViewModels;
+using WebAPI.Domain.Core.Entities;
+using WebAPI.Infrastructure.Data.Persistence.Context;
 
 namespace WebAPI.Authentication
 {
     public class Startup
     {
+        private IConfiguration Configuration { get; }
+        
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
         /// <summary>
         /// This method gets called by the runtime.
         /// Use this method to add services to the container.
@@ -61,12 +70,13 @@ namespace WebAPI.Authentication
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(key),
                         ValidateIssuer = true,
-                        ValidateAudience = true,
-                        RequireExpirationTime = true,
                         ValidIssuer = issuer,
-                        ValidAudience = audience
+                        ValidateAudience = true,
+                        ValidAudience = audience,
+                        RequireExpirationTime = true,
                     };
                     options.SaveToken = true;
+                    options.RequireHttpsMetadata = true;
                 });
 
             // services.AddDefaultIdentity<IdentityUser>(opts => 

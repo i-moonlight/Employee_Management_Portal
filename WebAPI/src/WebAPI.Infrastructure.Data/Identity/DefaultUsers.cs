@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using WebAPI.Domain.Core.Entities;
 
-namespace WebAPI.Presentation.Identity
+namespace WebAPI.Infrastructure.Data.Identity
 {
     public static class DefaultUsers
     {

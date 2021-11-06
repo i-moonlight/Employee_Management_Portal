@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using WebAPI.Domain.Core.Entities;
 
-namespace WebAPI.Presentation.Identity
+namespace WebAPI.Infrastructure.Data.Identity
 {
     /// <summary>
     /// Claim Role Manager.

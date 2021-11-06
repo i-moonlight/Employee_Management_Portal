@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NLog.Web;
-using WebAPI.Presentation.Identity;
 using Microsoft.Extensions.Configuration;
 using Serilog;
 using Serilog.Exceptions;
 using Serilog.Sinks.Elasticsearch;
+using WebAPI.Infrastructure.Data.Identity;
 using static System.Reflection.Assembly;
 
 namespace WebAPI.Presentation

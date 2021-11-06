@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace WebAPI.Presentation.Identity
+namespace WebAPI.Infrastructure.Data.Identity
 {
     public static class RoleNames
     {

@@ -23,7 +23,7 @@ namespace WebAPI.Tests.Controllers
         public void Setup()
         {
             _mockEmpRepo = new Mock<ICrudRepository<Employee>>();
-            _controller = new EmployeeController(_mockEmpRepo.Object, _env);
+            _controller = new EmployeeController(_mockEmpRepo.Object, _env, null);
             _fakeCategories = GetCategories();
             _model = new Employee();
         }

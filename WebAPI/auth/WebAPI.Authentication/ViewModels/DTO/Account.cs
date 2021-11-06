@@ -6,9 +6,9 @@ namespace WebAPI.Authentication.ViewModels.DTO
     /// <summary>
     /// User data transfer object.
     /// </summary>
-    public class UserDto
+    public class Account
     {
-        public UserDto(
+        public Account(
             string fullName,
             string email,
             string userName,
@@ -28,4 +28,9 @@ namespace WebAPI.Authentication.ViewModels.DTO
         public List<string> Roles { get; set; }
         public string Token { get; set; }
     }
+
+    // public enum Role
+    // {
+    //     Employee, Manager, Administrator
+    // }
 }
