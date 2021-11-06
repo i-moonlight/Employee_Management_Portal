@@ -39,7 +39,7 @@ namespace WebAPI.Presentation
                     .CreateScope();
 
 #pragma warning disable 4014
-                SeedData.Initializer(scope.ServiceProvider);
+                ClaimRoleManager.Initializer(scope.ServiceProvider);
 #pragma warning restore 4014
 
                 #endregion
