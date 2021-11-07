@@ -3,10 +3,12 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Serialization;
 using WebAPI.Authentication.ViewModels;
 using WebAPI.Domain.Core.Entities;
 using WebAPI.Infrastructure.Data.Persistence.Context;
@@ -21,6 +23,7 @@ namespace WebAPI.Authentication
         {
             Configuration = configuration;
         }
+        
         /// <summary>
         /// This method gets called by the runtime.
         /// Use this method to add services to the container.
@@ -30,6 +33,25 @@ namespace WebAPI.Authentication
         {
             services.AddControllers();
 
+            #region JSON Serializer
+
+            services.AddControllersWithViews().AddNewtonsoftJson(options =>
+                {
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                    options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+                    options.SerializerSettings.DateFormatString = "yyyy'-'MM'-'dd' 'HH':'mm':'ss";
+                });
+                    
+
+            #endregion
+
+            #region Enable application context
+            
+            services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            #endregion
+            
             #region Role Identity
 
             services.AddIdentity<User, IdentityRole>(options =>
@@ -118,7 +140,7 @@ namespace WebAPI.Authentication
             app.UseAuthorization();
 
             app.UseCors();
-
+            
             app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
     }

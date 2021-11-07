@@ -7,7 +7,6 @@ using Microsoft.Extensions.Configuration;
 using Serilog;
 using Serilog.Exceptions;
 using Serilog.Sinks.Elasticsearch;
-using WebAPI.Infrastructure.Data.Identity;
 using static System.Reflection.Assembly;
 
 namespace WebAPI.Presentation
@@ -38,9 +37,9 @@ namespace WebAPI.Presentation
                     .GetRequiredService<IServiceScopeFactory>()
                     .CreateScope();
 
-#pragma warning disable 4014
-                ClaimRoleManager.Initializer(scope.ServiceProvider);
-#pragma warning restore 4014
+// #pragma warning disable 4014
+//                  ClaimRoleManager.Initializer(scope.ServiceProvider);
+// #pragma warning restore 4014
 
                 #endregion
 
