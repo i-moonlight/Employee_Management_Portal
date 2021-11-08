@@ -119,39 +119,44 @@ namespace WebAPI.Authentication.Controllers
         }
         
         /// <summary>
-        /// Validate login into App.  
+        /// Sign in App.  
         /// </summary>
         /// <param name="viewModel"></param>
         /// <returns>Response model</returns>
         // [AllowAnonymous]
-        [HttpPost("Login")]
-        public async Task<object> Login([FromBody] LoginViewModel viewModel)
+        [HttpPost("SignIn")]
+        public async Task<object> SignIn([FromBody] LoginViewModel viewModel)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var result = await _signInManager
-                        .PasswordSignInAsync(viewModel.Email, viewModel.Password, true, false);
+                    var result = await _signInManager.PasswordSignInAsync(
+                        viewModel.Email, viewModel.Password, false, true);
 
-                    if (result != null)
+                    if (!result.Succeeded)
                     {
                         var appUser = await _userManager.FindByEmailAsync(viewModel.Email);
-                        var role = (await _userManager.GetRolesAsync(appUser)).ToString();
+                        var role = (await _userManager.GetRolesAsync(appUser)).ToList();
+                        
                         var user = new ProfileDto(
-                            appUser.FullName, appUser.Email, appUser.UserName, appUser.DateCreated, role);
+                            appUser.FullName, appUser.Email, appUser.UserName, appUser.DateCreated,
+                            role.ElementAt(0));
+                        
                         user.Token = GenerateToken(appUser);
-                        return await Task.FromResult(new ResponseModel(ResponseCode.Ok, "", user));
+                        
+                        return await Task.FromResult(
+                            new ResponseModel(ResponseCode.Ok, "Token generated", user));
                     }
                 }
 
                 return await Task.FromResult(
-                    new ResponseModel(ResponseCode.Error, "invalid Email or password", null));
+                    new ResponseModel(ResponseCode.Error, "Invalid email or password", null));
             }
             catch (Exception ex)
             {
                 return await Task.FromResult(
-                    new ResponseModel(ResponseCode.Error, ex.Message, null));
+                    new ResponseModel(ResponseCode.Error, ex.Message, "The user does not exist"));
             }
         }
         
