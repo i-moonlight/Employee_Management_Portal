@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
@@ -28,13 +29,15 @@ namespace WebAPI.Presentation.Controllers
         }
 
         [HttpGet]
+        [Authorize (Roles = "Manager")]
         public JsonResult Get()
         {
-            _logger.Information("EmployeeController - Get All {CustomProperty}", 7);
+            _logger.Warning("Get all employees successful {CustomProperty}", 0);
             return new JsonResult(_empRepository.Read());
         }
         
         [HttpPost]
+        [Authorize (Roles = "Manager")]
         public JsonResult Post(Employee emp)
         {
             _empRepository.Create(emp);
@@ -42,6 +45,7 @@ namespace WebAPI.Presentation.Controllers
         }
 
         [HttpPut]
+        [Authorize (Roles = "Manager")]
         public JsonResult Put(Employee emp)
         {
             var success = true;
@@ -59,6 +63,7 @@ namespace WebAPI.Presentation.Controllers
         }
         
         [HttpDelete("{id}")]
+        [Authorize (Roles = "Manager")]
         public JsonResult Delete(int id)
         {
             var success = true;
@@ -76,6 +81,7 @@ namespace WebAPI.Presentation.Controllers
         }
         
         [HttpPost]
+        [Authorize (Roles = "Manager")]
         [Route("UploadPhoto")]
         public JsonResult UploadPhoto()
         {
@@ -100,6 +106,7 @@ namespace WebAPI.Presentation.Controllers
         }
         
         [HttpPost]
+        [Authorize (Roles = "Manager")]
         [Route("{Id}/UpdatePhoto")]
         public JsonResult UpdatePhoto(int id)
         {

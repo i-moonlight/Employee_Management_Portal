@@ -6,9 +6,7 @@
     public class ResponseModel
     {
         public ResponseModel(
-            ResponseCode responseCode,
-            string responseMessage,
-            object dataSet)
+            ResponseCode responseCode, string responseMessage, object dataSet)
         {
             ResponseCode = responseCode;
             ResponseMessage = responseMessage;

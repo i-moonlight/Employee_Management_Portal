@@ -45,7 +45,7 @@ namespace WebAPI.Authentication.Controllers
         /// <param name="viewModel"></param>
         /// <returns>Response model</returns>
         [HttpPost("RegisterUser")]
-        public async Task<object> AddRegisterUser([FromBody] RegisterUserViewModel viewModel)
+        public async Task<object> RegisterUser([FromBody] RegisterUserViewModel viewModel)
         {
             try
             {
@@ -64,17 +64,19 @@ namespace WebAPI.Authentication.Controllers
                 if (result.Succeeded)
                 {
                     var tempUser = await _userManager.FindByEmailAsync(viewModel.Email);
-                    foreach (var role in RoleNames.AllRoles)
-                    {
-                        await _userManager.AddToRoleAsync(tempUser, role);
-                    }
+                    // foreach (var role in RoleNames.AllRoles)
+                    // {
+                    //     await _userManager.AddToRoleAsync(tempUser, role);
+                    // }
 
+                    await _userManager.AddToRoleAsync(tempUser, RoleNames.AllRoles.ElementAt(0));
+                    
                     return await Task.FromResult(
                         new ResponseModel(ResponseCode.Ok, "User has been Registered", null));
                 }
 
                 return await Task.FromResult(
-                    new ResponseModel(ResponseCode.Error, "",
+                    new ResponseModel(ResponseCode.Ok, "User has been not Registered",
                         result.Errors.Select(x => x.Description).ToArray()));
             }
             catch (Exception ex)
@@ -94,19 +96,20 @@ namespace WebAPI.Authentication.Controllers
         {
             try
             {
-                var allUsersDto = new List<Account>();
-                var users = _userManager.Users.ToList();
+                var profilesDto = new List<ProfileDto>();
+                var users = _userManager.Users.ToArray();
 
                 foreach (var user in users)
                 {
-                    var roles = (await _userManager.GetRolesAsync(user)).ToList();
+                    var role = (await _userManager.GetRolesAsync(user)).ToList();
 
-                    allUsersDto.Add(
-                        new Account(user.FullName, user.Email, user.UserName, user.DateCreated, roles));
+                    profilesDto.Add(
+                        new ProfileDto(user.FullName, user.Email, user.UserName, user.DateCreated, 
+                        string.Join(" ", role)));
                 }
 
                 return await Task.FromResult(
-                    new ResponseModel(ResponseCode.Ok, "", allUsersDto));
+                    new ResponseModel(ResponseCode.Ok, "", profilesDto));
             }
             catch (Exception ex)
             {
@@ -134,8 +137,8 @@ namespace WebAPI.Authentication.Controllers
                     if (result != null)
                     {
                         var appUser = await _userManager.FindByEmailAsync(viewModel.Email);
-                        var role = (await _userManager.GetRolesAsync(appUser)).ToList();
-                        var user = new Account(
+                        var role = (await _userManager.GetRolesAsync(appUser)).ToString();
+                        var user = new ProfileDto(
                             appUser.FullName, appUser.Email, appUser.UserName, appUser.DateCreated, role);
                         user.Token = GenerateToken(appUser);
                         return await Task.FromResult(new ResponseModel(ResponseCode.Ok, "", user));

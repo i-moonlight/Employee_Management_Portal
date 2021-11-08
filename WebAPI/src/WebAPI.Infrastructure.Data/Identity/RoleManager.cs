@@ -6,16 +6,9 @@ using WebAPI.Domain.Core.Entities;
 
 namespace WebAPI.Infrastructure.Data.Identity
 {
-    /// <summary>
-    /// Claim Role Manager.
-    /// </summary>
-    public static class ClaimRoleManager
+    public static class RoleManager
     {
-        /// <summary>
-        /// Initializing a user of roses on email confirmation.
-        /// </summary>
-        /// <param name="provider"></param>
-        public static async Task Initializer(IServiceProvider provider)
+         public static async Task Initialize(IServiceProvider provider)
         {
             foreach (var roleName in RoleNames.AllRoles)
             {
@@ -64,7 +57,6 @@ namespace WebAPI.Infrastructure.Data.Identity
                 var empUser = await userManager.FindByEmailAsync(DefaultUsers.Employee.Email);
                 var managerUser = await userManager.FindByEmailAsync(DefaultUsers.Manager.Email);
                 var adminUser = await userManager.FindByEmailAsync(DefaultUsers.Administrator.Email);
-
                 await userManager.AddToRoleAsync(empUser, RoleNames.Employee);
                 await userManager.AddToRoleAsync(managerUser, RoleNames.Manager);
                 await userManager.AddToRoleAsync(adminUser, RoleNames.Administrator);
