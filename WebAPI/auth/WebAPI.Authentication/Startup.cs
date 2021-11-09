@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
-using WebAPI.Domain.Core.Configs;
+using WebAPI.Domain.Core.Common;
 using WebAPI.Domain.Core.Entities;
 using WebAPI.Infrastructure.Data.Persistence.Context;
 
@@ -100,11 +100,7 @@ namespace WebAPI.Authentication
                     options.SaveToken = true;
                     options.RequireHttpsMetadata = true;
                 });
-
-            // services.AddDefaultIdentity<IdentityUser>(opts => 
-            //         opts.SignIn.RequireConfirmedAccount = true)
-            //     .AddEntityFrameworkStores<AppDbContext>();
-
+            
             #endregion
 
             #region CORS
@@ -135,12 +131,12 @@ namespace WebAPI.Authentication
 
             app.UseRouting();
 
+            app.UseCors();
+            
             app.UseAuthentication();
 
             app.UseAuthorization();
 
-            app.UseCors();
-            
             app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
     }

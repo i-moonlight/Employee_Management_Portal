@@ -16,7 +16,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using Serilog;
-using WebAPI.Domain.Core.Configs;
+using WebAPI.Domain.Core.Common;
 using WebAPI.Domain.Core.Entities;
 using WebAPI.Domain.Core.Interfaces;
 using WebAPI.Infrastructure.Data.Persistence.Context;
@@ -62,22 +62,13 @@ namespace WebAPI.Presentation
             #endregion
 
             #region Role Identity
-            
 
-            services.AddIdentity<User, IdentityRole>(options =>
-                {
-                    options.Password.RequireDigit = true;
-                    options.Password.RequiredLength = 5;
-                    options.Password.RequireUppercase = true;
-                    options.Lockout.MaxFailedAccessAttempts = 6;
-                    options.User.RequireUniqueEmail = true;
-                    options.SignIn.RequireConfirmedAccount = true;
-                    options.SignIn.RequireConfirmedEmail = false;
-                })
-                .AddRoles<IdentityRole>()
+            services.AddIdentity<User, IdentityRole>(options => {})
+                //.AddRoles<IdentityRole>()
+                //.AddRoleManager<RoleManager<IdentityRole>>()
                 .AddEntityFrameworkStores<AppDbContext>();
             
-            #endregion
+            #endregion Role Identity
 
             #region Swagger
             
@@ -92,9 +83,9 @@ namespace WebAPI.Presentation
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFile));
             });
-            
+
             #endregion
-            
+
             #region Enable logging
 
             services.AddLogging(loggingBuilder =>
@@ -150,8 +141,6 @@ namespace WebAPI.Presentation
                         ValidAudience = audience,
                         RequireExpirationTime = true,
                     };
-                    options.SaveToken = true;
-                    options.RequireHttpsMetadata = true;
                 });
 
             #endregion
@@ -178,18 +167,26 @@ namespace WebAPI.Presentation
             });
 
             app.UseRouting();
-            
-            app.UseAuthentication();
-            
-            app.UseAuthorization();
-            
+
+            app.UseCors();
             // Enable CORS.
             // app.UseCors(options => options
             //     .WithOrigins("http://localhost:4200", "http://localhost:9876")
             //     .AllowAnyMethod()
             //     .AllowAnyHeader());
-            app.UseCors();
 
+            app.UseAuthentication();
+
+            app.UseAuthorization();
+
+            // app.UseEndpoints(endpoints =>
+            // {
+            //     endpoints.MapGet("/", async context =>
+            //     {
+            //         await context.Response.WriteAsync("Resource server works");
+            //     });
+            // });
+            
             app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
     }

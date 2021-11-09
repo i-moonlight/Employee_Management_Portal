@@ -1,4 +1,4 @@
-﻿namespace WebAPI.Domain.Core.Configs
+﻿namespace WebAPI.Domain.Core.Common
 {
     public class JwtConfig
     {

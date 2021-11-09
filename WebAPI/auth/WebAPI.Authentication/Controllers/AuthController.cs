@@ -12,7 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using WebAPI.Authentication.ViewModels.DTO;
 using WebAPI.Authentication.ViewModels.Request;
 using WebAPI.Authentication.ViewModels.Response;
-using WebAPI.Domain.Core.Configs;
+using WebAPI.Domain.Core.Common;
 using WebAPI.Domain.Core.Entities;
 using WebAPI.Infrastructure.Data.Identity;
 
@@ -104,8 +104,8 @@ namespace WebAPI.Authentication.Controllers
                     var role = (await _userManager.GetRolesAsync(user)).ToList();
 
                     profilesDto.Add(
-                        new ProfileDto(user.FullName, user.Email, user.UserName, user.DateCreated, 
-                        string.Join(" ", role)));
+                        new ProfileDto(user.FullName, user.Email, user.UserName, user.DateCreated,
+                            string.Join(" ", role)));
                 }
 
                 return await Task.FromResult(
@@ -143,7 +143,7 @@ namespace WebAPI.Authentication.Controllers
                             appUser.FullName, appUser.Email, appUser.UserName, appUser.DateCreated,
                             role.ElementAt(0));
                         
-                        user.Token = GenerateToken(appUser);
+                        user.Token = await GenerateToken(appUser);
                         
                         return await Task.FromResult(
                             new ResponseModel(ResponseCode.Ok, "Token generated", user));
@@ -165,8 +165,11 @@ namespace WebAPI.Authentication.Controllers
         /// </summary>
         /// <param name="user"></param>
         /// <returns>token</returns>
-        private string GenerateToken(User user)
+        private async Task<string> GenerateToken(User user)
         {
+            var userId = await _userManager.FindByIdAsync(user.Id);
+            var userRoles = await _userManager.GetRolesAsync(userId);
+
             var claims = new List<Claim>()
             {
                 new Claim(JwtRegisteredClaimNames.NameId, user.Id),
@@ -174,10 +177,11 @@ namespace WebAPI.Authentication.Controllers
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
-            // foreach (var role in user.Roles)
-            // {
-            //     claims.Add(new Claim("role", role.ToString()));
-            // }
+            if (userRoles != null)
+                foreach (var role in userRoles)
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, role));
+                }
 
             var jwtTokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_jwtConfig.Secret);
