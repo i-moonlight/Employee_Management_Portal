@@ -1,6 +1,8 @@
 using System;
 using System.IO;
 using System.Reflection;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -10,9 +12,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using Serilog;
+using WebAPI.Domain.Core.Configs;
 using WebAPI.Domain.Core.Entities;
 using WebAPI.Domain.Core.Interfaces;
 using WebAPI.Infrastructure.Data.Persistence.Context;
@@ -117,6 +121,38 @@ namespace WebAPI.Presentation
                     builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
                 });
             });
+
+            #endregion
+            
+            #region Authentication JWT
+
+            services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig"));
+
+            services.AddAuthentication(options =>
+                {
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(options =>
+                {
+                    var key = Encoding.ASCII.GetBytes(Configuration["JwtConfig:Secret"]);
+                    var issuer = Configuration["JwtConfig:Issuer"];
+                    var audience = Configuration["JwtConfig:Audience"];
+
+                    options.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = true,
+                        ValidIssuer = issuer,
+                        ValidateAudience = true,
+                        ValidAudience = audience,
+                        RequireExpirationTime = true,
+                    };
+                    options.SaveToken = true;
+                    options.RequireHttpsMetadata = true;
+                });
 
             #endregion
         }

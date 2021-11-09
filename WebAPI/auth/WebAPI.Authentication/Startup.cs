@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
-using WebAPI.Authentication.ViewModels;
+using WebAPI.Domain.Core.Configs;
 using WebAPI.Domain.Core.Entities;
 using WebAPI.Infrastructure.Data.Persistence.Context;
 

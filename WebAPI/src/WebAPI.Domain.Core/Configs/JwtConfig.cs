@@ -1,4 +1,4 @@
-﻿namespace WebAPI.Authentication.ViewModels
+﻿namespace WebAPI.Domain.Core.Configs
 {
     public class JwtConfig
     {
