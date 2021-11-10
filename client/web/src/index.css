@@ -17,6 +17,10 @@ html {
     font-size: 14px;
 }
 
+/** {*/
+/*  border: 1px solid #5a5a5d;*/
+/*}*/
+
 .header {
     position: fixed;
     top: 0;
@@ -67,79 +71,79 @@ html {
     padding-top: 64px;
 }
 
-.content-inner {
-    margin: 16px;
-}
+/*.content-inner {*/
+/*    margin: 16px;*/
+/*}*/
 
-.content-header {
-    margin-bottom: 16px;
-}
+/*.content-header {*/
+/*    margin-bottom: 16px;*/
+/*}*/
 
-.content-form {
-    padding: 32px;
-    background-color: #fff;
-    border-radius: 4px;
-}
+/*.content-form {*/
+/*    padding: 32px;*/
+/*    background-color: #fff;*/
+/*    border-radius: 4px;*/
+/*}*/
 
-.form-label {
-    display: inline-block;
-    margin-bottom: 4px;
-}
+/*.form-label {*/
+/*    display: inline-block;*/
+/*    margin-bottom: 4px;*/
+/*}*/
 
-.my-progress-bar {
-    z-index: 10000;
-    height: 4px !important;
-}
+/*.my-progress-bar {*/
+/*    z-index: 10000;*/
+/*    height: 4px !important;*/
+/*}*/
 
-.cell-link {
-    text-decoration: none;
-    color: #2478dd;
-    font-weight: 600;
-}
+/*.cell-link {*/
+/*    text-decoration: none;*/
+/*    color: #2478dd;*/
+/*    font-weight: 600;*/
+/*}*/
 
-.cell-link:hover {
-    text-decoration: underline;
-}
+/*.cell-link:hover {*/
+/*    text-decoration: underline;*/
+/*}*/
 
-.detail-label {
-    width: 160px;
-}
+/*.detail-label {*/
+/*    width: 160px;*/
+/*}*/
 
-.content-detail {
-    padding: 32px;
-    background-color: #fff;
-    border-radius: 4px;
-}
+/*.content-detail {*/
+/*    padding: 32px;*/
+/*    background-color: #fff;*/
+/*    border-radius: 4px;*/
+/*}*/
 
-.image-display-wrapper {
-    width: 256px;
-    margin-bottom: 16px;
-    text-align: center;
-}
+/*.image-display-wrapper {*/
+/*    width: 256px;*/
+/*    margin-bottom: 16px;*/
+/*    text-align: center;*/
+/*}*/
 
-.image-display {
-    max-width: 100%;
-}
+/*.image-display {*/
+/*    max-width: 100%;*/
+/*}*/
 
-.icon-display.pi {
-    font-size: 128px;
-    display: inline-block;
-    color: #2478dd;
-}
+/*.icon-display.pi {*/
+/*    font-size: 128px;*/
+/*    display: inline-block;*/
+/*    color: #2478dd;*/
+/*}*/
 
-.error-page {
-    width: 600px;
-    padding: 32px;
-    text-align: center;
-    border-radius: 8px;
-    background-color: #fff;
-    margin: 32px auto;
-}
+/*.error-page {*/
+/*    width: 600px;*/
+/*    padding: 32px;*/
+/*    text-align: center;*/
+/*    border-radius: 8px;*/
+/*    background-color: #fff;*/
+/*    margin: 32px auto;*/
+/*}*/
 
-.error-page h1 {
-    margin: 0 0 8px;
-}
+/*.error-page h1 {*/
+/*    margin: 0 0 8px;*/
+/*}*/
 
-.error-page h3 {
-    font-weight: normal;
-}
+/*.error-page h3 {*/
+/*    font-weight: normal;*/
+/*}*/

@@ -1,16 +1,14 @@
-import React, {useState} from 'react';
-import {useAuth} from './useAuth';
-import {InputText} from 'primereact/inputtext';
-import {Password} from 'primereact/password';
-import {Button} from 'primereact/button';
-import {Link} from 'react-router-dom';
-
+import React, { useState } from 'react';
+import { useAuth } from './useAuth';
+import { InputText } from 'primereact/inputtext';
+import { Password } from 'primereact/password';
+import { Button } from 'primereact/button';
+import { Link } from 'react-router-dom';
 
 const SigninPage = () => {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-
     const {signin} = useAuth();
 
     const isValidForm = () => {
@@ -23,7 +21,7 @@ const SigninPage = () => {
     }
 
     return (
-        <div className="App login-panel shadow-4 p-fluid">
+        <div className="login-panel shadow-4 p-fluid blur">
 
             <form onSubmit={handleSubmit}>
                 <h1>Login</h1>

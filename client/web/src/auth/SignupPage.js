@@ -1,11 +1,10 @@
-import React, {useState} from 'react';
-import {Link, useNavigate} from 'react-router-dom';
-import {Button} from 'primereact/button';
-import {InputText} from 'primereact/inputtext';
-import {Password} from 'primereact/password';
-import {Message} from 'primereact/message';
-import {APP_BASE_URL} from '../App.constants';
-
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Button } from 'primereact/button';
+import { InputText } from 'primereact/inputtext';
+import { Password } from 'primereact/password';
+import { Message } from 'primereact/message';
+import { APP_BASE_URL } from '../App.constants';
 
 const SignupPage = () => {
 
@@ -59,7 +58,7 @@ const SignupPage = () => {
     }
 
     return (
-        <div className="login-panel shadow-4 p-fluid">
+        <div className="login-panel shadow-4 p-fluid blur">
             <form onSubmit={handleSubmit}>
                 <h1>Registration</h1>
 
@@ -98,7 +97,7 @@ const SignupPage = () => {
                     </Button>
                     <br/>
                     <br/>
-                    <Link to="/signin">Sign In</Link>
+                    <Link to="/signin">Login</Link>
                 </div>
             </form>
         </div>
