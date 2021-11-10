@@ -3,9 +3,9 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
-using WebAPI.Presentation.Controllers;
-using WebAPI.Domain.Core.Entities;
-using WebAPI.Domain.Core.Interfaces;
+using WebAPI.Application.Common.Interfaces;
+using WebAPI.Controllers;
+using WebAPI.Domain.Entities;
 
 namespace WebAPI.Tests.Controllers
 {

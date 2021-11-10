@@ -19,8 +19,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\WebAPI.Domain.Core\WebAPI.Domain.Core.csproj" />
-      <ProjectReference Include="..\..\src\WebAPI.Infrastructure.Data\WebAPI.Infrastructure.Data.csproj" />
+      <ProjectReference Include="..\..\src\Core\WebAPI.Domain\WebAPI.Domain.csproj" />
+      <ProjectReference Include="..\..\src\Infrastructure\WebAPI.Persistence\WebAPI.Persistence.csproj" />
     </ItemGroup>
     
 </Project>

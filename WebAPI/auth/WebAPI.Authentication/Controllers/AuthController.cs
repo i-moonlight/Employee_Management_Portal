@@ -12,9 +12,9 @@ using Microsoft.IdentityModel.Tokens;
 using WebAPI.Authentication.ViewModels.DTO;
 using WebAPI.Authentication.ViewModels.Request;
 using WebAPI.Authentication.ViewModels.Response;
-using WebAPI.Domain.Core.Common;
-using WebAPI.Domain.Core.Entities;
-using WebAPI.Infrastructure.Data.Identity;
+using WebAPI.Domain.Common;
+using WebAPI.Domain.Entities;
+using WebAPI.Persistence.Identity;
 
 namespace WebAPI.Authentication.Controllers
 {
