@@ -1,15 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\WebAPI.Domain\WebAPI.Domain.csproj" />
+      <PackageReference Include="AutoMapper" Version="10.0.0" />
+      <PackageReference Include="MediatR" Version="10.0.0" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Common" />
+        <ProjectReference Include="..\WebAPI.Domain\WebAPI.Domain.csproj" />
     </ItemGroup>
-
+    
 </Project>
