@@ -1,15 +1,15 @@
 import React from 'react';
+import { Container } from 'react-bootstrap';
 import { Route, Routes } from 'react-router-dom';
 import { ProtectedRoute } from './router/ProtectedRoute';
+
 import DashboardAdminPage from './pages/admin/DashboardAdminPage';
 import HomePage from './pages/HomePage';
 import SigninPage from './auth/SigninPage';
 import SignupPage from './auth/SignupPage';
-import './App.css'
-import Header from './components/Header';
-import { Container } from 'react-bootstrap';
-import Footer from './components/Footer';
 
+import Header from './components/Header';
+import Footer from './components/Footer';
 
 const App = () => {
     return (

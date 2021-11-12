@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { Password } from 'primereact/password';
 import { Message } from 'primereact/message';
@@ -92,12 +91,18 @@ const SignupPage = () => {
                 </div>
 
                 <div>
-                    <Button type="submit" disabled={!isValidForm()}>
+                    <button type="submit" className="btn" disabled={!isValidForm()}>
                         Sign Up
-                    </Button>
+                    </button>
                     <br/>
                     <br/>
-                    <Link to="/signin">Login</Link>
+
+                    <div>
+                        <p>If you have a account
+                            <br/>
+                            <Link to="/signin">Login</Link>
+                        </p>
+                    </div>
                 </div>
             </form>
         </div>
