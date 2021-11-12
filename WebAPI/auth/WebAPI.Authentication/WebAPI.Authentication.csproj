@@ -20,7 +20,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\src\Core\WebAPI.Domain\WebAPI.Domain.csproj" />
-      <ProjectReference Include="..\..\src\Infrastructure\WebAPI.Persistence\WebAPI.Persistence.csproj" />
+      <ProjectReference Include="..\..\src\Frameworks\WebAPI.DataAccess.MsSql\WebAPI.DataAccess.MsSql.csproj" />
     </ItemGroup>
     
 </Project>
