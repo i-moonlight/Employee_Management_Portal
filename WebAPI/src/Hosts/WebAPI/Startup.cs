@@ -1,7 +1,9 @@
+using Serilog;
 using System;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -15,7 +17,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
-using Serilog;
 using WebAPI.DataAccess.MsSql.Persistence.Context;
 using WebAPI.DataAccess.MsSql.Repositories;
 using WebAPI.Domain.Common;
@@ -58,6 +59,8 @@ namespace WebAPI
             
             services.AddScoped<ICrudRepository<Employee>, EmployeeRepository>();
             services.AddScoped<ICrudRepository<Department>, DepartmentRepository>();
+            services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
             
             #endregion
 

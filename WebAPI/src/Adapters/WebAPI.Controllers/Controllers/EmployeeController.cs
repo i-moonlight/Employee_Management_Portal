@@ -1,18 +1,20 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using Serilog;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Domain.Entities;
 using WebAPI.Infrastructure.Interfaces.Interfaces;
+using WebAPI.UserCases.Cases.Employees.Queries.EmployeeList;
 using WebAPI.Utils.Constants;
 
 namespace WebAPI.Controllers.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EmployeeController : ControllerBase
+    public class EmployeeController : BaseController
     {
         private readonly ICrudRepository<Employee> _empRepository;
         private readonly IWebHostEnvironment _env;
@@ -26,12 +28,25 @@ namespace WebAPI.Controllers.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Gets the list of Employee
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// GET /employee
+        /// </remarks>
+        /// <returns>Returns EmployeeListViewModel</returns>
+        /// <response code="200">Success</response>
+        /// <response code="401">If the user is unauthorized</response>
         [HttpGet]
-        [Authorize (Roles = "Manager")]
-        public JsonResult Get()
+        // [Authorize (Roles = "Manager")]
+        // [ProducesResponseType(StatusCodes.Status200OK)]
+        // [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<EmployeeListViewModel>> GetEmployeeList()
         {
-            _logger.Warning("Get all employees successful {CustomProperty}", 0);
-            return new JsonResult(_empRepository.Read());
+            var query = new EmployeeListQuery() { EmployeeId = EmployeeId };
+            var view = await Mediator.Send(query);
+            return Ok(view);
         }
         
         [HttpPost]

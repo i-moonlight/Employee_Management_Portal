@@ -7,22 +7,25 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using WebAPI.Infrastructure.Interfaces.Interfaces;
 
-namespace WebAPI.UserCases.Cases.Employee.Queries.EmployeeList
+namespace WebAPI.UserCases.Cases.Employees.Queries.EmployeeList
 {
     public class EmployeeListQueryHandler : IRequestHandler<EmployeeListQuery, EmployeeListViewModel>
     {
         private readonly IEmployeeDbContext _dbContext;
         private readonly IMapper _mapper;
 
-        public EmployeeListQueryHandler(IEmployeeDbContext dbContext, IMapper mapper) =>
-            (_dbContext, _mapper) = (dbContext, mapper);
+        public EmployeeListQueryHandler(IEmployeeDbContext dbContext, IMapper mapper)
+        {
+            _dbContext = dbContext;
+            _mapper = mapper;
+        }
 
         public async Task<EmployeeListViewModel> Handle(
             EmployeeListQuery request, CancellationToken cancellationToken)
         {
             var employeesQuery = await _dbContext.Employees
-                .Where(emp => emp.EmployeeId == request.EmployeeId)
-                .ProjectTo<EmployeeDto>(_mapper.ConfigurationProvider)
+                .OrderBy(emp => emp.EmployeeId == request.EmployeeId)
+                .ProjectTo<EmployeeListDto>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
 
             return new EmployeeListViewModel() { Employees = employeesQuery };

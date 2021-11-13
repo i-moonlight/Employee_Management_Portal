@@ -7,7 +7,7 @@ namespace WebAPI.Domain.Entities
         /// <summary>
         /// Employee ID.
         /// </summary>
-        public int EmployeeId { get; set; }
+        public Guid EmployeeId { get; set; }
         
         /// <summary>
         /// Employee Name.
