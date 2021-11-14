@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using MediatR;
 using Serilog;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Authorization;

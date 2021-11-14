@@ -22,6 +22,7 @@ using WebAPI.DataAccess.MsSql.Repositories;
 using WebAPI.Domain.Common;
 using WebAPI.Domain.Entities;
 using WebAPI.Infrastructure.Interfaces.Interfaces;
+using WebAPI.UserCases.Common.Mappings;
 
 namespace WebAPI
 {
@@ -37,6 +38,7 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddMvc();
 
             #region JSON Serializer
 
@@ -57,8 +59,18 @@ namespace WebAPI
 
             #region Dependency injection
             
+            services.AddAutoMapper(config =>
+            {
+                config.AddProfile(new AssemblyMappingProfile(Assembly.GetExecutingAssembly()));
+                config.AddProfile(new AssemblyMappingProfile(typeof(IEmployeeDbContext).Assembly));
+            });
+            
+            services.AddAutoMapper(typeof(AssemblyMappingProfile));
+            
+            
             services.AddScoped<ICrudRepository<Employee>, EmployeeRepository>();
             services.AddScoped<ICrudRepository<Department>, DepartmentRepository>();
+           // services.AddMediatR(typeof(Startup));
 
             #endregion
 

@@ -5,6 +5,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using WebAPI.Domain.Entities;
 using WebAPI.Infrastructure.Interfaces.Interfaces;
 
 namespace WebAPI.UserCases.Cases.Employees.Queries.EmployeeList
@@ -23,12 +24,15 @@ namespace WebAPI.UserCases.Cases.Employees.Queries.EmployeeList
         public async Task<EmployeeListViewModel> Handle(
             EmployeeListQuery request, CancellationToken cancellationToken)
         {
-            var employeesQuery = await _dbContext.Employees
-                .OrderBy(emp => emp.EmployeeId == request.EmployeeId)
-                .ProjectTo<EmployeeListDto>(_mapper.ConfigurationProvider)
-                .ToListAsync(cancellationToken);
+            var employeesQuery = await _dbContext.Employees.FindAsync(request.EmployeeId);
+                // .OrderBy(emp => emp.EmployeeId == request.EmployeeId)
+                // .ProjectTo<EmployeeListDto>(_mapper.ConfigurationProvider)
+                // .ToListAsync();
+            
+           // var model = await _db.Foods.FindAsync(request.Id);
+            return _mapper.Map<Employee, EmployeeListViewModel>(employeesQuery);
 
-            return new EmployeeListViewModel() { Employees = employeesQuery };
+            //return new EmployeeListViewModel() { EmployeeList = employeesQuery };
         }
     }
 }
