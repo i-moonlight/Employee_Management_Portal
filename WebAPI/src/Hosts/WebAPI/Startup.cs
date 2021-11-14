@@ -59,9 +59,7 @@ namespace WebAPI
             
             services.AddScoped<ICrudRepository<Employee>, EmployeeRepository>();
             services.AddScoped<ICrudRepository<Department>, DepartmentRepository>();
-            services.AddMediatR(Assembly.GetExecutingAssembly());
-            services.AddAutoMapper(Assembly.GetExecutingAssembly());
-            
+
             #endregion
 
             #region Role Identity
