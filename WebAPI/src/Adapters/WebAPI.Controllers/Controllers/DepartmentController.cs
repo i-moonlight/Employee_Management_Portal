@@ -47,7 +47,7 @@ namespace WebAPI.Controllers.Controllers
         }
         
         [HttpDelete("{id}")]
-        public JsonResult Delete(int id)
+        public JsonResult Delete(Guid id)
         {
             var success = true;
             try

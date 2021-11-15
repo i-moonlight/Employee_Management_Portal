@@ -3,7 +3,6 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Text;
-using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -38,7 +37,6 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddMvc();
 
             #region JSON Serializer
 
@@ -53,7 +51,9 @@ namespace WebAPI
             #region Enable application context
             
             services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection"),
+                    x => x.MigrationsAssembly("WebAPI.DataAccess.MsSql")));
 
             #endregion
 
@@ -62,7 +62,7 @@ namespace WebAPI
             services.AddAutoMapper(config =>
             {
                 config.AddProfile(new AssemblyMappingProfile(Assembly.GetExecutingAssembly()));
-                config.AddProfile(new AssemblyMappingProfile(typeof(IEmployeeDbContext).Assembly));
+                config.AddProfile(new AssemblyMappingProfile(typeof(IAppDbContext).Assembly));
             });
             
             services.AddAutoMapper(typeof(AssemblyMappingProfile));

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 
 namespace WebAPI.Infrastructure.Interfaces.Interfaces
 {
@@ -8,7 +9,7 @@ namespace WebAPI.Infrastructure.Interfaces.Interfaces
         public IEnumerable ReadAll();
         public T Create(T model);
         public T Update(T model);
-        public void Delete(int id);
-        public string GetFileName(int id);
+        public void Delete(Guid id);
+        public string GetFileName(Guid id);
     }
 }

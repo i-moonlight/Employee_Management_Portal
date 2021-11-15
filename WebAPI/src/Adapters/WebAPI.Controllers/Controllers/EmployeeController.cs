@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
-using MediatR;
 using Serilog;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Authorization;
@@ -78,7 +77,7 @@ namespace WebAPI.Controllers.Controllers
         
         [HttpDelete("{id}")]
         [Authorize (Roles = "Manager")]
-        public JsonResult Delete(int id)
+        public JsonResult Delete(Guid id)
         {
             var success = true;
             try
@@ -122,7 +121,7 @@ namespace WebAPI.Controllers.Controllers
         [HttpPost]
         [Authorize (Roles = "Manager")]
         [Route("{Id}/UpdatePhoto")]
-        public JsonResult UpdatePhoto(int id)
+        public JsonResult UpdatePhoto(Guid id)
         {
             try
             {

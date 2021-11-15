@@ -137,7 +137,7 @@ namespace WebAPI.Tests.Controllers
                     new Employee
                     {
                         //EmployeeId = 1,
-                        EmployeeName = "Test"
+                        Name = "Test"
                     }
                 }
                 .AsEnumerable();

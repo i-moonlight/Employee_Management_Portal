@@ -5,7 +5,7 @@ using WebAPI.Infrastructure.Interfaces.Interfaces;
 
 namespace WebAPI.DataAccess.MsSql.Persistence.Context
 {
-    public class AppDbContext : IdentityDbContext<User>, IEmployeeDbContext
+    public class AppDbContext : IdentityDbContext<User>, IAppDbContext
     {
         public AppDbContext(DbContextOptions options) : base(options) {}
 

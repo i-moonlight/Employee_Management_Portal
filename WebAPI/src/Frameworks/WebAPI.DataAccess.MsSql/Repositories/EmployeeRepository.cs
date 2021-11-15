@@ -18,12 +18,12 @@ namespace WebAPI.DataAccess.MsSql.Repositories
 
         public IEnumerable Read()
         {
-            return _context.Employees.OrderBy(x => x.EmployeeId);
+            return _context.Employees.OrderBy(x => x.Id);
         }
         
         public IEnumerable ReadAll()
         {
-            return _context.Departments.OrderBy(x => x.DepartmentId);
+            return _context.Departments.OrderBy(x => x.Id);
         }
         
         public Employee Create(Employee model)
@@ -40,22 +40,12 @@ namespace WebAPI.DataAccess.MsSql.Repositories
             return model;
         }
 
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        // public void Delete(int id)
-        // {
-        //     var model = _context.Employees.FirstOrDefault(x => x.EmployeeId == id);
-        //     _context.Employees.Remove(model ?? throw new InvalidOperationException());
-        //     _context.SaveChanges();
-        //     
-        //     var path = PathTypes.StoragePath + model.PhotoFileName;
-        //     if (File.Exists(path)) File.Delete(path);
-        // }
-
-        public string GetFileName(int id)
+        public string GetFileName(Guid id)
         {
             return _context.Employees.Find(id).PhotoFileName;
         }

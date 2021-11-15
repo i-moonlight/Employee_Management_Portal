@@ -18,7 +18,7 @@ namespace WebAPI.DataAccess.MsSql.Repositories
 
         public IEnumerable Read()
         {
-            return _context.Departments.OrderBy(x => x.DepartmentId);
+            return _context.Departments.OrderBy(x => x.Id);
         }
 
         public IEnumerable ReadAll()
@@ -39,15 +39,15 @@ namespace WebAPI.DataAccess.MsSql.Repositories
             _context.SaveChanges();
             return model;
         }
-        
-        public void Delete(int id)
+
+        public void Delete(Guid id)
         {
-            var model = _context.Departments.FirstOrDefault(x => x.DepartmentId == id);
+            var model = _context.Departments.FirstOrDefault(x => x.Id == id);
             _context.Departments.Remove(model ?? throw new InvalidOperationException());
             _context.SaveChanges();
         }
 
-        public string GetFileName(int id)
+        public string GetFileName(Guid id)
         {
             throw new NotImplementedException();
         }

@@ -115,11 +115,12 @@ namespace WebAPI
         /// <returns>web host</returns>
         private static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>())
+                .ConfigureWebHostDefaults(webBuilder =>
+                    webBuilder.UseStartup<Startup>())
+                
                 .ConfigureAppConfiguration(configuration =>
-                {
-                    configuration.AddJsonFile("appsettings.json", false, true);
-                })
+                    configuration.AddJsonFile("appsettings.json", false, true))
+                
                 .UseSerilog()
                 .UseNLog(); // NLog: Setup NLog for Dependency injection.
     }

@@ -13,7 +13,7 @@ namespace WebAPI.UserCases.Cases.Employees.Queries.EmployeeList
         {
             profile.CreateMap<Employee, EmployeeListDto>()
                 .ForMember(dto => dto.EmployeeId,
-                    opt => opt.MapFrom(employee => employee.EmployeeId));
+                    opt => opt.MapFrom(employee => employee.Id));
         }
     }
 }
