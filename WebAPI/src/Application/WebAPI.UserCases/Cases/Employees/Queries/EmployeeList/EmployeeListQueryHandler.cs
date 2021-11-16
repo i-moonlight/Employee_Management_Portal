@@ -1,16 +1,6 @@
-﻿using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-using WebAPI.Domain.Entities;
-using WebAPI.Infrastructure.Interfaces.Interfaces;
-
-namespace WebAPI.UserCases.Cases.Employees.Queries.EmployeeList
+﻿namespace WebAPI.UserCases.Cases.Employees.Queries.EmployeeList
 {
-    public class EmployeeListQueryHandler : IRequestHandler<EmployeeListQuery, EmployeeListViewModel>
+    public partial class EmployeeListQueryHandler : IRequestHandler<EmployeeListQuery, EmployeeListViewModel>
     {
         private readonly IAppDbContext _dbContext;
         private readonly IMapper _mapper;
@@ -22,14 +12,15 @@ namespace WebAPI.UserCases.Cases.Employees.Queries.EmployeeList
         }
 
         public async Task<EmployeeListViewModel> Handle(
-            EmployeeListQuery request, CancellationToken cancellationToken)
-        {
-            var employeesQuery = await _dbContext.Employees
-                 .OrderBy(emp => emp.Id == request.EmployeeId)
-                 .ProjectTo<EmployeeListDto>(_mapper.ConfigurationProvider)
-                 .ToListAsync(cancellationToken);
-            
-            return new EmployeeListViewModel() { EmployeeList = employeesQuery };
-        }
+            EmployeeListQuery request, CancellationToken cancellationToken) =>
+        
+            new EmployeeListViewModel()
+            {
+                EmployeeList = await _dbContext.Employees
+                    .AsNoTracking()
+                    .ProjectTo<EmployeeListDto>(_mapper.ConfigurationProvider)
+                    .OrderBy(t => t.EmployeeId)
+                    .ToListAsync(cancellationToken)
+            };
     }
 }

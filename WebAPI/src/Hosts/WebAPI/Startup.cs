@@ -16,11 +16,12 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
+using WebAPI.DataAccess.MsSql;
 using WebAPI.DataAccess.MsSql.Persistence.Context;
-using WebAPI.DataAccess.MsSql.Repositories;
 using WebAPI.Domain.Common;
 using WebAPI.Domain.Entities;
 using WebAPI.Infrastructure.Interfaces.Interfaces;
+using WebAPI.UserCases;
 using WebAPI.UserCases.Common.Mappings;
 
 namespace WebAPI
@@ -29,59 +30,44 @@ namespace WebAPI
     {
         private IConfiguration Configuration { get; }
         
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+        public Startup(IConfiguration configuration) => Configuration = configuration;
 
         public void ConfigureServices(IServiceCollection services)
         {
+            #region Dependency Injection
+            
             services.AddControllers();
+            services.AddUserCases();
+            services.AddDataAccess(Configuration);
+            
+            #endregion
 
             #region JSON Serializer
 
-            services.AddControllersWithViews()
-                .AddNewtonsoftJson(options =>
-                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
-                .AddNewtonsoftJson(options =>
-                    options.SerializerSettings.ContractResolver = new DefaultContractResolver());
+            services.AddControllersWithViews().AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+            });
 
             #endregion
 
-            #region Enable application context
-            
-            services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection"),
-                    x => x.MigrationsAssembly("WebAPI.DataAccess.MsSql")));
+            #region AutoMapper
 
-            #endregion
-
-            #region Dependency injection
-            
             services.AddAutoMapper(config =>
             {
-                config.AddProfile(new AssemblyMappingProfile(Assembly.GetExecutingAssembly()));
-                config.AddProfile(new AssemblyMappingProfile(typeof(IAppDbContext).Assembly));
+                config.AddProfile(new MappingProfile(Assembly.GetExecutingAssembly()));
+                config.AddProfile(new MappingProfile(typeof(IAppDbContext).Assembly));
             });
-            
-            services.AddAutoMapper(typeof(AssemblyMappingProfile));
-            
-            
-            services.AddScoped<ICrudRepository<Employee>, EmployeeRepository>();
-            services.AddScoped<ICrudRepository<Department>, DepartmentRepository>();
-           // services.AddMediatR(typeof(Startup));
 
             #endregion
 
             #region Role Identity
 
             services.AddIdentity<User, IdentityRole>(options => {})
-                //.AddRoles<IdentityRole>()
-                //.AddRoleManager<RoleManager<IdentityRole>>()
                 .AddEntityFrameworkStores<AppDbContext>();
             
-            #endregion Role Identity
+            #endregion
 
             #region Swagger
             
@@ -104,9 +90,8 @@ namespace WebAPI
             services.AddLogging(loggingBuilder =>
             {
                 // Enable logging.
-                loggingBuilder.AddConsole()
-                // Display sql commands.
-                .AddFilter(DbLoggerCategory.Database.Command.Name, LogLevel.Information);
+                loggingBuilder.AddConsole().AddFilter(
+                    DbLoggerCategory.Database.Command.Name, LogLevel.Information);
                 // Display output IDE.
                 loggingBuilder.AddDebug();
             });

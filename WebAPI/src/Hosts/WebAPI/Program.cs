@@ -23,19 +23,15 @@ namespace WebAPI
             // Configure logging first.
             ConfigureLogging();
 
-            var logger = NLogBuilder
-                .ConfigureNLog("Nlog.config")
-                .GetCurrentClassLogger();
+            var logger = NLogBuilder.ConfigureNLog("Nlog.config").GetCurrentClassLogger();
             try
             {
-                logger.Debug("Program initialization");
+                logger.Debug("Resource server initialize");
 
-                #region Program initialization
+                #region Resource server initialize
 
                 var host = CreateHostBuilder(args).Build();
-                using var scope = host.Services
-                    .GetRequiredService<IServiceScopeFactory>()
-                    .CreateScope();
+                using var scope = host.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
 
 // #pragma warning disable 4014
 //                   RoleManager.Initialize(scope.ServiceProvider);
@@ -47,7 +43,7 @@ namespace WebAPI
             }
             catch (Exception exception)
             {
-                logger.Error(exception, "Program fall");
+                logger.Error(exception, "Resource server falled");
                 throw;
             }
             finally
@@ -117,10 +113,8 @@ namespace WebAPI
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                     webBuilder.UseStartup<Startup>())
-                
                 .ConfigureAppConfiguration(configuration =>
                     configuration.AddJsonFile("appsettings.json", false, true))
-                
                 .UseSerilog()
                 .UseNLog(); // NLog: Setup NLog for Dependency injection.
     }
