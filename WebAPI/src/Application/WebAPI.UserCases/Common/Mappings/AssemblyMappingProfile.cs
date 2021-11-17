@@ -5,17 +5,22 @@ using AutoMapper;
 
 namespace WebAPI.UserCases.Common.Mappings
 {
-    public class MappingProfile : Profile
+    /// <summary>
+    /// Assembly mapping profile.
+    /// </summary>
+    public class AssemblyMappingProfile : Profile
     {
-        public MappingProfile(Assembly getExecutingAssembly)
-        {
+        public AssemblyMappingProfile(Assembly getExecutingAssembly) => 
             ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
-        }
 
+        /// <summary>
+        /// Apply mappings from assembly.
+        /// </summary>
+        /// <param name="assembly">The assembly</param>
         private void ApplyMappingsFromAssembly(Assembly assembly)
         {
             var types = assembly.GetExportedTypes().Where(t => t.GetInterfaces()
-                    .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IMapWith<>))).ToList();
+                    .Any(t => t.IsGenericType && t.GetGenericTypeDefinition() == typeof(IMapWith<>))).ToList();
 
             foreach (var type in types)
             {

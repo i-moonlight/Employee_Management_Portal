@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Serilog;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Domain.Entities;
 using WebAPI.Infrastructure.Interfaces.Interfaces;
@@ -29,19 +30,19 @@ namespace WebAPI.Controllers.Controllers
         }
 
         /// <summary>
-        /// Gets the list of Employee
+        /// Gets the list of Employee.
         /// </summary>
         /// <remarks>
         /// Sample request:
-        /// GET /employee
+        /// GET /employee.
         /// </remarks>
-        /// <returns>Returns EmployeeListViewModel</returns>
-        /// <response code="200">Success</response>
-        /// <response code="401">If the user is unauthorized</response>
+        /// <returns>Returns EmployeeListViewModel.</returns>
+        /// <response code="200">Success.</response>
+        /// <response code="401">If the user is unauthorized.</response>
         [HttpGet]
         // [Authorize (Roles = "Manager")]
-        // [ProducesResponseType(StatusCodes.Status200OK)]
-        // [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<EmployeeListViewModel>> GetEmployeeList()
         {
             var query = new EmployeeListQuery() { EmployeeId = EmployeeId };
