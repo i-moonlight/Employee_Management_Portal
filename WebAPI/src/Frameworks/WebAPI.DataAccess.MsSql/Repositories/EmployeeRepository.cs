@@ -16,9 +16,9 @@ namespace WebAPI.DataAccess.MsSql.Repositories
             _context = context;
         }
 
-        public IEnumerable Read()
+        public Employee Read(Guid id)
         {
-            return _context.Employees.OrderBy(x => x.Id);
+            return _context.Employees.Find(id);
         }
         
         public IEnumerable ReadAll()

@@ -21,6 +21,11 @@ namespace WebAPI.DataAccess.MsSql.Repositories
             return _context.Departments.OrderBy(x => x.Id);
         }
 
+        public Department Read(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable ReadAll()
         {
             throw new NotImplementedException();

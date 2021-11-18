@@ -1,14 +1,14 @@
 ﻿using System;
 using AutoMapper;
-using WebAPI.UserCases.Common.Mappings;
 using WebAPI.Domain.Entities;
+using WebAPI.UserCases.Common.Mappings;
 
-namespace WebAPI.UserCases.Cases.Employees.Queries.EmployeeList
+namespace WebAPI.UserCases.Cases.Employees.Queries.EmployeeListQuery
 {
     /// <summary>
     /// Represents a set of key/value application object properties.
     /// </summary>
-    public class EmployeeListDto : IMapWith<Employee>
+    public class EmployeeListDto : IMapFrom<Employee>
     {
         public Guid EmployeeId { get; set; }
         public string EmployeeName { get; set; }

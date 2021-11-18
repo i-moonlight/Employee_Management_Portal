@@ -26,20 +26,20 @@ namespace WebAPI.Tests.Controllers
             _model = new Department();
         }
 
-        [Test]
-        public void Get_Should_Returns_JsonResult_String_Value()
-        {
-            // Arrange.   
-            _mockDepRepo.Setup(x => x.Read()).Returns(_fakeCategories);
-
-            // Act.
-            var result = _controller.Get();
-
-            // Assert.
-            Assert.NotNull(result, "Result is null");
-            Assert.AreEqual(new JsonResult(_model).GetType(), result.GetType(), "Return type mismatch");
-            Assert.AreEqual(typeof(List<Department>), result.Value.GetType(), "Return value type mismatch");
-        }
+        // [Test]
+        // public void Get_Should_Returns_JsonResult_String_Value()
+        // {
+        //     // Arrange.   
+        //     _mockDepRepo.Setup(x => x.Read()).Returns(_fakeCategories);
+        //
+        //     // Act.
+        //     var result = _controller.Get();
+        //
+        //     // Assert.
+        //     Assert.NotNull(result, "Result is null");
+        //     Assert.AreEqual(new JsonResult(_model).GetType(), result.GetType(), "Return type mismatch");
+        //     Assert.AreEqual(typeof(List<Department>), result.Value.GetType(), "Return value type mismatch");
+        // }
         
         [Test]
         public void Post_Should_Returns_JsonResult_String_Value()

@@ -17,9 +17,9 @@ namespace WebAPI.Controllers.Controllers
         }
 
         [HttpGet]
-        public JsonResult Get()
+        public JsonResult Get(Guid id)
         {
-            return new JsonResult(_depRepository.Read());
+            return new JsonResult(_depRepository.Read(id));
         }
         
         [HttpPost]

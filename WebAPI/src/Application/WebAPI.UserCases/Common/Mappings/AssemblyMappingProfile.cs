@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Reflection;
 using AutoMapper;
+using WebAPI.Domain.Entities;
+using WebAPI.UserCases.Cases.Employees.Queries.EmployeeQuery;
 
 namespace WebAPI.UserCases.Common.Mappings
 {
@@ -10,7 +12,7 @@ namespace WebAPI.UserCases.Common.Mappings
     /// </summary>
     public class AssemblyMappingProfile : Profile
     {
-        public AssemblyMappingProfile(Assembly getExecutingAssembly) => 
+        public AssemblyMappingProfile() => 
             ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
 
         /// <summary>
@@ -20,8 +22,8 @@ namespace WebAPI.UserCases.Common.Mappings
         private void ApplyMappingsFromAssembly(Assembly assembly)
         {
             var types = assembly.GetExportedTypes().Where(t => t.GetInterfaces()
-                    .Any(t => t.IsGenericType && t.GetGenericTypeDefinition() == typeof(IMapWith<>))).ToList();
-
+                    .Any(t => t.IsGenericType && t.GetGenericTypeDefinition() == typeof(IMapFrom<>))).ToList();
+            
             foreach (var type in types)
             {
                 var instance = Activator.CreateInstance(type);

@@ -8,7 +8,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using WebAPI.Infrastructure.Interfaces.Interfaces;
 
-namespace WebAPI.UserCases.Cases.Employees.Queries.EmployeeList
+namespace WebAPI.UserCases.Cases.Employees.Queries.EmployeeListQuery
 {
     /// <summary>
     /// Sets the object selection property.

@@ -2,7 +2,7 @@
 
 namespace WebAPI.UserCases.Common.Mappings
 {
-    public interface IMapWith<T>
+    public interface IMapFrom<T>
     {
         void Mapping(Profile profile)
         {

@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Domain.Entities;
-using WebAPI.Infrastructure.Interfaces.Interfaces;
-using WebAPI.UserCases.Cases.Employees.Queries.EmployeeList;
+using WebAPI.UserCases.Cases.Employees.Queries.EmployeeListQuery;
+using WebAPI.UserCases.Cases.Employees.Queries.EmployeeQuery;
 using WebAPI.Utils.Constants;
 
 namespace WebAPI.Controllers.Controllers
@@ -17,16 +17,13 @@ namespace WebAPI.Controllers.Controllers
     [ApiController]
     public class EmployeeController : BaseController
     {
-        private readonly ICrudRepository<Employee> _empRepository;
-        private readonly IWebHostEnvironment _env;
         private readonly ILogger _logger;
+        private readonly IWebHostEnvironment _env;
 
-        public EmployeeController(
-            ICrudRepository<Employee> empRepository, IWebHostEnvironment env, ILogger logger)
+        public EmployeeController(ILogger logger, IWebHostEnvironment env)
         {
-            _empRepository = empRepository;
-            _env = env;
             _logger = logger;
+            _env = env;
         }
 
         /// <summary>
@@ -50,8 +47,29 @@ namespace WebAPI.Controllers.Controllers
             return Ok(view);
         }
         
+        /// <summary>
+        /// Gets the employee by id.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// GET /employee/D34D349E-43B8-429E-BCA4-793C932FD580.
+        /// </remarks>
+        /// <param name="id">Employee id (guid).</param>
+        /// <returns>Returns EmployeeListViewModel.</returns>
+        /// <response code="200">Success.</response>
+        /// <response code="401">If the user in unauthorized.</response>
+        [HttpGet("{id}")]
+        // [Authorize (Roles = "Manager")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<EmployeeQuery>> GetEmployee(Guid id)
+        {
+            var query = new EmployeeQuery { Id = id };
+            return Ok(await Mediator.Send(query));
+        }
+        
         [HttpPost]
-        [Authorize (Roles = "Manager")]
+        //[Authorize (Roles = "Manager")]
         public JsonResult Post(Employee emp)
         {
             _empRepository.Create(emp);

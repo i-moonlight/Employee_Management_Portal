@@ -56,7 +56,7 @@ namespace WebAPI
 
             services.AddAutoMapper(config =>
             {
-                config.AddProfile(new AssemblyMappingProfile(Assembly.GetExecutingAssembly()));
+                config.AddProfile(typeof(AssemblyMappingProfile));
                 //config.AddProfile(new AssemblyMappingProfile(typeof(IAppDbContext).Assembly));
             });
 
