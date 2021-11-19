@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
 using WebAPI.Controllers.Controllers;
-using WebAPI.Domain.Entities;
-using WebAPI.Infrastructure.Interfaces.Interfaces;
+using WebAPI.Entities.Models;
+using WebAPI.Infrastructure.Interfaces.DataAccess;
 
 namespace WebAPI.Tests.Controllers
 {

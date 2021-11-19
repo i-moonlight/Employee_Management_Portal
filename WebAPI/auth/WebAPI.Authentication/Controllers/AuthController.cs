@@ -13,8 +13,8 @@ using WebAPI.Authentication.ViewModels.DTO;
 using WebAPI.Authentication.ViewModels.Request;
 using WebAPI.Authentication.ViewModels.Response;
 using WebAPI.DataAccess.MsSql.Identity;
-using WebAPI.Domain.Common;
-using WebAPI.Domain.Entities;
+using WebAPI.Entities.Common;
+using WebAPI.Entities.Models;
 
 namespace WebAPI.Authentication.Controllers
 {

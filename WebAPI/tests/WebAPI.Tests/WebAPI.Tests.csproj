@@ -13,10 +13,10 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\src\Adapters\WebAPI.Controllers\WebAPI.Controllers.csproj" />
-        <ProjectReference Include="..\..\src\Application\WebAPI.Infrastructure.Interfaces\WebAPI.Infrastructure.Interfaces.csproj" />
-        <ProjectReference Include="..\..\src\Core\WebAPI.Domain\WebAPI.Domain.csproj" />
         <ProjectReference Include="..\..\src\Hosts\WebAPI\WebAPI.csproj" />
+        <ProjectReference Include="..\..\src\WebAPI.Controllers\WebAPI.Controllers.csproj" />
+        <ProjectReference Include="..\..\src\WebAPI.Entities\WebAPI.Entities.csproj" />
+        <ProjectReference Include="..\..\src\WebAPI.Infrastructure.Interfaces\WebAPI.Infrastructure.Interfaces.csproj" />
     </ItemGroup>
 
 </Project>

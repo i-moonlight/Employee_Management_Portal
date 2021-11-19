@@ -10,8 +10,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
 using WebAPI.DataAccess.MsSql.Persistence.Context;
-using WebAPI.Domain.Common;
-using WebAPI.Domain.Entities;
+using WebAPI.Entities.Common;
+using WebAPI.Entities.Models;
 
 namespace WebAPI.Authentication
 {

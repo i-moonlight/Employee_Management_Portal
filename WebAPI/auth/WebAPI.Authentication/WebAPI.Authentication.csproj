@@ -19,8 +19,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\Core\WebAPI.Domain\WebAPI.Domain.csproj" />
-      <ProjectReference Include="..\..\src\Frameworks\WebAPI.DataAccess.MsSql\WebAPI.DataAccess.MsSql.csproj" />
+      <ProjectReference Include="..\..\src\WebAPI.DataAccess.MsSql\WebAPI.DataAccess.MsSql.csproj" />
+      <ProjectReference Include="..\..\src\WebAPI.Entities\WebAPI.Entities.csproj" />
     </ItemGroup>
     
 </Project>

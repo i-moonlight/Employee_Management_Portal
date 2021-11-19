@@ -31,10 +31,12 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\auth\WebAPI.Authentication\WebAPI.Authentication.csproj" />
-      <ProjectReference Include="..\..\Application\WebAPI.UserCases\WebAPI.UserCases.csproj" />
-      <ProjectReference Include="..\..\Adapters\WebAPI.Controllers\WebAPI.Controllers.csproj" />
-      <ProjectReference Include="..\..\Core\WebAPI.Domain\WebAPI.Domain.csproj" />
-      <ProjectReference Include="..\..\Frameworks\WebAPI.DataAccess.MsSql\WebAPI.DataAccess.MsSql.csproj" />
+      <ProjectReference Include="..\..\WebAPI.Controllers\WebAPI.Controllers.csproj" />
+      <ProjectReference Include="..\..\WebAPI.DataAccess.MsSql\WebAPI.DataAccess.MsSql.csproj" />
+      <ProjectReference Include="..\..\WebAPI.Entities\WebAPI.Entities.csproj" />
+      <ProjectReference Include="..\..\WebAPI.Infrastructure.Interfaces\WebAPI.Infrastructure.Interfaces.csproj" />
+      <ProjectReference Include="..\..\WebAPI.UserCases\WebAPI.UserCases.csproj" />
+      <ProjectReference Include="..\..\WebAPI.Utils\WebAPI.Utils.csproj" />
     </ItemGroup>
 
 </Project>
