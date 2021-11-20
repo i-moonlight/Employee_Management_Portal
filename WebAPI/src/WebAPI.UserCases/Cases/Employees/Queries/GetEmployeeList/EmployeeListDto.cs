@@ -3,7 +3,7 @@ using AutoMapper;
 using WebAPI.Entities.Models;
 using WebAPI.UserCases.Common.Mappings;
 
-namespace WebAPI.UserCases.Cases.Employees.Queries.EmployeeListQuery
+namespace WebAPI.UserCases.Cases.Employees.Queries.GetEmployeeList
 {
     /// <summary>
     /// Represents a set of key/value application object properties.

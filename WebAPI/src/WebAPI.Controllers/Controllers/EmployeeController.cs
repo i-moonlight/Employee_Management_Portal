@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Entities.Models;
-using WebAPI.UserCases.Cases.Employees.Queries.EmployeeListQuery;
-using WebAPI.UserCases.Cases.Employees.Queries.EmployeeQuery;
+using WebAPI.UserCases.Cases.Employees.Queries.GetEmployee;
+using WebAPI.UserCases.Cases.Employees.Queries.GetEmployeeList;
 using WebAPI.Utils.Constants;
 
 namespace WebAPI.Controllers.Controllers
@@ -42,7 +42,7 @@ namespace WebAPI.Controllers.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<EmployeeListViewModel>> GetEmployeeList()
         {
-            var query = new EmployeeListQuery() { EmployeeId = EmployeeId };
+            var query = new GetEmployeeListQuery() { EmployeeId = EmployeeId };
             var view = await Mediator.Send(query);
             return Ok(view);
         }
@@ -54,17 +54,17 @@ namespace WebAPI.Controllers.Controllers
         /// Sample request:
         /// GET /employee/D34D349E-43B8-429E-BCA4-793C932FD580.
         /// </remarks>
-        /// <param name="id">Employee id (guid).</param>
-        /// <returns>Returns EmployeeListViewModel.</returns>
-        /// <response code="200">Success.</response>
-        /// <response code="401">If the user in unauthorized.</response>
+        /// <param name="id">Employee id (guid)</param>
+        /// <returns>Returns GetEmployeeQuery</returns>
+        /// <response code="200">Success</response>
+        /// <response code="401">If the user in unauthorized</response>
         [HttpGet("{id}")]
         // [Authorize (Roles = "Manager")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<EmployeeQuery>> GetEmployee(Guid id)
+        public async Task<ActionResult<GetEmployeeQuery>> GetEmployeeById(Guid id)
         {
-            var query = new EmployeeQuery { Id = id };
+            var query = new GetEmployeeQuery { Id = id };
             return Ok(await Mediator.Send(query));
         }
         
