@@ -26,11 +26,10 @@ namespace WebAPI.DataAccess.MsSql.Repositories
             return _context.Departments.OrderBy(x => x.Id);
         }
         
-        public Employee Create(Employee model)
+        public void Create(Employee model)
         {
             _context.Employees.Add(model);
             _context.SaveChanges();
-            return model;
         }
         
         public Employee Update(Employee model)

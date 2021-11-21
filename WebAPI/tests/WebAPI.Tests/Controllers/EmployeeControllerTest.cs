@@ -43,35 +43,35 @@ namespace WebAPI.Tests.Controllers
         //     Assert.AreEqual(typeof(List<Employee>), result.Value.GetType(), "Return value type mismatch");
         // }
         
-        [Test]
-        public void Post_Should_Returns_JsonResult_String_Value()
-        {
-            // Arrange. 
-            _mockEmpRepo.Setup(x => x.Create(_model)).Returns(_fakeCategories.First());
-
-            // Act.
-            var result = _controller.Post(_model);
-
-            // Assert.
-            Assert.NotNull(result, "Result is null");
-            Assert.AreEqual(new JsonResult(_model).GetType(), result.GetType(), "Return type mismatch");
-            Assert.AreEqual(typeof(string), result.Value.GetType(), "Return value type mismatch");
-        }
-        
-        [Test]
-        public void Put_Should_Returns_JsonResult_String_Value()
-        {
-            // Arrange.
-            _mockEmpRepo.Setup(x => x.Update(_model)).Returns(_fakeCategories.First());
-
-            // Act.
-            var result = _controller.Put(_model);
-
-            // Assert.
-            Assert.NotNull(result, "Result is null");
-            Assert.AreEqual(new JsonResult(_model).GetType(), result.GetType(), "Return type mismatch");
-            Assert.AreEqual(typeof(string), result.Value.GetType(), "Return value type mismatch");
-        }
+        // [Test]
+        // public void Post_Should_Returns_JsonResult_String_Value()
+        // {
+        //     // Arrange. 
+        //     _mockEmpRepo.Setup(x => x.Create(_model)).Returns(_fakeCategories.First());
+        //
+        //     // Act.
+        //     var result = _controller.Post(_model);
+        //
+        //     // Assert.
+        //     Assert.NotNull(result, "Result is null");
+        //     Assert.AreEqual(new JsonResult(_model).GetType(), result.GetType(), "Return type mismatch");
+        //     Assert.AreEqual(typeof(string), result.Value.GetType(), "Return value type mismatch");
+        // }
+        //
+        // [Test]
+        // public void Put_Should_Returns_JsonResult_String_Value()
+        // {
+        //     // Arrange.
+        //     _mockEmpRepo.Setup(x => x.Update(_model)).Returns(_fakeCategories.First());
+        //
+        //     // Act.
+        //     var result = _controller.Put(_model);
+        //
+        //     // Assert.
+        //     Assert.NotNull(result, "Result is null");
+        //     Assert.AreEqual(new JsonResult(_model).GetType(), result.GetType(), "Return type mismatch");
+        //     Assert.AreEqual(typeof(string), result.Value.GetType(), "Return value type mismatch");
+        // }
         
         // [Test]
         // public void Delete_Should_Returns_JsonResult_String_Value()
@@ -88,17 +88,17 @@ namespace WebAPI.Tests.Controllers
         //     Assert.AreEqual(typeof(string), result.Value.GetType(), "Return value type mismatch");
         // }
         
-        [Test]
-        public void UploadPhoto_Should_Returns_JsonResult_String_Value()
-        {
-            // Act.
-            var result = _controller.UploadPhoto();
-
-            // Assert.
-            Assert.NotNull(result, "Result is null");
-            Assert.AreEqual(new JsonResult(_model).GetType(), result.GetType(), "Return type mismatch");
-            Assert.AreEqual(typeof(string), result.Value.GetType(), "Return value type mismatch");
-        }
+        // [Test]
+        // public void UploadPhoto_Should_Returns_JsonResult_String_Value()
+        // {
+        //     // Act.
+        //     var result = _controller.UploadPhoto();
+        //
+        //     // Assert.
+        //     Assert.NotNull(result, "Result is null");
+        //     Assert.AreEqual(new JsonResult(_model).GetType(), result.GetType(), "Return type mismatch");
+        //     Assert.AreEqual(typeof(string), result.Value.GetType(), "Return value type mismatch");
+        // }
         
         // [Test]
         // public void UpdatePhoto_Should_Returns_JsonResult_String_Value()
@@ -114,22 +114,22 @@ namespace WebAPI.Tests.Controllers
         //     Assert.AreEqual(new JsonResult(_model).GetType(), result.GetType(), "Return type mismatch");
         //     Assert.AreEqual(typeof(string), result.Value.GetType(), "Return value type mismatch");
         // }
-
-        [Test]
-        public void GetAllDepartmentNames_Should_Returns_JsonResult_Employee_Value()
-        {
-            // Arrange.   
-            _mockEmpRepo.Setup(x => x.ReadAll()).Returns(_fakeCategories);
-            
-            // Arrange.   
-            var result = _controller.GetAllDepartmentNames();
-
-            // Assert.
-            Assert.NotNull(result, "Result is null");
-            Assert.AreEqual(new JsonResult(_model).GetType(), result.GetType(), "Return type mismatch");
-            Assert.AreEqual(typeof(List<Employee>), result.Value.GetType(), "Return value type mismatch");
-        }
-
+    
+        // [Test]
+        // public void GetAllDepartmentNames_Should_Returns_JsonResult_Employee_Value()
+        // {
+        //     // Arrange.   
+        //     _mockEmpRepo.Setup(x => x.ReadAll()).Returns(_fakeCategories);
+        //     
+        //     // Arrange.   
+        //     var result = _controller.GetAllDepartmentNames();
+        //
+        //     // Assert.
+        //     Assert.NotNull(result, "Result is null");
+        //     Assert.AreEqual(new JsonResult(_model).GetType(), result.GetType(), "Return type mismatch");
+        //     Assert.AreEqual(typeof(List<Employee>), result.Value.GetType(), "Return value type mismatch");
+        // }
+    
         private static IEnumerable<Employee> GetCategories()
         {
             var fakeCategories = new List<Employee>

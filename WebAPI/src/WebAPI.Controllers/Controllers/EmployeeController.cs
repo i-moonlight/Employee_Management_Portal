@@ -1,15 +1,12 @@
 ﻿using System;
-using System.IO;
 using System.Threading.Tasks;
 using Serilog;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using WebAPI.Entities.Models;
 using WebAPI.UserCases.Cases.Employees.Queries.GetEmployee;
 using WebAPI.UserCases.Cases.Employees.Queries.GetEmployeeList;
-using WebAPI.Utils.Constants;
+using WebAPI.UserCases.Cases.Employees.Commands.CreateEmployee;
 
 namespace WebAPI.Controllers.Controllers
 {
@@ -68,110 +65,122 @@ namespace WebAPI.Controllers.Controllers
             return Ok(await Mediator.Send(query));
         }
         
+        /// <summary>
+        /// Creates the employee.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// POST /employee.
+        /// </remarks>
+        /// <param name="command">CreateEmployeeCommand.</param>
+        /// <returns>Returns response about success.</returns>
+        /// <response code="201">Success.</response>
+        /// <response code="401">If the user is unauthorized.</response>
         [HttpPost]
         //[Authorize (Roles = "Manager")]
-        public JsonResult Post(Employee emp)
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<string>> CreateEmployee([FromBody] CreateEmployeeCommand command)
         {
-            _empRepository.Create(emp);
-            return new JsonResult("Created Successfully");
+            return Ok(await Mediator.Send(command));
         }
 
-        [HttpPut]
-        [Authorize (Roles = "Manager")]
-        public JsonResult Put(Employee emp)
-        {
-            var success = true;
-            try
-            {
-                _empRepository.Update(emp);
-            }
-            catch (Exception)
-            {
-                success = false;
-            }
-            return success
-                ? new JsonResult("Update successful")
-                : new JsonResult("Update was not successful");
-        }
-        
-        [HttpDelete("{id}")]
-        [Authorize (Roles = "Manager")]
-        public JsonResult Delete(Guid id)
-        {
-            var success = true;
-            try
-            {
-                _empRepository.Delete(id);
-            }
-            catch (Exception)
-            {
-                success = false;
-            }
-            return success
-                ? new JsonResult("Delete successful")
-                : new JsonResult("Delete was not successful");
-        }
-        
-        [HttpPost]
-        [Authorize (Roles = "Manager")]
-        [Route("UploadPhoto")]
-        public JsonResult UploadPhoto()
-        {
-            try
-            {
-                var httpRequest = Request.Form;
-                var postedFile = httpRequest.Files[0];
-                var filename = postedFile.FileName;
-                var selectPath = _env.ContentRootPath + "/Photos/" + filename;
-
-                using (var stream = new FileStream(selectPath, FileMode.Create))
-                {
-                    postedFile.CopyTo(stream);
-                }
-
-                return new JsonResult(filename);
-            }
-            catch (Exception)
-            {
-                return new JsonResult("anonymous.png");
-            }
-        }
-        
-        [HttpPost]
-        [Authorize (Roles = "Manager")]
-        [Route("{Id}/UpdatePhoto")]
-        public JsonResult UpdatePhoto(Guid id)
-        {
-            try
-            {
-                var photoName = _empRepository.GetFileName(id);
-                var httpRequest = Request.Form;
-                var postedFile = httpRequest.Files[0];
-                var filename = postedFile.FileName;
-                var selectPath = _env.ContentRootPath + "/Photos/" + filename;
-                var storagePath = PathTypes.StoragePath + photoName;
-
-                if (System.IO.File.Exists(selectPath))
-                    System.IO.File.Copy(storagePath, selectPath, true);
-
-                using (var stream = new FileStream(selectPath, FileMode.Create))
-                {
-                    postedFile.CopyTo(stream);
-                    if (System.IO.File.Exists(selectPath))
-                        System.IO.File.Delete(storagePath);
-                }
-                return new JsonResult(filename);
-            }
-            catch (Exception)
-            {
-                return new JsonResult("anonymous.png");
-            }
-        }
-        
-        [Route("GetAllDepartmentNames")]
-        public JsonResult GetAllDepartmentNames()
-        {
-            return new JsonResult(_empRepository.ReadAll());
-        }
+        // [HttpPut]
+        // [Authorize (Roles = "Manager")]
+        // public JsonResult Put(Employee emp)
+        // {
+        //     var success = true;
+        //     try
+        //     {
+        //         _empRepository.Update(emp);
+        //     }
+        //     catch (Exception)
+        //     {
+        //         success = false;
+        //     }
+        //     return success
+        //         ? new JsonResult("Update successful")
+        //         : new JsonResult("Update was not successful");
+        // }
+        //
+        // [HttpDelete("{id}")]
+        // [Authorize (Roles = "Manager")]
+        // public JsonResult Delete(Guid id)
+        // {
+        //     var success = true;
+        //     try
+        //     {
+        //         _empRepository.Delete(id);
+        //     }
+        //     catch (Exception)
+        //     {
+        //         success = false;
+        //     }
+        //     return success
+        //         ? new JsonResult("Delete successful")
+        //         : new JsonResult("Delete was not successful");
+        // }
+        //
+        // [HttpPost]
+        // [Authorize (Roles = "Manager")]
+        // [Route("UploadPhoto")]
+        // public JsonResult UploadPhoto()
+        // {
+        //     try
+        //     {
+        //         var httpRequest = Request.Form;
+        //         var postedFile = httpRequest.Files[0];
+        //         var filename = postedFile.FileName;
+        //         var selectPath = _env.ContentRootPath + "/Photos/" + filename;
+        //
+        //         using (var stream = new FileStream(selectPath, FileMode.Create))
+        //         {
+        //             postedFile.CopyTo(stream);
+        //         }
+        //
+        //         return new JsonResult(filename);
+        //     }
+        //     catch (Exception)
+        //     {
+        //         return new JsonResult("anonymous.png");
+        //     }
+        // }
+        //
+        // [HttpPost]
+        // [Authorize (Roles = "Manager")]
+        // [Route("{Id}/UpdatePhoto")]
+        // public JsonResult UpdatePhoto(Guid id)
+        // {
+        //     try
+        //     {
+        //         var photoName = _empRepository.GetFileName(id);
+        //         var httpRequest = Request.Form;
+        //         var postedFile = httpRequest.Files[0];
+        //         var filename = postedFile.FileName;
+        //         var selectPath = _env.ContentRootPath + "/Photos/" + filename;
+        //         var storagePath = PathTypes.StoragePath + photoName;
+        //
+        //         if (System.IO.File.Exists(selectPath))
+        //             System.IO.File.Copy(storagePath, selectPath, true);
+        //
+        //         using (var stream = new FileStream(selectPath, FileMode.Create))
+        //         {
+        //             postedFile.CopyTo(stream);
+        //             if (System.IO.File.Exists(selectPath))
+        //                 System.IO.File.Delete(storagePath);
+        //         }
+        //         return new JsonResult(filename);
+        //     }
+        //     catch (Exception)
+        //     {
+        //         return new JsonResult("anonymous.png");
+        //     }
+        // }
+        //
+        // [Route("GetAllDepartmentNames")]
+        // public JsonResult GetAllDepartmentNames()
+        // {
+        //     return new JsonResult(_empRepository.ReadAll());
+        // }
     }
 }

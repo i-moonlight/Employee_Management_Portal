@@ -31,11 +31,10 @@ namespace WebAPI.DataAccess.MsSql.Repositories
             throw new NotImplementedException();
         }
 
-        public Department Create(Department model)
+        public void Create(Department model)
         {
             _context.Departments.Add(model);
             _context.SaveChanges();
-            return model;
         }
         
         public Department Update(Department model)
