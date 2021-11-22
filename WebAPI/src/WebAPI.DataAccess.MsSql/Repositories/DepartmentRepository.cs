@@ -37,11 +37,10 @@ namespace WebAPI.DataAccess.MsSql.Repositories
             _context.SaveChanges();
         }
         
-        public Department Update(Department model)
+        public void Update(Department model)
         {
             _context.Departments.Update(model);
             _context.SaveChanges();
-            return model;
         }
 
         public void Delete(Guid id)

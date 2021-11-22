@@ -32,11 +32,10 @@ namespace WebAPI.DataAccess.MsSql.Repositories
             _context.SaveChanges();
         }
         
-        public Employee Update(Employee model)
+        public void Update(Employee model)
         {
             _context.Employees.Update(model);
             _context.SaveChanges();
-            return model;
         }
 
         public void Delete(Guid id)

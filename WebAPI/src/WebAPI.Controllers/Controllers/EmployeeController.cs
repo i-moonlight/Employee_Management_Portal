@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using WebAPI.UserCases.Cases.Employees.Queries.GetEmployee;
 using WebAPI.UserCases.Cases.Employees.Queries.GetEmployeeList;
 using WebAPI.UserCases.Cases.Employees.Commands.CreateEmployee;
+using WebAPI.UserCases.Cases.Employees.Commands.UpdateEmployee;
 
 namespace WebAPI.Controllers.Controllers
 {
@@ -84,24 +85,27 @@ namespace WebAPI.Controllers.Controllers
         {
             return Ok(await Mediator.Send(command));
         }
-
-        // [HttpPut]
-        // [Authorize (Roles = "Manager")]
-        // public JsonResult Put(Employee emp)
-        // {
-        //     var success = true;
-        //     try
-        //     {
-        //         _empRepository.Update(emp);
-        //     }
-        //     catch (Exception)
-        //     {
-        //         success = false;
-        //     }
-        //     return success
-        //         ? new JsonResult("Update successful")
-        //         : new JsonResult("Update was not successful");
-        // }
+        
+        /// <summary>
+        /// Updates the employee.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// PUT /employee.
+        /// </remarks>
+        /// <param name="command">UpdateEmployeeCommand object.</param>
+        /// <returns>Returns response about success.</returns>
+        /// <response code="204">Success.</response>
+        /// <response code="401">If the user is unauthorized.</response>
+        [HttpPut]
+        // [Authorize]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<string>> UpdateEmployee([FromBody] UpdateEmployeeCommand command)
+        {
+            return Ok(await Mediator.Send(command));
+        }
+        
         //
         // [HttpDelete("{id}")]
         // [Authorize (Roles = "Manager")]
