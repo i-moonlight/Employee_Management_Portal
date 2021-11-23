@@ -40,7 +40,9 @@ namespace WebAPI.DataAccess.MsSql.Repositories
 
         public void Delete(Guid id)
         {
-            throw new NotImplementedException();
+            var model = _context.Employees.FirstOrDefault(x => x.Id == id);
+            _context.Employees.Remove(model ?? throw new InvalidOperationException());
+            _context.SaveChanges();
         }
 
         public string GetFileName(Guid id)

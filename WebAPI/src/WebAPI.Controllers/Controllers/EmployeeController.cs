@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using WebAPI.UserCases.Cases.Employees.Queries.GetEmployee;
 using WebAPI.UserCases.Cases.Employees.Queries.GetEmployeeList;
 using WebAPI.UserCases.Cases.Employees.Commands.CreateEmployee;
+using WebAPI.UserCases.Cases.Employees.Commands.DeleteEmployee;
 using WebAPI.UserCases.Cases.Employees.Commands.UpdateEmployee;
 
 namespace WebAPI.Controllers.Controllers
@@ -106,25 +107,27 @@ namespace WebAPI.Controllers.Controllers
             return Ok(await Mediator.Send(command));
         }
         
-        //
-        // [HttpDelete("{id}")]
+        /// <summary>
+        /// Deletes the employee by id.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// DELETE /employee/88DEB432-062F-43DE-8DCD-8B6EF79073D3.
+        /// </remarks>
+        /// <param name="id">Id of the employee (guid).</param>
+        /// <returns>Returns response about success.</returns>
+        /// <response code="204">Success.</response>
+        /// <response code="401">If the user is unauthorized.</response>
+        [HttpDelete("{id}")]
         // [Authorize (Roles = "Manager")]
-        // public JsonResult Delete(Guid id)
-        // {
-        //     var success = true;
-        //     try
-        //     {
-        //         _empRepository.Delete(id);
-        //     }
-        //     catch (Exception)
-        //     {
-        //         success = false;
-        //     }
-        //     return success
-        //         ? new JsonResult("Delete successful")
-        //         : new JsonResult("Delete was not successful");
-        // }
-        //
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<string>> DeleteEmployeeById(Guid id)
+        {
+            var query = new DeleteEmployeeCommand { EmployeeId = id };
+            return Ok(await Mediator.Send(query));
+        }
+
         // [HttpPost]
         // [Authorize (Roles = "Manager")]
         // [Route("UploadPhoto")]
