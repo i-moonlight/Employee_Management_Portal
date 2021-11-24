@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Serilog;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.UserCases.Cases.Employees.Queries.GetEmployee;
@@ -9,6 +8,7 @@ using WebAPI.UserCases.Cases.Employees.Queries.GetEmployeeList;
 using WebAPI.UserCases.Cases.Employees.Commands.CreateEmployee;
 using WebAPI.UserCases.Cases.Employees.Commands.DeleteEmployee;
 using WebAPI.UserCases.Cases.Employees.Commands.UpdateEmployee;
+using WebAPI.UserCases.Cases.Employees.Commands.UploadEmployeePhoto;
 
 namespace WebAPI.Controllers.Controllers
 {
@@ -17,13 +17,7 @@ namespace WebAPI.Controllers.Controllers
     public class EmployeeController : BaseController
     {
         private readonly ILogger _logger;
-        private readonly IWebHostEnvironment _env;
-
-        public EmployeeController(ILogger logger, IWebHostEnvironment env)
-        {
-            _logger = logger;
-            _env = env;
-        }
+        public EmployeeController(ILogger logger) => _logger = logger;
 
         /// <summary>
         /// Gets the list of Employee.
@@ -127,31 +121,28 @@ namespace WebAPI.Controllers.Controllers
             var query = new DeleteEmployeeCommand { EmployeeId = id };
             return Ok(await Mediator.Send(query));
         }
-
-        // [HttpPost]
+        
+        /// <summary>
+        /// Upload photo the employee by current id.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// POST /employee/UploadPhoto.
+        /// </remarks>
+        /// <returns>Returns photo file name.</returns>
+        /// <response code="204">Success.</response>
+        /// <response code="401">If the user is unauthorized.</response>
+        [HttpPost]
+        [Route("UploadPhoto")]
         // [Authorize (Roles = "Manager")]
-        // [Route("UploadPhoto")]
-        // public JsonResult UploadPhoto()
-        // {
-        //     try
-        //     {
-        //         var httpRequest = Request.Form;
-        //         var postedFile = httpRequest.Files[0];
-        //         var filename = postedFile.FileName;
-        //         var selectPath = _env.ContentRootPath + "/Photos/" + filename;
-        //
-        //         using (var stream = new FileStream(selectPath, FileMode.Create))
-        //         {
-        //             postedFile.CopyTo(stream);
-        //         }
-        //
-        //         return new JsonResult(filename);
-        //     }
-        //     catch (Exception)
-        //     {
-        //         return new JsonResult("anonymous.png");
-        //     }
-        // }
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<string>> UploadEmployeePhoto()
+        {
+            var query = new UploadPhotoCommand { Id = EmployeeId };
+            return Ok(await Mediator.Send(query));
+        }
+
         //
         // [HttpPost]
         // [Authorize (Roles = "Manager")]
