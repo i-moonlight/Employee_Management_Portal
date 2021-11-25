@@ -8,6 +8,7 @@ using WebAPI.UserCases.Cases.Employees.Queries.GetEmployeeList;
 using WebAPI.UserCases.Cases.Employees.Commands.CreateEmployee;
 using WebAPI.UserCases.Cases.Employees.Commands.DeleteEmployee;
 using WebAPI.UserCases.Cases.Employees.Commands.UpdateEmployee;
+using WebAPI.UserCases.Cases.Employees.Commands.UpdateEmployeePhoto;
 using WebAPI.UserCases.Cases.Employees.Commands.UploadEmployeePhoto;
 
 namespace WebAPI.Controllers.Controllers
@@ -143,38 +144,27 @@ namespace WebAPI.Controllers.Controllers
             return Ok(await Mediator.Send(query));
         }
 
-        //
-        // [HttpPost]
+        /// <summary>
+        /// Update photo the employee by id.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// POST /employee/UpdatePhoto.
+        /// </remarks>
+        /// <returns>Returns photo file name.</returns>
+        /// <response code="204">Success.</response>
+        /// <response code="401">If the user is unauthorized.</response>
+        [HttpPost]
+        [Route("UpdatePhoto")]
         // [Authorize (Roles = "Manager")]
-        // [Route("{Id}/UpdatePhoto")]
-        // public JsonResult UpdatePhoto(Guid id)
-        // {
-        //     try
-        //     {
-        //         var photoName = _empRepository.GetFileName(id);
-        //         var httpRequest = Request.Form;
-        //         var postedFile = httpRequest.Files[0];
-        //         var filename = postedFile.FileName;
-        //         var selectPath = _env.ContentRootPath + "/Photos/" + filename;
-        //         var storagePath = PathTypes.StoragePath + photoName;
-        //
-        //         if (System.IO.File.Exists(selectPath))
-        //             System.IO.File.Copy(storagePath, selectPath, true);
-        //
-        //         using (var stream = new FileStream(selectPath, FileMode.Create))
-        //         {
-        //             postedFile.CopyTo(stream);
-        //             if (System.IO.File.Exists(selectPath))
-        //                 System.IO.File.Delete(storagePath);
-        //         }
-        //         return new JsonResult(filename);
-        //     }
-        //     catch (Exception)
-        //     {
-        //         return new JsonResult("anonymous.png");
-        //     }
-        // }
-        //
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<string>> UpdateEmployeePhoto(Guid id)
+        {
+            var command = new UpdatePhotoCommand { EmployeeId = id };
+            return Ok(await Mediator.Send(command));
+        }
+        
         // [Route("GetAllDepartmentNames")]
         // public JsonResult GetAllDepartmentNames()
         // {

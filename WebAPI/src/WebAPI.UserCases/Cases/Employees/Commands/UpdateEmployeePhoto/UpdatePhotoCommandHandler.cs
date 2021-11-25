@@ -1,0 +1,58 @@
+﻿using System;
+using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
+using MediatR;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using WebAPI.Entities.Models;
+using WebAPI.Infrastructure.Interfaces.DataAccess;
+using WebAPI.Utils.Constants;
+
+namespace WebAPI.UserCases.Cases.Employees.Commands.UpdateEmployeePhoto
+{
+    /// <summary>
+    /// Implements a handler for the employee photo update command.
+    /// </summary>
+    public class UpdatePhotoCommandHandler : ActionContext, IRequestHandler<UpdatePhotoCommand, string>
+    {
+        private readonly IWebHostEnvironment _env;
+        private readonly ICrudRepository<Employee> _repository;
+
+        public UpdatePhotoCommandHandler(IWebHostEnvironment env, ICrudRepository<Employee> repository) =>
+            (_env, _repository) = (env, repository);
+        
+        /// <summary>
+        /// Handles a request.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns>Returns update photo file name.</returns>
+        public async Task<string> Handle(UpdatePhotoCommand request, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var photoName = _repository.GetFileName(request.EmployeeId);
+                var httpRequest = HttpContext.Request.Form;
+                var postedFile = httpRequest.Files[0];
+                var filename = postedFile.FileName;
+                var selectPath = _env.ContentRootPath + "/Photos/" + filename;
+                var storagePath = PathTypes.StoragePath + photoName;
+
+                if (File.Exists(selectPath)) File.Copy(storagePath, selectPath, true);
+
+                using (var stream = new FileStream(selectPath, FileMode.Create))
+                {
+                    postedFile.CopyTo(stream);
+                    if (File.Exists(selectPath)) File.Delete(storagePath);
+                }
+
+                return await Task.FromResult(filename);
+            }
+            catch (Exception)
+            {
+                return await Task.FromResult("anonymous.png");
+            }
+        }
+    }
+}

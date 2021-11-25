@@ -19,6 +19,7 @@
     <ItemGroup>
       <ProjectReference Include="..\WebAPI.Entities\WebAPI.Entities.csproj" />
       <ProjectReference Include="..\WebAPI.Infrastructure.Interfaces\WebAPI.Infrastructure.Interfaces.csproj" />
+      <ProjectReference Include="..\WebAPI.Utils\WebAPI.Utils.csproj" />
     </ItemGroup>
     
 </Project>
