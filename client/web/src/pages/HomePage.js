@@ -1,11 +1,22 @@
-import data from '../content.js';
+import axios from 'axios';
+import { APP_BASE_URL } from '../api/App.constants';
 
-const HomeScreen = {
-    render: () => {
-        const {products} = data;
-        return `
-      <ul class="products">
-         ${products.map((product) => `
+const HomePage = {
+    render: async () => {
+        const response = await axios({
+            url: APP_BASE_URL,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        if (!response || response.statusText !== 'OK') {
+            return `<div>Error in getting data</div>`;
+        }
+        const products = response.data;
+
+        return
+        ` <ul class="products">
+           ${products.map((product) => ` 
          <li>
            <div class="product">
              <a href="/#/product/${product._id}">
@@ -18,8 +29,10 @@ const HomeScreen = {
              <div class="product-price">$${product.price}</div>
            </div>
          </li>
-      `).join('\n')}
+      `
+        ).join('\n')}
       `;
+
     },
 };
-export default HomeScreen;
+export default HomePage;

@@ -6,11 +6,18 @@
   "main": "index.js",
   "scripts": {
     "start": "live-server --port=3000 src --verbose",
+    "start": "webpack-dev-server --port=3000 --open",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.4.0",
     "live-server": "^1.2.2"
+  },
+  "devDependencies": {
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
   }
 }
