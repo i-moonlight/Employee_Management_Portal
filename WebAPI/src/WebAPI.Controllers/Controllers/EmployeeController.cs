@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Threading.Tasks;
 using Serilog;
 using Microsoft.AspNetCore.Http;
@@ -10,10 +11,11 @@ using WebAPI.UserCases.Cases.Employees.Commands.DeleteEmployee;
 using WebAPI.UserCases.Cases.Employees.Commands.UpdateEmployee;
 using WebAPI.UserCases.Cases.Employees.Commands.UpdateEmployeePhoto;
 using WebAPI.UserCases.Cases.Employees.Commands.UploadEmployeePhoto;
+using WebAPI.UserCases.Cases.Employees.Queries.GetDepartmentNameList;
 
 namespace WebAPI.Controllers.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/employee")]
     [ApiController]
     public class EmployeeController : BaseController
     {
@@ -36,11 +38,11 @@ namespace WebAPI.Controllers.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<EmployeeListViewModel>> GetEmployeeList()
         {
-            var query = new GetEmployeeListQuery() { EmployeeId = EmployeeId };
+            var query = new GetEmployeeListQuery() {EmployeeId = EmployeeId};
             var view = await Mediator.Send(query);
             return Ok(view);
         }
-        
+
         /// <summary>
         /// Gets the employee by id.
         /// </summary>
@@ -58,12 +60,32 @@ namespace WebAPI.Controllers.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<GetEmployeeQuery>> GetEmployeeById(Guid id)
         {
-            var query = new GetEmployeeQuery { Id = id };
+            var query = new GetEmployeeQuery {Id = id};
             return Ok(await Mediator.Send(query));
         }
-        
+
         /// <summary>
-        /// Creates the employee.
+        /// Gets the list of all department names.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// POST /employee/departmentNames.
+        /// </remarks>
+        /// <returns>Returns get all department names.</returns>
+        /// <response code="200">Success.</response>
+        /// <response code="401">If the user is unauthorized.</response>
+        [HttpGet]
+        [Route("GetDepartmentNames")]
+        // [Authorize(Roles = "Manager")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<IEnumerable>> GetDepartmentNamesList()
+        {
+            return Ok(await Mediator.Send(new GetDepartmentNameListQuery()));
+        }
+
+        /// <summary>
+        /// Creates the employee
         /// </summary>
         /// <remarks>
         /// Sample request:
@@ -81,48 +103,7 @@ namespace WebAPI.Controllers.Controllers
         {
             return Ok(await Mediator.Send(command));
         }
-        
-        /// <summary>
-        /// Updates the employee.
-        /// </summary>
-        /// <remarks>
-        /// Sample request:
-        /// PUT /employee.
-        /// </remarks>
-        /// <param name="command">UpdateEmployeeCommand object.</param>
-        /// <returns>Returns response about success.</returns>
-        /// <response code="204">Success.</response>
-        /// <response code="401">If the user is unauthorized.</response>
-        [HttpPut]
-        // [Authorize]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<string>> UpdateEmployee([FromBody] UpdateEmployeeCommand command)
-        {
-            return Ok(await Mediator.Send(command));
-        }
-        
-        /// <summary>
-        /// Deletes the employee by id.
-        /// </summary>
-        /// <remarks>
-        /// Sample request:
-        /// DELETE /employee/88DEB432-062F-43DE-8DCD-8B6EF79073D3.
-        /// </remarks>
-        /// <param name="id">Id of the employee (guid).</param>
-        /// <returns>Returns response about success.</returns>
-        /// <response code="204">Success.</response>
-        /// <response code="401">If the user is unauthorized.</response>
-        [HttpDelete("{id}")]
-        // [Authorize (Roles = "Manager")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<string>> DeleteEmployeeById(Guid id)
-        {
-            var query = new DeleteEmployeeCommand { EmployeeId = id };
-            return Ok(await Mediator.Send(query));
-        }
-        
+
         /// <summary>
         /// Upload photo the employee by current id.
         /// </summary>
@@ -140,7 +121,7 @@ namespace WebAPI.Controllers.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<string>> UploadEmployeePhoto()
         {
-            var query = new UploadPhotoCommand { Id = EmployeeId };
+            var query = new UploadPhotoCommand {Id = EmployeeId};
             return Ok(await Mediator.Send(query));
         }
 
@@ -161,14 +142,49 @@ namespace WebAPI.Controllers.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<string>> UpdateEmployeePhoto(Guid id)
         {
-            var command = new UpdatePhotoCommand { EmployeeId = id };
+            var command = new UpdatePhotoCommand {EmployeeId = id};
             return Ok(await Mediator.Send(command));
         }
-        
-        // [Route("GetAllDepartmentNames")]
-        // public JsonResult GetAllDepartmentNames()
-        // {
-        //     return new JsonResult(_empRepository.ReadAll());
-        // }
+
+        /// <summary>
+        /// Updates the employee.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// PUT /employee.
+        /// </remarks>
+        /// <param name="command">UpdateEmployeeCommand object.</param>
+        /// <returns>Returns response about success.</returns>
+        /// <response code="204">Success.</response>
+        /// <response code="401">If the user is unauthorized.</response>
+        [HttpPut]
+        // [Authorize]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<string>> UpdateEmployee([FromBody] UpdateEmployeeCommand command)
+        {
+            return Ok(await Mediator.Send(command));
+        }
+
+        /// <summary>
+        /// Deletes the employee by id.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// DELETE /employee/88DEB432-062F-43DE-8DCD-8B6EF79073D3.
+        /// </remarks>
+        /// <param name="id">Id of the employee (guid).</param>
+        /// <returns>Returns response about success.</returns>
+        /// <response code="204">Success.</response>
+        /// <response code="401">If the user is unauthorized.</response>
+        [HttpDelete("{id}")]
+        // [Authorize (Roles = "Manager")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<string>> DeleteEmployeeById(Guid id)
+        {
+            var query = new DeleteEmployeeCommand {EmployeeId = id};
+            return Ok(await Mediator.Send(query));
+        }
     }
 }

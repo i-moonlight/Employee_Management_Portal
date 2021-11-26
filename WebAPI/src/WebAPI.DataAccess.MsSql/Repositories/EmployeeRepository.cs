@@ -21,11 +21,15 @@ namespace WebAPI.DataAccess.MsSql.Repositories
             return _context.Employees.Find(id);
         }
         
+        /// <summary>
+        /// Gets department names list sorted alphabetically.
+        /// </summary>
+        /// <returns>Returns department names list.</returns>
         public IEnumerable ReadAll()
         {
-            return _context.Departments.OrderBy(x => x.Id);
+            return _context.Departments.OrderBy(d => d.Name).Select(d => d.Name).ToList();
         }
-        
+
         public void Create(Employee model)
         {
             _context.Employees.Add(model);
