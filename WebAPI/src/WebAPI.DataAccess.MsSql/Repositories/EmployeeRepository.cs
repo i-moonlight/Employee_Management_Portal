@@ -7,13 +7,22 @@ using WebAPI.Infrastructure.Interfaces.DataAccess;
 
 namespace WebAPI.DataAccess.MsSql.Repositories
 {
+    /// <summary>
+    /// Provides access to the database.
+    /// </summary>
     public class EmployeeRepository : ICrudRepository<Employee>
     {
         private readonly AppDbContext _context;
 
-        public EmployeeRepository(AppDbContext context)
+        public EmployeeRepository(AppDbContext context) => _context = context;
+
+        /// <summary>
+        /// Gets a list of employees ordered by ID.
+        /// </summary>
+        /// <returns>Returns employees list.</returns>
+        public IEnumerable Read()
         {
-            _context = context;
+            return _context.Employees.OrderBy(e => e.Id).ToList();
         }
 
         public Employee Read(Guid id)

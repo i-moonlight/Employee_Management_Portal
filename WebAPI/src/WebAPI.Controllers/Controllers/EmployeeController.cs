@@ -12,6 +12,7 @@ using WebAPI.UserCases.Cases.Employees.Commands.UpdateEmployee;
 using WebAPI.UserCases.Cases.Employees.Commands.UpdateEmployeePhoto;
 using WebAPI.UserCases.Cases.Employees.Commands.UploadEmployeePhoto;
 using WebAPI.UserCases.Cases.Employees.Queries.GetDepartmentNameList;
+using WebAPI.UserCases.Common.Dto;
 
 namespace WebAPI.Controllers.Controllers
 {
@@ -29,18 +30,16 @@ namespace WebAPI.Controllers.Controllers
         /// Sample request:
         /// GET /employee.
         /// </remarks>
-        /// <returns>Returns EmployeeListViewModel.</returns>
+        /// <returns>Returns employee list.</returns>
         /// <response code="200">Success.</response>
         /// <response code="401">If the user is unauthorized.</response>
         [HttpGet]
         // [Authorize (Roles = "Manager")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<EmployeeListViewModel>> GetEmployeeList()
+        public async Task<ActionResult<IEnumerable>> GetEmployeeList()
         {
-            var query = new GetEmployeeListQuery() {EmployeeId = EmployeeId};
-            var view = await Mediator.Send(query);
-            return Ok(view);
+            return Ok(await Mediator.Send(new GetEmployeeListQuery()));
         }
 
         /// <summary>
@@ -58,10 +57,11 @@ namespace WebAPI.Controllers.Controllers
         // [Authorize (Roles = "Manager")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<GetEmployeeQuery>> GetEmployeeById(Guid id)
+        public async Task<ActionResult<EmployeeDto>> GetEmployeeById(Guid id)
         {
             var query = new GetEmployeeQuery {Id = id};
-            return Ok(await Mediator.Send(query));
+            var view = await Mediator.Send(query);
+            return Ok(view);
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace WebAPI.Controllers.Controllers
         /// </summary>
         /// <remarks>
         /// Sample request:
-        /// POST /employee/departmentNames.
+        /// POST /employee/GetDepartmentNames.
         /// </remarks>
         /// <returns>Returns get all department names.</returns>
         /// <response code="200">Success.</response>
