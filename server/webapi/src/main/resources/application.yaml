@@ -2,11 +2,43 @@ server:
   port: 8080
 
 spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/store
-    username: admin
-    password: 52670
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/store
+#    username: admin
+#    password: 52670
+
+  config:
+    import: optional:file:webapi.env[.properties]
+    cache:
+      type: redis
+      cache-names: redis-cache
+
+
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+
+  profiles:
+    active: dev
+
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: 6379
+      username: ${REDIS_USERNAME}
+      password: ${REDIS_PASSWORD}
 
   sql:
     init:
       platform: postgres
+
+  datasource:
+    jdbc-url: jdbc:postgresql://${POSTGRES_HOST}:5432/${POSTGRES_DB}
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+minio:
+  bucket: ${MINIO_BUCKET}
+  url: ${MINIO_URL}
+  accessKey: ${MINIO_ACCESS_KEY}
+  secretKey: ${MINIO_SECRET_KEY}
