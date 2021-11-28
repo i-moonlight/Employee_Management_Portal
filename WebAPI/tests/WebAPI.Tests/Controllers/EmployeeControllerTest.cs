@@ -1,10 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
-using WebAPI.Controllers.Controllers;
+using WebAPI.Controllers;
 using WebAPI.Entities.Models;
 using WebAPI.Infrastructure.Interfaces.DataAccess;
 

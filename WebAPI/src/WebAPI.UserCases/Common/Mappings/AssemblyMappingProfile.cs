@@ -10,18 +10,20 @@ namespace WebAPI.UserCases.Common.Mappings
     /// </summary>
     public class AssemblyMappingProfile : Profile
     {
-        public AssemblyMappingProfile() => 
+        public AssemblyMappingProfile() =>
             ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
 
         /// <summary>
         /// Apply mappings from assembly.
         /// </summary>
-        /// <param name="assembly">The assembly</param>
+        /// <param name="assembly">The assembly.</param>
         private void ApplyMappingsFromAssembly(Assembly assembly)
         {
-            var types = assembly.GetExportedTypes().Where(t => t.GetInterfaces()
-                    .Any(t => t.IsGenericType && t.GetGenericTypeDefinition() == typeof(IMapFrom<>))).ToList();
-            
+            var types = assembly.GetExportedTypes()
+                .Where(t => t.GetInterfaces()
+                .Any(t => t.IsGenericType && t.GetGenericTypeDefinition() == typeof(IMapFrom<>)))
+                .ToList();
+
             foreach (var type in types)
             {
                 var instance = Activator.CreateInstance(type);

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Threading.Tasks;
-using Serilog;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.UserCases.Cases.Employees.Queries.GetEmployee;
@@ -14,14 +13,15 @@ using WebAPI.UserCases.Cases.Employees.Commands.UploadEmployeePhoto;
 using WebAPI.UserCases.Cases.Employees.Queries.GetDepartmentNameList;
 using WebAPI.UserCases.Common.Dto;
 
-namespace WebAPI.Controllers.Controllers
+namespace WebAPI.Controllers
 {
     [Route("api/employee")]
     [ApiController]
     public class EmployeeController : BaseController
     {
-        private readonly ILogger _logger;
-        public EmployeeController(ILogger logger) => _logger = logger;
+        // private readonly ILogger _logger;
+        //
+        // public EmployeeController(ILogger logger) => _logger = logger;
 
         /// <summary>
         /// Gets the list of Employee.

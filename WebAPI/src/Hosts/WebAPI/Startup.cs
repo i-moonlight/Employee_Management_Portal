@@ -21,7 +21,6 @@ using WebAPI.DataAccess.MsSql.Persistence.Context;
 using WebAPI.Entities.Common;
 using WebAPI.Entities.Models;
 using WebAPI.UserCases;
-using WebAPI.UserCases.Common.Mappings;
 
 namespace WebAPI
 {
@@ -47,16 +46,6 @@ namespace WebAPI
             {
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 options.SerializerSettings.ContractResolver = new DefaultContractResolver();
-            });
-
-            #endregion
-
-            #region AutoMapper
-
-            services.AddAutoMapper(config =>
-            {
-                config.AddProfile(typeof(AssemblyMappingProfile));
-                //config.AddProfile(new AssemblyMappingProfile(typeof(IAppDbContext).Assembly));
             });
 
             #endregion
