@@ -5,30 +5,53 @@ volumes:
     driver: local
   db-data:
     driver: local
+  minio-data:
+    driver: local
 
 services:
-  app:
-    build:
-      context: server/
+
+  auth:
     container_name: auth
-    depends_on:
-      - db
-      - redis
-    env_file:
-      - server/.env
+    build:
+      context: server/auth
+      dockerfile: Dockerfile
+#      args:
+#        BUILDKIT_INLINE_CACHE: "0"
+#    depends_on:
+#      - db
+#      - redis
+#      - minio
     ports:
-      - '9090:9090'
+      - '7070:7070'
+
+  webapi:
+    container_name: webapi
+    build:
+      context: server/webapi
+      dockerfile: Dockerfile
+#      args:
+#        BUILDKIT_INLINE_CACHE: "0"
+#    depends_on:
+#      - db
+#      - redis
+#      - minio
+    ports:
+      - '8880:8080'
 
   db:
     container_name: postgres
     image: postgres:15.1-alpine
     environment:
-      - POSTGRES_USER=${POSTGRES_USERNAME}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - '6543:5432'
     volumes:
       - ./src/main/resources/script:/docker-entrypoint-init.db.d
       - db-data:/var/lib/postgresql/data
+    env_file:
+      - .env
 
   redis:
     container_name: redis
@@ -36,6 +59,20 @@ services:
     restart: always
     ports:
       - '6380:6380'
-    command: redis-server --requirepass $${REDIS_PASSWORD}
     volumes:
       - cache:/data
+    command: redis-server --requirepass $${REDIS_PASSWORD}
+
+  minio:
+    container_name: minio
+    image: minio/minio:latest
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ACCESS_KEY}
+      MINIO_ROOT_PASSWORD: ${MINIO_SECRET_KEY}
+    ports:
+      - '9090:9090'
+      - '9000:9000'
+    volumes:
+      - minio-data:/minio
+    restart: always # necessary since it's failing to start sometimes
+    command: server --address ":9099" --console-address ":9000" /data
