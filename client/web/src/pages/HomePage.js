@@ -4,7 +4,7 @@ import { APP_BASE_URL } from '../api/App.constants';
 const HomePage = {
     render: async () => {
         const response = await axios({
-            url: APP_BASE_URL,
+            url: APP_BASE_URL + 'product',
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -16,7 +16,7 @@ const HomePage = {
 
         return
         ` <ul class="products">
-           ${products.map((product) => ` 
+           ${products.map((product) => `
          <li>
            <div class="product">
              <a href="/#/product/${product._id}">

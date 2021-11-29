@@ -16,7 +16,7 @@ const router = async () => {
         (request.verb ? `/${request.verb}` : '');
     const page = routes[parseUrl] ? routes[parseUrl] : ErrorPage;
 
-    const main = document.getElementById('main-container');
+    const main = document.getElementById('root');
     main.innerHTML = await page.render();
 };
 

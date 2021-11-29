@@ -1,1 +1,7 @@
 .idea/
+
+### Security ###
+/.env
+
+### Static analysis ###
+/qodana.yaml

@@ -5,13 +5,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "live-server --port=3000 src --verbose",
     "start": "webpack-dev-server --port=3000 --open",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "webpack-dev-server --open --mode development",
+    "build": "webpack --mode production",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "webpack": "webpack -w"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/cli": "^7.22.9",
+    "@babel/core": "^7.22.9",
+    "@babel/node": "^7.22.6",
+    "@babel/preset-env": "^7.22.9",
     "axios": "^1.4.0",
     "live-server": "^1.2.2"
   },
