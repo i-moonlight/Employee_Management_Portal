@@ -25,11 +25,16 @@ namespace WebAPI.DataAccess.MsSql.Repositories
             return _context.Employees.OrderBy(e => e.Id).ToList();
         }
 
+        /// <summary>
+        /// Gets the employee by ID.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Returns employee.</returns>
         public Employee Read(Guid id)
         {
             return _context.Employees.Find(id);
         }
-        
+
         /// <summary>
         /// Gets department names list sorted alphabetically.
         /// </summary>

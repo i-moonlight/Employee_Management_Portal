@@ -1,13 +1,13 @@
 ﻿using System;
 using MediatR;
-using WebAPI.Entities.Models;
+using WebAPI.UserCases.Common.Dto;
 
 namespace WebAPI.UserCases.Cases.Employees.Queries.GetEmployee
 {
     /// <summary>
-    /// Sets a property of the query object.
+    /// Sets a property of the request object.
     /// </summary>
-    public class GetEmployeeQuery : IRequest<Employee>
+    public class GetEmployeeQuery : IRequest<EmployeeDto>
     {
         public Guid Id { get; set; }
     }

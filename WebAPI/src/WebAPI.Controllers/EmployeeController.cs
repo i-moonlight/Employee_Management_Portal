@@ -49,10 +49,10 @@ namespace WebAPI.Controllers
         /// Sample request:
         /// GET /employee/D34D349E-43B8-429E-BCA4-793C932FD580.
         /// </remarks>
-        /// <param name="id">Employee id (guid)</param>
-        /// <returns>Returns GetEmployeeQuery</returns>
-        /// <response code="200">Success</response>
-        /// <response code="401">If the user in unauthorized</response>
+        /// <param name="id">Employee id (guid).</param>
+        /// <returns>Returns employee dto.</returns>
+        /// <response code="200">Success.</response>
+        /// <response code="401">If the user in unauthorized.</response>
         [HttpGet("{id}")]
         // [Authorize (Roles = "Manager")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -60,8 +60,7 @@ namespace WebAPI.Controllers
         public async Task<ActionResult<EmployeeDto>> GetEmployeeById(Guid id)
         {
             var query = new GetEmployeeQuery {Id = id};
-            var view = await Mediator.Send(query);
-            return Ok(view);
+            return Ok(await Mediator.Send(query));
         }
 
         /// <summary>
