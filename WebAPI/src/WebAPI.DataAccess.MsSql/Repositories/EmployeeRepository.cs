@@ -44,12 +44,16 @@ namespace WebAPI.DataAccess.MsSql.Repositories
             return _context.Departments.OrderBy(d => d.Name).Select(d => d.Name).ToList();
         }
 
+        /// <summary>
+        /// Adds an employee to the database.
+        /// </summary>
+        /// <param name="model"></param>
         public void Create(Employee model)
         {
             _context.Employees.Add(model);
             _context.SaveChanges();
         }
-        
+
         public void Update(Employee model)
         {
             _context.Employees.Update(model);

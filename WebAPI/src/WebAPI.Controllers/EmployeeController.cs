@@ -84,13 +84,13 @@ namespace WebAPI.Controllers
         }
 
         /// <summary>
-        /// Creates the employee
+        /// Creates the employee.
         /// </summary>
         /// <remarks>
         /// Sample request:
         /// POST /employee.
         /// </remarks>
-        /// <param name="command">CreateEmployeeCommand.</param>
+        /// <param name="employee">EmployeeDto.</param>
         /// <returns>Returns response about success.</returns>
         /// <response code="201">Success.</response>
         /// <response code="401">If the user is unauthorized.</response>
@@ -98,8 +98,9 @@ namespace WebAPI.Controllers
         //[Authorize (Roles = "Manager")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<string>> CreateEmployee([FromBody] CreateEmployeeCommand command)
+        public async Task<ActionResult<string>> CreateEmployee([FromBody] EmployeeDto employee)
         {
+            var command = new CreateEmployeeCommand() {EmployeeDto = employee};
             return Ok(await Mediator.Send(command));
         }
 

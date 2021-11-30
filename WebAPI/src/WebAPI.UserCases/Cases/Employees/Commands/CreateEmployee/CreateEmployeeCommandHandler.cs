@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using MediatR;
 using WebAPI.Entities.Models;
 using WebAPI.Infrastructure.Interfaces.DataAccess;
+using WebAPI.UserCases.Common.Exceptions;
 
 namespace WebAPI.UserCases.Cases.Employees.Commands.CreateEmployee
 {
@@ -13,9 +15,10 @@ namespace WebAPI.UserCases.Cases.Employees.Commands.CreateEmployee
     public class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeCommand, string>
     {
         private readonly ICrudRepository<Employee> _repository;
+        private readonly IMapper _mapper;
 
-        public CreateEmployeeCommandHandler(ICrudRepository<Employee> repository) =>
-            _repository = repository;
+        public CreateEmployeeCommandHandler(ICrudRepository<Employee> repository, IMapper mapper) =>
+            (_repository, _mapper) = (repository, mapper);
 
         /// <summary>
         /// Handles a request.
@@ -25,14 +28,9 @@ namespace WebAPI.UserCases.Cases.Employees.Commands.CreateEmployee
         /// <returns>Returns string about success.</returns>
         public async Task<string> Handle(CreateEmployeeCommand request, CancellationToken cancellationToken)
         {
-            var employee = new Employee()
-            {
-                Id = Guid.NewGuid(),
-                Name = request.Name,
-                Department = request.Department,
-                DateOfJoining = request.DateOfJoining,
-                PhotoFileName = request.PhotoFileName
-            };
+            var employee = _mapper.Map<Employee>(request.EmployeeDto);
+
+            if (employee == null) throw new NotFoundException();
 
             var success = true;
             try
@@ -44,8 +42,7 @@ namespace WebAPI.UserCases.Cases.Employees.Commands.CreateEmployee
                 success = false;
             }
 
-            return await Task.FromResult(
-                success ? "Created successfully" : "Create was not successful");
+            return await Task.FromResult(success ? "Created successfully" : "Create failed");
         }
     }
 }
