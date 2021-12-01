@@ -15,8 +15,9 @@ namespace WebAPI.UserCases.Cases.Employees.Commands.UploadEmployeePhoto
     {
         private readonly IWebHostEnvironment _env;
 
-        public UploadPhotoCommandHandler(IWebHostEnvironment env) => _env = env;
-        
+        public UploadPhotoCommandHandler(IWebHostEnvironment env) =>
+            _env = env;
+
         /// <summary>
         /// Handles a request.
         /// </summary>
@@ -33,9 +34,7 @@ namespace WebAPI.UserCases.Cases.Employees.Commands.UploadEmployeePhoto
                 var selectPath = _env.ContentRootPath + "/Photos/" + filename;
 
                 using (var stream = new FileStream(selectPath, FileMode.Create))
-                {
                     postedFile.CopyTo(stream);
-                }
 
                 return await Task.FromResult(filename);
             }

@@ -105,7 +105,7 @@ namespace WebAPI.Controllers
         }
 
         /// <summary>
-        /// Upload photo the employee by current id.
+        /// Upload photo the employee.
         /// </summary>
         /// <remarks>
         /// Sample request:
@@ -121,8 +121,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<string>> UploadEmployeePhoto()
         {
-            var query = new UploadPhotoCommand {Id = EmployeeId};
-            return Ok(await Mediator.Send(query));
+            return Ok(await Mediator.Send(new UploadPhotoCommand()));
         }
 
         /// <summary>
