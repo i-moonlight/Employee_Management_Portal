@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using MediatR;
 using WebAPI.Entities.Models;
 using WebAPI.Infrastructure.Interfaces.DataAccess;
@@ -14,9 +15,10 @@ namespace WebAPI.UserCases.Cases.Employees.Commands.UpdateEmployee
     public class UpdateEmployeeCommandHandler : IRequestHandler<UpdateEmployeeCommand, string>
     {
         private readonly ICrudRepository<Employee> _repository;
+        private readonly IMapper _mapper;
 
-        public UpdateEmployeeCommandHandler(ICrudRepository<Employee> repository) =>
-            _repository = repository;
+        public UpdateEmployeeCommandHandler(ICrudRepository<Employee> repository, IMapper mapper) =>
+            (_repository, _mapper) = (repository, mapper);
 
         /// <summary>
         /// Handles a request.
@@ -26,19 +28,10 @@ namespace WebAPI.UserCases.Cases.Employees.Commands.UpdateEmployee
         /// <returns>Returns string about success.</returns>
         public async Task<string> Handle(UpdateEmployeeCommand request, CancellationToken cancellationToken)
         {
-            var employee = new Employee()
-            {
-                Id = request.Id,
-                Name = request.Name,
-                Department = request.Department,
-                DateOfJoining = request.DateOfJoining,
-                PhotoFileName = request.PhotoFileName
-            };
+            var employee = _mapper.Map<Employee>(request.EmployeeDto);
 
-            if (employee == null || employee.Id != request.Id)
-            {
-                throw new NotFoundException(nameof(employee), request.Id);
-            }
+            if (employee == null || employee.Id != request.EmployeeDto.Id)
+                throw new NotFoundException(nameof(employee), request.EmployeeDto);
 
             var success = true;
             try
@@ -50,7 +43,7 @@ namespace WebAPI.UserCases.Cases.Employees.Commands.UpdateEmployee
                 success = false;
             }
 
-            return await Task.FromResult(success ? "Update successful" : "Update was not successful");
+            return await Task.FromResult(success ? "Updated successfully" : "Update failed");
         }
     }
 }

@@ -160,8 +160,9 @@ namespace WebAPI.Controllers
         // [Authorize]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<string>> UpdateEmployee([FromBody] UpdateEmployeeCommand command)
+        public async Task<ActionResult<string>> UpdateEmployee([FromBody] EmployeeDto employee)
         {
+            var command = new UpdateEmployeeCommand() {EmployeeDto = employee};
             return Ok(await Mediator.Send(command));
         }
 

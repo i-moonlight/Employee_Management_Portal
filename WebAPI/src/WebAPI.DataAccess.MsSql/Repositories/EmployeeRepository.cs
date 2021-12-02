@@ -64,6 +64,10 @@ namespace WebAPI.DataAccess.MsSql.Repositories
             _context.SaveChanges();
         }
 
+        /// <summary>
+        /// Updates the employee.
+        /// </summary>
+        /// <param name="model">Employee model</param>
         public void Update(Employee model)
         {
             _context.Employees.Update(model);
