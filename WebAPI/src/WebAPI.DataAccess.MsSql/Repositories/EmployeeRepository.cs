@@ -45,6 +45,16 @@ namespace WebAPI.DataAccess.MsSql.Repositories
         }
 
         /// <summary>
+        /// Gets the photo name by ID.
+        /// </summary>
+        /// <param name="id">Employee id</param>
+        /// <returns>Returns the file name of the employee's photo.</returns>
+        public string ReadPhotoName(Guid id)
+        {
+            return _context.Employees.Find(id).PhotoFileName;
+        }
+
+        /// <summary>
         /// Adds an employee to the database.
         /// </summary>
         /// <param name="model"></param>
@@ -65,11 +75,6 @@ namespace WebAPI.DataAccess.MsSql.Repositories
             var model = _context.Employees.FirstOrDefault(x => x.Id == id);
             _context.Employees.Remove(model ?? throw new InvalidOperationException());
             _context.SaveChanges();
-        }
-
-        public string GetFileName(Guid id)
-        {
-            return _context.Employees.Find(id).PhotoFileName;
         }
     }
 }

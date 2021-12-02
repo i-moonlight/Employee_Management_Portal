@@ -31,6 +31,11 @@ namespace WebAPI.DataAccess.MsSql.Repositories
             throw new NotImplementedException();
         }
 
+        public string ReadPhotoName(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Create(Department model)
         {
             _context.Departments.Add(model);

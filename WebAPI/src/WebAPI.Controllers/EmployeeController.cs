@@ -141,7 +141,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<string>> UpdateEmployeePhoto(Guid id)
         {
-            var command = new UpdatePhotoCommand {EmployeeId = id};
+            var command = new UpdatePhotoCommand {Id = id};
             return Ok(await Mediator.Send(command));
         }
 

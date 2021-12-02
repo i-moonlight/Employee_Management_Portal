@@ -21,7 +21,7 @@ namespace WebAPI.UserCases.Cases.Employees.Commands.UpdateEmployeePhoto
 
         public UpdatePhotoCommandHandler(IWebHostEnvironment env, ICrudRepository<Employee> repository) =>
             (_env, _repository) = (env, repository);
-        
+
         /// <summary>
         /// Handles a request.
         /// </summary>
@@ -32,7 +32,7 @@ namespace WebAPI.UserCases.Cases.Employees.Commands.UpdateEmployeePhoto
         {
             try
             {
-                var photoName = _repository.GetFileName(request.EmployeeId);
+                var photoName = _repository.ReadPhotoName(request.Id);
                 var httpRequest = HttpContext.Request.Form;
                 var postedFile = httpRequest.Files[0];
                 var filename = postedFile.FileName;

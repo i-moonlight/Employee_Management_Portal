@@ -9,8 +9,8 @@ namespace WebAPI.Infrastructure.Interfaces.DataAccess
         public IEnumerable Read();
         public T Read(Guid id);
         public IEnumerable ReadAll();
+        public string ReadPhotoName(Guid id);
         public void Update(T model);
         public void Delete(Guid id);
-        public string GetFileName(Guid id);
     }
 }

@@ -8,6 +8,6 @@ namespace WebAPI.UserCases.Cases.Employees.Commands.UpdateEmployeePhoto
     /// </summary>
     public class UpdatePhotoCommand : IRequest<string>
     {
-        public Guid EmployeeId { get; set; }
+        public Guid Id { get; set; }
     }
 }
