@@ -26,13 +26,11 @@ namespace WebAPI.UserCases.Cases.Employees.Commands.DeleteEmployee
         /// <returns>Returns string about success.</returns>
         public async Task<string> Handle(DeleteEmployeeCommand request, CancellationToken cancellationToken)
         {
-            var employee = new Employee() { Id = request.EmployeeId };
+            var employee = new Employee() {Id = request.Id};
 
-            if (employee == null || employee.Id != request.EmployeeId)
-            {
-                throw new NotFoundException(nameof(employee), request.EmployeeId);
-            }
-            
+            if (employee == null || employee.Id != request.Id)
+                throw new NotFoundException(nameof(employee), request.Id);
+
             var success = true;
             try
             {
@@ -43,7 +41,7 @@ namespace WebAPI.UserCases.Cases.Employees.Commands.DeleteEmployee
                 success = false;
             }
 
-            return await Task.FromResult(success ? "Deleted successful" : "Deletion failed");
+            return await Task.FromResult(success ? "Deleted successfully" : "Delete failed");
         }
     }
 }

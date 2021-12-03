@@ -19,10 +19,6 @@ namespace WebAPI.Controllers
     [ApiController]
     public class EmployeeController : BaseController
     {
-        // private readonly ILogger _logger;
-        //
-        // public EmployeeController(ILogger logger) => _logger = logger;
-
         /// <summary>
         /// Gets the list of Employee.
         /// </summary>
@@ -183,7 +179,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<string>> DeleteEmployeeById(Guid id)
         {
-            var query = new DeleteEmployeeCommand {EmployeeId = id};
+            var query = new DeleteEmployeeCommand {Id = id};
             return Ok(await Mediator.Send(query));
         }
     }

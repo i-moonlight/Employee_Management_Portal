@@ -8,6 +8,6 @@ namespace WebAPI.UserCases.Cases.Employees.Commands.DeleteEmployee
     /// </summary>
     public class DeleteEmployeeCommand : IRequest<string>
     {
-        public Guid EmployeeId { get; set; }
+        public Guid Id { get; set; }
     }
 }

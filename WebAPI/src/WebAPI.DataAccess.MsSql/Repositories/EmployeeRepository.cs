@@ -14,7 +14,8 @@ namespace WebAPI.DataAccess.MsSql.Repositories
     {
         private readonly AppDbContext _context;
 
-        public EmployeeRepository(AppDbContext context) => _context = context;
+        public EmployeeRepository(AppDbContext context) =>
+            _context = context;
 
         /// <summary>
         /// Gets a list of employees ordered by ID.
@@ -74,10 +75,14 @@ namespace WebAPI.DataAccess.MsSql.Repositories
             _context.SaveChanges();
         }
 
+        /// <summary>
+        /// Deletes an employee by ID.
+        /// </summary>
+        /// <param name="id">Id of the employee (guid).</param>
         public void Delete(Guid id)
         {
-            var model = _context.Employees.FirstOrDefault(x => x.Id == id);
-            _context.Employees.Remove(model ?? throw new InvalidOperationException());
+            var employee = _context.Employees.FirstOrDefault(e => e.Id == id);
+            _context.Employees.Remove(employee ?? throw new InvalidOperationException());
             _context.SaveChanges();
         }
     }
