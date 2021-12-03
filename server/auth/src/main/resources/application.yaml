@@ -1,9 +1,9 @@
 server:
-  port: 9090
+  port: 7070
 
 spring:
   config:
-    import: optional:file:.env[.properties]
+    import: optional:file:auth.env[.properties]
     cache:
       type: redis
       cache-names: redis-cache

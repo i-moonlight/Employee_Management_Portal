@@ -9,7 +9,6 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableCaching
 @SpringBootApplication()
 public class AuthApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(AuthApplication.class, args);
     }
