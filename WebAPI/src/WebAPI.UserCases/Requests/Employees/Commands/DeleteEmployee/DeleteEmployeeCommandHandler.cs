@@ -6,7 +6,7 @@ using WebAPI.Entities.Models;
 using WebAPI.Infrastructure.Interfaces.DataAccess;
 using WebAPI.UserCases.Common.Exceptions;
 
-namespace WebAPI.UserCases.Cases.Employees.Commands.DeleteEmployee
+namespace WebAPI.UserCases.Requests.Employees.Commands.DeleteEmployee
 {
     /// <summary>
     /// Implements a handler for the employee delete command.
@@ -15,8 +15,8 @@ namespace WebAPI.UserCases.Cases.Employees.Commands.DeleteEmployee
     {
         private readonly ICrudRepository<Employee> _repository;
 
-        public DeleteEmployeeCommandHandler(ICrudRepository<Employee> repository) =>
-            _repository = repository;
+        public DeleteEmployeeCommandHandler(ICrudRepository<Employee> repo) =>
+            _repository = repo;
 
         /// <summary>
         /// Handles a request.

@@ -7,18 +7,18 @@ using WebAPI.Entities.Models;
 using WebAPI.Infrastructure.Interfaces.DataAccess;
 using WebAPI.UserCases.Common.Exceptions;
 
-namespace WebAPI.UserCases.Cases.Employees.Commands.UpdateEmployee
+namespace WebAPI.UserCases.Requests.Employees.Commands.CreateEmployee
 {
     /// <summary>
-    /// Implements a handler for the employee update command.
+    /// Implements a handler for the employee create command.
     /// </summary>
-    public class UpdateEmployeeCommandHandler : IRequestHandler<UpdateEmployeeCommand, string>
+    public class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeCommand, string>
     {
         private readonly ICrudRepository<Employee> _repository;
         private readonly IMapper _mapper;
 
-        public UpdateEmployeeCommandHandler(ICrudRepository<Employee> repository, IMapper mapper) =>
-            (_repository, _mapper) = (repository, mapper);
+        public CreateEmployeeCommandHandler(ICrudRepository<Employee> repo, IMapper mapper) =>
+            (_repository, _mapper) = (repo, mapper);
 
         /// <summary>
         /// Handles a request.
@@ -26,24 +26,23 @@ namespace WebAPI.UserCases.Cases.Employees.Commands.UpdateEmployee
         /// <param name="request">The request.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>Returns string about success.</returns>
-        public async Task<string> Handle(UpdateEmployeeCommand request, CancellationToken cancellationToken)
+        public async Task<string> Handle(CreateEmployeeCommand request, CancellationToken cancellationToken)
         {
             var employee = _mapper.Map<Employee>(request.EmployeeDto);
 
-            if (employee == null || employee.Id != request.EmployeeDto.Id)
-                throw new NotFoundException(nameof(employee), request.EmployeeDto);
+            if (employee == null) throw new NotFoundException();
 
             var success = true;
             try
             {
-                _repository.Update(employee);
+                _repository.Create(employee);
             }
             catch (Exception)
             {
                 success = false;
             }
 
-            return await Task.FromResult(success ? "Updated successfully" : "Update failed");
+            return await Task.FromResult(success ? "Created successfully" : "Create failed");
         }
     }
 }

@@ -9,18 +9,18 @@ using WebAPI.Entities.Models;
 using WebAPI.Infrastructure.Interfaces.DataAccess;
 using WebAPI.Utils.Constants;
 
-namespace WebAPI.UserCases.Cases.Employees.Commands.UpdateEmployeePhoto
+namespace WebAPI.UserCases.Requests.Employees.Commands.UpdateEmployeePhoto
 {
     /// <summary>
     /// Implements a handler for the employee photo update command.
     /// </summary>
     public class UpdatePhotoCommandHandler : ActionContext, IRequestHandler<UpdatePhotoCommand, string>
     {
-        private readonly IWebHostEnvironment _env;
         private readonly ICrudRepository<Employee> _repository;
+        private readonly IWebHostEnvironment _environment;
 
-        public UpdatePhotoCommandHandler(IWebHostEnvironment env, ICrudRepository<Employee> repository) =>
-            (_env, _repository) = (env, repository);
+        public UpdatePhotoCommandHandler(ICrudRepository<Employee> repo, IWebHostEnvironment env) =>
+            (_repository, _environment) = (repo, env);
 
         /// <summary>
         /// Handles a request.
@@ -36,10 +36,11 @@ namespace WebAPI.UserCases.Cases.Employees.Commands.UpdateEmployeePhoto
                 var httpRequest = HttpContext.Request.Form;
                 var postedFile = httpRequest.Files[0];
                 var filename = postedFile.FileName;
-                var selectPath = _env.ContentRootPath + "/Photos/" + filename;
+                var selectPath = _environment.ContentRootPath + "/Photos/" + filename;
                 var storagePath = PathTypes.StoragePath + photoName;
 
-                if (File.Exists(selectPath)) File.Copy(storagePath, selectPath, true);
+                if (File.Exists(selectPath))
+                    File.Copy(storagePath, selectPath, true);
 
                 using (var stream = new FileStream(selectPath, FileMode.Create))
                 {

@@ -5,7 +5,7 @@ using MediatR;
 using WebAPI.Entities.Models;
 using WebAPI.Infrastructure.Interfaces.DataAccess;
 
-namespace WebAPI.UserCases.Cases.Employees.Queries.GetEmployeeList
+namespace WebAPI.UserCases.Requests.Employees.Queries.GetEmployeeList
 {
     /// <summary>
     /// Implements a handler for the employee list request.
@@ -14,9 +14,9 @@ namespace WebAPI.UserCases.Cases.Employees.Queries.GetEmployeeList
     {
         private readonly ICrudRepository<Employee> _repository;
 
-        public GetEmployeeListQueryHandler(ICrudRepository<Employee> repository) =>
-            _repository = repository;
-        
+        public GetEmployeeListQueryHandler(ICrudRepository<Employee> repo) =>
+            _repository = repo;
+
         /// <summary>
         /// Handles a request.
         /// </summary>

@@ -6,17 +6,17 @@ using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebAPI.UserCases.Cases.Employees.Commands.UploadEmployeePhoto
+namespace WebAPI.UserCases.Requests.Employees.Commands.UploadEmployeePhoto
 {
     /// <summary>
     /// Implements a handler for the employee upload command.
     /// </summary>
     public class UploadPhotoCommandHandler : ActionContext, IRequestHandler<UploadPhotoCommand, string>
     {
-        private readonly IWebHostEnvironment _env;
+        private readonly IWebHostEnvironment _environment;
 
         public UploadPhotoCommandHandler(IWebHostEnvironment env) =>
-            _env = env;
+            _environment = env;
 
         /// <summary>
         /// Handles a request.
@@ -31,7 +31,7 @@ namespace WebAPI.UserCases.Cases.Employees.Commands.UploadEmployeePhoto
                 var httpRequest = HttpContext.Request.Form;
                 var postedFile = httpRequest.Files[0];
                 var filename = postedFile.FileName;
-                var selectPath = _env.ContentRootPath + "/Photos/" + filename;
+                var selectPath = _environment.ContentRootPath + "/Photos/" + filename;
 
                 using (var stream = new FileStream(selectPath, FileMode.Create))
                     postedFile.CopyTo(stream);

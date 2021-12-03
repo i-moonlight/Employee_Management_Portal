@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using WebAPI.UserCases.Common.Dto;
 
-namespace WebAPI.UserCases.Cases.Employees.Commands.CreateEmployee
+namespace WebAPI.UserCases.Requests.Employees.Commands.CreateEmployee
 {
     /// <summary>
     /// Sets a property of the command object.

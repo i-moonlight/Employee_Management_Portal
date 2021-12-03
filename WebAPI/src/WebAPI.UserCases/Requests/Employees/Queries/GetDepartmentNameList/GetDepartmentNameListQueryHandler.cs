@@ -5,18 +5,18 @@ using MediatR;
 using WebAPI.Entities.Models;
 using WebAPI.Infrastructure.Interfaces.DataAccess;
 
-namespace WebAPI.UserCases.Cases.Employees.Queries.GetDepartmentNameList
+namespace WebAPI.UserCases.Requests.Employees.Queries.GetDepartmentNameList
 {
     /// <summary>
     /// Implements a handler for the department names list query.
     /// </summary>
-    public class  GetDepartmentNameListQueryHandler : IRequestHandler<GetDepartmentNameListQuery, IEnumerable>
+    public class GetDepartmentNameListQueryHandler : IRequestHandler<GetDepartmentNameListQuery, IEnumerable>
     {
         private readonly ICrudRepository<Employee> _repository;
 
-        public GetDepartmentNameListQueryHandler(ICrudRepository<Employee> repository) =>
-            _repository = repository; 
-        
+        public GetDepartmentNameListQueryHandler(ICrudRepository<Employee> repo) =>
+            _repository = repo;
+
         /// <summary>
         /// Handles a request.
         /// </summary>

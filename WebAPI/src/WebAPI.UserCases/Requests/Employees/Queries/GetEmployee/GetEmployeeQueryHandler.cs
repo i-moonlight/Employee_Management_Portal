@@ -7,7 +7,7 @@ using WebAPI.Infrastructure.Interfaces.DataAccess;
 using WebAPI.UserCases.Common.Dto;
 using WebAPI.UserCases.Common.Exceptions;
 
-namespace WebAPI.UserCases.Cases.Employees.Queries.GetEmployee
+namespace WebAPI.UserCases.Requests.Employees.Queries.GetEmployee
 {
     /// <summary>
     /// Implements a handler for the employee request.
@@ -17,8 +17,8 @@ namespace WebAPI.UserCases.Cases.Employees.Queries.GetEmployee
         private readonly ICrudRepository<Employee> _repository;
         private readonly IMapper _mapper;
 
-        public GetEmployeeQueryHandler(ICrudRepository<Employee> repository, IMapper mapper) =>
-            (_repository, _mapper) = (repository, mapper);
+        public GetEmployeeQueryHandler(ICrudRepository<Employee> repo, IMapper mapper) =>
+            (_repository, _mapper) = (repo, mapper);
 
         /// <summary>
         /// Handles a request.

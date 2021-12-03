@@ -2,7 +2,7 @@
 using MediatR;
 using WebAPI.UserCases.Common.Dto;
 
-namespace WebAPI.UserCases.Cases.Employees.Queries.GetEmployee
+namespace WebAPI.UserCases.Requests.Employees.Queries.GetEmployee
 {
     /// <summary>
     /// Sets a property of the request object.

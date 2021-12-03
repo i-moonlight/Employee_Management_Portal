@@ -3,15 +3,15 @@ using System.Collections;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using WebAPI.UserCases.Cases.Employees.Queries.GetEmployee;
-using WebAPI.UserCases.Cases.Employees.Queries.GetEmployeeList;
-using WebAPI.UserCases.Cases.Employees.Commands.CreateEmployee;
-using WebAPI.UserCases.Cases.Employees.Commands.DeleteEmployee;
-using WebAPI.UserCases.Cases.Employees.Commands.UpdateEmployee;
-using WebAPI.UserCases.Cases.Employees.Commands.UpdateEmployeePhoto;
-using WebAPI.UserCases.Cases.Employees.Commands.UploadEmployeePhoto;
-using WebAPI.UserCases.Cases.Employees.Queries.GetDepartmentNameList;
 using WebAPI.UserCases.Common.Dto;
+using WebAPI.UserCases.Requests.Employees.Commands.CreateEmployee;
+using WebAPI.UserCases.Requests.Employees.Commands.DeleteEmployee;
+using WebAPI.UserCases.Requests.Employees.Commands.UpdateEmployee;
+using WebAPI.UserCases.Requests.Employees.Commands.UpdateEmployeePhoto;
+using WebAPI.UserCases.Requests.Employees.Commands.UploadEmployeePhoto;
+using WebAPI.UserCases.Requests.Employees.Queries.GetDepartmentNameList;
+using WebAPI.UserCases.Requests.Employees.Queries.GetEmployee;
+using WebAPI.UserCases.Requests.Employees.Queries.GetEmployeeList;
 
 namespace WebAPI.Controllers
 {

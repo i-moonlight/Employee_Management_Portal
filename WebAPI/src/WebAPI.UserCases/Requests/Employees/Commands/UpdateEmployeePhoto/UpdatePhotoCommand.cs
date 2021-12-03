@@ -1,12 +1,12 @@
 ﻿using System;
 using MediatR;
 
-namespace WebAPI.UserCases.Cases.Employees.Commands.DeleteEmployee
+namespace WebAPI.UserCases.Requests.Employees.Commands.UpdateEmployeePhoto
 {
     /// <summary>
     /// Sets a property of the command object.
     /// </summary>
-    public class DeleteEmployeeCommand : IRequest<string>
+    public class UpdatePhotoCommand : IRequest<string>
     {
         public Guid Id { get; set; }
     }
