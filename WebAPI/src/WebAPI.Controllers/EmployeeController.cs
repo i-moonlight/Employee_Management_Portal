@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI.UserCases.Common.Behaviors;
 using WebAPI.UserCases.Common.Dto;
 using WebAPI.UserCases.Requests.Employees.Commands.CreateEmployee;
 using WebAPI.UserCases.Requests.Employees.Commands.DeleteEmployee;
@@ -97,6 +99,12 @@ namespace WebAPI.Controllers
         public async Task<ActionResult<string>> CreateEmployee([FromBody] EmployeeDto employee)
         {
             var command = new CreateEmployeeCommand() {EmployeeDto = employee};
+            
+            var validationResult = Validation.CreateEmployeeValidator.Validate(command);
+
+            if (!validationResult.IsValid)
+                return BadRequest(validationResult.Errors.First().ErrorMessage);
+            
             return Ok(await Mediator.Send(command));
         }
 
