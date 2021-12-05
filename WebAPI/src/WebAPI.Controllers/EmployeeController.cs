@@ -167,6 +167,11 @@ namespace WebAPI.Controllers
         public async Task<ActionResult<string>> UpdateEmployee([FromBody] EmployeeDto employee)
         {
             var command = new UpdateEmployeeCommand() {EmployeeDto = employee};
+            var validationResult = Validation.UpdateEmployeeValidator.Validate(command);
+            
+            if (!validationResult.IsValid)
+                return BadRequest(validationResult.Errors.First().ErrorMessage);
+            
             return Ok(await Mediator.Send(command));
         }
 
