@@ -20,7 +20,7 @@ namespace WebAPI.UserCases.Common.Mappings
         private void ApplyMappingsFromAssembly(Assembly assembly)
         {
             var types = assembly.GetExportedTypes()
-                .Where(t => t.GetInterfaces()
+                .Where(type => type.GetInterfaces()
                 .Any(t => t.IsGenericType && t.GetGenericTypeDefinition() == typeof(IMapFrom<>)))
                 .ToList();
 

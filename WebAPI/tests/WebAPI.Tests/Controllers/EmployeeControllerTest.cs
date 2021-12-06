@@ -1,31 +1,24 @@
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Hosting;
-using Moq;
 using NUnit.Framework;
-using WebAPI.Controllers;
-using WebAPI.Entities.Models;
-using WebAPI.Infrastructure.Interfaces.DataAccess;
 
 namespace WebAPI.Tests.Controllers
 {
     [TestFixture]
     public class EmployeeControllerTest
     {
-        private Mock<ICrudRepository<Employee>> _mockEmpRepo;
-        private EmployeeController _controller;
-        private IEnumerable<Employee> _fakeCategories;
-        private Employee _model;
-        private readonly IWebHostEnvironment _env = null;
-
-        [SetUp]
-        public void Setup()
-        {
-            _mockEmpRepo = new Mock<ICrudRepository<Employee>>();
-            //_controller = new EmployeeController(_mockEmpRepo.Object, _env, null);
-            _fakeCategories = GetCategories();
-            _model = new Employee();
-        }
+        // private Mock<ICrudRepository<Employee>> _mockEmpRepo;
+        // private EmployeeController _controller;
+        // private IEnumerable<Employee> _fakeCategories;
+        // private Employee _model;
+        // private readonly IWebHostEnvironment _env = null;
+        //
+        // [SetUp]
+        // public void Setup()
+        // {
+        //     _mockEmpRepo = new Mock<ICrudRepository<Employee>>();
+        //     //_controller = new EmployeeController(_mockEmpRepo.Object, _env, null);
+        //     _fakeCategories = GetCategories();
+        //     _model = new Employee();
+        // }
 
         // [Test]
         // public void Get_Should_Returns_JsonResult_Employee_Value()
@@ -129,18 +122,18 @@ namespace WebAPI.Tests.Controllers
         //     Assert.AreEqual(typeof(List<Employee>), result.Value.GetType(), "Return value type mismatch");
         // }
     
-        private static IEnumerable<Employee> GetCategories()
-        {
-            var fakeCategories = new List<Employee>
-                {
-                    new Employee
-                    {
-                        //EmployeeId = 1,
-                        Name = "Test"
-                    }
-                }
-                .AsEnumerable();
-            return fakeCategories;
-        }
+        // private static IEnumerable<Employee> GetCategories()
+        // {
+        //     var fakeCategories = new List<Employee>
+        //         {
+        //             new Employee
+        //             {
+        //                 //EmployeeId = 1,
+        //                 Name = "Test"
+        //             }
+        //         }
+        //         .AsEnumerable();
+        //     return fakeCategories;
+        // }
     }
 }

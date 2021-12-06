@@ -37,7 +37,7 @@ namespace WebAPI.UserCases.Requests.Employees.Commands.UpdateEmployeePhoto
                 var postedFile = httpRequest.Files[0];
                 var filename = postedFile.FileName;
                 var selectPath = _environment.ContentRootPath + "/Photos/" + filename;
-                var storagePath = PathTypes.StoragePath + photoName;
+                var storagePath = PathTypes.PhotoStoragePath + photoName;
 
                 if (File.Exists(selectPath))
                     File.Copy(storagePath, selectPath, true);

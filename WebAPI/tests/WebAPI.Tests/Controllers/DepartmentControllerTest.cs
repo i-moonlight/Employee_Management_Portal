@@ -1,19 +1,14 @@
-﻿using System.Collections.Generic;
-using Moq;
-using NUnit.Framework;
-using WebAPI.Controllers;
-using WebAPI.Entities.Models;
-using WebAPI.Infrastructure.Interfaces.DataAccess;
+﻿using NUnit.Framework;
 
 namespace WebAPI.Tests.Controllers
 {
     [TestFixture]
     public class DepartmentControllerTest
     {
-        private Mock<ICrudRepository<Department>> _mockDepRepo;
-        private DepartmentController _controller;
-        private IEnumerable<Department> _fakeCategories;
-        private Department _model;
+        // private Mock<ICrudRepository<Department>> _mockDepRepo;
+        // private DepartmentController _controller;
+        // private IEnumerable<Department> _fakeCategories;
+        // private Department _model;
 
         // [SetUp]
         // public void Setup()

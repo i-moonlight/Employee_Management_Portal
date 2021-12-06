@@ -9,7 +9,7 @@ using Serilog.Exceptions;
 using Serilog.Sinks.Elasticsearch;
 using static System.Reflection.Assembly;
 
-namespace WebAPI
+namespace WebAPI.Web
 {
     public static class Program
     {
@@ -24,9 +24,10 @@ namespace WebAPI
             ConfigureLogging();
 
             var logger = NLogBuilder.ConfigureNLog("Nlog.config").GetCurrentClassLogger();
+            
             try
             {
-                logger.Debug("Resource server initialize");
+                logger.Debug("Resource server initialize.");
 
                 #region Resource server initialize
 
@@ -43,7 +44,7 @@ namespace WebAPI
             }
             catch (Exception exception)
             {
-                logger.Error(exception, "Resource server falled");
+                logger.Error(exception, "Resource server failed");
                 throw;
             }
             finally
@@ -60,11 +61,11 @@ namespace WebAPI
         private static void ConfigureLogging()
         {
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-            var configuration = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json", false, true)
-                .Build(); 
             
-            // Create Logger
+            var configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", false, true).Build();
+
+            // Create Logger.
             Log.Logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()
                 .Enrich.WithExceptionDetails()
@@ -80,41 +81,38 @@ namespace WebAPI
         #endregion
 
         #region Configure Elasticsearch Sink
-        
+
         /// <summary>
         /// Configure Elasticsearch Sink.
         /// </summary>
         /// <param name="config"></param>
         /// <param name="env"></param>
-        /// <returns>Options the elasticsearch sink</returns>
+        /// <returns>Returns options the elasticsearch sink.</returns>
         private static ElasticsearchSinkOptions ConfigureElasticSink(IConfigurationRoot config, string env)
         {
             var sink = new ElasticsearchSinkOptions(new Uri(config["ElasticConfiguration:Uri"]))
             {
                 AutoRegisterTemplate = true,
-                IndexFormat =
-                $@"{GetExecutingAssembly()
-                    .GetName().Name
+                IndexFormat = $@"{GetExecutingAssembly()
+                    .GetName().Name?
                     .ToLower()
                     .Replace(".", "-")}-{env?.ToLower()
                     .Replace(".", "-")}-{DateTime.UtcNow:yyyy-MM}"
             };
             return sink;
         }
-        
+
         #endregion
 
         /// <summary>
         /// Create web host.
         /// </summary>
         /// <param name="args"></param>
-        /// <returns>web host</returns>
+        /// <returns>Returns web host.</returns>
         private static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                    webBuilder.UseStartup<Startup>())
-                .ConfigureAppConfiguration(configuration =>
-                    configuration.AddJsonFile("appsettings.json", false, true))
+                .ConfigureWebHostDefaults(hb => hb.UseStartup<Startup>())
+                .ConfigureAppConfiguration(cb => cb.AddJsonFile("appsettings.json", false, true))
                 .UseSerilog()
                 .UseNLog(); // NLog: Setup NLog for Dependency injection.
     }

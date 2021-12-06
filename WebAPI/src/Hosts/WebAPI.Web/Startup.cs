@@ -22,7 +22,7 @@ using WebAPI.Entities.Common;
 using WebAPI.Entities.Models;
 using WebAPI.UserCases;
 
-namespace WebAPI
+namespace WebAPI.Web
 {
     public class Startup
     {
@@ -64,7 +64,7 @@ namespace WebAPI
                 options.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
-                    Title = "WebAPI.Authentication",
+                    Title = "WebAPI",
                     Description = "An ASP.NET Core Web API for managing API documentation"
                 });
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
