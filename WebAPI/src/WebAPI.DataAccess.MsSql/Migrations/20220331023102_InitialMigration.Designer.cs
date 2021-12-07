@@ -21,37 +21,28 @@ namespace WebAPI.DataAccess.MsSql.Migrations
                 .HasAnnotation("ProductVersion", "5.0.7")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("WebAPI.Entities.Entities.Department", b =>
+            modelBuilder.Entity("WebAPI.Entities.Models.Department", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<Guid>("Id").ValueGeneratedOnAdd().HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("Name").HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Departments");
                 });
 
-            modelBuilder.Entity("WebAPI.Entities.Entities.Employee", b =>
+            modelBuilder.Entity("WebAPI.Entities.Models.Employee", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<Guid>("Id").ValueGeneratedOnAdd().HasColumnType("uniqueidentifier");
+                    
+                    b.Property<DateTime>("DateOfJoining").HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateOfJoining")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Department").HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Department")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("Name").HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhotoFileName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("PhotoFileName").HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

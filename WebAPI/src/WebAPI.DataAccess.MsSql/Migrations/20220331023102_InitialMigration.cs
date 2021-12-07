@@ -15,9 +15,7 @@ namespace WebAPI.DataAccess.MsSql.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
-                {
-                    table.PrimaryKey("PK_Departments", x => x.Id);
-                });
+                    table.PrimaryKey("PK_Departments", x => x.Id));
 
             migrationBuilder.CreateTable(
                 name: "Employees",
@@ -30,18 +28,13 @@ namespace WebAPI.DataAccess.MsSql.Migrations
                     PhotoFileName = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
-                {
-                    table.PrimaryKey("PK_Employees", x => x.Id);
-                });
+                    table.PrimaryKey("PK_Employees", x => x.Id));
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Departments");
-
-            migrationBuilder.DropTable(
-                name: "Employees");
+            migrationBuilder.DropTable(name: "Departments");
+            migrationBuilder.DropTable(name: "Employees");
         }
     }
 }
