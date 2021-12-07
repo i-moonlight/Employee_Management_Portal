@@ -10,9 +10,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
@@ -27,17 +27,22 @@ namespace WebAPI.Web
     public class Startup
     {
         private IConfiguration Configuration { get; }
-        
-        public Startup(IConfiguration configuration) => Configuration = configuration;
 
+        public Startup(IConfiguration configuration) =>
+            Configuration = configuration;
+
+        /// <summary>
+        /// The optional method registers the services that are used by the application.
+        /// </summary>
+        /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
             #region Dependency Injection
-            
+
             services.AddControllers();
             services.AddUserCases();
             services.AddDataAccess(Configuration);
-            
+
             #endregion
 
             #region JSON Serializer
@@ -52,13 +57,14 @@ namespace WebAPI.Web
 
             #region Role Identity
 
-            services.AddIdentity<User, IdentityRole>(options => {})
+            services
+                .AddIdentity<User, IdentityRole>(options => { })
                 .AddEntityFrameworkStores<AppDbContext>();
-            
+
             #endregion
 
             #region Swagger
-            
+
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo
@@ -77,18 +83,17 @@ namespace WebAPI.Web
 
             services.AddLogging(loggingBuilder =>
             {
-                // Enable logging.
-                loggingBuilder.AddConsole().AddFilter(
-                    DbLoggerCategory.Database.Command.Name, LogLevel.Information);
-                // Display output IDE.
-                loggingBuilder.AddDebug();
+                loggingBuilder
+                    .AddConsole()
+                    .AddFilter(DbLoggerCategory.Database.Command.Name, LogLevel.Information)
+                    .AddDebug();
             });
-            
+
             // Enable Serilog.
             services.AddSingleton(Log.Logger);
 
             #endregion
-            
+
             #region CORS
 
             services.AddCors(options =>
@@ -100,7 +105,7 @@ namespace WebAPI.Web
             });
 
             #endregion
-            
+
             #region Authentication JWT
 
             services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig"));
@@ -130,6 +135,18 @@ namespace WebAPI.Web
                 });
 
             #endregion
+
+            #region Static Files
+
+            services.Configure<StaticFileOptions>(options =>
+            {
+                var fileDirectory = new DirectoryInfo(
+                    Path.Combine(Directory.GetCurrentDirectory(), "Photos"));
+                if (!fileDirectory.Exists) fileDirectory.Create();
+                options.RequestPath = "/Photos";
+            });
+
+            #endregion
         }
 
         /// <summary>
@@ -141,38 +158,19 @@ namespace WebAPI.Web
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
-            }
-            
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(
-                    Path.Combine(Directory.GetCurrentDirectory(), "Photos")),
-                RequestPath = "/Photos"
-            });
+
+            app.UseStaticFiles(app.ApplicationServices
+                .GetRequiredService<IOptions<StaticFileOptions>>().Value);
 
             app.UseRouting();
 
             app.UseCors();
-            // Enable CORS.
-            // app.UseCors(options => options
-            //     .WithOrigins("http://localhost:4200", "http://localhost:9876")
-            //     .AllowAnyMethod()
-            //     .AllowAnyHeader());
 
             app.UseAuthentication();
 
             app.UseAuthorization();
 
-            // app.UseEndpoints(endpoints =>
-            // {
-            //     endpoints.MapGet("/", async context =>
-            //     {
-            //         await context.Response.WriteAsync("Resource server works");
-            //     });
-            // });
-            
             app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
     }

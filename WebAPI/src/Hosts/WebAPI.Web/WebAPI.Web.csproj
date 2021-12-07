@@ -39,4 +39,8 @@
       <ProjectReference Include="..\..\WebAPI.Utils\WebAPI.Utils.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Include="wwwroot\Photos\anonymous.png" />
+    </ItemGroup>
+
 </Project>

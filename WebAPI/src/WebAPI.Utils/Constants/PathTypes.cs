@@ -2,7 +2,7 @@
 {
     public static class PathTypes
     {
-         public const string PhotoStoragePath =
-             @"C:\Users\Shved\Desktop\Projects\Employee-Management-Portal\WebAPI\WebAPI.Web\Photos\";
+        public const string PhotoStoragePath =
+            @"C:\Users\Shved\Documents\Projects\Employee-Management-Portal\WebAPI\src\Hosts\WebAPI.Web\wwwroot\Photos\";
     }
 }
