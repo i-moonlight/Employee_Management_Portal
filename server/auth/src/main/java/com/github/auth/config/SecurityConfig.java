@@ -58,6 +58,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers(
                         "/api/greet/hello",
+                        "/api/greet/test",
                         "/api/auth/signin",
                         "/api/auth/signup",
                         "/api/auth/token",
