@@ -3,6 +3,9 @@ using WebAPI.Controllers;
 using System.Collections;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
+using WebAPI.Tests.Common;
+using WebAPI.Web;
 
 namespace WebAPI.Tests.Controllers
 {
@@ -10,11 +13,13 @@ namespace WebAPI.Tests.Controllers
     public class EmployeeControllerTests
     {
         private EmployeeController _controller;
+        private TestWebApplicationFactory<Startup> _factory;
 
         [SetUp]
         public void Setup()
         {
             _controller = new EmployeeController();
+            _factory = new TestWebApplicationFactory<Startup>();
         }
 
         [Test]
@@ -25,6 +30,19 @@ namespace WebAPI.Tests.Controllers
 
             // Assert.
             Assert.AreEqual(typeof(Task<ActionResult<IEnumerable>>), result.GetType());
+        }
+
+        [Test]
+        public async Task GetEmployeeList_Method_Should_Returns_Success_Http_Status_Code()
+        {
+            // Arrange.
+            var client = _factory.CreateClient();
+
+            // Act.
+            var response = await client.GetAsync("api/employee");
+
+            // Assert.
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         // [Test]
