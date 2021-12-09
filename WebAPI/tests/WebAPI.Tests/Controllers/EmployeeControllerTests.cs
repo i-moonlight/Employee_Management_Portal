@@ -1,40 +1,32 @@
 using NUnit.Framework;
+using WebAPI.Controllers;
+using System.Collections;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Tests.Controllers
 {
     [TestFixture]
-    public class EmployeeControllerTest
+    public class EmployeeControllerTests
     {
-        // private Mock<ICrudRepository<Employee>> _mockEmpRepo;
-        // private EmployeeController _controller;
-        // private IEnumerable<Employee> _fakeCategories;
-        // private Employee _model;
-        // private readonly IWebHostEnvironment _env = null;
-        //
-        // [SetUp]
-        // public void Setup()
-        // {
-        //     _mockEmpRepo = new Mock<ICrudRepository<Employee>>();
-        //     //_controller = new EmployeeController(_mockEmpRepo.Object, _env, null);
-        //     _fakeCategories = GetCategories();
-        //     _model = new Employee();
-        // }
+        private EmployeeController _controller;
 
-        // [Test]
-        // public void Get_Should_Returns_JsonResult_Employee_Value()
-        // {
-        //     // Arrange.   
-        //     _mockEmpRepo.Setup(x => x.Read()).Returns(_fakeCategories);
-        //
-        //     // Act.
-        //     var result = _controller.Get();
-        //
-        //     // Assert.
-        //     Assert.NotNull(result, "Result is null");
-        //     Assert.AreEqual(new JsonResult(_model).GetType(), result.GetType(), "Return type mismatch");
-        //     Assert.AreEqual(typeof(List<Employee>), result.Value.GetType(), "Return value type mismatch");
-        // }
-        
+        [SetUp]
+        public void Setup()
+        {
+            _controller = new EmployeeController();
+        }
+
+        [Test]
+        public void GetEmployeeList_Method_Should_Returns_ActionResult_IEnumerable_Type()
+        {
+            // Act.
+            var result = _controller.GetEmployeeList();
+
+            // Assert.
+            Assert.AreEqual(typeof(Task<ActionResult<IEnumerable>>), result.GetType());
+        }
+
         // [Test]
         // public void Post_Should_Returns_JsonResult_String_Value()
         // {
@@ -64,7 +56,7 @@ namespace WebAPI.Tests.Controllers
         //     Assert.AreEqual(new JsonResult(_model).GetType(), result.GetType(), "Return type mismatch");
         //     Assert.AreEqual(typeof(string), result.Value.GetType(), "Return value type mismatch");
         // }
-        
+
         // [Test]
         // public void Delete_Should_Returns_JsonResult_String_Value()
         // {
@@ -79,7 +71,7 @@ namespace WebAPI.Tests.Controllers
         //     Assert.AreEqual(new JsonResult(_model).GetType(), result.GetType(), "Return type mismatch");
         //     Assert.AreEqual(typeof(string), result.Value.GetType(), "Return value type mismatch");
         // }
-        
+
         // [Test]
         // public void UploadPhoto_Should_Returns_JsonResult_String_Value()
         // {
@@ -91,7 +83,7 @@ namespace WebAPI.Tests.Controllers
         //     Assert.AreEqual(new JsonResult(_model).GetType(), result.GetType(), "Return type mismatch");
         //     Assert.AreEqual(typeof(string), result.Value.GetType(), "Return value type mismatch");
         // }
-        
+
         // [Test]
         // public void UpdatePhoto_Should_Returns_JsonResult_String_Value()
         // {
@@ -106,7 +98,7 @@ namespace WebAPI.Tests.Controllers
         //     Assert.AreEqual(new JsonResult(_model).GetType(), result.GetType(), "Return type mismatch");
         //     Assert.AreEqual(typeof(string), result.Value.GetType(), "Return value type mismatch");
         // }
-    
+
         // [Test]
         // public void GetAllDepartmentNames_Should_Returns_JsonResult_Employee_Value()
         // {
@@ -121,7 +113,7 @@ namespace WebAPI.Tests.Controllers
         //     Assert.AreEqual(new JsonResult(_model).GetType(), result.GetType(), "Return type mismatch");
         //     Assert.AreEqual(typeof(List<Employee>), result.Value.GetType(), "Return value type mismatch");
         // }
-    
+
         // private static IEnumerable<Employee> GetCategories()
         // {
         //     var fakeCategories = new List<Employee>
