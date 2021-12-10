@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using WebAPI.Tests.Common;
 using WebAPI.Web;
+using System;
+using WebAPI.UserCases.Common.Dto;
 
 namespace WebAPI.Tests.Controllers
 {
@@ -43,6 +45,16 @@ namespace WebAPI.Tests.Controllers
 
             // Assert.
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        }
+
+        [Test]
+        public void GetEmployeeById_Method_Should_Returns_ActionResult_EmployeeDto_Type()
+        {
+            // Act.
+            var result = _controller.GetEmployeeById(Guid.NewGuid());
+
+            // Assert.
+            Assert.AreEqual(typeof(Task<ActionResult<EmployeeDto>>), result.GetType());
         }
 
         // [Test]
