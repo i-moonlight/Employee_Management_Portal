@@ -7,6 +7,10 @@ using System.Net;
 using WebAPI.Tests.Common;
 using WebAPI.Web;
 using System;
+using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
+using WebAPI.DataAccess.MsSql.Persistence.Context;
+using WebAPI.Entities.Models;
 using WebAPI.UserCases.Common.Dto;
 
 namespace WebAPI.Tests.Controllers
@@ -55,6 +59,23 @@ namespace WebAPI.Tests.Controllers
 
             // Assert.
             Assert.AreEqual(typeof(Task<ActionResult<EmployeeDto>>), result.GetType());
+        }
+
+        [Test]
+        public async Task GetEmployeeById_Method_Should_Returns_Success_Http_Status_Code()
+        {
+            // Arrange.
+            var dbContext = _factory.Services.CreateScope().ServiceProvider.GetService<AppDbContext>();
+            await dbContext.Employees.AddRangeAsync(new Employee());
+            await dbContext.SaveChangesAsync();
+            var client = _factory.CreateClient();
+            var employeeId = dbContext.Employees?.FirstOrDefault()?.Id;
+
+            // Act.
+            var response = await client.GetAsync($"api/employee/{employeeId}");
+
+            // Assert.
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         // [Test]
