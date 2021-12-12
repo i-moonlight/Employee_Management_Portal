@@ -88,6 +88,19 @@ namespace WebAPI.Tests.Controllers
             Assert.AreEqual(typeof(Task<ActionResult<IEnumerable>>), result.GetType());
         }
 
+        [Test]
+        public async Task GetDepartmentNameList_Method_Should_Returns_Success_Http_Status_Code()
+        {
+            // Arrange.
+            var client = _factory.CreateClient();
+
+            // Act.
+            var response = await client.GetAsync("api/employee/GetDepartmentNames");
+
+            // Assert.
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        }
+
         // [Test]
         // public void Post_Should_Returns_JsonResult_String_Value()
         // {
