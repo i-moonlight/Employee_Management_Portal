@@ -76,7 +76,7 @@ namespace WebAPI.Controllers
         // [Authorize(Roles = "Manager")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<IEnumerable>> GetDepartmentNamesList()
+        public async Task<ActionResult<IEnumerable>> GetDepartmentNameList()
         {
             return Ok(await Mediator.Send(new GetDepartmentNameListQuery()));
         }

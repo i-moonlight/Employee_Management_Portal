@@ -78,6 +78,16 @@ namespace WebAPI.Tests.Controllers
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
+        [Test]
+        public void GetDepartmentNameList_Method_Should_Returns_ActionResult_IEnumerable_Type()
+        {
+            // Act.
+            var result = _controller.GetDepartmentNameList();
+
+            // Assert.
+            Assert.AreEqual(typeof(Task<ActionResult<IEnumerable>>), result.GetType());
+        }
+
         // [Test]
         // public void Post_Should_Returns_JsonResult_String_Value()
         // {
@@ -148,21 +158,6 @@ namespace WebAPI.Tests.Controllers
         //     Assert.NotNull(result, "Result is null");
         //     Assert.AreEqual(new JsonResult(_model).GetType(), result.GetType(), "Return type mismatch");
         //     Assert.AreEqual(typeof(string), result.Value.GetType(), "Return value type mismatch");
-        // }
-
-        // [Test]
-        // public void GetAllDepartmentNames_Should_Returns_JsonResult_Employee_Value()
-        // {
-        //     // Arrange.   
-        //     _mockEmpRepo.Setup(x => x.ReadAll()).Returns(_fakeCategories);
-        //     
-        //     // Arrange.   
-        //     var result = _controller.GetAllDepartmentNames();
-        //
-        //     // Assert.
-        //     Assert.NotNull(result, "Result is null");
-        //     Assert.AreEqual(new JsonResult(_model).GetType(), result.GetType(), "Return type mismatch");
-        //     Assert.AreEqual(typeof(List<Employee>), result.Value.GetType(), "Return value type mismatch");
         // }
 
         // private static IEnumerable<Employee> GetCategories()
