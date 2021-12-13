@@ -99,12 +99,11 @@ namespace WebAPI.Controllers
         public async Task<ActionResult<string>> CreateEmployee([FromBody] EmployeeDto employee)
         {
             var command = new CreateEmployeeCommand() {EmployeeDto = employee};
-            
             var validationResult = Validation.CreateEmployeeValidator.Validate(command);
 
             if (!validationResult.IsValid)
                 return BadRequest(validationResult.Errors.First().ErrorMessage);
-            
+
             return Ok(await Mediator.Send(command));
         }
 
