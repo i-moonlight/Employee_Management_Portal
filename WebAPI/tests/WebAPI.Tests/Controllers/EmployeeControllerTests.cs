@@ -113,6 +113,23 @@ namespace WebAPI.Tests.Controllers
             Assert.AreEqual(typeof(Task<ActionResult<string>>), result.GetType());
         }
 
+        [Test]
+        public async Task CreateEmployee_Method_Should_Returns_Success_Http_Status_Code()
+        {
+            // Arrange.
+            var client = _factory.CreateClient();
+            var employeeDto = TestContent.GetTestEmployeeDto();
+            var content = TestContent.GetRequestContent(employeeDto);
+
+            // Act.
+            var response = await client.PostAsync("api/employee", content);
+            var stringResponse = await response.Content.ReadAsStringAsync();
+
+            // Assert.
+            response.EnsureSuccessStatusCode();
+            Assert.AreEqual("Created successfully", stringResponse);
+        }
+
         // [Test]
         // public void Put_Should_Returns_JsonResult_String_Value()
         // {
@@ -168,20 +185,6 @@ namespace WebAPI.Tests.Controllers
         //     Assert.NotNull(result, "Result is null");
         //     Assert.AreEqual(new JsonResult(_model).GetType(), result.GetType(), "Return type mismatch");
         //     Assert.AreEqual(typeof(string), result.Value.GetType(), "Return value type mismatch");
-        // }
-
-        // private static IEnumerable<Employee> GetCategories()
-        // {
-        //     var fakeCategories = new List<Employee>
-        //         {
-        //             new Employee
-        //             {
-        //                 //EmployeeId = 1,
-        //                 Name = "Test"
-        //             }
-        //         }
-        //         .AsEnumerable();
-        //     return fakeCategories;
         // }
     }
 }
