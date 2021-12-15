@@ -130,6 +130,16 @@ namespace WebAPI.Tests.Controllers
             Assert.AreEqual("Created successfully", stringResponse);
         }
 
+        [Test]
+        public void UploadEmployeePhoto_Method_Should_Returns_ActionResult_String_Type()
+        {
+            // Act.
+            var result = _controller.UploadEmployeePhoto();
+
+            // Assert.
+            Assert.AreEqual(typeof(Task<ActionResult<string>>), result.GetType());
+        }
+
         // [Test]
         // public void Put_Should_Returns_JsonResult_String_Value()
         // {
@@ -153,18 +163,6 @@ namespace WebAPI.Tests.Controllers
         //
         //     // Act.
         //     var result = _controller.Delete(_fakeCategories.First().EmployeeId);
-        //
-        //     // Assert.
-        //     Assert.NotNull(result, "Result is null");
-        //     Assert.AreEqual(new JsonResult(_model).GetType(), result.GetType(), "Return type mismatch");
-        //     Assert.AreEqual(typeof(string), result.Value.GetType(), "Return value type mismatch");
-        // }
-
-        // [Test]
-        // public void UploadPhoto_Should_Returns_JsonResult_String_Value()
-        // {
-        //     // Act.
-        //     var result = _controller.UploadPhoto();
         //
         //     // Assert.
         //     Assert.NotNull(result, "Result is null");
