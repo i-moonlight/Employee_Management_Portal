@@ -140,6 +140,21 @@ namespace WebAPI.Tests.Controllers
             Assert.AreEqual(typeof(Task<ActionResult<string>>), result.GetType());
         }
 
+        [Test]
+        public async Task UploadEmployeePhoto_Method_Should_Returns_Success_Http_Status_Code()
+        {
+            // Arrange.
+            var client = _factory.CreateClient();
+            var employeeDto = TestContent.GetTestEmployeeDto();
+            var content = TestContent.GetRequestContent(employeeDto);
+
+            // Act.
+            var response = await client.PostAsync("api/employee/UploadPhoto", content);
+
+            // Assert.
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        }
+
         // [Test]
         // public void Put_Should_Returns_JsonResult_String_Value()
         // {
