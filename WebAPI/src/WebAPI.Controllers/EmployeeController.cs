@@ -167,10 +167,10 @@ namespace WebAPI.Controllers
         {
             var command = new UpdateEmployeeCommand() {EmployeeDto = employee};
             var validationResult = Validation.UpdateEmployeeValidator.Validate(command);
-            
+
             if (!validationResult.IsValid)
                 return BadRequest(validationResult.Errors.First().ErrorMessage);
-            
+
             return Ok(await Mediator.Send(command));
         }
 
