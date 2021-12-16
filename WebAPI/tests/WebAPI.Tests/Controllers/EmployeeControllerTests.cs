@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using WebAPI.Tests.Common;
 using WebAPI.Web;
-using System;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using WebAPI.DataAccess.MsSql.Persistence.Context;
@@ -56,8 +55,11 @@ namespace WebAPI.Tests.Controllers
         [Test]
         public void GetEmployeeById_Method_Should_Returns_ActionResult_EmployeeDto_Type()
         {
+            // Arrange.
+            var employeeId = TestContent.GetTestEmployeeDto().Id;
+
             // Act.
-            var result = _controller.GetEmployeeById(Guid.NewGuid());
+            var result = _controller.GetEmployeeById(employeeId);
 
             // Assert.
             Assert.AreEqual(typeof(Task<ActionResult<EmployeeDto>>), result.GetType());
@@ -155,6 +157,19 @@ namespace WebAPI.Tests.Controllers
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
+        [Test]
+        public void UpdateEmployeePhoto_Method_Should_Returns_ActionResult_String_Type()
+        {
+            // Arrange.
+            var employeeId = TestContent.GetTestEmployeeDto().Id;
+
+            // Act.
+            var result = _controller.UpdateEmployeePhoto(employeeId);
+
+            // Assert.
+            Assert.AreEqual(typeof(Task<ActionResult<string>>), result.GetType());
+        }
+
         // [Test]
         // public void Put_Should_Returns_JsonResult_String_Value()
         // {
@@ -178,21 +193,6 @@ namespace WebAPI.Tests.Controllers
         //
         //     // Act.
         //     var result = _controller.Delete(_fakeCategories.First().EmployeeId);
-        //
-        //     // Assert.
-        //     Assert.NotNull(result, "Result is null");
-        //     Assert.AreEqual(new JsonResult(_model).GetType(), result.GetType(), "Return type mismatch");
-        //     Assert.AreEqual(typeof(string), result.Value.GetType(), "Return value type mismatch");
-        // }
-
-        // [Test]
-        // public void UpdatePhoto_Should_Returns_JsonResult_String_Value()
-        // {
-        //     // Arrange.   
-        //     _mockEmpRepo.Setup(x => x.GetFileName(_fakeCategories.First().EmployeeId)).Returns("PhotoFileName");
-        //
-        //     // Act.
-        //     var result = _controller.UpdatePhoto(_fakeCategories.First().EmployeeId);
         //
         //     // Assert.
         //     Assert.NotNull(result, "Result is null");
