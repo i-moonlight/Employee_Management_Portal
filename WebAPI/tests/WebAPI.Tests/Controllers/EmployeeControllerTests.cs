@@ -18,14 +18,12 @@ namespace WebAPI.Tests.Controllers
     public class EmployeeControllerTests
     {
         private EmployeeController _controller;
-        private EmployeeDto _employeeDto;
         private TestWebApplicationFactory<Startup> _factory;
 
         [SetUp]
         public void Setup()
         {
             _controller = new EmployeeController();
-            _employeeDto = new EmployeeDto();
             _factory = new TestWebApplicationFactory<Startup>();
         }
 
@@ -108,8 +106,11 @@ namespace WebAPI.Tests.Controllers
         [Test]
         public void CreateEmployee_Method_Should_Returns_ActionResult_String_Type()
         {
+            // Arrange.
+            var employeeDto = TestContent.GetTestEmployeeDto();
+
             // Act.
-            var result = _controller.CreateEmployee(_employeeDto);
+            var result = _controller.CreateEmployee(employeeDto);
 
             // Assert.
             Assert.AreEqual(typeof(Task<ActionResult<string>>), result.GetType());
@@ -185,20 +186,18 @@ namespace WebAPI.Tests.Controllers
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
-        // [Test]
-        // public void Put_Should_Returns_JsonResult_String_Value()
-        // {
-        //     // Arrange.
-        //     _mockEmpRepo.Setup(x => x.Update(_model)).Returns(_fakeCategories.First());
-        //
-        //     // Act.
-        //     var result = _controller.Put(_model);
-        //
-        //     // Assert.
-        //     Assert.NotNull(result, "Result is null");
-        //     Assert.AreEqual(new JsonResult(_model).GetType(), result.GetType(), "Return type mismatch");
-        //     Assert.AreEqual(typeof(string), result.Value.GetType(), "Return value type mismatch");
-        // }
+        [Test]
+        public void UpdateEmployee_Method_Should_Returns_ActionResult_String_Type()
+        {
+            // Arrange.
+            var employeeDto = TestContent.GetTestEmployeeDto();
+
+            // Act.
+            var result = _controller.UpdateEmployee(employeeDto);
+
+            // Assert.
+            Assert.AreEqual(typeof(Task<ActionResult<string>>), result.GetType());
+        }
 
         // [Test]
         // public void Delete_Should_Returns_JsonResult_String_Value()
