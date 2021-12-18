@@ -216,19 +216,17 @@ namespace WebAPI.Tests.Controllers
             Assert.AreEqual("Updated successfully", stringResponse);
         }
 
-        // [Test]
-        // public void Delete_Should_Returns_JsonResult_String_Value()
-        // {
-        //     // Arrange.   
-        //     _mockEmpRepo.Setup(x => x.Delete(_fakeCategories.First().EmployeeId));
-        //
-        //     // Act.
-        //     var result = _controller.Delete(_fakeCategories.First().EmployeeId);
-        //
-        //     // Assert.
-        //     Assert.NotNull(result, "Result is null");
-        //     Assert.AreEqual(new JsonResult(_model).GetType(), result.GetType(), "Return type mismatch");
-        //     Assert.AreEqual(typeof(string), result.Value.GetType(), "Return value type mismatch");
-        // }
+        [Test]
+        public void DeleteEmployee_Method_Should_Returns_ActionResult_String_Type()
+        {
+            // Arrange.
+            var employeeId = TestContent.GetTestEmployeeDto().Id;
+
+            // Act.
+            var result = _controller.DeleteEmployeeById(employeeId);
+
+            // Assert.
+            Assert.AreEqual(typeof(Task<ActionResult<string>>), result.GetType());
+        }
     }
 }
