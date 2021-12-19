@@ -228,5 +228,24 @@ namespace WebAPI.Tests.Controllers
             // Assert.
             Assert.AreEqual(typeof(Task<ActionResult<string>>), result.GetType());
         }
+
+        [Test]
+        public async Task DeleteEmployee_Method_Should_Returns_Success_Http_Status_Code()
+        {
+            // Arrange.
+            var client = _factory.CreateClient();
+            var dbContext = _factory.Services.CreateScope().ServiceProvider.GetService<AppDbContext>();
+            await dbContext.Employees.AddRangeAsync(new Employee());
+            await dbContext.SaveChangesAsync();
+            var employeeId = dbContext.Employees?.FirstOrDefault()?.Id;
+
+            // Act.
+            var response = await client.DeleteAsync($"api/employee/{employeeId}");
+            var stringResponse = await response.Content.ReadAsStringAsync();
+
+            // Assert.
+            response.EnsureSuccessStatusCode();
+            Assert.AreEqual("Deleted successfully", stringResponse);
+        }
     }
 }
