@@ -1,11 +1,12 @@
-mod routes;
-mod models;
+mod router;
+mod model;
+
+use router::{config::config};
 
 use actix_cors::Cors;
 use actix_web::{HttpServer, middleware::Logger, App, http::header};
 use sqlx::{Postgres, Pool, postgres::PgPoolOptions};
 use dotenv::dotenv;
-use routes::{config::config};
 
 pub struct AppState {
     db: Pool<Postgres>
