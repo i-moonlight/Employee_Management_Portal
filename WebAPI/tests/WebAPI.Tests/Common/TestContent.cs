@@ -32,7 +32,7 @@ namespace WebAPI.Tests.Common
                 }
             }
             .AsEnumerable();
-        
+
         public static IEnumerable GetTestDepartmentList() => new List<Department>
             {
                 new Department()
