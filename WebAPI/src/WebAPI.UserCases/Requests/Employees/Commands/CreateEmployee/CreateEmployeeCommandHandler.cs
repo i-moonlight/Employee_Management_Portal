@@ -26,7 +26,7 @@ namespace WebAPI.UserCases.Requests.Employees.Commands.CreateEmployee
         /// <param name="request">The request.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>Returns string about success.</returns>
-        public async Task<string> Handle(CreateEmployeeCommand request, CancellationToken cancellationToken)
+        public async Task<string> Handle(CreateEmployeeCommand request, CancellationToken token)
         {
             var employee = _mapper.Map<Employee>(request.EmployeeDto);
 
