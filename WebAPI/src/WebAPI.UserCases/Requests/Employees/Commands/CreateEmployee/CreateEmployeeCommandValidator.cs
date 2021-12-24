@@ -13,10 +13,10 @@ namespace WebAPI.UserCases.Requests.Employees.Commands.CreateEmployee
                 .Empty()
                 .WithMessage("Identifier is excluded");
 
-            RuleFor(x => x.EmployeeDto.Name)
-                .NotNull()
-                .NotEmpty()
-                .MaximumLength(250);
+            RuleFor(cmd => cmd.EmployeeDto.Name)
+                .NotNull().WithMessage("Name must be filled")
+                .NotEmpty().WithMessage("Name must be filled")
+                .MaximumLength(50).WithMessage("Name must be shorter");
 
             RuleFor(x => x.EmployeeDto.Department)
                 .NotNull()
