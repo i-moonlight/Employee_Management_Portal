@@ -1,0 +1,5 @@
+/server/store/target/
+
+### Security ###
+/.env
+/target/
