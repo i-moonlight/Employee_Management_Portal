@@ -41,5 +41,18 @@ namespace WebAPI.Tests.Requests.Commands
             // Assert.
             Assert.AreEqual("Created successfully", result);
         }
+
+        [Test]
+        public async Task CreateEmployeeCommandHandler_Handle_Method_Should_Returns_Failure_String()
+        {
+            // Arrange.
+            var handler = new CreateEmployeeCommandHandler(_mockEmployeeRepo.Object, _mapper);
+
+            // Act.
+            var result = await handler.Handle(null, None);
+
+            // Assert.
+            Assert.AreEqual("Create failed", result);
+        }
     }
 }

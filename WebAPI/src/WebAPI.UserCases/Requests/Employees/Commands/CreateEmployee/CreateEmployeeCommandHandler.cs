@@ -5,7 +5,6 @@ using AutoMapper;
 using MediatR;
 using WebAPI.Entities.Models;
 using WebAPI.Infrastructure.Interfaces.DataAccess;
-using WebAPI.UserCases.Common.Exceptions;
 
 namespace WebAPI.UserCases.Requests.Employees.Commands.CreateEmployee
 {
@@ -28,13 +27,10 @@ namespace WebAPI.UserCases.Requests.Employees.Commands.CreateEmployee
         /// <returns>Returns string about success.</returns>
         public async Task<string> Handle(CreateEmployeeCommand request, CancellationToken token)
         {
-            var employee = _mapper.Map<Employee>(request.EmployeeDto);
-
-            if (employee == null) throw new NotFoundException();
-
             var success = true;
             try
             {
+                var employee = _mapper.Map<Employee>(request.EmployeeDto);
                 _repository.Create(employee);
             }
             catch (Exception)
