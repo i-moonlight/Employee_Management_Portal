@@ -22,7 +22,7 @@ namespace WebAPI.UserCases.Requests.Employees.Commands.UploadEmployeePhoto
         /// Handles a request.
         /// </summary>
         /// <param name="request">The request.</param>
-        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <param name="token">Cancellation token.</param>
         /// <returns>Returns string about success.</returns>
         public async Task<string> Handle(UploadPhotoCommand request, CancellationToken cancellationToken)
         {

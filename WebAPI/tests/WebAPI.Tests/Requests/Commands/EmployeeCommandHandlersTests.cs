@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Hosting;
 using Moq;
 using NUnit.Framework;
 using WebAPI.Entities.Models;
@@ -7,6 +8,7 @@ using WebAPI.Infrastructure.Interfaces.DataAccess;
 using WebAPI.Tests.Common;
 using WebAPI.UserCases.Common.Mappings;
 using WebAPI.UserCases.Requests.Employees.Commands.CreateEmployee;
+using WebAPI.UserCases.Requests.Employees.Commands.UploadEmployeePhoto;
 using static System.Threading.CancellationToken;
 
 namespace WebAPI.Tests.Requests.Commands
@@ -15,6 +17,7 @@ namespace WebAPI.Tests.Requests.Commands
     public class EmployeeCommandHandlersTests
     {
         private Mock<ICrudRepository<Employee>> _mockEmployeeRepo;
+        private Mock<IWebHostEnvironment> _mockEnvironment;
         private IMapper _mapper;
 
         [SetUp]
@@ -24,6 +27,7 @@ namespace WebAPI.Tests.Requests.Commands
             var mapper = mappingConfig.CreateMapper();
 
             _mockEmployeeRepo = new Mock<ICrudRepository<Employee>>();
+            _mockEnvironment = new Mock<IWebHostEnvironment>();
             _mapper = mapper;
         }
 
@@ -53,6 +57,19 @@ namespace WebAPI.Tests.Requests.Commands
 
             // Assert.
             Assert.AreEqual("Create failed", result);
+        }
+
+        [Test]
+        public async Task UploadPhotoCommandHandler_Handle_Method_Should_Returns_Default_FileName_String()
+        {
+            // Arrange.
+            var handler = new UploadPhotoCommandHandler(_mockEnvironment.Object);
+
+            // Act.
+            var result = await handler.Handle(new UploadPhotoCommand(), None);
+
+            // Assert.
+            Assert.AreEqual("anonymous.png", result);
         }
     }
 }
