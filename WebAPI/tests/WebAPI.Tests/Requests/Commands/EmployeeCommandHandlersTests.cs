@@ -8,6 +8,7 @@ using WebAPI.Infrastructure.Interfaces.DataAccess;
 using WebAPI.Tests.Common;
 using WebAPI.UserCases.Common.Mappings;
 using WebAPI.UserCases.Requests.Employees.Commands.CreateEmployee;
+using WebAPI.UserCases.Requests.Employees.Commands.UpdateEmployeePhoto;
 using WebAPI.UserCases.Requests.Employees.Commands.UploadEmployeePhoto;
 using static System.Threading.CancellationToken;
 
@@ -67,6 +68,19 @@ namespace WebAPI.Tests.Requests.Commands
 
             // Act.
             var result = await handler.Handle(new UploadPhotoCommand(), None);
+
+            // Assert.
+            Assert.AreEqual("anonymous.png", result);
+        }
+        
+        [Test]
+        public async Task UpdatePhotoCommandHandler_Handle_Method_Should_Returns_Default_FileName_String()
+        {
+            // Arrange.
+            var handler = new UpdatePhotoCommandHandler(_mockEmployeeRepo.Object, _mockEnvironment.Object);
+
+            // Act.
+            var result = await handler.Handle(new UpdatePhotoCommand(), None);
 
             // Assert.
             Assert.AreEqual("anonymous.png", result);
