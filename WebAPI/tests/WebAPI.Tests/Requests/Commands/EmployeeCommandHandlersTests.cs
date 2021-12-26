@@ -101,5 +101,18 @@ namespace WebAPI.Tests.Requests.Commands
             // Assert.
             Assert.AreEqual("Updated successfully", result);
         }
+
+        [Test]
+        public async Task UpdateEmployeeCommandHandler_Handle_Method_Should_Returns_Failure_String()
+        {
+            // Arrange.
+            var handler = new UpdateEmployeeCommandHandler(_mockEmployeeRepo.Object, _mapper);
+
+            // Act.
+            var result = await handler.Handle(null, None);
+
+            // Assert.
+            Assert.AreEqual("Update failed", result);
+        }
     }
 }
