@@ -233,6 +233,22 @@ namespace WebAPI.Tests.Controllers
         }
 
         [Test]
+        public async Task UpdateEmployee_Method_Should_Returns_Validate_Response()
+        {
+            // Arrange.
+            var client = _factory.CreateClient();
+            var employeeDto = new EmployeeDto() {Name = null};
+            var content = TestContent.GetRequestContent(employeeDto);
+
+            // Act.
+            var response = await client.PutAsync("api/employee", content);
+            var stringResponse = await response.Content.ReadAsStringAsync();
+
+            // Assert.
+            Assert.AreEqual("Name must be filled", stringResponse);
+        }
+        
+        [Test]
         public void DeleteEmployee_Method_Should_Returns_ActionResult_String_Type()
         {
             // Arrange.
