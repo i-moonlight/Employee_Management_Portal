@@ -9,27 +9,26 @@ namespace WebAPI.UserCases.Requests.Employees.Commands.UpdateEmployee
     {
         public UpdateEmployeeCommandValidator()
         {
-            RuleFor(x => x.EmployeeDto.Id)
-                .Empty()
-                .WithMessage("Identifier is excluded");
+            RuleFor(cmd => cmd.EmployeeDto.Id)
+                .Empty().WithMessage("Id must be empty");
 
-            RuleFor(x => x.EmployeeDto.Name)
-                .NotNull()
-                .NotEmpty()
-                .MaximumLength(250);
+            RuleFor(cmd => cmd.EmployeeDto.Name)
+                .NotNull().WithMessage("Name must be filled")
+                .NotEmpty().WithMessage("Name must be filled")
+                .MaximumLength(50).WithMessage("Name must be shorter");
 
-            RuleFor(x => x.EmployeeDto.Department)
-                .NotEmpty()
-                .MaximumLength(250);
+            RuleFor(cmd => cmd.EmployeeDto.Department)
+                .NotEmpty().WithMessage("Department name must be filled")
+                .MaximumLength(50).WithMessage("Department name must be shorter");
 
-            RuleFor(x => x.EmployeeDto.DateOfJoining)
-                .NotNull()
-                .NotEmpty();
+            RuleFor(cmd => cmd.EmployeeDto.DateOfJoining)
+                .NotNull().WithMessage("Date must be filled")
+                .NotEmpty().WithMessage("Date must be filled");
 
-            RuleFor(x => x.EmployeeDto.PhotoFileName)
-                .NotNull()
-                .NotEmpty()
-                .MaximumLength(250);
+            RuleFor(cmd => cmd.EmployeeDto.PhotoFileName)
+                .NotNull().WithMessage("Photo name must be filled")
+                .NotEmpty().WithMessage("Photo name must be filled")
+                .MaximumLength(50).WithMessage("Photo name must be shorter");
         }
     }
 }
