@@ -11,6 +11,7 @@ using WebAPI.UserCases.Requests.Employees.Commands.CreateEmployee;
 using WebAPI.UserCases.Requests.Employees.Commands.UpdateEmployeePhoto;
 using WebAPI.UserCases.Requests.Employees.Commands.UploadEmployeePhoto;
 using WebAPI.UserCases.Requests.Employees.Commands.UpdateEmployee;
+using WebAPI.UserCases.Requests.Employees.Commands.DeleteEmployee;
 using static System.Threading.CancellationToken;
 
 namespace WebAPI.Tests.Requests.Commands
@@ -113,6 +114,21 @@ namespace WebAPI.Tests.Requests.Commands
 
             // Assert.
             Assert.AreEqual("Update failed", result);
+        }
+
+        [Test]
+        public async Task DeleteEmployeeCommandHandler_Handle_Method_Should_Returns_Success_String()
+        {
+            // Arrange.
+            var handler = new DeleteEmployeeCommandHandler(_mockEmployeeRepo.Object);
+            var employeeId = TestContent.GetTestEmployeeDto().Id;
+            var request = new DeleteEmployeeCommand() {Id = employeeId};
+
+            // Act.
+            var result = await handler.Handle(request, None);
+
+            // Assert.
+            Assert.AreEqual("Deleted successfully", result);
         }
     }
 }
