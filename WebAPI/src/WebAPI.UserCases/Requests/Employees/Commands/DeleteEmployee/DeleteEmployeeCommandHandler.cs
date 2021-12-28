@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using MediatR;
 using WebAPI.Entities.Models;
 using WebAPI.Infrastructure.Interfaces.DataAccess;
-using WebAPI.UserCases.Common.Exceptions;
 
 namespace WebAPI.UserCases.Requests.Employees.Commands.DeleteEmployee
 {
@@ -22,18 +21,14 @@ namespace WebAPI.UserCases.Requests.Employees.Commands.DeleteEmployee
         /// Handles a request.
         /// </summary>
         /// <param name="request">The request.</param>
-        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <param name="token">Cancellation token.</param>
         /// <returns>Returns string about success.</returns>
-        public async Task<string> Handle(DeleteEmployeeCommand request, CancellationToken cancellationToken)
+        public async Task<string> Handle(DeleteEmployeeCommand request, CancellationToken token)
         {
-            var employee = new Employee() {Id = request.Id};
-
-            if (employee == null || employee.Id != request.Id)
-                throw new NotFoundException(nameof(employee), request.Id);
-
             var success = true;
             try
             {
+                var employee = new Employee() {Id = request.Id};
                 _repository.Delete(employee.Id);
             }
             catch (Exception)
