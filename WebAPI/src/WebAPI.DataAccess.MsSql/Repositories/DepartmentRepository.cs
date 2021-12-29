@@ -16,9 +16,13 @@ namespace WebAPI.DataAccess.MsSql.Repositories
             _context = context;
         }
 
+        /// <summary>
+        /// Gets a list of departments ordered by ID.
+        /// </summary>
+        /// <returns>Returns departments list.</returns>
         public IEnumerable Read()
         {
-            return _context.Departments.OrderBy(x => x.Id);
+            return _context.Departments.OrderBy(d => d.Id);
         }
 
         public Department Read(Guid id)
@@ -41,7 +45,7 @@ namespace WebAPI.DataAccess.MsSql.Repositories
             _context.Departments.Add(model);
             _context.SaveChanges();
         }
-        
+
         public void Update(Department model)
         {
             _context.Departments.Update(model);
