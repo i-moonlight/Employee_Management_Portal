@@ -1,0 +1,51 @@
+<!-- Modal edit-->
+<div class="d-flex flex-row bd-highlight">
+  <div class="form-froup row">
+    <label class="col-sm-2 col-form-label" id="name">Employee Name</label>
+    <!-- Employee name input-->
+    <div class="col-sm-10">
+      <input type="text" id="employeeName" class="form-control" placeholder="Enter Employee Name"
+             [(ngModel)]="employeeName">
+    </div>
+    <label class="col-sm-2 col-form-label" id="dep">Department</label>
+    <!-- Department name select-->
+    <div class="col-sm-10">
+      <select class="form-control" id="department" [(ngModel)]="department">
+        <option>--Select--</option>
+        <option *ngFor="let depName of departmentList">
+          {{depName["DepartmentName"]}}
+        </option>
+      </select>
+    </div>
+    <label class="col-sm-2 col-form-label" id="date">Date of joining</label>
+    <!-- Date Of joining input-->
+    <div class="col-sm-10">
+      <input type="date" class="form-control" id="dateOfJoining" [(ngModel)]="dateOfJoining">
+    </div>
+  </div>
+</div>
+
+<!-- Display and select photo-->
+<div class="ml-3 bd-highlight">
+  <div class="form-froup row">
+    <label class="col-sm-2 col-form-label" id="photo">Photo</label>
+    <div class="container">
+      <img class="photo" [src]="photoFilePath">
+      <input class="input" id="file" type="file" multiple="multiple"
+             (change)="onFileSelected($event)">
+    </div>
+  </div>
+</div>
+
+<div class="container-btn">
+  <!-- Upload button -->
+  <button class="btn btn-primary" id="uploadButton" *ngIf="emp.EmployeeId==0" [disabled]="!buttonClicked"
+          (click)="uploadEmployeeData()">
+    Add
+  </button>
+  <!-- Update button -->
+  <button class="btn btn-primary" id="updateButton" *ngIf="emp.EmployeeId!=0"
+          (click)="updateEmployeeData(emp.EmployeeId)">
+    Update
+  </button>
+</div>

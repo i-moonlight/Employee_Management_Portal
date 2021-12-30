@@ -1,0 +1,23 @@
+<!-- Modal edit-->
+<div class="form-froup row">
+  <label class="col-sm-2 col-form-label" id="name">Department Name</label>
+  <div class="col-sm-10">
+    <label>
+      <input type="text" id="departmentName" class="form-control" placeholder="Enter Department Name"
+             [(ngModel)]="departmentName">
+    </label>
+  </div>
+</div>
+
+<div class="container-btn">
+  <!-- Add department modal button -->
+  <button class="btn btn-primary" id="addButton" *ngIf="dep.DepartmentId==0"
+          (click)="addDepartment()">
+    Add
+  </button>
+  <!-- Update department modal button -->
+  <button class="btn btn-primary" id="updateButton" *ngIf="dep.DepartmentId!=0"
+          (click)="updateDepartment()">
+    Update
+  </button>
+</div>

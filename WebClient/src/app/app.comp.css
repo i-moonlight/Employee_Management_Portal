@@ -1,0 +1,20 @@
+.card-container {
+  padding-top: 3rem;
+  width: 80%;
+  margin: 0 auto;
+}
+
+h1 {
+  margin-bottom: 1rem;
+}
+
+h3 {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+h5 {
+  display: flex;
+  justify-content: center;
+}
