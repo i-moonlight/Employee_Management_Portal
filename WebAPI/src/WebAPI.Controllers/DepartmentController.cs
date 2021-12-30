@@ -1,7 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI.UserCases.Common.Dto;
+using WebAPI.UserCases.Requests.Departments.Queries.GetDepartment;
 using WebAPI.UserCases.Requests.Departments.Queries.GetDepartmentList;
 
 namespace WebAPI.Controllers
@@ -29,12 +32,27 @@ namespace WebAPI.Controllers
             return Ok(await Mediator.Send(new GetDepartmentListQuery()));
         }
 
-        // [HttpGet]
-        // public JsonResult Get(Guid id)
-        // {
-        //     return new JsonResult(_depRepository.Read(id));
-        // }
-        //
+        /// <summary>
+        /// Gets the department by id.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// GET /department/D34D349E-43B8-429E-BCA4-793C932FD580.
+        /// </remarks>
+        /// <param name="id">Department id (guid).</param>
+        /// <returns>Returns department dto.</returns>
+        /// <response code="200">Success.</response>
+        /// <response code="401">If the user in unauthorized.</response>
+        [HttpGet("{id}")]
+        // [Authorize (Roles = "Manager")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<DepartmentDto>> GetDepartmentById(Guid id)
+        {
+            var request = new GetDepartmentQuery {Id = id};
+            return Ok(await Mediator.Send(request));
+        }
+
         // [HttpPost]
         // public JsonResult Post(Department dep)
         // {
