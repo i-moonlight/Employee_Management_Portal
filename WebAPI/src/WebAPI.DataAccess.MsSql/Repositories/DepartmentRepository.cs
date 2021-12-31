@@ -15,6 +15,16 @@ namespace WebAPI.DataAccess.MsSql.Repositories
             _context = context;
 
         /// <summary>
+        /// Adds an department to the database.
+        /// </summary>
+        /// <param name="model"></param>
+        public void Create(Department model)
+        {
+            _context.Departments.Add(model);
+            _context.SaveChanges();
+        }
+
+        /// <summary>
         /// Gets a list of departments ordered by ID.
         /// </summary>
         /// <returns>Returns departments list.</returns>
@@ -41,12 +51,6 @@ namespace WebAPI.DataAccess.MsSql.Repositories
         public string ReadPhotoName(Guid id)
         {
             throw new NotImplementedException();
-        }
-
-        public void Create(Department model)
-        {
-            _context.Departments.Add(model);
-            _context.SaveChanges();
         }
 
         public void Update(Department model)
