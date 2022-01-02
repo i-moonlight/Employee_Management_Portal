@@ -31,7 +31,5 @@ build/
 
 ### VS Code ###
 .vscode/
-/.env
-/.env
-/.env
+.env
 /.mvn/
