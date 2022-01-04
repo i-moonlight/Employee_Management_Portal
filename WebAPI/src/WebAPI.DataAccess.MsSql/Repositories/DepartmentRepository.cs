@@ -53,6 +53,10 @@ namespace WebAPI.DataAccess.MsSql.Repositories
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Updates the department.
+        /// </summary>
+        /// <param name="model">Department model.</param>
         public void Update(Department model)
         {
             _context.Departments.Update(model);

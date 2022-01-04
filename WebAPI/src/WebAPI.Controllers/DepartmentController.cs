@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using WebAPI.UserCases.Common.Behaviors;
 using WebAPI.UserCases.Common.Dto;
 using WebAPI.UserCases.Requests.Departments.Commands.CreateDepartment;
+using WebAPI.UserCases.Requests.Departments.Commands.UpdateDepartment;
 using WebAPI.UserCases.Requests.Departments.Queries.GetDepartment;
 using WebAPI.UserCases.Requests.Departments.Queries.GetDepartmentList;
 
@@ -82,23 +83,32 @@ namespace WebAPI.Controllers
             return Ok(await Mediator.Send(request));
         }
 
-        //
-        // [HttpPut]
-        // public JsonResult Put(Department dep)
-        // { 
-        //     var success = true;
-        //     try
-        //     {
-        //         _depRepository.Update(dep);
-        //     }
-        //     catch (Exception)
-        //     {
-        //         success = false;
-        //     }
-        //     return success
-        //         ? new JsonResult("Update successful")
-        //         : new JsonResult("Update was not successful");
-        // }
+        /// <summary>
+        /// Updates the department.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// PUT /department.
+        /// </remarks>
+        /// <param name="department">DepartmentDto.</param>
+        /// <returns>Returns response about success.</returns>
+        /// <response code="204">Success.</response>
+        /// <response code="401">If the user is unauthorized.</response>
+        [HttpPut]
+        // [Authorize]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<string>> UpdateDepartment([FromBody] DepartmentDto employee)
+        {
+            var request = new UpdateDepartmentCommand() {DepartmentDto = employee};
+            var validationResult = Validation.UpdateDepartmentValidator.Validate(request);
+
+            if (!validationResult.IsValid)
+                return BadRequest(validationResult.Errors.First().ErrorMessage);
+
+            return Ok(await Mediator.Send(request));
+        }
+
         //
         // [HttpDelete("{id}")]
         // public JsonResult Delete(Guid id)

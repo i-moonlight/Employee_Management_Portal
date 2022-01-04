@@ -1,4 +1,5 @@
 using WebAPI.UserCases.Requests.Departments.Commands.CreateDepartment;
+using WebAPI.UserCases.Requests.Departments.Commands.UpdateDepartment;
 using WebAPI.UserCases.Requests.Employees.Commands.CreateEmployee;
 using WebAPI.UserCases.Requests.Employees.Commands.UpdateEmployee;
 
@@ -17,11 +18,17 @@ namespace WebAPI.UserCases.Common.Behaviors
         /// </summary>
         public static UpdateEmployeeCommandValidator UpdateEmployeeValidator =>
             new UpdateEmployeeCommandValidator();
-        
+
         /// <summary>
         /// The instance for department create command validator.
         /// </summary>
         public static CreateDepartmentCommandValidator CreateDepartmentValidator =>
             new CreateDepartmentCommandValidator();
+
+        /// <summary>
+        /// The instance for department update command validator.
+        /// </summary>
+        public static UpdateDepartmentCommandValidator UpdateDepartmentValidator =>
+            new UpdateDepartmentCommandValidator();
     }
 }
