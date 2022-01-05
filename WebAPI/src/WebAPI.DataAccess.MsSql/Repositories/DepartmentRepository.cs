@@ -63,16 +63,15 @@ namespace WebAPI.DataAccess.MsSql.Repositories
             _context.SaveChanges();
         }
 
+        /// <summary>
+        /// Deletes an department by ID.
+        /// </summary>
+        /// <param name="id">Id of the department (guid).</param>
         public void Delete(Guid id)
         {
-            var model = _context.Departments.FirstOrDefault(x => x.Id == id);
-            _context.Departments.Remove(model ?? throw new InvalidOperationException());
+            var department = _context.Departments.FirstOrDefault(d => d.Id == id);
+            _context.Departments.Remove(department ?? throw new InvalidOperationException());
             _context.SaveChanges();
-        }
-
-        public string GetFileName(Guid id)
-        {
-            throw new NotImplementedException();
         }
     }
 }
