@@ -8,9 +8,10 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@AllArgsConstructor
+@Builder
 @Data
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "product")
 public class Product {

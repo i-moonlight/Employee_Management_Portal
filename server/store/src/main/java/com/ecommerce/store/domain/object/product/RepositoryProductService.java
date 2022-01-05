@@ -15,7 +15,7 @@ import java.util.UUID;
 public class RepositoryProductService implements ProductService {
     private final ProductRepository repository;
     @Override
-    public Flux<Product> findProductAll() {
+    public Flux<Product> findProductList() {
         return repository.findAll().delayElements(Duration.ofSeconds(1));
     }
 

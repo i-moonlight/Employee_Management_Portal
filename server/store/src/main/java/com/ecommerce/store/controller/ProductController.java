@@ -3,6 +3,7 @@ package com.ecommerce.store.controller;
 import com.ecommerce.store.domain.service.ProductService;
 import com.ecommerce.store.entity.Product;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.*;
 
@@ -15,13 +16,15 @@ import java.util.UUID;
 public class ProductController {
     private final ProductService service;
 
-    @GetMapping("/all") // http://localhost:9001/api/product/all
-    public Flux<Product> getProductAll(){
-        return service.findProductAll();
+    @GetMapping("/list") // http://localhost:9001/api/product/list
+    @ResponseStatus(HttpStatus.OK)
+    public Flux<Product> getProductList(){
+        return service.findProductList();
     }
 
     @GetMapping("/{id}")
-    Mono<Product> getProductById(@PathVariable("id") UUID productId) {
+    @ResponseStatus(HttpStatus.OK)
+    public Mono<Product> getProductById(@PathVariable("id") UUID productId) {
         return service.findProductById(productId);
     }
 }

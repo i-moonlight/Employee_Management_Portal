@@ -13,6 +13,5 @@ public interface ProductRepository extends R2dbcRepository<Product, UUID> {
 
     @Query("SELECT * FROM product p WHERE p.id = :id")
     Mono<Product> getProductById(@Param("id") UUID id);
-
 }
 
