@@ -1,8 +1,11 @@
 ﻿using System.Collections;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
 using WebAPI.Controllers;
+using WebAPI.Tests.Common;
+using WebAPI.Web;
 
 namespace WebAPI.Tests.Controllers
 {
@@ -10,11 +13,13 @@ namespace WebAPI.Tests.Controllers
     public class DepartmentControllerTests
     {
         private DepartmentController _controller;
+        private TestWebApplicationFactory<Startup> _factory;
 
         [SetUp]
         public void Setup()
         {
             _controller = new DepartmentController();
+            _factory = new TestWebApplicationFactory<Startup>();
         }
 
         [Test]
@@ -25,6 +30,19 @@ namespace WebAPI.Tests.Controllers
 
             // Assert.
             Assert.AreEqual(typeof(Task<ActionResult<IEnumerable>>), result.GetType());
+        }
+
+        [Test]
+        public async Task GetDepartmentList_Method_Should_Returns_Success_Http_Status_Code()
+        {
+            // Arrange.
+            var client = _factory.CreateClient();
+
+            // Act.
+            var response = await client.GetAsync("api/department");
+
+            // Assert.
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         // [Test]
