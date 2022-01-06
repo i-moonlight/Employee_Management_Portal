@@ -1,39 +1,32 @@
-﻿using NUnit.Framework;
+﻿using System.Collections;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using NUnit.Framework;
+using WebAPI.Controllers;
 
 namespace WebAPI.Tests.Controllers
 {
     [TestFixture]
-    public class DepartmentControllerTest
+    public class DepartmentControllerTests
     {
-        // private Mock<ICrudRepository<Department>> _mockDepRepo;
-        // private DepartmentController _controller;
-        // private IEnumerable<Department> _fakeCategories;
-        // private Department _model;
+        private DepartmentController _controller;
 
-        // [SetUp]
-        // public void Setup()
-        // {
-        //     _mockDepRepo = new Mock<ICrudRepository<Department>>();
-        //     //_controller = new DepartmentController(_mockDepRepo.Object);
-        //     _fakeCategories = GetCategories();
-        //     _model = new Department();
-        // }
+        [SetUp]
+        public void Setup()
+        {
+            _controller = new DepartmentController();
+        }
 
-        // [Test]
-        // public void Get_Should_Returns_JsonResult_String_Value()
-        // {
-        //     // Arrange.   
-        //     _mockDepRepo.Setup(x => x.Read()).Returns(_fakeCategories);
-        //
-        //     // Act.
-        //     var result = _controller.Get();
-        //
-        //     // Assert.
-        //     Assert.NotNull(result, "Result is null");
-        //     Assert.AreEqual(new JsonResult(_model).GetType(), result.GetType(), "Return type mismatch");
-        //     Assert.AreEqual(typeof(List<Department>), result.Value.GetType(), "Return value type mismatch");
-        // }
-        
+        [Test]
+        public void GetDepartmentList_Method_Should_Returns_ActionResult_IEnumerable_Type()
+        {
+            // Act.
+            var result = _controller.GetDepartmentList();
+
+            // Assert.
+            Assert.AreEqual(typeof(Task<ActionResult<IEnumerable>>), result.GetType());
+        }
+
         // [Test]
         // public void Post_Should_Returns_JsonResult_String_Value()
         // {
@@ -79,18 +72,5 @@ namespace WebAPI.Tests.Controllers
         //     // Assert.AreEqual(typeof(string), result.Value.GetType(), "Return value type mismatch");
         // }
         //
-        // private static IEnumerable<Department> GetCategories()
-        // {
-        //     var fakeCategories = new List<Department>
-        //         {
-        //             new Department
-        //             {
-        //                 //Id = 1,
-        //                 Name = "Test"
-        //             }
-        //         }
-        //         .AsEnumerable();
-        //     return fakeCategories;
-        // }
     }
 }
