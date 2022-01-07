@@ -3,8 +3,10 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using WebAPI.Controllers;
+using WebAPI.DataAccess.MsSql.Persistence.Context;
 using WebAPI.Entities.Models;
 using WebAPI.Tests.Common;
 using WebAPI.UserCases.Common.Dto;
@@ -59,6 +61,24 @@ namespace WebAPI.Tests.Controllers
 
             // Assert.
             Assert.AreEqual(typeof(Task<ActionResult<DepartmentDto>>), result.GetType());
+        }
+
+        [Test]
+        public async Task GetDepartmentById_Method_Should_Returns_Success_Http_Status_Code()
+        {
+            // Arrange.
+            var dbContext = _factory.Services.CreateScope().ServiceProvider.GetService<AppDbContext>();
+            await dbContext.Departments.AddRangeAsync(new Department());
+            await dbContext.SaveChangesAsync();
+
+            var client = _factory.CreateClient();
+            var departmentId = dbContext.Departments?.FirstOrDefault()?.Id;
+
+            // Act.
+            var response = await client.GetAsync($"api/department/{departmentId}");
+
+            // Assert.
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         // [Test]
