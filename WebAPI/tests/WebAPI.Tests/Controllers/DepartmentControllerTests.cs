@@ -1,10 +1,13 @@
 ﻿using System.Collections;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
 using WebAPI.Controllers;
+using WebAPI.Entities.Models;
 using WebAPI.Tests.Common;
+using WebAPI.UserCases.Common.Dto;
 using WebAPI.Web;
 
 namespace WebAPI.Tests.Controllers
@@ -43,6 +46,19 @@ namespace WebAPI.Tests.Controllers
 
             // Assert.
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        }
+
+        [Test]
+        public void GetDepartmentById_Method_Should_Returns_ActionResult_IEnumerable_Type()
+        {
+            // Arrange.
+            var departmentId = TestContent.GetTestDepartmentList().Cast<Department>().First().Id;
+
+            // Act.
+            var result = _controller.GetDepartmentById(departmentId);
+
+            // Assert.
+            Assert.AreEqual(typeof(Task<ActionResult<DepartmentDto>>), result.GetType());
         }
 
         // [Test]

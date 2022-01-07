@@ -24,7 +24,7 @@ namespace WebAPI.Tests.Common
             {
                 new Employee
                 {
-                    Id = new Guid("9EAA21E2-3DF3-4C32-7EE5-08DA1DB6A7E3"),
+                    Id = Guid.NewGuid(),
                     Name = "Name",
                     Department = "Department",
                     DateOfJoining = DateTime.UtcNow,
@@ -37,8 +37,8 @@ namespace WebAPI.Tests.Common
             {
                 new Department()
                 {
-                    Id = new Guid("9EAA21E2-3DF3-4C32-7EE5-08DA1DB6A7E3"),
-                    Name = "Name",
+                    Id = Guid.NewGuid(),
+                    Name = "Name"
                 }
             }
             .AsEnumerable();
