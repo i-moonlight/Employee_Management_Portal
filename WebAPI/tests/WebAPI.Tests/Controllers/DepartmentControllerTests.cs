@@ -111,6 +111,22 @@ namespace WebAPI.Tests.Controllers
             Assert.AreEqual("Created successfully", stringResponse);
         }
 
+        [Test]
+        public async Task CreateDepartment_Method_Should_Returns_Validation_Response()
+        {
+            // Arrange.
+            var client = _factory.CreateClient();
+            var departmentDto = new DepartmentDto() {Name = null};
+            var content = TestContent.GetRequestContent(departmentDto);
+
+            // Act.
+            var response = await client.PostAsync("api/department", content);
+            var stringResponse = await response.Content.ReadAsStringAsync();
+
+            // Assert.
+            Assert.AreEqual("Name must be filled", stringResponse);
+        }
+
         // [Test]
         // public void Put_Should_Returns_JsonResult_String_Value()
         // {
