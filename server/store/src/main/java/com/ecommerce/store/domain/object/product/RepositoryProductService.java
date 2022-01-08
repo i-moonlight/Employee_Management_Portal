@@ -23,4 +23,14 @@ public class RepositoryProductService implements ProductService {
     public Mono<Product> findProductById(UUID id) {
         return repository.getProductById(id);
     }
+
+    @Override
+    public Mono<Product> createProduct(Product product) {
+        return repository.createProduct(
+                product.getBrand(),
+                product.getCategory(),
+                product.getDescription(),
+                product.getImage()
+        );
+    }
 }

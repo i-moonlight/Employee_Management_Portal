@@ -10,4 +10,5 @@ import java.util.UUID;
 public interface ProductService {
     Flux<Product> findProductList();
     Mono<Product> findProductById(UUID productId);
+    Mono<Product> createProduct(Product product);
 }

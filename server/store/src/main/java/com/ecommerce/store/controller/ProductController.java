@@ -27,4 +27,10 @@ public class ProductController {
     public Mono<Product> getProductById(@PathVariable("id") UUID productId) {
         return service.findProductById(productId);
     }
+
+    @PostMapping(value = "/item", consumes = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Mono<Product> createProduct(@RequestBody Product product) {
+        return service.createProduct(product);
+    }
 }

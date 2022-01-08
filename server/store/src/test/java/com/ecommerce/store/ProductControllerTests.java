@@ -20,6 +20,8 @@ import reactor.core.publisher.*;
 import java.math.BigDecimal;
 import java.util.*;
 
+import static org.mockito.ArgumentMatchers.any;
+
 @Import(ProductService.class)
 @RunWith(SpringRunner.class)
 @ExtendWith(SpringExtension.class)
@@ -93,5 +95,41 @@ public class ProductControllerTests {
                 .consumeWith(System.out::println)
                 .jsonPath("$.brand").isEqualTo(product.getBrand())
                 .jsonPath("$.price").isEqualTo(product.getPrice());
+    }
+
+    @Test
+    public void test_create_product_return_response_success() {
+
+        // given - precondition or setup
+        var productId = UUID.fromString("e1ebc80b-32f0-4714-851b-407a7042d5e0");
+
+        Product product = Product.builder()
+                .id(productId)
+                .brand("test")
+                .category("test")
+                .description("test")
+                .image("/images/product-1.jpg")
+                .build();
+
+        Mockito.when(mockService.createProduct(any(Product.class)))
+                .thenReturn(Mono.just(product));
+
+        // when - action or behaviour that we are going test
+        var response = webTestClient
+                .post().uri("/api/product/item")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .body(Mono.just(product), Product.class)
+                .exchange();
+
+        // then - verify the result or output using assert statements
+        response.expectStatus().isCreated()
+                .expectBody()
+                .consumeWith(System.out::println)
+
+                .jsonPath("$.brand").isEqualTo(product.getBrand())
+                .jsonPath("$.category").isEqualTo(product.getCategory())
+                .jsonPath("$.description").isEqualTo(product.getDescription())
+                .jsonPath("$.image").isEqualTo(product.getImage());
     }
 }
