@@ -81,21 +81,19 @@ namespace WebAPI.Tests.Controllers
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
-        // [Test]
-        // public void Post_Should_Returns_JsonResult_String_Value()
-        // {
-        //     // Arrange.   
-        //     _mockDepRepo.Setup(x => x.Create(_model)).Returns(_fakeCategories.First());
-        //
-        //     // Act.
-        //     var result = _controller.Post(_fakeCategories.First());
-        //
-        //     // Assert.
-        //     Assert.NotNull(result, "Result is null");
-        //     Assert.AreEqual(new JsonResult(_model).GetType(), result.GetType(), "Return type mismatch");
-        //     Assert.AreEqual(typeof(string), result.Value.GetType(), "Return value type mismatch");
-        // }    
-        //
+        [Test]
+        public void CreateDepartment_Method_Should_Returns_ActionResult_String_Type()
+        {
+            // Arrange.
+            var departmentDto = TestContent.GetTestDepartmentDto();
+
+            // Act.
+            var result = _controller.CreateDepartment(departmentDto);
+
+            // Assert.
+            Assert.AreEqual(typeof(Task<ActionResult<string>>), result.GetType());
+        }
+
         // [Test]
         // public void Put_Should_Returns_JsonResult_String_Value()
         // {
