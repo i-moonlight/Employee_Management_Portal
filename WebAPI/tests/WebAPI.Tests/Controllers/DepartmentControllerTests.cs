@@ -140,6 +140,23 @@ namespace WebAPI.Tests.Controllers
             Assert.AreEqual(typeof(Task<ActionResult<string>>), result.GetType());
         }
 
+        [Test]
+        public async Task UpdateDepartment_Method_Should_Returns_Success_Http_Status_Code()
+        {
+            // Arrange.
+            var client = _factory.CreateClient();
+            var departmentDto = TestContent.GetTestDepartmentDto();
+            var content = TestContent.GetRequestContent(departmentDto);
+
+            // Act.
+            var response = await client.PutAsync("api/department", content);
+            var stringResponse = await response.Content.ReadAsStringAsync();
+
+            // Assert.
+            response.EnsureSuccessStatusCode();
+            Assert.AreEqual("Updated successfully", stringResponse);
+        }
+
         //
         // [Test]
         // public void Delete_Should_Returns_JsonResult_String_Value()
