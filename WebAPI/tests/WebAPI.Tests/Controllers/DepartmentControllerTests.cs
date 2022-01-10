@@ -157,6 +157,22 @@ namespace WebAPI.Tests.Controllers
             Assert.AreEqual("Updated successfully", stringResponse);
         }
 
+        [Test]
+        public async Task UpdateDepartment_Method_Should_Returns_Validation_Response()
+        {
+            // Arrange.
+            var client = _factory.CreateClient();
+            var departmentDto = new DepartmentDto() {Name = null};
+            var content = TestContent.GetRequestContent(departmentDto);
+
+            // Act.
+            var response = await client.PutAsync("api/department", content);
+            var stringResponse = await response.Content.ReadAsStringAsync();
+
+            // Assert.
+            Assert.AreEqual("Name must be filled", stringResponse);
+        }
+
         //
         // [Test]
         // public void Delete_Should_Returns_JsonResult_String_Value()
