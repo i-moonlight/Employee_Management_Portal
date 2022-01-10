@@ -11,7 +11,7 @@ use chrono::Utc;
 use serde_json::json;
 
 
-#[get("/products")]
+#[get("/products")] // http://localhost:8080/api/products
 pub async fn get_products(state: web::Data<AppState>) -> impl Responder {
     let query_result = sqlx::query_as!(
         ProductModel,
@@ -34,7 +34,7 @@ pub async fn get_products(state: web::Data<AppState>) -> impl Responder {
 
     HttpResponse::Ok().json(
         json!({
-            "status": "success",
+            "status": 200,
             "no. products": products.len(),
             "products": products
         })

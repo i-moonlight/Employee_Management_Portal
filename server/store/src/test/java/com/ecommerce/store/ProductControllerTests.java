@@ -1,6 +1,7 @@
 package com.ecommerce.store;
 
 import com.ecommerce.store.controller.ProductController;
+import com.ecommerce.store.domain.dto.Response;
 import com.ecommerce.store.domain.service.ProductService;
 import com.ecommerce.store.entity.Product;
 import org.junit.Test;
@@ -11,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
-import org.springframework.http.MediaType;
+import org.springframework.http.*;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -77,12 +78,17 @@ public class ProductControllerTests {
         var productId = UUID.fromString("e1ebc80b-32f0-4714-851b-407a7042d5e0");
 
         var product = Product.builder()
-                .brand("John")
-                .price(BigDecimal.valueOf(100.00))
+                .id(productId)
+                .brand("test")
+                .category("test")
+                .description("test")
+                .image("/images/product-1.jpg")
                 .build();
 
+        var fakeResponse = new Response<>(HttpStatus.OK, "Product found", product);
+
         Mockito.when(mockService.findProductById(productId))
-                .thenReturn(Mono.just(product));
+                .thenReturn(Mono.just(fakeResponse));
 
         // when - action or behaviour that we are going test
         var response = webTestClient.get()
@@ -93,8 +99,10 @@ public class ProductControllerTests {
         response.expectStatus().isOk()
                 .expectBody()
                 .consumeWith(System.out::println)
-                .jsonPath("$.brand").isEqualTo(product.getBrand())
-                .jsonPath("$.price").isEqualTo(product.getPrice());
+                .jsonPath("$.body.brand").isEqualTo(product.getBrand())
+                .jsonPath("$.body.category").isEqualTo(product.getCategory())
+                .jsonPath("$.body.description").isEqualTo(product.getDescription())
+                .jsonPath("$.body.image").isEqualTo(product.getImage());
     }
 
     @Test
@@ -116,7 +124,7 @@ public class ProductControllerTests {
 
         // when - action or behaviour that we are going test
         var response = webTestClient
-                .post().uri("/api/product/item")
+                .post().uri("/api/product/create")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .body(Mono.just(product), Product.class)

@@ -14,25 +14,34 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor
 @Table(name = "product")
+//@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Product {
+    static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID id;
+    UUID       id;
+    String     brand;
+    String     category;
+    String     description;
+    String     image;
+    BigDecimal price;
+    float      rating;
+    int        numReviews;
+    int        countStock;
 
-    private String brand;
-    private String category;
-    private String description;
-    private String image;
-    private BigDecimal price;
-    private float rating;
-    private int numReviews;
-    private int countStock;
+    @JsonFormat(pattern = DATE_TIME_FORMAT)
+    LocalDateTime createdAt;
 
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime createdAt;
+    @JsonFormat(pattern = DATE_TIME_FORMAT)
+    LocalDateTime updatedAt;
 
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime updatedAt;
+    public Product(UUID id, String brand, String category, String description, String image) {
+        this.id = id;
+        this.brand = brand;
+        this.category = category;
+        this.description = description;
+        this.image = image;
+    }
 }
