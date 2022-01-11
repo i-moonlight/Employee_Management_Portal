@@ -173,21 +173,17 @@ namespace WebAPI.Tests.Controllers
             Assert.AreEqual("Name must be filled", stringResponse);
         }
 
-        //
-        // [Test]
-        // public void Delete_Should_Returns_JsonResult_String_Value()
-        // {
-        //     // Arrange.
-        //     _mockDepRepo.Setup(x => x.Delete(_fakeCategories.First().Id));
-        //
-        //     // Act.
-        //     //var result = _controller.Delete(_fakeCategories.First().Id);
-        //
-        //     // Assert.
-        //     // Assert.NotNull(result, "Result is null");
-        //     // Assert.AreEqual(new JsonResult(_model).GetType(), result.GetType(), "Return type mismatch");
-        //     // Assert.AreEqual(typeof(string), result.Value.GetType(), "Return value type mismatch");
-        // }
-        //
+        [Test]
+        public void DeleteDepartment_Method_Should_Returns_ActionResult_String_Type()
+        {
+            // Arrange.
+            var departmentId = TestContent.GetTestDepartmentDto().Id;
+
+            // Act.
+            var result = _controller.DeleteDepartmentById(departmentId);
+
+            // Assert.
+            Assert.AreEqual(typeof(Task<ActionResult<string>>), result.GetType());
+        }
     }
 }
