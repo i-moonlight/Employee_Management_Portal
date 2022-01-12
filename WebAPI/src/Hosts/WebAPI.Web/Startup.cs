@@ -58,7 +58,7 @@ namespace WebAPI.Web
             #region Role Identity
 
             services
-                .AddIdentity<User, IdentityRole>(options => { })
+                .AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>();
 
             #endregion
@@ -140,8 +140,7 @@ namespace WebAPI.Web
 
             services.Configure<StaticFileOptions>(options =>
             {
-                var fileDirectory = new DirectoryInfo(
-                    Path.Combine(Directory.GetCurrentDirectory(), "Photos"));
+                var fileDirectory = new DirectoryInfo(Path.Combine(Directory.GetCurrentDirectory(), "Photos"));
                 if (!fileDirectory.Exists) fileDirectory.Create();
                 options.RequestPath = "/Photos";
             });

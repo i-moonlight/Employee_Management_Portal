@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using WebAPI.UserCases.Common.Behaviors;
 using WebAPI.UserCases.Common.Dto;
 using WebAPI.UserCases.Requests.Departments.Commands.CreateDepartment;
 using WebAPI.UserCases.Requests.Departments.Commands.DeleteDepartment;
@@ -76,7 +75,7 @@ namespace WebAPI.Controllers
         public async Task<ActionResult<string>> CreateDepartment([FromBody] DepartmentDto department)
         {
             var request = new CreateDepartmentCommand() {DepartmentDto = department};
-            var validationResult = Validation.CreateDepartmentValidator.Validate(request);
+            var validationResult = new CreateDepartmentCommandValidator().Validate(request);
 
             if (!validationResult.IsValid)
                 return BadRequest(validationResult.Errors.First().ErrorMessage);
@@ -102,7 +101,7 @@ namespace WebAPI.Controllers
         public async Task<ActionResult<string>> UpdateDepartment([FromBody] DepartmentDto employee)
         {
             var request = new UpdateDepartmentCommand() {DepartmentDto = employee};
-            var validationResult = Validation.UpdateDepartmentValidator.Validate(request);
+            var validationResult = new UpdateDepartmentCommandValidator().Validate(request);
 
             if (!validationResult.IsValid)
                 return BadRequest(validationResult.Errors.First().ErrorMessage);

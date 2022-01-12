@@ -5,7 +5,7 @@ using WebAPI.UserCases.Common.Mappings;
 namespace WebAPI.UserCases.Common.Dto
 {
     /// <summary>
-    /// Creates a data transfer object for employee entity.
+    /// Sets a properties of the data transfer object for employee entity.
     /// </summary>
     public class EmployeeDto : IMapFrom<Employee>
     {

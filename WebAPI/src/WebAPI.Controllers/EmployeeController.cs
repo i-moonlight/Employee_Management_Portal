@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using WebAPI.UserCases.Common.Behaviors;
 using WebAPI.UserCases.Common.Dto;
 using WebAPI.UserCases.Requests.Employees.Commands.CreateEmployee;
 using WebAPI.UserCases.Requests.Employees.Commands.DeleteEmployee;
@@ -57,8 +56,8 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<EmployeeDto>> GetEmployeeById(Guid id)
         {
-            var query = new GetEmployeeQuery {Id = id};
-            return Ok(await Mediator.Send(query));
+            var request = new GetEmployeeQuery {Id = id};
+            return Ok(await Mediator.Send(request));
         }
 
         /// <summary>
@@ -98,13 +97,13 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<string>> CreateEmployee([FromBody] EmployeeDto employee)
         {
-            var command = new CreateEmployeeCommand() {EmployeeDto = employee};
-            var validationResult = Validation.CreateEmployeeValidator.Validate(command);
+            var request = new CreateEmployeeCommand() {EmployeeDto = employee};
+            var validationResult = new CreateEmployeeCommandValidator().Validate(request);
 
             if (!validationResult.IsValid)
                 return BadRequest(validationResult.Errors.First().ErrorMessage);
 
-            return Ok(await Mediator.Send(command));
+            return Ok(await Mediator.Send(request));
         }
 
         /// <summary>
@@ -144,8 +143,8 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<string>> UpdateEmployeePhoto(Guid id)
         {
-            var command = new UpdatePhotoCommand {Id = id};
-            return Ok(await Mediator.Send(command));
+            var request = new UpdatePhotoCommand {Id = id};
+            return Ok(await Mediator.Send(request));
         }
 
         /// <summary>
@@ -165,13 +164,13 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<string>> UpdateEmployee([FromBody] EmployeeDto employee)
         {
-            var command = new UpdateEmployeeCommand() {EmployeeDto = employee};
-            var validationResult = Validation.UpdateEmployeeValidator.Validate(command);
+            var request = new UpdateEmployeeCommand() {EmployeeDto = employee};
+            var validationResult = new UpdateEmployeeCommandValidator().Validate(request);
 
             if (!validationResult.IsValid)
                 return BadRequest(validationResult.Errors.First().ErrorMessage);
 
-            return Ok(await Mediator.Send(command));
+            return Ok(await Mediator.Send(request));
         }
 
         /// <summary>
@@ -191,8 +190,8 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<string>> DeleteEmployeeById(Guid id)
         {
-            var query = new DeleteEmployeeCommand {Id = id};
-            return Ok(await Mediator.Send(query));
+            var request = new DeleteEmployeeCommand {Id = id};
+            return Ok(await Mediator.Send(request));
         }
     }
 }

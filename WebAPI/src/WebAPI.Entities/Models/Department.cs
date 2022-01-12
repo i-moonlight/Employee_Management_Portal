@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebAPI.Entities.Models
 {
@@ -7,11 +8,13 @@ namespace WebAPI.Entities.Models
         /// <summary>
         /// Department ID.
         /// </summary>
+        [Required]
         public Guid Id { get; set; }
-        
+
         /// <summary>
         /// Department Name.
         /// </summary>
+        [Required]
         public string Name { get; set; }
     }
 }

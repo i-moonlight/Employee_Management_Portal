@@ -9,6 +9,9 @@ namespace WebAPI.UserCases.Requests.Departments.Commands.DeleteDepartment
 {
     public class DeleteDepartmentCommandHandler : IRequestHandler<DeleteDepartmentCommand, string>
     {
+        /// <summary>
+        /// Implements a handler for the department delete command.
+        /// </summary>
         private readonly ICrudRepository<Department> _repository;
 
         public DeleteDepartmentCommandHandler(ICrudRepository<Department> repo) =>

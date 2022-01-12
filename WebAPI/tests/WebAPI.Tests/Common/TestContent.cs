@@ -9,9 +9,12 @@ using WebAPI.UserCases.Common.Dto;
 
 namespace WebAPI.Tests.Common
 {
+    /// <summary>
+    /// Sets the content for testing.
+    /// </summary>
     public static class TestContent
     {
-        public static EmployeeDto GetTestEmployeeDto() => new EmployeeDto()
+        public static EmployeeDto GetTestEmployeeDto() => new()
         {
             Name = "Name",
             Department = "Department",
@@ -21,7 +24,7 @@ namespace WebAPI.Tests.Common
 
         public static IEnumerable GetTestEmployeeList() => new List<Employee>
         {
-            new Employee
+            new()
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -31,12 +34,11 @@ namespace WebAPI.Tests.Common
             }
         };
 
-        public static DepartmentDto GetTestDepartmentDto() =>
-            new DepartmentDto() {Name = "Name"};
+        public static DepartmentDto GetTestDepartmentDto() => new() {Name = "Name"};
 
         public static IEnumerable GetTestDepartmentList() => new List<Department>
         {
-            new Department()
+            new()
             {
                 Id = Guid.NewGuid(),
                 Name = "Name"
@@ -44,6 +46,6 @@ namespace WebAPI.Tests.Common
         };
 
         public static StringContent GetRequestContent(object obj) =>
-            new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json");
+            new(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json");
     }
 }

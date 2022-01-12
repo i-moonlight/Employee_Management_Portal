@@ -3,7 +3,7 @@
 namespace WebAPI.UserCases.Requests.Employees.Commands.CreateEmployee
 {
     /// <summary>
-    /// Validator for create employee command.
+    /// Sets validation rules for create employee command.
     /// </summary>
     public class CreateEmployeeCommandValidator : AbstractValidator<CreateEmployeeCommand>
     {
