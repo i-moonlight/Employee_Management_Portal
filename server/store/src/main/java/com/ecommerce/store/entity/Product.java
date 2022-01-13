@@ -36,12 +36,4 @@ public class Product {
 
     @JsonFormat(pattern = DATE_TIME_FORMAT)
     LocalDateTime updatedAt;
-
-    public Product(UUID id, String brand, String category, String description, String image) {
-        this.id = id;
-        this.brand = brand;
-        this.category = category;
-        this.description = description;
-        this.image = image;
-    }
 }

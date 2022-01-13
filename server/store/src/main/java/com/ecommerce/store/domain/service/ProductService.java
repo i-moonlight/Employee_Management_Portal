@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Component
 public interface ProductService {
-    Flux<Product> findProductList();
-    Mono<Response<Product>> findProductById(UUID productId);
+    Mono<Response> findProductList();
+    Mono<Response> findProductById(UUID productId);
     Mono<Product> createProduct(Product product);
 }
