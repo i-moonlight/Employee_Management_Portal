@@ -8,6 +8,7 @@ using WebAPI.Entities.Models;
 using WebAPI.Infrastructure.Interfaces.DataAccess;
 using WebAPI.Tests.Common;
 using WebAPI.UserCases.Common.Dto;
+using WebAPI.UserCases.Common.Exceptions;
 using WebAPI.UserCases.Common.Mappings;
 using WebAPI.UserCases.Requests.Departments.Queries.GetDepartment;
 using WebAPI.UserCases.Requests.Departments.Queries.GetDepartmentList;
@@ -61,6 +62,24 @@ namespace WebAPI.Tests.Requests.Queries
 
             // Assert.
             Assert.AreEqual(typeof(DepartmentDto), result.GetType());
+        }
+
+        [Test]
+        public async Task GetDepartmentQueryHandler_Handler_Method_Should_Returns_Exception()
+        {
+            // Arrange.
+            var request = new GetDepartmentQuery();
+            var handler = new GetDepartmentQueryHandler(_mockDepartmentRepo.Object, _mapper);
+            var employee = TestContent.GetTestDepartmentList().Cast<Department>().ToList().First();
+
+            request.Id = employee.Id;
+            _mockDepartmentRepo.Setup(r => r.Read(request.Id)).Returns(null as Department);
+
+            // Act.
+            async Task Exception() => await handler.Handle(request, None);
+
+            // Assert.
+            await Task.FromResult(Assert.ThrowsAsync<NotFoundException>(Exception));
         }
     }
 }
