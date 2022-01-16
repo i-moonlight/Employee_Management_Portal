@@ -7,6 +7,7 @@ using WebAPI.Infrastructure.Interfaces.DataAccess;
 using WebAPI.Tests.Common;
 using WebAPI.UserCases.Common.Mappings;
 using WebAPI.UserCases.Requests.Departments.Commands.CreateDepartment;
+using WebAPI.UserCases.Requests.Departments.Commands.UpdateDepartment;
 using static System.Threading.CancellationToken;
 
 namespace WebAPI.Tests.Requests.Commands
@@ -52,6 +53,21 @@ namespace WebAPI.Tests.Requests.Commands
 
             // Assert.
             Assert.AreEqual("Create failed", result);
+        }
+
+        [Test]
+        public async Task UpdateDepartmentCommandHandler_Handle_Method_Should_Returns_Success_String()
+        {
+            // Arrange.
+            var handler = new UpdateDepartmentCommandHandler(_mockDepartmentRepo.Object, _mapper);
+            var dto = TestContent.GetTestDepartmentDto();
+            var request = new UpdateDepartmentCommand() {DepartmentDto = dto};
+
+            // Act.
+            var result = await handler.Handle(request, None);
+
+            // Assert.
+            Assert.AreEqual("Updated successfully", result);
         }
     }
 }
