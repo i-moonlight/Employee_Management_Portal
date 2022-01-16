@@ -11,5 +11,5 @@ import java.util.UUID;
 public interface ProductService {
     Mono<Response> findProductList();
     Mono<Response> findProductById(UUID productId);
-    Mono<Product> createProduct(Product product);
+    Mono<Response> createProduct(Product product);
 }

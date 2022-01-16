@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Response {
+    int           code;
     HttpStatus    status;
     String        message;
     List<Product> body;

@@ -19,7 +19,7 @@ public class ProductController {
 
     @GetMapping("/list") // http://localhost:9001/api/product/list
     @ResponseStatus(HttpStatus.OK)
-    public Mono<Response> getProductList(){
+    public Mono<Response> getProductList() {
         return service.findProductList();
     }
 
@@ -29,9 +29,9 @@ public class ProductController {
         return service.findProductById(productId);
     }
 
-    @PostMapping(value = "/create", consumes = "application/json")
+    @PostMapping(value = "/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<Product> createProduct(@RequestBody Product product) {
+    public Mono<Response> createProduct(@RequestBody Product product) {
         return service.createProduct(product);
     }
 }

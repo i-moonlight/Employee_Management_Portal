@@ -53,8 +53,11 @@ public class ProductControllerTests {
                 .build()
         );
 
-        var fakeResponse = new Response(HttpStatus.OK, "Product found", productList);
-        Mockito.when(mockService.findProductList()).thenReturn(Mono.just(fakeResponse));
+        var fakeResponse = new Response(200, HttpStatus.OK, "Product found", productList);
+
+        Mockito
+                .when(mockService.findProductList())
+                .thenReturn(Mono.just(fakeResponse));
 
         // when - action or behaviour that we are going test
         var response = webTestClient.get()
@@ -83,9 +86,10 @@ public class ProductControllerTests {
                 .build();
 
         List<Product> list = Arrays.asList(product);
-        var fakeResponse = new Response(HttpStatus.OK, "Product found", list);
+        var fakeResponse = new Response(200, HttpStatus.OK, "Product found", list);
 
-        Mockito.when(mockService.findProductById(productId))
+        Mockito
+                .when(mockService.findProductById(productId))
                 .thenReturn(Mono.just(fakeResponse));
 
         // when - action or behaviour that we are going test
@@ -114,8 +118,11 @@ public class ProductControllerTests {
                 .image("/images/product-1.jpg")
                 .build();
 
-        Mockito.when(mockService.createProduct(any(Product.class)))
-                .thenReturn(Mono.just(product));
+        var fakeResponse = new Response(200, HttpStatus.CREATED, "Product created successfully", null);
+
+        Mockito
+                .when(mockService.createProduct(any(Product.class)))
+                .thenReturn(Mono.just(fakeResponse));
 
         // when - action or behaviour that we are going test
         var response = webTestClient
@@ -129,10 +136,6 @@ public class ProductControllerTests {
         response.expectStatus().isCreated()
                 .expectBody()
                 .consumeWith(System.out::println)
-
-                .jsonPath("$.brand").isEqualTo(product.getBrand())
-                .jsonPath("$.category").isEqualTo(product.getCategory())
-                .jsonPath("$.description").isEqualTo(product.getDescription())
-                .jsonPath("$.image").isEqualTo(product.getImage());
+                .jsonPath("$.message").isEqualTo(fakeResponse.getMessage());
     }
 }

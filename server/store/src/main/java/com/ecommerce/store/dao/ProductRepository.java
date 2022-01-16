@@ -1,6 +1,7 @@
 package com.ecommerce.store.dao;
 
 import com.ecommerce.store.entity.Product;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.r2dbc.repository.*;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -14,13 +15,20 @@ public interface ProductRepository extends R2dbcRepository<Product, UUID> {
     @Query("SELECT * FROM product p WHERE p.id = :id")
     Mono<Product> getProductById(@Param("id") UUID id);
 
+    @Modifying
     @Query("INSERT INTO product (brand, category, description, image)" +
             "VALUES (:brand, :category, :description, :image)")
-    Mono<Product> createProduct(
-            @Param("brand") String brand,
-            @Param("category") String category,
+    default Mono<String> createProduct(
+            @Param("brand")       String brand,
+            @Param("category")    String category,
             @Param("description") String description,
-            @Param("image") String image
-    );
+            @Param("image")       String image)
+    {
+        try {
+            return Mono.just("Product created successfully");
+        } catch (Exception e) {
+            return Mono.just(e.getMessage());
+        }
+    }
 }
 
