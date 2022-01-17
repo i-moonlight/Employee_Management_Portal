@@ -98,5 +98,18 @@ namespace WebAPI.Tests.Requests.Commands
             // Assert.
             Assert.AreEqual("Deleted successfully", result);
         }
+        
+        [Test]
+        public async Task DeleteDepartmentCommandHandler_Handle_Method_Should_Returns_Failure_String()
+        {
+            // Arrange.
+            var handler = new DeleteDepartmentCommandHandler(_mockDepartmentRepo.Object);
+
+            // Act.
+            var result = await handler.Handle(null, None);
+
+            // Assert.
+            Assert.AreEqual("Delete failed", result);
+        }
     }
 }
