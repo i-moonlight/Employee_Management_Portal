@@ -7,6 +7,7 @@ using WebAPI.Infrastructure.Interfaces.DataAccess;
 using WebAPI.Tests.Common;
 using WebAPI.UserCases.Common.Mappings;
 using WebAPI.UserCases.Requests.Departments.Commands.CreateDepartment;
+using WebAPI.UserCases.Requests.Departments.Commands.DeleteDepartment;
 using WebAPI.UserCases.Requests.Departments.Commands.UpdateDepartment;
 using static System.Threading.CancellationToken;
 
@@ -81,6 +82,21 @@ namespace WebAPI.Tests.Requests.Commands
 
             // Assert.
             Assert.AreEqual("Update failed", result);
+        }
+        
+        [Test]
+        public async Task DeleteDepartmentCommandHandler_Handle_Method_Should_Returns_Success_String()
+        {
+            // Arrange.
+            var handler = new DeleteDepartmentCommandHandler(_mockDepartmentRepo.Object);
+            var employeeId = TestContent.GetTestDepartmentDto().Id;
+            var request = new DeleteDepartmentCommand() {Id = employeeId};
+
+            // Act.
+            var result = await handler.Handle(request, None);
+
+            // Assert.
+            Assert.AreEqual("Deleted successfully", result);
         }
     }
 }
