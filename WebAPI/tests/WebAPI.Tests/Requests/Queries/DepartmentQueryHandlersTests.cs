@@ -1,43 +1,39 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
-using Moq;
 using NUnit.Framework;
 using WebAPI.Entities.Models;
-using WebAPI.Infrastructure.Interfaces.DataAccess;
 using WebAPI.Tests.Common;
 using WebAPI.UserCases.Common.Dto;
 using WebAPI.UserCases.Common.Exceptions;
-using WebAPI.UserCases.Common.Mappings;
 using WebAPI.UserCases.Requests.Departments.Queries.GetDepartment;
 using WebAPI.UserCases.Requests.Departments.Queries.GetDepartmentList;
 using static System.Threading.CancellationToken;
 
 namespace WebAPI.Tests.Requests.Queries
 {
-    public class DepartmentQueryHandlersTests
+    [TestFixture]
+    public class DepartmentQueryHandlersTests : RequestHandlersTest
     {
-        private Mock<ICrudRepository<Department>> _mockDepartmentRepo;
-        private IMapper _mapper;
+        private GetDepartmentQuery _request;
+        private GetDepartmentQueryHandler _handler;
+        private IEnumerable _testDepartmentList;
 
         [SetUp]
-        public void Setup()
+        public new void Setup()
         {
-            var mappingConfig = new MapperConfiguration(c => c.AddProfile(new AssemblyMappingProfile()));
-            var mapper = mappingConfig.CreateMapper();
-
-            _mockDepartmentRepo = new Mock<ICrudRepository<Department>>();
-            _mapper = mapper;
+            _request = new GetDepartmentQuery();
+            _handler = new GetDepartmentQueryHandler(MockDepartmentRepo.Object, Mapper);
+            _testDepartmentList = TestContent.GetTestDepartmentList();
         }
 
         [Test]
         public async Task GetDepartmentListQueryHandler_Handler_Method_Should_Returns_Department_List()
         {
             // Arrange.
-            var handler = new GetDepartmentListQueryHandler(_mockDepartmentRepo.Object);
-            var departmentList = TestContent.GetTestDepartmentList();
-            _mockDepartmentRepo.Setup(r => r.Read()).Returns(departmentList);
+            var handler = new GetDepartmentListQueryHandler(MockDepartmentRepo.Object);
+            MockDepartmentRepo.Setup(r => r.Read()).Returns(_testDepartmentList);
 
             // Act.
             var result = await handler.Handle(new GetDepartmentListQuery(), None);
@@ -50,15 +46,12 @@ namespace WebAPI.Tests.Requests.Queries
         public async Task GetDepartmentQueryHandler_Handler_Method_Should_Returns_DepartmentDto()
         {
             // Arrange.
-            var request = new GetDepartmentQuery();
-            var handler = new GetDepartmentQueryHandler(_mockDepartmentRepo.Object, _mapper);
-            var department = TestContent.GetTestDepartmentList().Cast<Department>().ToList().First();
-
-            request.Id = department.Id;
-            _mockDepartmentRepo.Setup(r => r.Read(request.Id)).Returns(department);
+            var testDepartment = _testDepartmentList.Cast<Department>().First();
+            _request.Id = testDepartment.Id;
+            MockDepartmentRepo.Setup(r => r.Read(_request.Id)).Returns(testDepartment);
 
             // Act.
-            var result = await handler.Handle(request, None);
+            var result = await _handler.Handle(_request, None);
 
             // Assert.
             Assert.AreEqual(typeof(DepartmentDto), result.GetType());
@@ -68,15 +61,10 @@ namespace WebAPI.Tests.Requests.Queries
         public async Task GetDepartmentQueryHandler_Handler_Method_Should_Returns_Exception()
         {
             // Arrange.
-            var request = new GetDepartmentQuery();
-            var handler = new GetDepartmentQueryHandler(_mockDepartmentRepo.Object, _mapper);
-            var employee = TestContent.GetTestDepartmentList().Cast<Department>().ToList().First();
-
-            request.Id = employee.Id;
-            _mockDepartmentRepo.Setup(r => r.Read(request.Id)).Returns(null as Department);
+            MockDepartmentRepo.Setup(r => r.Read(_request.Id)).Returns(null as Department);
 
             // Act.
-            async Task Exception() => await handler.Handle(request, None);
+            async Task Exception() => await _handler.Handle(_request, None);
 
             // Assert.
             await Task.FromResult(Assert.ThrowsAsync<NotFoundException>(Exception));
