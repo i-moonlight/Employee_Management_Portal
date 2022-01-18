@@ -118,7 +118,7 @@ public class ProductControllerTests {
                 .image("/images/product-1.jpg")
                 .build();
 
-        var fakeResponse = new Response(200, HttpStatus.CREATED, "Product created successfully", null);
+        var fakeResponse = new Response(201, HttpStatus.CREATED, "Product created", null);
 
         Mockito
                 .when(mockService.createProduct(any(Product.class)))
@@ -134,6 +134,41 @@ public class ProductControllerTests {
 
         // then - verify the result or output using assert statements
         response.expectStatus().isCreated()
+                .expectBody()
+                .consumeWith(System.out::println)
+                .jsonPath("$.message").isEqualTo(fakeResponse.getMessage());
+    }
+
+    @Test
+    public void test_update_product_return_response_success() {
+
+        // given - precondition or setup
+        var productId = UUID.fromString("e1ebc80b-32f0-4714-851b-407a7042d5e0");
+
+        Product product = Product.builder()
+                .id(productId)
+                .brand("test")
+                .category("test")
+                .description("test")
+                .image("/images/product-1.jpg")
+                .build();
+
+        var fakeResponse = new Response(200, HttpStatus.OK, "Product updated", null);
+
+        Mockito
+                .when(mockService.updateProductById(productId, product))
+                .thenReturn(Mono.just(fakeResponse));
+
+        // when - action or behaviour that we are going test
+        var response = webTestClient
+                .put().uri("/api/product/update/e1ebc80b-32f0-4714-851b-407a7042d5e0")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .body(Mono.just(product), Product.class)
+                .exchange();
+
+        // then - verify the result or output using assert statements
+        response.expectStatus().isOk()
                 .expectBody()
                 .consumeWith(System.out::println)
                 .jsonPath("$.message").isEqualTo(fakeResponse.getMessage());

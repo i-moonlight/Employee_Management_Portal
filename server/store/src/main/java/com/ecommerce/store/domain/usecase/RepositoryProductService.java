@@ -20,7 +20,8 @@ public class RepositoryProductService implements ProductService {
 
     @Override
     public Mono<Response> findProductList() {
-        return repository.findAll().delayElements(Duration.ofSeconds(1))
+        return repository.findAll()
+                .delayElements(Duration.ofSeconds(1))
                 .collectList()
                 .flatMap(productList -> {
                     if (productList.isEmpty()) {
@@ -45,7 +46,7 @@ public class RepositoryProductService implements ProductService {
     public Mono<Response> findProductById(UUID id) {
         return repository.getProductById(id)
                 .map(product -> new Response(
-                        200, HttpStatus.OK, "Product found", (List<Product>) product)
+                        200, HttpStatus.OK, "Product found", product)
                 )
                 .switchIfEmpty(Mono.just(new Response(
                         404, HttpStatus.NOT_FOUND, "Product not found", null))
@@ -57,12 +58,42 @@ public class RepositoryProductService implements ProductService {
 
     @Override
     public Mono<Response> createProduct(Product p) {
-        return repository.createProduct(p.getBrand(), p.getCategory(), p.getDescription(), p.getImage())
+        return repository.createProduct(
+                p.getBrand(), p.getCategory(), p.getDescription(), p.getImage()
+                )
                 .map(result -> new Response(
-                        201, HttpStatus.CREATED, result, null)
+                        201, HttpStatus.CREATED, "Product created", p)
                 )
                 .onErrorResume(ex -> Mono.just(new Response(
-                        500, HttpStatus.INTERNAL_SERVER_ERROR, "Error creating product: " + ex.getMessage(), null))
+                        500, HttpStatus.INTERNAL_SERVER_ERROR,
+                        "Error: " + ex.getMessage(), null))
                 );
+    }
+
+    public Mono<Response> updateProductById(UUID productId, Product p) {
+        return repository.getProductById(productId)
+                .flatMap(existProduct -> {
+                    existProduct.setBrand(p.getBrand());
+                    existProduct.setCategory(p.getCategory());
+                    existProduct.setDescription(p.getDescription());
+                    existProduct.setImage(p.getImage());
+
+            return repository.updateProduct(
+                            existProduct.getBrand(),
+                            existProduct.getCategory(),
+                            existProduct.getDescription(),
+                            existProduct.getImage(),
+                            existProduct.getId()
+                    )
+                    .map(result -> new Response(
+                            200, HttpStatus.OK, "Product updated", null)
+                    )
+                    .defaultIfEmpty(new Response(
+                            404, HttpStatus.NOT_FOUND, "Product not found", null)
+                    )
+                    .onErrorResume(ex -> Mono.just(new Response(
+                            500, HttpStatus.INTERNAL_SERVER_ERROR, "Error: " + ex.getMessage(), null))
+                    );
+        });
     }
 }
