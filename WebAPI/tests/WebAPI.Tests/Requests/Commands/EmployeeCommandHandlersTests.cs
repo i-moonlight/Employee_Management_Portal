@@ -1,12 +1,6 @@
 ﻿using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.AspNetCore.Hosting;
-using Moq;
 using NUnit.Framework;
-using WebAPI.Entities.Models;
-using WebAPI.Infrastructure.Interfaces.DataAccess;
 using WebAPI.Tests.Common;
-using WebAPI.UserCases.Common.Mappings;
 using WebAPI.UserCases.Requests.Employees.Commands.CreateEmployee;
 using WebAPI.UserCases.Requests.Employees.Commands.UpdateEmployeePhoto;
 using WebAPI.UserCases.Requests.Employees.Commands.UploadEmployeePhoto;
@@ -17,30 +11,14 @@ using static System.Threading.CancellationToken;
 namespace WebAPI.Tests.Requests.Commands
 {
     [TestFixture]
-    public class EmployeeCommandHandlersTests
+    public class EmployeeCommandHandlersTests : RequestHandlersTest
     {
-        private Mock<ICrudRepository<Employee>> _mockEmployeeRepo;
-        private Mock<IWebHostEnvironment> _mockEnvironment;
-        private IMapper _mapper;
-
-        [SetUp]
-        public void Setup()
-        {
-            var mappingConfig = new MapperConfiguration(c => c.AddProfile(new AssemblyMappingProfile()));
-            var mapper = mappingConfig.CreateMapper();
-
-            _mockEmployeeRepo = new Mock<ICrudRepository<Employee>>();
-            _mockEnvironment = new Mock<IWebHostEnvironment>();
-            _mapper = mapper;
-        }
-
         [Test]
         public async Task CreateEmployeeCommandHandler_Handle_Method_Should_Returns_Success_String()
         {
             // Arrange.
-            var handler = new CreateEmployeeCommandHandler(_mockEmployeeRepo.Object, _mapper);
-            var dto = TestContent.GetTestEmployeeDto();
-            var request = new CreateEmployeeCommand() {EmployeeDto = dto};
+            var handler = new CreateEmployeeCommandHandler(MockEmployeeRepo.Object, Mapper);
+            var request = new CreateEmployeeCommand() {EmployeeDto = TestEmployeeDto};
 
             // Act.
             var result = await handler.Handle(request, None);
@@ -53,7 +31,7 @@ namespace WebAPI.Tests.Requests.Commands
         public async Task CreateEmployeeCommandHandler_Handle_Method_Should_Returns_Failure_String()
         {
             // Arrange.
-            var handler = new CreateEmployeeCommandHandler(_mockEmployeeRepo.Object, _mapper);
+            var handler = new CreateEmployeeCommandHandler(MockEmployeeRepo.Object, Mapper);
 
             // Act.
             var result = await handler.Handle(null, None);
@@ -66,7 +44,7 @@ namespace WebAPI.Tests.Requests.Commands
         public async Task UploadPhotoCommandHandler_Handle_Method_Should_Returns_Default_FileName_String()
         {
             // Arrange.
-            var handler = new UploadPhotoCommandHandler(_mockEnvironment.Object);
+            var handler = new UploadPhotoCommandHandler(MockEnvironment.Object);
 
             // Act.
             var result = await handler.Handle(new UploadPhotoCommand(), None);
@@ -79,7 +57,7 @@ namespace WebAPI.Tests.Requests.Commands
         public async Task UpdatePhotoCommandHandler_Handle_Method_Should_Returns_Default_FileName_String()
         {
             // Arrange.
-            var handler = new UpdatePhotoCommandHandler(_mockEmployeeRepo.Object, _mockEnvironment.Object);
+            var handler = new UpdatePhotoCommandHandler(MockEmployeeRepo.Object, MockEnvironment.Object);
 
             // Act.
             var result = await handler.Handle(new UpdatePhotoCommand(), None);
@@ -92,9 +70,8 @@ namespace WebAPI.Tests.Requests.Commands
         public async Task UpdateEmployeeCommandHandler_Handle_Method_Should_Returns_Success_String()
         {
             // Arrange.
-            var handler = new UpdateEmployeeCommandHandler(_mockEmployeeRepo.Object, _mapper);
-            var dto = TestContent.GetTestEmployeeDto();
-            var request = new UpdateEmployeeCommand() {EmployeeDto = dto};
+            var handler = new UpdateEmployeeCommandHandler(MockEmployeeRepo.Object, Mapper);
+            var request = new UpdateEmployeeCommand() {EmployeeDto = TestEmployeeDto};
 
             // Act.
             var result = await handler.Handle(request, None);
@@ -107,7 +84,7 @@ namespace WebAPI.Tests.Requests.Commands
         public async Task UpdateEmployeeCommandHandler_Handle_Method_Should_Returns_Failure_String()
         {
             // Arrange.
-            var handler = new UpdateEmployeeCommandHandler(_mockEmployeeRepo.Object, _mapper);
+            var handler = new UpdateEmployeeCommandHandler(MockEmployeeRepo.Object, Mapper);
 
             // Act.
             var result = await handler.Handle(null, None);
@@ -120,8 +97,8 @@ namespace WebAPI.Tests.Requests.Commands
         public async Task DeleteEmployeeCommandHandler_Handle_Method_Should_Returns_Success_String()
         {
             // Arrange.
-            var handler = new DeleteEmployeeCommandHandler(_mockEmployeeRepo.Object);
-            var employeeId = TestContent.GetTestEmployeeDto().Id;
+            var handler = new DeleteEmployeeCommandHandler(MockEmployeeRepo.Object);
+            var employeeId = TestEmployeeDto.Id;
             var request = new DeleteEmployeeCommand() {Id = employeeId};
 
             // Act.
@@ -135,7 +112,7 @@ namespace WebAPI.Tests.Requests.Commands
         public async Task DeleteEmployeeCommandHandler_Handle_Method_Should_Returns_Failure_String()
         {
             // Arrange.
-            var handler = new DeleteEmployeeCommandHandler(_mockEmployeeRepo.Object);
+            var handler = new DeleteEmployeeCommandHandler(MockEmployeeRepo.Object);
 
             // Act.
             var result = await handler.Handle(null, None);
