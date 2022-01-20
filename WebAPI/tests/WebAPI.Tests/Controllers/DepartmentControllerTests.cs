@@ -1,37 +1,31 @@
 ﻿using System.Collections;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
-using WebAPI.Controllers;
-using WebAPI.DataAccess.MsSql.Persistence.Context;
 using WebAPI.Entities.Models;
 using WebAPI.Tests.Common;
 using WebAPI.UserCases.Common.Dto;
-using WebAPI.Web;
+using static System.Net.HttpStatusCode;
+using static WebAPI.Tests.Common.TestContent;
 
 namespace WebAPI.Tests.Controllers
 {
     [TestFixture]
-    public class DepartmentControllerTests
+    public class DepartmentControllerTests : ControllerTestSetup
     {
-        private DepartmentController _controller;
-        private TestWebApplicationFactory<Startup> _factory;
-
         [SetUp]
-        public void Setup()
+        public new void Setup()
         {
-            _controller = new DepartmentController();
-            _factory = new TestWebApplicationFactory<Startup>();
+            TestDbContext.Departments.AddRangeAsync(new Department());
+            TestDbContext.SaveChangesAsync();
         }
 
         [Test]
         public void GetDepartmentList_Method_Should_Returns_ActionResult_IEnumerable_Type()
         {
             // Act.
-            var result = _controller.GetDepartmentList();
+            var result = DepartmentController.GetDepartmentList();
 
             // Assert.
             Assert.AreEqual(typeof(Task<ActionResult<IEnumerable>>), result.GetType());
@@ -40,24 +34,21 @@ namespace WebAPI.Tests.Controllers
         [Test]
         public async Task GetDepartmentList_Method_Should_Returns_Success_Http_Status_Code()
         {
-            // Arrange.
-            var client = _factory.CreateClient();
-
             // Act.
-            var response = await client.GetAsync("api/department");
+            var response = await HttpClient.GetAsync("api/department");
 
             // Assert.
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.AreEqual(OK, response.StatusCode);
         }
 
         [Test]
         public void GetDepartmentById_Method_Should_Returns_ActionResult_IEnumerable_Type()
         {
             // Arrange.
-            var departmentId = TestContent.GetTestDepartmentList().Cast<Department>().First().Id;
+            var departmentId = TestDepartmentDto.Id;
 
             // Act.
-            var result = _controller.GetDepartmentById(departmentId);
+            var result = DepartmentController.GetDepartmentById(departmentId);
 
             // Assert.
             Assert.AreEqual(typeof(Task<ActionResult<DepartmentDto>>), result.GetType());
@@ -67,28 +58,20 @@ namespace WebAPI.Tests.Controllers
         public async Task GetDepartmentById_Method_Should_Returns_Success_Http_Status_Code()
         {
             // Arrange.
-            var dbContext = _factory.Services.CreateScope().ServiceProvider.GetService<AppDbContext>();
-            await dbContext.Departments.AddRangeAsync(new Department());
-            await dbContext.SaveChangesAsync();
-
-            var client = _factory.CreateClient();
-            var departmentId = dbContext.Departments?.FirstOrDefault()?.Id;
+            var departmentId = TestDbContext.Departments?.FirstOrDefault()?.Id;
 
             // Act.
-            var response = await client.GetAsync($"api/department/{departmentId}");
+            var response = await HttpClient.GetAsync($"api/department/{departmentId}");
 
             // Assert.
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.AreEqual(OK, response.StatusCode);
         }
 
         [Test]
         public void CreateDepartment_Method_Should_Returns_ActionResult_String_Type()
         {
-            // Arrange.
-            var departmentDto = TestContent.GetTestDepartmentDto();
-
             // Act.
-            var result = _controller.CreateDepartment(departmentDto);
+            var result = DepartmentController.CreateDepartment(TestDepartmentDto);
 
             // Assert.
             Assert.AreEqual(typeof(Task<ActionResult<string>>), result.GetType());
@@ -98,12 +81,10 @@ namespace WebAPI.Tests.Controllers
         public async Task CreateDepartment_Method_Should_Returns_Success_Http_Status_Code()
         {
             // Arrange.
-            var client = _factory.CreateClient();
-            var departmentDto = TestContent.GetTestDepartmentDto();
-            var content = TestContent.GetRequestContent(departmentDto);
+            var content = GetRequestContent(TestDepartmentDto);
 
             // Act.
-            var response = await client.PostAsync("api/department", content);
+            var response = await HttpClient.PostAsync("api/department", content);
             var stringResponse = await response.Content.ReadAsStringAsync();
 
             // Assert.
@@ -115,12 +96,11 @@ namespace WebAPI.Tests.Controllers
         public async Task CreateDepartment_Method_Should_Returns_Validation_Response()
         {
             // Arrange.
-            var client = _factory.CreateClient();
             var departmentDto = new DepartmentDto() {Name = null};
-            var content = TestContent.GetRequestContent(departmentDto);
+            var content = GetRequestContent(departmentDto);
 
             // Act.
-            var response = await client.PostAsync("api/department", content);
+            var response = await HttpClient.PostAsync("api/department", content);
             var stringResponse = await response.Content.ReadAsStringAsync();
 
             // Assert.
@@ -130,11 +110,8 @@ namespace WebAPI.Tests.Controllers
         [Test]
         public void UpdateDepartment_Method_Should_Returns_ActionResult_String_Type()
         {
-            // Arrange.
-            var departmentDto = TestContent.GetTestDepartmentDto();
-
             // Act.
-            var result = _controller.UpdateDepartment(departmentDto);
+            var result = DepartmentController.UpdateDepartment(TestDepartmentDto);
 
             // Assert.
             Assert.AreEqual(typeof(Task<ActionResult<string>>), result.GetType());
@@ -144,12 +121,10 @@ namespace WebAPI.Tests.Controllers
         public async Task UpdateDepartment_Method_Should_Returns_Success_Http_Status_Code()
         {
             // Arrange.
-            var client = _factory.CreateClient();
-            var departmentDto = TestContent.GetTestDepartmentDto();
-            var content = TestContent.GetRequestContent(departmentDto);
+            var content = GetRequestContent(TestDepartmentDto);
 
             // Act.
-            var response = await client.PutAsync("api/department", content);
+            var response = await HttpClient.PutAsync("api/department", content);
             var stringResponse = await response.Content.ReadAsStringAsync();
 
             // Assert.
@@ -161,12 +136,11 @@ namespace WebAPI.Tests.Controllers
         public async Task UpdateDepartment_Method_Should_Returns_Validation_Response()
         {
             // Arrange.
-            var client = _factory.CreateClient();
             var departmentDto = new DepartmentDto() {Name = null};
-            var content = TestContent.GetRequestContent(departmentDto);
+            var content = GetRequestContent(departmentDto);
 
             // Act.
-            var response = await client.PutAsync("api/department", content);
+            var response = await HttpClient.PutAsync("api/department", content);
             var stringResponse = await response.Content.ReadAsStringAsync();
 
             // Assert.
@@ -177,10 +151,10 @@ namespace WebAPI.Tests.Controllers
         public void DeleteDepartment_Method_Should_Returns_ActionResult_String_Type()
         {
             // Arrange.
-            var departmentId = TestContent.GetTestDepartmentDto().Id;
+            var departmentId = TestDepartmentDto.Id;
 
             // Act.
-            var result = _controller.DeleteDepartmentById(departmentId);
+            var result = DepartmentController.DeleteDepartmentById(departmentId);
 
             // Assert.
             Assert.AreEqual(typeof(Task<ActionResult<string>>), result.GetType());
@@ -190,14 +164,10 @@ namespace WebAPI.Tests.Controllers
         public async Task DeleteEmployee_Method_Should_Returns_Success_Http_Status_Code()
         {
             // Arrange.
-            var client = _factory.CreateClient();
-            var dbContext = _factory.Services.CreateScope().ServiceProvider.GetService<AppDbContext>();
-            await dbContext.Departments.AddRangeAsync(new Department());
-            await dbContext.SaveChangesAsync();
-            var departmentId = dbContext.Departments?.FirstOrDefault()?.Id;
+            var departmentId = TestDbContext.Departments?.FirstOrDefault()?.Id;
 
             // Act.
-            var response = await client.DeleteAsync($"api/department/{departmentId}");
+            var response = await HttpClient.DeleteAsync($"api/department/{departmentId}");
             var stringResponse = await response.Content.ReadAsStringAsync();
 
             // Assert.
