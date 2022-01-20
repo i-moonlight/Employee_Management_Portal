@@ -173,4 +173,29 @@ public class ProductControllerTests {
                 .consumeWith(System.out::println)
                 .jsonPath("$.message").isEqualTo(fakeResponse.getMessage());
     }
+
+    @Test
+    public void test_delete_product_return_response_success() {
+
+        // given - precondition or setup
+        var productId = UUID.fromString("e1ebc80b-32f0-4714-851b-407a7042d5e0");
+        var fakeResponse = new Response(200, HttpStatus.OK, "Product deleted", null);
+
+        Mockito
+                .when(mockService.deleteProductById(productId))
+                .thenReturn(Mono.just(fakeResponse));
+
+        // when - action or behaviour that we are going test
+        var response = webTestClient.delete()
+                .uri("/api/product/delete/e1ebc80b-32f0-4714-851b-407a7042d5e0",
+                        Collections.singletonMap("id", productId))
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange();
+
+        // then - verify the result or output using assert statements
+        response.expectStatus().isOk()
+                .expectBody()
+                .consumeWith(System.out::println)
+                .jsonPath("$.message").isEqualTo(fakeResponse.getMessage());
+    }
 }

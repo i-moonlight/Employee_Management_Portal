@@ -13,4 +13,5 @@ public interface ProductService {
     Mono<Response> findProductById(UUID productId);
     Mono<Response> createProduct(Product product);
     Mono<Response> updateProductById(UUID productId, Product updatedProduct);
+    Mono<Response> deleteProductById(UUID productId);
 }

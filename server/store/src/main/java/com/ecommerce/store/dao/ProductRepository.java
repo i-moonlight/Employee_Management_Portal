@@ -4,6 +4,7 @@ import com.ecommerce.store.entity.Product;
 import org.springframework.data.r2dbc.repository.*;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
 import java.util.UUID;
@@ -25,6 +26,7 @@ public interface ProductRepository extends R2dbcRepository<Product, UUID> {
     );
 
     @Modifying
+    @Transactional
     @Query("UPDATE product" +
             " SET brand = $1, category = $2, description = $3, image = $4" +
             " WHERE id = $5")
@@ -35,5 +37,10 @@ public interface ProductRepository extends R2dbcRepository<Product, UUID> {
             @Param("image")       String image,
             @Param("id")          UUID   id
     );
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Product p WHERE p.id = :productId")
+    Mono<Long> deleteProduct(UUID productId);
 }
 

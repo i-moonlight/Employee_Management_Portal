@@ -20,25 +20,24 @@ public class RepositoryProductService implements ProductService {
 
     @Override
     public Mono<Response> findProductList() {
-        return repository.findAll()
-                .delayElements(Duration.ofSeconds(1))
+        return repository.findAll().delayElements(Duration.ofSeconds(1))
                 .collectList()
-                .flatMap(productList -> {
-                    if (productList.isEmpty()) {
+                .flatMap(list -> {
+                    if (!list.isEmpty()) {
                         return Mono.just(new Response(
-                                200, HttpStatus.OK, "List is empty", productList)
+                                200, HttpStatus.OK, "List is found", list.size(), list)
                         );
                     } else {
                         return Mono.just(new Response(
-                                200, HttpStatus.OK, "List is found", productList)
+                                200, HttpStatus.OK, "List is empty", 0, list)
                         );
                     }
                 })
                 .switchIfEmpty(Mono.just(new Response(
-                        404, HttpStatus.NOT_FOUND, "Product not found", null))
+                        404, HttpStatus.NOT_FOUND, "Product not found", null, null))
                 )
                 .onErrorResume(DatabaseException.class, ex -> Mono.just(new Response(
-                        500, HttpStatus.INTERNAL_SERVER_ERROR, "Database error", null))
+                        500, HttpStatus.INTERNAL_SERVER_ERROR, "Database error", null, null))
                 );
     }
 
@@ -46,13 +45,13 @@ public class RepositoryProductService implements ProductService {
     public Mono<Response> findProductById(UUID id) {
         return repository.getProductById(id)
                 .map(product -> new Response(
-                        200, HttpStatus.OK, "Product found", product)
+                        200, HttpStatus.OK, "Product found", 1, product)
                 )
                 .switchIfEmpty(Mono.just(new Response(
-                        404, HttpStatus.NOT_FOUND, "Product not found", null))
+                        404, HttpStatus.NOT_FOUND, "Product not found", null, null))
                 )
                 .onErrorResume(DatabaseException.class, ex -> Mono.just(new Response(
-                        500, HttpStatus.INTERNAL_SERVER_ERROR, "Database error", null))
+                        500, HttpStatus.INTERNAL_SERVER_ERROR, "Database error", null, null))
                 );
     }
 
@@ -71,6 +70,7 @@ public class RepositoryProductService implements ProductService {
     }
 
     public Mono<Response> updateProductById(UUID productId, Product p) {
+
         return repository.getProductById(productId)
                 .flatMap(existProduct -> {
                     existProduct.setBrand(p.getBrand());
@@ -95,5 +95,21 @@ public class RepositoryProductService implements ProductService {
                             500, HttpStatus.INTERNAL_SERVER_ERROR, "Error: " + ex.getMessage(), null))
                     );
         });
+    }
+
+    @Override
+    public Mono<Response> deleteProductById(UUID productId) {
+        return repository.getProductById(productId)
+                .flatMap(existProduct -> repository.deleteProduct(existProduct.getId())
+                        .then(Mono.just(new Response(
+                                200, HttpStatus.OK, "Product deleted", null))
+                        )
+                        .switchIfEmpty(Mono.just(new Response(
+                                404, HttpStatus.NOT_FOUND, "Product not found", null)
+                        )
+                        .onErrorResume(ex -> Mono.just(new Response(
+                                500, HttpStatus.INTERNAL_SERVER_ERROR, "Error: " + ex.getMessage(), null))
+                        ))
+                );
     }
 }

@@ -39,4 +39,9 @@ public class ProductController {
     public Mono<Response> updateProduct(@PathVariable UUID productId, @RequestBody Product updatedProduct) {
         return service.updateProductById(productId, updatedProduct);
     }
+
+    @DeleteMapping("/delete/{productId}")
+    public Mono<Response> deleteProduct(@PathVariable UUID productId) {
+        return service.deleteProductById(productId);
+    }
 }
