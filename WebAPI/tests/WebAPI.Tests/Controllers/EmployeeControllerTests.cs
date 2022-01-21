@@ -1,37 +1,31 @@
 using NUnit.Framework;
-using WebAPI.Controllers;
 using System.Collections;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
 using WebAPI.Tests.Common;
-using WebAPI.Web;
-using System.Linq;
-using Microsoft.Extensions.DependencyInjection;
-using WebAPI.DataAccess.MsSql.Persistence.Context;
 using WebAPI.Entities.Models;
 using WebAPI.UserCases.Common.Dto;
+using static System.Net.HttpStatusCode;
+using static WebAPI.Tests.Common.TestContent;
 
 namespace WebAPI.Tests.Controllers
 {
     [TestFixture]
-    public class EmployeeControllerTests
+    public class EmployeeControllerTests : ControllerTestSetup
     {
-        private EmployeeController _controller;
-        private TestWebApplicationFactory<Startup> _factory;
-
         [SetUp]
-        public void Setup()
+        public new void Setup()
         {
-            _controller = new EmployeeController();
-            _factory = new TestWebApplicationFactory<Startup>();
+            TestDbContext.Employees.AddRangeAsync(new Employee());
+            TestDbContext.SaveChangesAsync();
         }
 
         [Test]
         public void GetEmployeeList_Method_Should_Returns_ActionResult_IEnumerable_Type()
         {
             // Act.
-            var result = _controller.GetEmployeeList();
+            var result = EmployeeController.GetEmployeeList();
 
             // Assert.
             Assert.AreEqual(typeof(Task<ActionResult<IEnumerable>>), result.GetType());
@@ -40,24 +34,21 @@ namespace WebAPI.Tests.Controllers
         [Test]
         public async Task GetEmployeeList_Method_Should_Returns_Success_Http_Status_Code()
         {
-            // Arrange.
-            var client = _factory.CreateClient();
-
             // Act.
-            var response = await client.GetAsync("api/employee");
+            var response = await HttpClient.GetAsync("api/employee");
 
             // Assert.
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.AreEqual(OK, response.StatusCode);
         }
 
         [Test]
         public void GetEmployeeById_Method_Should_Returns_ActionResult_EmployeeDto_Type()
         {
             // Arrange.
-            var employeeId = TestContent.GetTestEmployeeDto().Id;
+            var employeeId = GetTestEmployeeDto().Id;
 
             // Act.
-            var result = _controller.GetEmployeeById(employeeId);
+            var result = EmployeeController.GetEmployeeById(employeeId);
 
             // Assert.
             Assert.AreEqual(typeof(Task<ActionResult<EmployeeDto>>), result.GetType());
@@ -67,24 +58,20 @@ namespace WebAPI.Tests.Controllers
         public async Task GetEmployeeById_Method_Should_Returns_Success_Http_Status_Code()
         {
             // Arrange.
-            var dbContext = _factory.Services.CreateScope().ServiceProvider.GetService<AppDbContext>();
-            await dbContext.Employees.AddRangeAsync(new Employee());
-            await dbContext.SaveChangesAsync();
-            var client = _factory.CreateClient();
-            var employeeId = dbContext.Employees?.FirstOrDefault()?.Id;
+            var employeeId = TestDbContext.Employees?.FirstOrDefault()?.Id;
 
             // Act.
-            var response = await client.GetAsync($"api/employee/{employeeId}");
+            var response = await HttpClient.GetAsync($"api/employee/{employeeId}");
 
             // Assert.
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.AreEqual(OK, response.StatusCode);
         }
 
         [Test]
         public void GetDepartmentNameList_Method_Should_Returns_ActionResult_IEnumerable_Type()
         {
             // Act.
-            var result = _controller.GetDepartmentNameList();
+            var result = EmployeeController.GetDepartmentNameList();
 
             // Assert.
             Assert.AreEqual(typeof(Task<ActionResult<IEnumerable>>), result.GetType());
@@ -93,24 +80,18 @@ namespace WebAPI.Tests.Controllers
         [Test]
         public async Task GetDepartmentNameList_Method_Should_Returns_Success_Http_Status_Code()
         {
-            // Arrange.
-            var client = _factory.CreateClient();
-
             // Act.
-            var response = await client.GetAsync("api/employee/GetDepartmentNames");
+            var response = await HttpClient.GetAsync("api/employee/GetDepartmentNames");
 
             // Assert.
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.AreEqual(OK, response.StatusCode);
         }
 
         [Test]
         public void CreateEmployee_Method_Should_Returns_ActionResult_String_Type()
         {
-            // Arrange.
-            var employeeDto = TestContent.GetTestEmployeeDto();
-
             // Act.
-            var result = _controller.CreateEmployee(employeeDto);
+            var result = EmployeeController.CreateEmployee(TestEmployeeDto);
 
             // Assert.
             Assert.AreEqual(typeof(Task<ActionResult<string>>), result.GetType());
@@ -120,12 +101,10 @@ namespace WebAPI.Tests.Controllers
         public async Task CreateEmployee_Method_Should_Returns_Success_Http_Status_Code()
         {
             // Arrange.
-            var client = _factory.CreateClient();
-            var employeeDto = TestContent.GetTestEmployeeDto();
-            var content = TestContent.GetRequestContent(employeeDto);
+            var content = GetRequestContent(TestEmployeeDto);
 
             // Act.
-            var response = await client.PostAsync("api/employee", content);
+            var response = await HttpClient.PostAsync("api/employee", content);
             var stringResponse = await response.Content.ReadAsStringAsync();
 
             // Assert.
@@ -137,12 +116,11 @@ namespace WebAPI.Tests.Controllers
         public async Task CreateEmployee_Method_Should_Returns_Validate_Response()
         {
             // Arrange.
-            var client = _factory.CreateClient();
             var employeeDto = new EmployeeDto() {Name = null};
-            var content = TestContent.GetRequestContent(employeeDto);
+            var content = GetRequestContent(employeeDto);
 
             // Act.
-            var response = await client.PostAsync("api/employee", content);
+            var response = await HttpClient.PostAsync("api/employee", content);
             var stringResponse = await response.Content.ReadAsStringAsync();
 
             // Assert.
@@ -153,7 +131,7 @@ namespace WebAPI.Tests.Controllers
         public void UploadEmployeePhoto_Method_Should_Returns_ActionResult_String_Type()
         {
             // Act.
-            var result = _controller.UploadEmployeePhoto();
+            var result = EmployeeController.UploadEmployeePhoto();
 
             // Assert.
             Assert.AreEqual(typeof(Task<ActionResult<string>>), result.GetType());
@@ -163,25 +141,23 @@ namespace WebAPI.Tests.Controllers
         public async Task UploadEmployeePhoto_Method_Should_Returns_Success_Http_Status_Code()
         {
             // Arrange.
-            var client = _factory.CreateClient();
-            var employeeDto = TestContent.GetTestEmployeeDto();
-            var content = TestContent.GetRequestContent(employeeDto);
+            var content = GetRequestContent(TestEmployeeDto);
 
             // Act.
-            var response = await client.PostAsync("api/employee/UploadPhoto", content);
+            var response = await HttpClient.PostAsync("api/employee/UploadPhoto", content);
 
             // Assert.
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.AreEqual(OK, response.StatusCode);
         }
 
         [Test]
         public void UpdateEmployeePhoto_Method_Should_Returns_ActionResult_String_Type()
         {
             // Arrange.
-            var employeeId = TestContent.GetTestEmployeeDto().Id;
+            var employeeId = TestEmployeeDto.Id;
 
             // Act.
-            var result = _controller.UpdateEmployeePhoto(employeeId);
+            var result = EmployeeController.UpdateEmployeePhoto(employeeId);
 
             // Assert.
             Assert.AreEqual(typeof(Task<ActionResult<string>>), result.GetType());
@@ -191,25 +167,20 @@ namespace WebAPI.Tests.Controllers
         public async Task UpdateEmployeePhoto_Method_Should_Returns_Success_Http_Status_Code()
         {
             // Arrange.
-            var client = _factory.CreateClient();
-            var employeeDto = TestContent.GetTestEmployeeDto();
-            var content = TestContent.GetRequestContent(employeeDto);
+            var content = GetRequestContent(TestEmployeeDto);
 
             // Act.
-            var response = await client.PostAsync("api/employee/UpdatePhoto", content);
+            var response = await HttpClient.PostAsync("api/employee/UpdatePhoto", content);
 
             // Assert.
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.AreEqual(OK, response.StatusCode);
         }
 
         [Test]
         public void UpdateEmployee_Method_Should_Returns_ActionResult_String_Type()
         {
-            // Arrange.
-            var employeeDto = TestContent.GetTestEmployeeDto();
-
             // Act.
-            var result = _controller.UpdateEmployee(employeeDto);
+            var result = EmployeeController.UpdateEmployee(TestEmployeeDto);
 
             // Assert.
             Assert.AreEqual(typeof(Task<ActionResult<string>>), result.GetType());
@@ -219,12 +190,10 @@ namespace WebAPI.Tests.Controllers
         public async Task UpdateEmployee_Method_Should_Returns_Success_Http_Status_Code()
         {
             // Arrange.
-            var client = _factory.CreateClient();
-            var employeeDto = TestContent.GetTestEmployeeDto();
-            var content = TestContent.GetRequestContent(employeeDto);
+            var content = GetRequestContent(TestEmployeeDto);
 
             // Act.
-            var response = await client.PutAsync("api/employee", content);
+            var response = await HttpClient.PutAsync("api/employee", content);
             var stringResponse = await response.Content.ReadAsStringAsync();
 
             // Assert.
@@ -236,26 +205,25 @@ namespace WebAPI.Tests.Controllers
         public async Task UpdateEmployee_Method_Should_Returns_Validate_Response()
         {
             // Arrange.
-            var client = _factory.CreateClient();
             var employeeDto = new EmployeeDto() {Name = null};
-            var content = TestContent.GetRequestContent(employeeDto);
+            var content = GetRequestContent(employeeDto);
 
             // Act.
-            var response = await client.PutAsync("api/employee", content);
+            var response = await HttpClient.PutAsync("api/employee", content);
             var stringResponse = await response.Content.ReadAsStringAsync();
 
             // Assert.
             Assert.AreEqual("Name must be filled", stringResponse);
         }
-        
+
         [Test]
         public void DeleteEmployee_Method_Should_Returns_ActionResult_String_Type()
         {
             // Arrange.
-            var employeeId = TestContent.GetTestEmployeeDto().Id;
+            var employeeId = TestEmployeeDto.Id;
 
             // Act.
-            var result = _controller.DeleteEmployeeById(employeeId);
+            var result = EmployeeController.DeleteEmployeeById(employeeId);
 
             // Assert.
             Assert.AreEqual(typeof(Task<ActionResult<string>>), result.GetType());
@@ -265,14 +233,10 @@ namespace WebAPI.Tests.Controllers
         public async Task DeleteEmployee_Method_Should_Returns_Success_Http_Status_Code()
         {
             // Arrange.
-            var client = _factory.CreateClient();
-            var dbContext = _factory.Services.CreateScope().ServiceProvider.GetService<AppDbContext>();
-            await dbContext.Employees.AddRangeAsync(new Employee());
-            await dbContext.SaveChangesAsync();
-            var employeeId = dbContext.Employees?.FirstOrDefault()?.Id;
+            var employeeId = TestDbContext.Employees?.FirstOrDefault()?.Id;
 
             // Act.
-            var response = await client.DeleteAsync($"api/employee/{employeeId}");
+            var response = await HttpClient.DeleteAsync($"api/employee/{employeeId}");
             var stringResponse = await response.Content.ReadAsStringAsync();
 
             // Assert.

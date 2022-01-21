@@ -11,13 +11,13 @@ namespace WebAPI.Tests.Common
 {
     public class ControllerTestSetup
     {
+        protected AppDbContext TestDbContext;
         protected DepartmentDto TestDepartmentDto;
         protected EmployeeDto TestEmployeeDto;
         protected DepartmentController DepartmentController;
         protected EmployeeController EmployeeController;
         protected HttpClient HttpClient;
         protected TestWebApplicationFactory<Startup> WebApplicationFactory;
-        protected AppDbContext TestDbContext;
 
         [SetUp]
         public void Setup()
@@ -28,11 +28,10 @@ namespace WebAPI.Tests.Common
             EmployeeController = new EmployeeController();
             WebApplicationFactory = new TestWebApplicationFactory<Startup>();
             HttpClient = WebApplicationFactory.CreateClient();
-            
+
             TestDbContext = WebApplicationFactory
                 .Services.CreateScope()
                 .ServiceProvider.GetService<AppDbContext>();
-           
         }
     }
 }
