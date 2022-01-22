@@ -1,12 +1,11 @@
-﻿namespace WebAPI.Authentication.ViewModels.Response
+﻿namespace WebAPI.UserCases.Common.Response
 {
     /// <summary>
     /// Response model.
     /// </summary>
     public class ResponseModel
     {
-        public ResponseModel(
-            ResponseCode responseCode, string responseMessage, object dataSet)
+        public ResponseModel(ResponseCode responseCode, string responseMessage, object dataSet)
         {
             ResponseCode = responseCode;
             ResponseMessage = responseMessage;

@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WebAPI.Authentication.ViewModels.Request
+namespace WebAPI.UserCases.Common.Request
 {
     /// <summary>
     /// Login view model as contract form.
     /// </summary>
-    public class LoginViewModel
+    public class LoginDto
     {
         [Required]
         [Display(Name = "Name")]

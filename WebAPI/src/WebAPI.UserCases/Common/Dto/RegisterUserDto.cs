@@ -1,9 +1,9 @@
-﻿namespace WebAPI.Authentication.ViewModels.Request
+﻿namespace WebAPI.UserCases.Common.Dto
 {
     /// <summary>
     /// Register user view model.
     /// </summary>
-    public class RegisterUserViewModel
+    public class RegisterUserDto
     {
         public string FullName { get; set; }
         public string UserName { get; set; }

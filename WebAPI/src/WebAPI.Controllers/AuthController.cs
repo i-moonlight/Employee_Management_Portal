@@ -9,29 +9,29 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using WebAPI.Authentication.ViewModels.DTO;
-using WebAPI.Authentication.ViewModels.Request;
-using WebAPI.Authentication.ViewModels.Response;
-using WebAPI.DataAccess.MsSql.Identity;
 using WebAPI.Entities.Common;
 using WebAPI.Entities.Models;
+using WebAPI.UserCases.Common.Dto;
+using WebAPI.UserCases.Common.Request;
+using WebAPI.UserCases.Common.Response;
+using static System.Security.Claims.ClaimTypes;
+using static WebAPI.DataAccess.MsSql.Identity.RoleNames;
+using static WebAPI.UserCases.Common.Response.ResponseCode;
 
-namespace WebAPI.Authentication.Controllers
+namespace WebAPI.Controllers
 {
     /// <summary>
     /// Authentication controller.
     /// </summary>
     [ApiController]
-    [Route("api/[controller]")]
-    public class AuthController : ControllerBase
+    [Route("api/auth")]
+    public class AuthController : BaseController
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly JwtConfig _jwtConfig;
 
-        public AuthController(
-            UserManager<User> userManager,
-            SignInManager<User> signManager,
+        public AuthController(UserManager<User> userManager, SignInManager<User> signManager,
             IOptions<JwtConfig> jwtConfig)
         {
             _userManager = userManager;
@@ -42,35 +42,30 @@ namespace WebAPI.Authentication.Controllers
         /// <summary>
         /// Register new user.
         /// </summary>
-        /// <param name="viewModel"></param>
-        /// <returns>Response model</returns>
+        /// <param name="registerUser">RegisterUserDto.</param>
+        /// <returns>Response model.</returns>
         [HttpPost("RegisterUser")]
-        public async Task<object> RegisterUser([FromBody] RegisterUserViewModel viewModel)
+        public async Task<object> RegisterUser([FromBody] RegisterUserDto registerUser)
         {
             try
             {
                 var user = new User()
                 {
-                    FullName = viewModel.FullName,
-                    Email = viewModel.Email,
+                    FullName = registerUser.FullName,
+                    Email = registerUser.Email,
                     EmailConfirmed = true,
-                    UserName = viewModel.UserName,
+                    UserName = registerUser.UserName,
                     DateCreated = DateTime.UtcNow,
                     DateModified = DateTime.UtcNow
                 };
 
-                var result = await _userManager.CreateAsync(user, viewModel.Password);
+                var result = await _userManager.CreateAsync(user, registerUser.Password);
 
                 if (result.Succeeded)
                 {
-                    var tempUser = await _userManager.FindByEmailAsync(viewModel.Email);
-                    // foreach (var role in RoleNames.AllRoles)
-                    // {
-                    //     await _userManager.AddToRoleAsync(tempUser, role);
-                    // }
+                    var tempUser = await _userManager.FindByEmailAsync(registerUser.Email);
+                    await _userManager.AddToRoleAsync(tempUser, AllRoles.ElementAt(0));
 
-                    await _userManager.AddToRoleAsync(tempUser, RoleNames.AllRoles.ElementAt(0));
-                    
                     return await Task.FromResult(
                         new ResponseModel(ResponseCode.Ok, "User has been Registered", null));
                 }
@@ -82,14 +77,14 @@ namespace WebAPI.Authentication.Controllers
             catch (Exception ex)
             {
                 return await Task.FromResult(
-                    new ResponseModel(ResponseCode.Error, ex.Message, null));
+                    new ResponseModel(Error, ex.Message, null));
             }
         }
-        
+
         /// <summary>
         /// Get All User from database.   
         /// </summary>
-        /// <returns>Response model</returns>
+        /// <returns>Response model.</returns>
         // [Authorize(Roles = "Admin")]
         [HttpGet("GetAllUsers")]
         public async Task<object> GetAllUsers()
@@ -114,57 +109,56 @@ namespace WebAPI.Authentication.Controllers
             catch (Exception ex)
             {
                 return await Task.FromResult(
-                    new ResponseModel(ResponseCode.Error, ex.Message, null));
+                    new ResponseModel(Error, ex.Message, null));
             }
         }
-        
+
         /// <summary>
         /// Sign in App.  
         /// </summary>
-        /// <param name="viewModel"></param>
-        /// <returns>Response model</returns>
+        /// <param name="login">LoginDto.</param>
+        /// <returns>Response model.</returns>
         // [AllowAnonymous]
         [HttpPost("SignIn")]
-        public async Task<object> SignIn([FromBody] LoginViewModel viewModel)
+        public async Task<object> SignIn([FromBody] LoginDto login)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var result = await _signInManager.PasswordSignInAsync(
-                        viewModel.Email, viewModel.Password, false, true);
+                    var result = await _signInManager.PasswordSignInAsync(login.Email, login.Password, false, true);
 
                     if (!result.Succeeded)
                     {
-                        var appUser = await _userManager.FindByEmailAsync(viewModel.Email);
+                        var appUser = await _userManager.FindByEmailAsync(login.Email);
                         var role = (await _userManager.GetRolesAsync(appUser)).ToList();
-                        
+
                         var user = new ProfileDto(
                             appUser.FullName, appUser.Email, appUser.UserName, appUser.DateCreated,
                             role.ElementAt(0));
-                        
+
                         user.Token = await GenerateToken(appUser);
-                        
+
                         return await Task.FromResult(
                             new ResponseModel(ResponseCode.Ok, "Token generated", user));
                     }
                 }
 
                 return await Task.FromResult(
-                    new ResponseModel(ResponseCode.Error, "Invalid email or password", null));
+                    new ResponseModel(Error, "Invalid email or password", null));
             }
             catch (Exception ex)
             {
                 return await Task.FromResult(
-                    new ResponseModel(ResponseCode.Error, ex.Message, "The user does not exist"));
+                    new ResponseModel(Error, ex.Message, "The user does not exist"));
             }
         }
-        
+
         /// <summary>
         /// Generate token.  
         /// </summary>
-        /// <param name="user"></param>
-        /// <returns>token</returns>
+        /// <param name="user">User.</param>
+        /// <returns>Token.</returns>
         private async Task<string> GenerateToken(User user)
         {
             var userId = await _userManager.FindByIdAsync(user.Id);
@@ -172,15 +166,15 @@ namespace WebAPI.Authentication.Controllers
 
             var claims = new List<Claim>()
             {
-                new Claim(JwtRegisteredClaimNames.NameId, user.Id),
-                new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                new(JwtRegisteredClaimNames.NameId, user.Id),
+                new(JwtRegisteredClaimNames.Email, user.Email),
+                new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
             if (userRoles != null)
                 foreach (var role in userRoles)
                 {
-                    claims.Add(new Claim(ClaimTypes.Role, role));
+                    claims.Add(new Claim(Role, role));
                 }
 
             var jwtTokenHandler = new JwtSecurityTokenHandler();

@@ -1,14 +1,13 @@
 ﻿using System;
 
-namespace WebAPI.Authentication.ViewModels.DTO
+namespace WebAPI.UserCases.Common.Dto
 {
     /// <summary>
     /// User data transfer object.
     /// </summary>
     public class ProfileDto
     {
-        public ProfileDto(
-            string fullName, string email, string userName, DateTime dateCreated, string role)
+        public ProfileDto(string fullName, string email, string userName, DateTime dateCreated, string role)
         {
             FullName = fullName;
             Email = email;
@@ -16,6 +15,7 @@ namespace WebAPI.Authentication.ViewModels.DTO
             DateCreated = dateCreated;
             Role = role;
         }
+
         public string FullName { get; set; }
         public string Email { get; set; }
         public string UserName { get; set; }
