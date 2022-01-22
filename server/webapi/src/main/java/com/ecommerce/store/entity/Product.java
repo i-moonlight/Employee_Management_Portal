@@ -19,7 +19,7 @@ public class Product {
     static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     @Id
-    @Column(name = "id")
+    // @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     UUID       id;
     String     brand;

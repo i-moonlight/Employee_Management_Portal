@@ -4,6 +4,7 @@ import com.ecommerce.store.domain.dto.Response;
 import com.ecommerce.store.domain.service.ProductService;
 import com.ecommerce.store.entity.Product;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.*;
@@ -15,6 +16,7 @@ import java.util.UUID;
 @RequestMapping("/api/product")
 @RequiredArgsConstructor
 public class ProductController {
+    @Qualifier("repositoryProductService")
     private final ProductService service;
 
     @GetMapping("/list") // http://localhost:9001/api/product/list
