@@ -15,7 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\src\Hosts\WebAPI.Web\WebAPI.Web.csproj" />
+        <ProjectReference Include="..\..\src\hosts\WebAPI.Web\WebAPI.Web.csproj" />
         <ProjectReference Include="..\..\src\WebAPI.Controllers\WebAPI.Controllers.csproj" />
         <ProjectReference Include="..\..\src\WebAPI.Entities\WebAPI.Entities.csproj" />
         <ProjectReference Include="..\..\src\WebAPI.Infrastructure.Interfaces\WebAPI.Infrastructure.Interfaces.csproj" />

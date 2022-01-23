@@ -2,27 +2,27 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "auth", "auth", "{951AACDC-FA58-469E-98FC-E649131F3E58}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI.Authentication", "auth\WebAPI.Authentication\WebAPI.Authentication.csproj", "{FCC5864E-4247-40F6-9528-A17099AE3E67}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5D55C42E-6480-43B7-B195-727A4F42C5C7}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI.Web", "src\Hosts\WebAPI.Web\WebAPI.Web.csproj", "{DDE1AFC9-FFAA-40E6-A232-DABF128B014D}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI.Entities", "src\WebAPI.Entities\WebAPI.Entities.csproj", "{9CF8D8A2-9B21-428A-A501-839F76E18852}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI.DataAccess.MsSql", "src\WebAPI.DataAccess.MsSql\WebAPI.DataAccess.MsSql.csproj", "{FD46190B-9177-44AB-8334-8B4EAEDE47DC}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{AEF342B1-CBA4-47F6-8118-F43D00CAB2DA}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI.Tests", "tests\WebAPI.Tests\WebAPI.Tests.csproj", "{CC0D609E-B847-42B5-8A51-15BF9FB7EB41}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{6EBC2BD9-5897-410A-ACFB-2583F0CE3FFF}"
 	ProjectSection(SolutionItems) = preProject
 		docker\.dockerignore = docker\.dockerignore
 		docker\docker-compose.yml = docker\docker-compose.yml
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5D55C42E-6480-43B7-B195-727A4F42C5C7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hosts", "hosts", "{2E3BA21B-AF40-41A3-AFFC-05BD590AAA14}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{AEF342B1-CBA4-47F6-8118-F43D00CAB2DA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI.Authentication", "src\hosts\WebAPI.Authentication\WebAPI.Authentication.csproj", "{FCC5864E-4247-40F6-9528-A17099AE3E67}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI.Web", "src\hosts\WebAPI.Web\WebAPI.Web.csproj", "{DDE1AFC9-FFAA-40E6-A232-DABF128B014D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI.Entities", "src\WebAPI.Entities\WebAPI.Entities.csproj", "{9CF8D8A2-9B21-428A-A501-839F76E18852}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI.DataAccess.MsSql", "src\WebAPI.DataAccess.MsSql\WebAPI.DataAccess.MsSql.csproj", "{FD46190B-9177-44AB-8334-8B4EAEDE47DC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI.Tests", "tests\WebAPI.Tests\WebAPI.Tests.csproj", "{CC0D609E-B847-42B5-8A51-15BF9FB7EB41}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI.UserCases", "src\WebAPI.UserCases\WebAPI.UserCases.csproj", "{540CA6D3-D09F-4B7A-BBD3-55EA6A7241AB}"
 EndProject
@@ -31,8 +31,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI.Controllers", "src\WebAPI.Controllers\WebAPI.Controllers.csproj", "{8029E073-9539-484C-9711-85ECCCD244D6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI.Utils", "src\WebAPI.Utils\WebAPI.Utils.csproj", "{95FD976A-6E86-4DF4-B65D-8B124567B4A1}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hosts", "Hosts", "{2E3BA21B-AF40-41A3-AFFC-05BD590AAA14}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,7 +79,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{FCC5864E-4247-40F6-9528-A17099AE3E67} = {951AACDC-FA58-469E-98FC-E649131F3E58}
 		{CC0D609E-B847-42B5-8A51-15BF9FB7EB41} = {AEF342B1-CBA4-47F6-8118-F43D00CAB2DA}
 		{A23C2CEB-52CB-43A5-BC8F-E474CBDA050F} = {5D55C42E-6480-43B7-B195-727A4F42C5C7}
 		{9FC3A764-2B14-423A-96FA-33AB073006E7} = {5D55C42E-6480-43B7-B195-727A4F42C5C7}
@@ -96,6 +93,7 @@ Global
 		{8029E073-9539-484C-9711-85ECCCD244D6} = {5D55C42E-6480-43B7-B195-727A4F42C5C7}
 		{3277B408-6F50-43BA-BD73-588FAB4C0FB9} = {5D55C42E-6480-43B7-B195-727A4F42C5C7}
 		{540CA6D3-D09F-4B7A-BBD3-55EA6A7241AB} = {5D55C42E-6480-43B7-B195-727A4F42C5C7}
+		{FCC5864E-4247-40F6-9528-A17099AE3E67} = {2E3BA21B-AF40-41A3-AFFC-05BD590AAA14}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D2F06865-CD12-4EDD-9641-0FBCA4D7264B}

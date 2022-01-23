@@ -21,9 +21,7 @@ namespace WebAPI.Authentication
                 #region Authentication server initialize
 
                 var host = CreateHostBuilder(args).Build();
-                using var scope = host.Services
-                    .GetRequiredService<IServiceScopeFactory>()
-                    .CreateScope();
+                using var scope = host.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
 
 #pragma warning disable 4014
                 RoleManager.Initialize(scope.ServiceProvider);
@@ -47,9 +45,7 @@ namespace WebAPI.Authentication
         /// <returns>web host</returns>
         private static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                    webBuilder.UseStartup<Startup>())
-                .ConfigureAppConfiguration(configuration =>
-                    configuration.AddJsonFile("appsettings.json", false, true));
+                .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>())
+                .ConfigureAppConfiguration(confBuilder => confBuilder.AddJsonFile("appsettings.json", false, true));
     }
 }

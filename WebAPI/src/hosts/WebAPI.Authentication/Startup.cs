@@ -18,12 +18,10 @@ namespace WebAPI.Authentication
     public class Startup
     {
         private IConfiguration Configuration { get; }
-        
-        public Startup(IConfiguration configuration)
-        {
+
+        public Startup(IConfiguration configuration) => 
             Configuration = configuration;
-        }
-        
+
         /// <summary>
         /// This method gets called by the runtime.
         /// Use this method to add services to the container.
@@ -36,22 +34,21 @@ namespace WebAPI.Authentication
             #region JSON Serializer
 
             services.AddControllersWithViews().AddNewtonsoftJson(options =>
-                {
-                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-                    options.SerializerSettings.ContractResolver = new DefaultContractResolver();
-                    options.SerializerSettings.DateFormatString = "yyyy'-'MM'-'dd' 'HH':'mm':'ss";
-                });
-                    
+            {
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+                options.SerializerSettings.DateFormatString = "yyyy'-'MM'-'dd' 'HH':'mm':'ss";
+            });
 
             #endregion
 
             #region Enable application context
-            
+
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             #endregion
-            
+
             #region Role Identity
 
             services.AddIdentity<User, IdentityRole>(options =>
@@ -70,7 +67,7 @@ namespace WebAPI.Authentication
                 .AddEntityFrameworkStores<AppDbContext>();
 
             #endregion
-            
+
             #region Authentication JWT
 
             services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig"));
@@ -100,7 +97,7 @@ namespace WebAPI.Authentication
                     options.SaveToken = true;
                     options.RequireHttpsMetadata = true;
                 });
-            
+
             #endregion
 
             #region CORS
@@ -125,14 +122,12 @@ namespace WebAPI.Authentication
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
-            }
 
             app.UseRouting();
 
             app.UseCors();
-            
+
             app.UseAuthentication();
 
             app.UseAuthorization();
