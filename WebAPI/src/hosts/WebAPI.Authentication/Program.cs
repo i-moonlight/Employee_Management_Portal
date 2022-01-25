@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using WebAPI.DataAccess.MsSql.Identity;
+using WebAPI.Utils.Logging;
 
 namespace WebAPI.Authentication
 {
@@ -18,7 +19,7 @@ namespace WebAPI.Authentication
         /// <param name="args"></param>
         public static void Main(string[] args)
         {
-            Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateBootstrapLogger();
+            LoggingSets.DefaultSetup();
 
             try
             {
@@ -35,7 +36,7 @@ namespace WebAPI.Authentication
             }
             catch (Exception exception)
             {
-                Console.WriteLine("{0} Exception caught.", exception);
+                Log.Fatal(exception, "Resource server failed");
                 throw;
             }
             finally

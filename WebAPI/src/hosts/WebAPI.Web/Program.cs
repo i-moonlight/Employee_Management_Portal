@@ -5,7 +5,7 @@ using Microsoft.Extensions.Hosting;
 using NLog.Web;
 using Microsoft.Extensions.Configuration;
 using Serilog;
-using static WebAPI.Utils.Logging.LoggingConfiguration;
+using WebAPI.Utils.Logging;
 
 namespace WebAPI.Web
 {
@@ -19,7 +19,7 @@ namespace WebAPI.Web
         /// <param name="args"></param>
         public static void Main(string[] args)
         {
-            ConfigureLogging();
+            LoggingSets.ElasticsearchSetup();
 
             try
             {
