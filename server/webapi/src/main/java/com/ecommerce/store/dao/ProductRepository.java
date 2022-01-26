@@ -40,7 +40,11 @@ public interface ProductRepository extends R2dbcRepository<Product, UUID> {
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM Product p WHERE p.id = :productId")
+    @Query("DELETE FROM product p WHERE p.id = :productId")
     Mono<Long> deleteProduct(UUID productId);
+
+    @Modifying
+    @Query("UPDATE product SET image = :fileName WHERE id = :productId; ")
+    void addImage(@Param("productId") UUID id, @Param("fileName") String fileName);
 }
 

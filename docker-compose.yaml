@@ -25,9 +25,9 @@ services:
       - '7070:7070'
 
   webapi:
-    container_name: store
+    container_name: webapi
     build:
-      context: server/store
+      context: server/webapi
       dockerfile: Dockerfile
 #      args:
 #        BUILDKIT_INLINE_CACHE: "0"

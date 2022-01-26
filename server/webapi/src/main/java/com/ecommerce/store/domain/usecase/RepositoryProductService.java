@@ -57,9 +57,7 @@ public class RepositoryProductService implements ProductService {
 
     @Override
     public Mono<Response> createProduct(Product p) {
-        return repository.createProduct(
-                p.getBrand(), p.getCategory(), p.getDescription(), p.getImage()
-                )
+        return repository.createProduct(p.getBrand(), p.getCategory(), p.getDescription(), p.getImage())
                 .map(result -> new Response(
                         201, HttpStatus.CREATED, "Product created", p)
                 )
