@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -14,8 +15,8 @@ using WebAPI.Entities.Models;
 using WebAPI.UserCases.Common.Dto;
 using WebAPI.UserCases.Common.Request;
 using WebAPI.UserCases.Common.Response;
+using WebAPI.UserCases.Requests.Authentication.Commands;
 using static System.Security.Claims.ClaimTypes;
-using static WebAPI.DataAccess.MsSql.Identity.RoleNames;
 using static WebAPI.UserCases.Common.Response.ResponseCode;
 
 namespace WebAPI.Controllers
@@ -42,43 +43,19 @@ namespace WebAPI.Controllers
         /// <summary>
         /// Register new user.
         /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// POST /auth/RegisterUser.
+        /// </remarks>
         /// <param name="registerUser">RegisterUserDto.</param>
         /// <returns>Response model.</returns>
+        /// <response code="200">Success.</response>
         [HttpPost("RegisterUser")]
-        public async Task<object> RegisterUser([FromBody] RegisterUserDto registerUser)
+        [AllowAnonymous]
+        public async Task<ActionResult<ResponseModel>> RegisterUser([FromBody] RegisterUserDto registerUser)
         {
-            try
-            {
-                var user = new User()
-                {
-                    FullName = registerUser.FullName,
-                    Email = registerUser.Email,
-                    EmailConfirmed = true,
-                    UserName = registerUser.UserName,
-                    DateCreated = DateTime.UtcNow,
-                    DateModified = DateTime.UtcNow
-                };
-
-                var result = await _userManager.CreateAsync(user, registerUser.Password);
-
-                if (result.Succeeded)
-                {
-                    var tempUser = await _userManager.FindByEmailAsync(registerUser.Email);
-                    await _userManager.AddToRoleAsync(tempUser, AllRoles.ElementAt(0));
-
-                    return await Task.FromResult(
-                        new ResponseModel(ResponseCode.Ok, "User has been Registered", null));
-                }
-
-                return await Task.FromResult(
-                    new ResponseModel(ResponseCode.Ok, "User has been not Registered",
-                        result.Errors.Select(x => x.Description).ToArray()));
-            }
-            catch (Exception ex)
-            {
-                return await Task.FromResult(
-                    new ResponseModel(Error, ex.Message, null));
-            }
+            var request = new RegisterUserCommand() {RegisterUserDto = registerUser};
+            return Ok(await Mediator.Send(request));
         }
 
         /// <summary>

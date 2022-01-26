@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 
 namespace WebAPI.Entities.Models
@@ -12,15 +13,23 @@ namespace WebAPI.Entities.Models
         /// User full name.
         /// </summary>
         public string FullName { get; set; }
-        
+
+        /// <summary>
+        /// User email confirmed.
+        /// </summary>
+        [Required]
+        public new bool EmailConfirmed { get; set; } = true;
+
         /// <summary>
         /// User create date.
         /// </summary>
-        public DateTime DateCreated { get; set; }
+        [Required]
+        public DateTime DateCreated { get; set; } = DateTime.Now;
         
         /// <summary>
         /// User modify date.
         /// </summary>
+        [Required]
         public DateTime DateModified { get; set; }
     }
 }

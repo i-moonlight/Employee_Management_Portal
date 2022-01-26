@@ -20,6 +20,7 @@
       "dotnetRunMessages": "true",
       "launchBrowser": true,
       "applicationUrl": "https://localhost:4021;http://localhost:4022",
+      "launchUrl": "api/auth/GetAllUsers",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

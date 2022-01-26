@@ -33,8 +33,8 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\WebAPI.UserCases\WebAPI.UserCases.csproj"/>
         <ProjectReference Include="..\..\WebAPI.Utils\WebAPI.Utils.csproj"/>
-        <ProjectReference Include="..\WebAPI.Authentication\WebAPI.Authentication.csproj"/>
         <ProjectReference Include="..\..\WebAPI.Controllers\WebAPI.Controllers.csproj"/>
         <ProjectReference Include="..\..\WebAPI.DataAccess.MsSql\WebAPI.DataAccess.MsSql.csproj"/>
         <ProjectReference Include="..\..\WebAPI.Entities\WebAPI.Entities.csproj"/>

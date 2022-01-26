@@ -12,6 +12,7 @@ using Newtonsoft.Json.Serialization;
 using WebAPI.DataAccess.MsSql.Persistence.Context;
 using WebAPI.Entities.Common;
 using WebAPI.Entities.Models;
+using WebAPI.UserCases;
 
 namespace WebAPI.Authentication
 {
@@ -29,7 +30,7 @@ namespace WebAPI.Authentication
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddUserCases();
 
             #region JSON Serializer
 

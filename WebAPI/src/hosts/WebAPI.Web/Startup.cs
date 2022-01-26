@@ -38,8 +38,7 @@ namespace WebAPI.Web
         public void ConfigureServices(IServiceCollection services)
         {
             #region Dependency Injection
-
-            services.AddControllers();
+            
             services.AddUserCases();
             services.AddDataAccess(Configuration);
 

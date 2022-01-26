@@ -10,8 +10,7 @@ namespace WebAPI.UserCases.Common.Mappings
     /// </summary>
     public class AssemblyMappingProfile : Profile
     {
-        public AssemblyMappingProfile() =>
-            ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
+        public AssemblyMappingProfile() => ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
 
         /// <summary>
         /// Apply mappings from assembly.

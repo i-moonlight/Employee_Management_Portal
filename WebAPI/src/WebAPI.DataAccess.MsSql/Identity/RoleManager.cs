@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using WebAPI.Entities.Models;
+using WebAPI.Utils.Constants;
 
 namespace WebAPI.DataAccess.MsSql.Identity
 {
@@ -10,7 +11,7 @@ namespace WebAPI.DataAccess.MsSql.Identity
     {
          public static async Task Initialize(IServiceProvider provider)
         {
-            foreach (var roleName in RoleNames.AllRoles)
+            foreach (var roleName in RoleNameTypes.AllRoles)
             {
                 await CreateRole(provider, roleName);
             }
@@ -57,9 +58,10 @@ namespace WebAPI.DataAccess.MsSql.Identity
                 var empUser = await userManager.FindByEmailAsync(DefaultUsers.Employee.Email);
                 var managerUser = await userManager.FindByEmailAsync(DefaultUsers.Manager.Email);
                 var adminUser = await userManager.FindByEmailAsync(DefaultUsers.Administrator.Email);
-                await userManager.AddToRoleAsync(empUser, RoleNames.Employee);
-                await userManager.AddToRoleAsync(managerUser, RoleNames.Manager);
-                await userManager.AddToRoleAsync(adminUser, RoleNames.Administrator);
+                
+                await userManager.AddToRoleAsync(empUser, RoleNameTypes.Employee);
+                await userManager.AddToRoleAsync(managerUser, RoleNameTypes.Manager);
+                await userManager.AddToRoleAsync(adminUser, RoleNameTypes.Administrator);
             }
             else
             {

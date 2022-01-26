@@ -3,7 +3,7 @@
 namespace WebAPI.UserCases.Common.Dto
 {
     /// <summary>
-    /// User data transfer object.
+    /// Profile data transfer object.
     /// </summary>
     public class ProfileDto
     {

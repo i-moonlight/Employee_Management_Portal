@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace WebAPI.DataAccess.MsSql.Identity
+namespace WebAPI.Utils.Constants
 {
-    public static class RoleNames
+    public static class RoleNameTypes
     {
         public const string Employee = "Employee";
         public const string Manager = "Manager";

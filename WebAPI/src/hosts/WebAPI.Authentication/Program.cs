@@ -59,6 +59,7 @@ namespace WebAPI.Authentication
             return Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>())
                 .ConfigureAppConfiguration(confBuilder => confBuilder.AddJsonFile("appsettings.json", false, true))
+                .UseDefaultServiceProvider(options => options.ValidateScopes = false) // needed for mediatr DI.
                 .UseSerilog();
         }
 
