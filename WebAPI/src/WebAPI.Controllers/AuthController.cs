@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -16,6 +17,7 @@ using WebAPI.UserCases.Common.Dto;
 using WebAPI.UserCases.Common.Request;
 using WebAPI.UserCases.Common.Response;
 using WebAPI.UserCases.Requests.Authentication.Commands;
+using WebAPI.UserCases.Requests.Authentication.Queries;
 using static System.Security.Claims.ClaimTypes;
 using static WebAPI.UserCases.Common.Response.ResponseCode;
 
@@ -41,6 +43,22 @@ namespace WebAPI.Controllers
         }
 
         /// <summary>
+        /// Get all user from database.   
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// POST /auth/GetAllUsers.
+        /// <returns>User list.</returns>
+        /// <response code="200">Success.</response>
+        // [Authorize(Roles = "Admin")]
+        [HttpGet("GetAllUsers")]
+        public async Task<ActionResult<IEnumerable>> GetUserList()
+        {
+            var request = new GetUserListQuery();
+            return Ok(await Mediator.Send(request));
+        }
+        
+        /// <summary>
         /// Register new user.
         /// </summary>
         /// <remarks>
@@ -56,38 +74,6 @@ namespace WebAPI.Controllers
         {
             var request = new RegisterUserCommand() {RegisterUserDto = registerUser};
             return Ok(await Mediator.Send(request));
-        }
-
-        /// <summary>
-        /// Get All User from database.   
-        /// </summary>
-        /// <returns>Response model.</returns>
-        // [Authorize(Roles = "Admin")]
-        [HttpGet("GetAllUsers")]
-        public async Task<object> GetAllUsers()
-        {
-            try
-            {
-                var profilesDto = new List<ProfileDto>();
-                var users = _userManager.Users.ToArray();
-
-                foreach (var user in users)
-                {
-                    var role = (await _userManager.GetRolesAsync(user)).ToList();
-
-                    profilesDto.Add(
-                        new ProfileDto(user.FullName, user.Email, user.UserName, user.DateCreated,
-                            string.Join(" ", role)));
-                }
-
-                return await Task.FromResult(
-                    new ResponseModel(ResponseCode.Ok, "", profilesDto));
-            }
-            catch (Exception ex)
-            {
-                return await Task.FromResult(
-                    new ResponseModel(Error, ex.Message, null));
-            }
         }
 
         /// <summary>
