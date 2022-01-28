@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WebAPI.UserCases.Common.Request
+namespace WebAPI.UserCases.Common.Dto.Request
 {
     /// <summary>
-    /// Login view model as contract form.
+    /// The data transfer object for user login.
     /// </summary>
     public class LoginDto
     {

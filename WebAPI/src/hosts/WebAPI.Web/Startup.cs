@@ -18,9 +18,9 @@ using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using WebAPI.DataAccess.MsSql;
 using WebAPI.DataAccess.MsSql.Persistence.Context;
-using WebAPI.Entities.Common;
 using WebAPI.Entities.Models;
 using WebAPI.UserCases;
+using WebAPI.UserCases.Common.Configs;
 
 namespace WebAPI.Web
 {

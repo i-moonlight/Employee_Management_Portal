@@ -1,4 +1,4 @@
-﻿namespace WebAPI.Entities.Common
+﻿namespace WebAPI.UserCases.Common.Configs
 {
     public class JwtConfig
     {
