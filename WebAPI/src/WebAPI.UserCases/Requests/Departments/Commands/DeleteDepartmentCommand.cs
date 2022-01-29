@@ -5,8 +5,16 @@ using MediatR;
 using WebAPI.Entities.Models;
 using WebAPI.Infrastructure.Interfaces.DataAccess;
 
-namespace WebAPI.UserCases.Requests.Departments.Commands.DeleteDepartment
+namespace WebAPI.UserCases.Requests.Departments.Commands
 {
+    /// <summary>
+    /// Sets a property of the command object.
+    /// </summary>
+    public class DeleteDepartmentCommand : IRequest<string>
+    {
+        public Guid Id { get; set; }
+    }
+
     public class DeleteDepartmentCommandHandler : IRequestHandler<DeleteDepartmentCommand, string>
     {
         /// <summary>

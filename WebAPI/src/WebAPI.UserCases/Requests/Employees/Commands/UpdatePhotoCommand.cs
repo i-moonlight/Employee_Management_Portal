@@ -9,8 +9,16 @@ using WebAPI.Entities.Models;
 using WebAPI.Infrastructure.Interfaces.DataAccess;
 using WebAPI.Utils.Constants;
 
-namespace WebAPI.UserCases.Requests.Employees.Commands.UpdateEmployeePhoto
+namespace WebAPI.UserCases.Requests.Employees.Commands
 {
+    /// <summary>
+    /// Sets a property of the command object.
+    /// </summary>
+    public class UpdatePhotoCommand : IRequest<string>
+    {
+        public Guid Id { get; set; }
+    }
+
     /// <summary>
     /// Implements a handler for the employee photo update command.
     /// </summary>

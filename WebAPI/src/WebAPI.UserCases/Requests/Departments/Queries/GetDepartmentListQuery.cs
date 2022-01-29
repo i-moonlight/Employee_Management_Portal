@@ -5,8 +5,13 @@ using MediatR;
 using WebAPI.Entities.Models;
 using WebAPI.Infrastructure.Interfaces.DataAccess;
 
-namespace WebAPI.UserCases.Requests.Departments.Queries.GetDepartmentList
+namespace WebAPI.UserCases.Requests.Departments.Queries
 {
+    /// <summary>
+    /// Sets a property of the request object.
+    /// </summary>
+    public class GetDepartmentListQuery : IRequest<IEnumerable> {}
+
     /// <summary>
     /// Implements a handler for the department list request.
     /// </summary>

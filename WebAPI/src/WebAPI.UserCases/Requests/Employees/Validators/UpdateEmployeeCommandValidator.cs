@@ -1,9 +1,10 @@
 ﻿using FluentValidation;
+using WebAPI.UserCases.Requests.Employees.Commands;
 
-namespace WebAPI.UserCases.Requests.Employees.Commands.UpdateEmployee
+namespace WebAPI.UserCases.Requests.Employees.Validators
 {
     /// <summary>
-    /// Sets validation rules for update employee command.
+    /// Validator for update employee command.
     /// </summary>
     public class UpdateEmployeeCommandValidator : AbstractValidator<UpdateEmployeeCommand>
     {

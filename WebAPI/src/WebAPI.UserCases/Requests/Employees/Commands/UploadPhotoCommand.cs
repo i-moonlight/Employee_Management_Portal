@@ -6,8 +6,13 @@ using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebAPI.UserCases.Requests.Employees.Commands.UploadEmployeePhoto
+namespace WebAPI.UserCases.Requests.Employees.Commands
 {
+    /// <summary>
+    /// Sets a property of the command object.
+    /// </summary>
+    public class UploadPhotoCommand : IRequest<string> {}
+
     /// <summary>
     /// Implements a handler for the employee upload command.
     /// </summary>

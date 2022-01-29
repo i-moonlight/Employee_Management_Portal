@@ -5,8 +5,13 @@ using MediatR;
 using WebAPI.Entities.Models;
 using WebAPI.Infrastructure.Interfaces.DataAccess;
 
-namespace WebAPI.UserCases.Requests.Employees.Queries.GetEmployeeList
+namespace WebAPI.UserCases.Requests.Employees.Queries
 {
+    /// <summary>
+    /// Sets a property of the request object.
+    /// </summary>
+    public class GetEmployeeListQuery : IRequest<IEnumerable> {}
+    
     /// <summary>
     /// Implements a handler for the employee list request.
     /// </summary>

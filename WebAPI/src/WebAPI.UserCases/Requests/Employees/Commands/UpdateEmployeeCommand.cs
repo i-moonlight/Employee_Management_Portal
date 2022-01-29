@@ -5,18 +5,27 @@ using AutoMapper;
 using MediatR;
 using WebAPI.Entities.Models;
 using WebAPI.Infrastructure.Interfaces.DataAccess;
+using WebAPI.UserCases.Common.Dto;
 
-namespace WebAPI.UserCases.Requests.Departments.Commands.UpdateDepartment
+namespace WebAPI.UserCases.Requests.Employees.Commands
 {
     /// <summary>
-    /// Implements a handler for the department update command.
+    /// Sets a property of the command object.
     /// </summary>
-    public class UpdateDepartmentCommandHandler : IRequestHandler<UpdateDepartmentCommand, string>
+    public class UpdateEmployeeCommand : IRequest<string>
     {
-        private readonly ICrudRepository<Department> _repository;
+        public EmployeeDto EmployeeDto { get; set; }
+    }
+
+    /// <summary>
+    /// Implements a handler for the employee update command.
+    /// </summary>
+    public class UpdateEmployeeCommandHandler : IRequestHandler<UpdateEmployeeCommand, string>
+    {
+        private readonly ICrudRepository<Employee> _repository;
         private readonly IMapper _mapper;
 
-        public UpdateDepartmentCommandHandler(ICrudRepository<Department> repo, IMapper mapper) =>
+        public UpdateEmployeeCommandHandler(ICrudRepository<Employee> repo, IMapper mapper) =>
             (_repository, _mapper) = (repo, mapper);
 
         /// <summary>
@@ -25,12 +34,12 @@ namespace WebAPI.UserCases.Requests.Departments.Commands.UpdateDepartment
         /// <param name="request">The request.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>Returns string about success.</returns>
-        public async Task<string> Handle(UpdateDepartmentCommand request, CancellationToken cancellationToken)
+        public async Task<string> Handle(UpdateEmployeeCommand request, CancellationToken cancellationToken)
         {
             var success = true;
             try
             {
-                var employee = _mapper.Map<Department>(request.DepartmentDto);
+                var employee = _mapper.Map<Employee>(request.EmployeeDto);
                 _repository.Update(employee);
             }
             catch (Exception)

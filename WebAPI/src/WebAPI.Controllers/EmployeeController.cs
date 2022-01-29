@@ -5,14 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.UserCases.Common.Dto;
-using WebAPI.UserCases.Requests.Employees.Commands.CreateEmployee;
-using WebAPI.UserCases.Requests.Employees.Commands.DeleteEmployee;
-using WebAPI.UserCases.Requests.Employees.Commands.UpdateEmployee;
-using WebAPI.UserCases.Requests.Employees.Commands.UpdateEmployeePhoto;
-using WebAPI.UserCases.Requests.Employees.Commands.UploadEmployeePhoto;
-using WebAPI.UserCases.Requests.Employees.Queries.GetDepartmentNameList;
-using WebAPI.UserCases.Requests.Employees.Queries.GetEmployee;
-using WebAPI.UserCases.Requests.Employees.Queries.GetEmployeeList;
+using WebAPI.UserCases.Requests.Employees.Commands;
+using WebAPI.UserCases.Requests.Employees.Queries;
+using WebAPI.UserCases.Requests.Employees.Validators;
 
 namespace WebAPI.Controllers
 {

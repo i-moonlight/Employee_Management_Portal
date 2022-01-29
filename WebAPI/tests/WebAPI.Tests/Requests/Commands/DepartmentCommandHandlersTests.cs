@@ -1,9 +1,7 @@
 ﻿using System.Threading.Tasks;
 using NUnit.Framework;
 using WebAPI.Tests.Common;
-using WebAPI.UserCases.Requests.Departments.Commands.CreateDepartment;
-using WebAPI.UserCases.Requests.Departments.Commands.DeleteDepartment;
-using WebAPI.UserCases.Requests.Departments.Commands.UpdateDepartment;
+using WebAPI.UserCases.Requests.Departments.Commands;
 using static System.Threading.CancellationToken;
 
 namespace WebAPI.Tests.Requests.Commands

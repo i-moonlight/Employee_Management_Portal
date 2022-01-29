@@ -6,9 +6,7 @@ using WebAPI.Entities.Models;
 using WebAPI.Tests.Common;
 using WebAPI.UserCases.Common.Dto;
 using WebAPI.UserCases.Common.Exceptions;
-using WebAPI.UserCases.Requests.Employees.Queries.GetDepartmentNameList;
-using WebAPI.UserCases.Requests.Employees.Queries.GetEmployee;
-using WebAPI.UserCases.Requests.Employees.Queries.GetEmployeeList;
+using WebAPI.UserCases.Requests.Employees.Queries;
 using static System.Threading.CancellationToken;
 using static WebAPI.Tests.Common.TestContent;
 

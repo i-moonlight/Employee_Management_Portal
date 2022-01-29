@@ -7,8 +7,7 @@ using WebAPI.Entities.Models;
 using WebAPI.Tests.Common;
 using WebAPI.UserCases.Common.Dto;
 using WebAPI.UserCases.Common.Exceptions;
-using WebAPI.UserCases.Requests.Departments.Queries.GetDepartment;
-using WebAPI.UserCases.Requests.Departments.Queries.GetDepartmentList;
+using WebAPI.UserCases.Requests.Departments.Queries;
 using static System.Threading.CancellationToken;
 using static WebAPI.Tests.Common.TestContent;
 

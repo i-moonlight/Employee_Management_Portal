@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
@@ -7,8 +8,16 @@ using WebAPI.Infrastructure.Interfaces.DataAccess;
 using WebAPI.UserCases.Common.Dto;
 using WebAPI.UserCases.Common.Exceptions;
 
-namespace WebAPI.UserCases.Requests.Employees.Queries.GetEmployee
+namespace WebAPI.UserCases.Requests.Employees.Queries
 {
+    /// <summary>
+    /// Sets a property of the request object.
+    /// </summary>
+    public class GetEmployeeQuery : IRequest<EmployeeDto>
+    {
+        public Guid Id { get; set; }
+    }
+    
     /// <summary>
     /// Implements a handler for the employee request.
     /// </summary>

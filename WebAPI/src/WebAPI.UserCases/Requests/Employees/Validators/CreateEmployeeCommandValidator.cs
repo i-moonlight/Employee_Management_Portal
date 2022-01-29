@@ -1,9 +1,10 @@
 ﻿using FluentValidation;
+using WebAPI.UserCases.Requests.Employees.Commands;
 
-namespace WebAPI.UserCases.Requests.Employees.Commands.CreateEmployee
+namespace WebAPI.UserCases.Requests.Employees.Validators
 {
     /// <summary>
-    /// Sets validation rules for create employee command.
+    /// Validator for create employee command.
     /// </summary>
     public class CreateEmployeeCommandValidator : AbstractValidator<CreateEmployeeCommand>
     {

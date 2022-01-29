@@ -1,13 +1,14 @@
 ﻿using FluentValidation;
+using WebAPI.UserCases.Requests.Departments.Commands;
 
-namespace WebAPI.UserCases.Requests.Departments.Commands.UpdateDepartment
+namespace WebAPI.UserCases.Requests.Departments.Validators
 {
     /// <summary>
-    /// Sets validation rules for update department command.
+    /// Validator for create department command.
     /// </summary>
-    public class UpdateDepartmentCommandValidator : AbstractValidator<UpdateDepartmentCommand>
+    public class CreateDepartmentCommandValidator : AbstractValidator<CreateDepartmentCommand>
     {
-        public UpdateDepartmentCommandValidator()
+        public CreateDepartmentCommandValidator()
         {
             RuleFor(cmd => cmd.DepartmentDto.Id)
                 .Empty().WithMessage("Id must be empty");

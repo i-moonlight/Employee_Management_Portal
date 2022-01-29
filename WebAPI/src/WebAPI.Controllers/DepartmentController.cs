@@ -5,11 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.UserCases.Common.Dto;
-using WebAPI.UserCases.Requests.Departments.Commands.CreateDepartment;
-using WebAPI.UserCases.Requests.Departments.Commands.DeleteDepartment;
-using WebAPI.UserCases.Requests.Departments.Commands.UpdateDepartment;
-using WebAPI.UserCases.Requests.Departments.Queries.GetDepartment;
-using WebAPI.UserCases.Requests.Departments.Queries.GetDepartmentList;
+using WebAPI.UserCases.Requests.Departments.Commands;
+using WebAPI.UserCases.Requests.Departments.Queries;
+using WebAPI.UserCases.Requests.Departments.Validators;
 
 namespace WebAPI.Controllers
 {

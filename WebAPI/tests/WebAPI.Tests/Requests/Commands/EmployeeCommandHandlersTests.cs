@@ -1,11 +1,7 @@
 ﻿using System.Threading.Tasks;
 using NUnit.Framework;
 using WebAPI.Tests.Common;
-using WebAPI.UserCases.Requests.Employees.Commands.CreateEmployee;
-using WebAPI.UserCases.Requests.Employees.Commands.UpdateEmployeePhoto;
-using WebAPI.UserCases.Requests.Employees.Commands.UploadEmployeePhoto;
-using WebAPI.UserCases.Requests.Employees.Commands.UpdateEmployee;
-using WebAPI.UserCases.Requests.Employees.Commands.DeleteEmployee;
+using WebAPI.UserCases.Requests.Employees.Commands;
 using static System.Threading.CancellationToken;
 
 namespace WebAPI.Tests.Requests.Commands
