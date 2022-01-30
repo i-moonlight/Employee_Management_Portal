@@ -14,6 +14,7 @@ namespace WebAPI.Tests.Common
         protected AppDbContext TestDbContext;
         protected DepartmentDto TestDepartmentDto;
         protected EmployeeDto TestEmployeeDto;
+        protected AuthController AuthController;
         protected DepartmentController DepartmentController;
         protected EmployeeController EmployeeController;
         protected HttpClient HttpClient;
@@ -24,6 +25,7 @@ namespace WebAPI.Tests.Common
         {
             TestDepartmentDto = GetTestDepartmentDto();
             TestEmployeeDto = GetTestEmployeeDto();
+            AuthController = new AuthController();
             DepartmentController = new DepartmentController();
             EmployeeController = new EmployeeController();
             WebApplicationFactory = new TestWebApplicationFactory<Startup>();
