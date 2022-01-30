@@ -1,29 +1,51 @@
 {
   "name": "store",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "private": true,
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start": "webpack-dev-server --port=3000 --open",
-    "dev": "webpack-dev-server --open --mode development",
-    "build": "webpack --mode production",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "webpack": "webpack -w"
-  },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "@babel/cli": "^7.22.9",
-    "@babel/core": "^7.22.9",
-    "@babel/node": "^7.22.6",
-    "@babel/preset-env": "^7.22.9",
-    "axios": "^1.4.0",
-    "live-server": "^1.2.2"
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.18.54",
+    "@types/react": "^18.2.22",
+    "@types/react-dom": "^18.2.7",
+    "primereact": "^9.6.2",
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.8.0",
+    "react-router-dom": "^6.16.0",
+    "react-dom": "^18.2.0",
+    "react-router": "^6.16.0",
+    "react-scripts": "5.0.1",
+    "typescript": "^4.9.5",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
   "devDependencies": {
-    "webpack": "^5.88.2",
-    "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^4.15.1"
+    "@types/react-router-dom": "^5.3.3",
+    "react-router-dom": "^6.16.0"
   }
 }

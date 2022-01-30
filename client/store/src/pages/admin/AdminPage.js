@@ -1,9 +1,9 @@
 import React from 'react';
-import MainPage from '../../components/MainPage';
+import Page from "../Page";
 
-const DashboardAdminPage = () => {
+const AdminPage = () => {
     return (
-        <MainPage>
+        <Page>
             <div className="main-content">
                 <div className="content">
                     <div className="content-header">
@@ -11,8 +11,8 @@ const DashboardAdminPage = () => {
                     </div>
                 </div>
             </div>
-        </MainPage>
+        </Page>
     )
 }
 
-export default DashboardAdminPage;
+export default AdminPage;
