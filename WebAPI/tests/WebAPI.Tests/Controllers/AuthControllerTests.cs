@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
 using WebAPI.Tests.Common;
+using WebAPI.UserCases.Common.Dto;
+using WebAPI.UserCases.Common.Response;
 
 namespace WebAPI.Tests.Controllers
 {
@@ -28,6 +30,19 @@ namespace WebAPI.Tests.Controllers
 
             // Assert.
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        }
+
+        [Test]
+        public void RegisterUser_Method_Should_Returns_ActionResult_ResponseModel_Type()
+        {
+            // Arrange.
+            var registerUser = new RegisterUserDto();
+
+            // Act.
+            var result = AuthController.RegisterUser(registerUser);
+
+            // Assert.
+            Assert.AreEqual(typeof(Task<ActionResult<ResponseModel>>), result.GetType());
         }
     }
 }
