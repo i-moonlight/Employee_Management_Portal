@@ -14,6 +14,14 @@ namespace WebAPI.Tests.Common
     /// </summary>
     public static class TestContent
     {
+        public static RegisterUserDto GetTestRegisterUserDto() => new()
+        {
+            FullName = "FullName",
+            UserName = "UserName",
+            Email = "User@test.ru",
+            Password = "User123!"
+        };
+
         public static EmployeeDto GetTestEmployeeDto() => new()
         {
             Name = "Name",
@@ -34,7 +42,10 @@ namespace WebAPI.Tests.Common
             }
         };
 
-        public static DepartmentDto GetTestDepartmentDto() => new() {Name = "Name"};
+        public static DepartmentDto GetTestDepartmentDto() => new()
+        {
+            Name = "Name"
+        };
 
         public static IEnumerable GetTestDepartmentList() => new List<Department>
         {
