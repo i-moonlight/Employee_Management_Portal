@@ -57,5 +57,18 @@ namespace WebAPI.Tests.Controllers
             // Assert.
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
+        
+        [Test]
+        public void SignIn_Method_Should_Returns_ActionResult_ResponseModel_Type()
+        {
+            // Arrange.
+            var testLoginDto = TestContent.GetTestLoginDto();
+
+            // Act.
+            var result = AuthController.SignIn(testLoginDto);
+
+            // Assert.
+            Assert.AreEqual(typeof(Task<ActionResult<ResponseModel>>), result.GetType());
+        }
     }
 }

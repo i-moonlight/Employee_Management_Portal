@@ -6,6 +6,7 @@ using System.Text;
 using Newtonsoft.Json;
 using WebAPI.Entities.Models;
 using WebAPI.UserCases.Common.Dto;
+using WebAPI.UserCases.Common.Dto.Request;
 
 namespace WebAPI.Tests.Common
 {
@@ -14,6 +15,13 @@ namespace WebAPI.Tests.Common
     /// </summary>
     public static class TestContent
     {
+        public static LoginDto GetTestLoginDto() => new()
+        {
+            Username = "UserName",
+            Email = "User@test.ru",
+            Password = "User123!"
+        };
+
         public static RegisterUserDto GetTestRegisterUserDto() => new()
         {
             FullName = "FullName",
