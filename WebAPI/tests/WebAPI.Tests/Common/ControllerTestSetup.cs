@@ -4,6 +4,7 @@ using NUnit.Framework;
 using WebAPI.Controllers;
 using WebAPI.DataAccess.MsSql.Persistence.Context;
 using WebAPI.UserCases.Common.Dto;
+using WebAPI.UserCases.Common.Dto.Request;
 using WebAPI.Web;
 using static WebAPI.Tests.Common.TestContent;
 
@@ -14,6 +15,7 @@ namespace WebAPI.Tests.Common
         protected AppDbContext TestDbContext;
         protected DepartmentDto TestDepartmentDto;
         protected EmployeeDto TestEmployeeDto;
+        protected LoginDto TestLoginDto;
         protected RegisterUserDto TestRegisterUserDto;
         protected AuthController AuthController;
         protected DepartmentController DepartmentController;
@@ -26,6 +28,7 @@ namespace WebAPI.Tests.Common
         {
             TestDepartmentDto = GetTestDepartmentDto();
             TestEmployeeDto = GetTestEmployeeDto();
+            TestLoginDto = GetTestLoginDto();
             TestRegisterUserDto = GetTestRegisterUserDto();
             AuthController = new AuthController();
             DepartmentController = new DepartmentController();
