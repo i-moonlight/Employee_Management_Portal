@@ -14,7 +14,7 @@ using static WebAPI.Tests.Common.TestContent;
 namespace WebAPI.Tests.Requests.Queries
 {
     [TestFixture]
-    public class DepartmentQueryHandlersTests : RequestHandlersTest
+    public class DepartmentQueryHandlersTests : RequestTestSetup
     {
         private GetDepartmentQuery _request;
         private GetDepartmentQueryHandler _handler;

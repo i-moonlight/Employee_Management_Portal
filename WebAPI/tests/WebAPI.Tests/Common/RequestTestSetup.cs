@@ -10,7 +10,7 @@ using static WebAPI.Tests.Common.TestContent;
 
 namespace WebAPI.Tests.Common
 {
-    public class RequestHandlersTest
+    public class RequestTestSetup
     {
         protected DepartmentDto TestDepartmentDto;
         protected EmployeeDto TestEmployeeDto;

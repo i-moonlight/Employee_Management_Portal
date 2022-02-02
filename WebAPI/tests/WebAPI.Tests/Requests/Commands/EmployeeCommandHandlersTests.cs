@@ -7,7 +7,7 @@ using static System.Threading.CancellationToken;
 namespace WebAPI.Tests.Requests.Commands
 {
     [TestFixture]
-    public class EmployeeCommandHandlersTests : RequestHandlersTest
+    public class EmployeeCommandHandlersTests : RequestTestSetup
     {
         [Test]
         public async Task CreateEmployeeCommandHandler_Handle_Method_Should_Returns_Success_String()

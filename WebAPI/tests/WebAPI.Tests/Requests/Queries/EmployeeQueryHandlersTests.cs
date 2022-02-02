@@ -13,7 +13,7 @@ using static WebAPI.Tests.Common.TestContent;
 namespace WebAPI.Tests.Requests.Queries
 {
     [TestFixture]
-    public class EmployeeQueryHandlersTests : RequestHandlersTest
+    public class EmployeeQueryHandlersTests : RequestTestSetup
     {
         private GetEmployeeQuery _request;
         private GetEmployeeQueryHandler _handler;
