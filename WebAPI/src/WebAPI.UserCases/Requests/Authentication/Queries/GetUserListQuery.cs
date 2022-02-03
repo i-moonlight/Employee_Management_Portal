@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -8,7 +7,6 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using WebAPI.Entities.Models;
 using WebAPI.UserCases.Common.Dto;
-using WebAPI.UserCases.Common.Response;
 
 namespace WebAPI.UserCases.Requests.Authentication.Queries
 {
@@ -18,45 +16,34 @@ namespace WebAPI.UserCases.Requests.Authentication.Queries
     public class GetUserListQuery : IRequest<IEnumerable> {}
 
     /// <summary>
-    /// Implements a handler for the department list request.
+    /// Implements a request handler for a list of registered users.
     /// </summary>
     public class GetUserListQueryHandler : IRequestHandler<GetUserListQuery, IEnumerable>
     {
         private readonly UserManager<User> _userManager;
 
-        public GetUserListQueryHandler(UserManager<User> userManager) =>
-            _userManager = userManager;
+        public GetUserListQueryHandler(UserManager<User> userManager) => _userManager = userManager;
 
         /// <summary>
         /// Handles a request.
         /// </summary>
         /// <param name="request">The request.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
-        /// <returns>Returns department list.</returns>
+        /// <returns>Returns registration user list.</returns>
         public async Task<IEnumerable> Handle(GetUserListQuery request, CancellationToken cancellationToken)
         {
-            try
+            var userProfiles = new List<ProfileDto>();
+            var users = _userManager.Users;
+
+            foreach (var user in users)
             {
-                var userProfiles = new List<ProfileDto>();
-                var users = _userManager.Users.ToArray();
+                var role = await _userManager.GetRolesAsync(user);
 
-                foreach (var user in users)
-                {
-                    var role = await _userManager.GetRolesAsync(user);
-
-                    userProfiles.Add(new ProfileDto(
-                        user.FullName, user.Email, user.UserName, user.DateCreated, role.First()));
-                }
-
-                return await Task.FromResult(userProfiles);
+                userProfiles.Add(new ProfileDto(user.FullName, user.Email,
+                    user.UserName, user.DateCreated, role.First()));
             }
-            catch (Exception ex)
-            {
-                return new[]
-                {
-                    Task.FromResult(new ResponseModel(ResponseCode.Error, ex.Message, null))
-                };
-            }
+
+            return await Task.FromResult(userProfiles);
         }
     }
 }
