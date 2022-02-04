@@ -1,30 +1,61 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import { RefreshTokenDto } from './dto/refresh-token.dto';
+import { PrismaService } from '../../prisma/prisma.service';
+import { hash } from 'argon2';
+import { JwtService } from '@nestjs/jwt';
+import { User } from '@prisma/client';
 
 @Injectable()
 export class AuthService {
-  register(createAuthDto: CreateAuthDto) {
-      throw new Error('Method not implemented.');
+  constructor(
+     private prisma: PrismaService,
+     private jwt: JwtService) {}
+
+  async register(dto: CreateAuthDto) {
+    const existUser = await this.prisma.user.findUnique({
+      where: {
+        email: dto.email
+      }
+    })
+
+    if (existUser) throw new BadRequestException('User already exists')
+
+    const user = await this.prisma.user.create({
+      data: {
+        name: dto.name,
+        email: dto.email,
+        password: await hash(dto.password)
+      }
+    })
+
+    const tokens = await this.issueTokens(user.id)
+
+    // Response model dto
+    return {
+      response: this.returnUserFields(user),
+      ...tokens
+    }
   }
 
-  create(createAuthDto: CreateAuthDto) {
-    return 'This action adds a new auth';
+  private async issueTokens(userId: number) {
+    const data = { id : userId }
+
+    const accessToken = this.jwt.sign(data, {
+      expiresIn: '1h',
+    })
+
+    const refreshToken = this.jwt.sign(data, {
+      expiresIn: '7d',
+    })
+
+    return { accessToken, refreshToken }
   }
 
-  findAll() {
-    return `This action returns all auth`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
-  }
-
-  update(id: number, updateAuthDto: UpdateAuthDto) {
-    return `This action updates a #${id} auth`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
+  private returnUserFields(user: Partial<User>) {
+    return {
+      id: user.id,
+      email: user.email
+    }
   }
 }

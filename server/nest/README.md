@@ -104,3 +104,16 @@ $ npx prisma db push
 - Эта команда допускает потерю данных и не запрашивает у вас имя переноса (чтобы избежать блокировки вашего конвейера сборки).
 - Эта команда применит все миграции, которые еще не применены.
 
+
+## Nest generate commands
+````
+$ npx nest g resource [feature folder name]
+$ npx nest g resource [feature folder name] --no-spec
+````
+
+## Npm libs commands
+````
+$ npm install class-validator --save
+$ npm i argon2
+$ npm install class-transformer
+````
