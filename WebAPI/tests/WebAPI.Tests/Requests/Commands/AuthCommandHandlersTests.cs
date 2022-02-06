@@ -48,5 +48,26 @@ namespace WebAPI.Tests.Requests.Commands
             // Assert.
             Assert.AreEqual("User has been not registered", result.ResponseMessage);
         }
+        
+        [Test]
+        public async Task RegisterUserCommandHandler_Handle_Method_Should_Returns_Exception()
+        {
+            // Arrange.
+            var testRegisterUserDto = TestContent.GetTestRegisterUserDto();
+            var request = new RegisterUserCommand() {RegisterUserDto = testRegisterUserDto};
+            var manager = TestManager.MockUserManager<User>();
+            
+            manager
+                .Setup(m => m.CreateAsync(It.IsAny<User>(), It.IsAny<string>()))
+                .ReturnsAsync((IdentityResult) null);
+            
+            var handler = new RegisterUserCommandHandler(manager.Object, Mapper);
+
+            // Act.
+            var result = await handler.Handle(request, CancellationToken.None);
+
+            // Assert.
+            Assert.AreEqual("Object reference not set to an instance of an object.", result.ResponseMessage);
+        }
     }
 }
