@@ -12,7 +12,7 @@ using Newtonsoft.Json.Serialization;
 using WebAPI.DataAccess.MsSql.Persistence.Context;
 using WebAPI.Entities.Models;
 using WebAPI.UserCases;
-using WebAPI.UserCases.Common.Configs;
+using WebAPI.UserCases.Token;
 
 namespace WebAPI.Authentication
 {

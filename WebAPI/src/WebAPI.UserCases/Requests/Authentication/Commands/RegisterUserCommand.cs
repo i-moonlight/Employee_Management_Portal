@@ -13,6 +13,9 @@ using static WebAPI.UserCases.Common.Response.ResponseCode;
 
 namespace WebAPI.UserCases.Requests.Authentication.Commands
 {
+    /// <summary>
+    /// Sets a property of the request object.
+    /// </summary>
     public class RegisterUserCommand : IRequest<ResponseModel>
     {
         public RegisterUserDto RegisterUserDto { get; set; }
@@ -48,18 +51,15 @@ namespace WebAPI.UserCases.Requests.Authentication.Commands
 
                     await _userManager.AddToRoleAsync(tempUser, RoleNameTypes.AllRoles.ElementAt(0));
 
-                    return await Task.FromResult(
-                        new ResponseModel(Ok, "User has been registered", null));
+                    return await Task.FromResult(new ResponseModel(Ok, "User has been registered.", null));
                 }
 
-                return await Task.FromResult(
-                    new ResponseModel(Ok, "User has been not registered",
-                        result.Errors.Select(error => error.Description).ToArray()));
+                return await Task.FromResult(new ResponseModel(Ok, "User has been not registered.",
+                    result.Errors.Select(error => error.Description).ToArray()));
             }
             catch (Exception ex)
             {
-                return await Task.FromResult(
-                    new ResponseModel(Error, ex.Message, null));
+                return await Task.FromResult(new ResponseModel(Error, ex.Message, null));
             }
         }
     }

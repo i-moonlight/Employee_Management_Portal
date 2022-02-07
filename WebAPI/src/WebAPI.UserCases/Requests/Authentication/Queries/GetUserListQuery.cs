@@ -13,7 +13,9 @@ namespace WebAPI.UserCases.Requests.Authentication.Queries
     /// <summary>
     /// Sets a property of the request object.
     /// </summary>
-    public class GetUserListQuery : IRequest<IEnumerable> {}
+    public class GetUserListQuery : IRequest<IEnumerable>
+    {
+    }
 
     /// <summary>
     /// Implements a request handler for a list of registered users.
@@ -39,8 +41,8 @@ namespace WebAPI.UserCases.Requests.Authentication.Queries
             {
                 var role = await _userManager.GetRolesAsync(user);
 
-                userProfiles.Add(new ProfileDto(user.FullName, user.Email,
-                    user.UserName, user.DateCreated, role.First()));
+                userProfiles.Add(new ProfileDto(user.FullName, user.Email, user.UserName, user.DateCreated,
+                    role.First()));
             }
 
             return await Task.FromResult(userProfiles);
