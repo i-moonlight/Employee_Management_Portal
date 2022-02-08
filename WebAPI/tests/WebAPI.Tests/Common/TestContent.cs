@@ -15,6 +15,15 @@ namespace WebAPI.Tests.Common
     /// </summary>
     public static class TestContent
     {
+        public static User GetTestUser() => new()
+        {
+            UserName = "UserName",
+            FullName = "FullName",
+            Email = "User@test.ru",
+            DateModified = DateTime.Today,
+            DateCreated = DateTime.Now
+        };
+        
         public static LoginDto GetTestLoginDto() => new()
         {
             Username = "UserName",
