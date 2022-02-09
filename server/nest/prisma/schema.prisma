@@ -11,15 +11,84 @@ datasource db {
 }
 
 model User {
-  id          Int       @id @default(autoincrement())
+  id            String        @id @default(uuid()) @db.Uuid
+  name          String        @default("")
+  email         String        @unique
+  password      String
+  phone         String        @default("")
+  avatarPath    String?       @default("/uploads/default-avatar.png") @map("avatar_path")
+  createdAt     DateTime      @default(now()) @map("created_at")
+  updatedAt     DateTime      @updatedAt @map("updated_at")
+  orders        Order[]
+  reviews       Review[]
+  favourites    Product[]
+}
 
-  name        String    @default("")
-  email       String    @unique
-  password    String
-  phone       String    @default("")
+model Product {
+  id            String        @id @default(uuid()) @db.Uuid
+  name          String        @unique
+  slug          String        @unique
+  description   String
+  price         Float
+  images        String[]
+  orderItems    OrderItem[]
+  reviews       Review[]
+  userId        String?       @db.Uuid
+  user          User?         @relation(fields: [userId], references: [id])
+  categoryId    String?       @db.Uuid
+  category      Category?     @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  createdAt     DateTime      @default(now()) @map("created_at")
+  updatedAt     DateTime      @updatedAt @map("updated_at")
+}
 
-  avatarPath  String?   @default("/uploads/default-avatar.png") @map("avatar_path")
+model Category {
+  id            String        @unique @id @default(uuid()) @db.Uuid
+  name          String        @unique
+  slug          String        @unique
+  products      Product[]
+  createdAt     DateTime      @default(now()) @map("created_at")
+  updatedAt     DateTime      @updatedAt @map("updated_at")
+}
 
-  createdAt   DateTime  @default(now()) @map("created_at")
-  updatedAt   DateTime  @updatedAt @map("updated_at")
+enum OrderStatus {
+  PENDING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+model Order {
+  id            String        @unique @id @default(uuid()) @db.Uuid
+  status        OrderStatus   @default(PENDING)
+  totalAmount   Float         @default(0)
+  orderItems    OrderItem[]
+  user          User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
+  userId        String?       @db.Uuid
+  createdAt     DateTime      @default(now()) @map("created_at")
+  updatedAt     DateTime      @updatedAt @map("updated_at")
+}
+
+model OrderItem {
+  id            String        @unique @id @default(uuid()) @db.Uuid
+  quantity      Int
+  price         Float
+  orderId       String?       @db.Uuid
+  order         Order?        @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId     String?       @db.Uuid
+  product       Product?      @relation(fields: [productId], references: [id], onDelete: SetNull)
+  createdAt     DateTime      @default(now()) @map("created_at")
+  updatedAt     DateTime      @updatedAt @map("updated_at")
+  @@map("Order_item")
+}
+
+model Review {
+  id            String        @unique @id @default(uuid()) @db.Uuid
+  rating        Int
+  text          String
+  user          User?         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        String?       @db.Uuid
+  product       Product?      @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId     String?       @db.Uuid
+  createdAt     DateTime      @default(now()) @map("created_at")
+  updatedAt     DateTime      @updatedAt @map("updated_at")
 }

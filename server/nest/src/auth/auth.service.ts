@@ -7,9 +7,7 @@ import { AuthDto } from './dto/auth.dto';
 
 @Injectable()
 export class AuthService {
-  constructor(
-     private prisma: PrismaService,
-     private jwt: JwtService) {}
+  constructor(private prisma: PrismaService, private jwt: JwtService) {}
 
   async register(dto: AuthDto) {
     const existUser = await this.prisma.user.findUnique({
@@ -37,7 +35,7 @@ export class AuthService {
     }
   }
 
-  private async issueTokens(userId: number) {
+  private async issueTokens(userId: string) {
     const data = { id : userId }
 
     const accessToken = this.jwt.sign(data, {
