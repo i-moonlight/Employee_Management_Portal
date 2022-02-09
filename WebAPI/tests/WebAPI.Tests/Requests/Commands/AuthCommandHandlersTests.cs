@@ -88,5 +88,23 @@ namespace WebAPI.Tests.Requests.Commands
             // Assert.
             Assert.AreEqual("Token generated.", result.ResponseMessage);
         }
+
+        [Test]
+        public async Task SignInCommandHandler_Handle_Method_Should_Returns_Exception()
+        {
+            // Arrange.
+            var request = new SignInCommand() {LoginDto = null};
+
+            var mockUserManager = TestManager.MockUserManagerCheckEmail<User>();
+            var mockSignInManager = TestManager.MockSignInManager<User>();
+
+            var handler = new SignInCommandHandler(mockUserManager.Object, mockSignInManager.Object);
+
+            // Act.
+            var result = await handler.Handle(request, CancellationToken.None);
+
+            // Assert.
+            Assert.AreEqual("Object reference not set to an instance of an object.", result.ResponseMessage);
+        }
     }
 }
