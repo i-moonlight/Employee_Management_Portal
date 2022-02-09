@@ -22,7 +22,7 @@ namespace WebAPI.Tests.Requests.Queries
         public async Task GetUserListQueryHandler_Handler_Method_Should_Returns_User_List()
         {
             // Arrange
-            var manager = TestManager.MockUserManager<User>().Object;
+            var manager = MockInstances.GetMockUserManager<User>().Object;
             var handler = new GetUserListQueryHandler(manager);
 
             // Act.
