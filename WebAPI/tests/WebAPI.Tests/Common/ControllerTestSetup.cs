@@ -6,7 +6,6 @@ using WebAPI.DataAccess.MsSql.Persistence.Context;
 using WebAPI.UserCases.Common.Dto;
 using WebAPI.UserCases.Common.Dto.Request;
 using WebAPI.Web;
-using static WebAPI.Tests.Common.TestContent;
 
 namespace WebAPI.Tests.Common
 {
@@ -30,10 +29,10 @@ namespace WebAPI.Tests.Common
             DepartmentController = new DepartmentController();
             EmployeeController = new EmployeeController();
             WebApplicationFactory = new TestWebApplicationFactory<Startup>();
-            TestDepartmentDto = GetTestDepartmentDto();
-            TestEmployeeDto = GetTestEmployeeDto();
-            TestLoginDto = GetTestLoginDto();
-            TestRegisterUserDto = GetTestRegisterUserDto();
+            TestDepartmentDto = TestContent.TestDepartmentDto;
+            TestEmployeeDto = TestContent.TestEmployeeDto;
+            TestLoginDto = TestContent.TestLoginDto;
+            TestRegisterUserDto = TestContent.TestRegisterUserDto;
             HttpClient = WebApplicationFactory.CreateClient();
             TestDbContext = WebApplicationFactory.Services.CreateScope().ServiceProvider.GetService<AppDbContext>();
         }

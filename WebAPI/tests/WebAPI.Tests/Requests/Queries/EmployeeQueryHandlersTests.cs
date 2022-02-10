@@ -8,7 +8,6 @@ using WebAPI.UserCases.Common.Dto;
 using WebAPI.UserCases.Common.Exceptions;
 using WebAPI.UserCases.Requests.Employees.Queries;
 using static System.Threading.CancellationToken;
-using static WebAPI.Tests.Common.TestContent;
 
 namespace WebAPI.Tests.Requests.Queries
 {
@@ -24,7 +23,7 @@ namespace WebAPI.Tests.Requests.Queries
         {
             _request = new GetEmployeeQuery();
             _handler = new GetEmployeeQueryHandler(MockEmployeeRepo.Object, Mapper);
-            _testEmployee = GetTestEmployeeList().Cast<Employee>().First();
+            _testEmployee = TestContent.TestEmployeeList.Cast<Employee>().First();
             _request.Id = _testEmployee.Id;
         }
 
@@ -33,7 +32,7 @@ namespace WebAPI.Tests.Requests.Queries
         {
             // Arrange.
             var handler = new GetEmployeeListQueryHandler(MockEmployeeRepo.Object);
-            var employeeList = GetTestEmployeeList();
+            var employeeList = TestContent.TestEmployeeList;
 
             MockEmployeeRepo.Setup(r => r.Read()).Returns(employeeList);
 
@@ -76,7 +75,7 @@ namespace WebAPI.Tests.Requests.Queries
             // Arrange.
             var handler = new GetDepartmentNameListQueryHandler(MockEmployeeRepo.Object);
 
-            var testDepartmentNameList = GetTestDepartmentList()
+            var testDepartmentNameList = TestContent.TestDepartmentList
                 .Cast<Department>()
                 .OrderBy(d => d.Name).Select(d => d.Name)
                 .ToList();

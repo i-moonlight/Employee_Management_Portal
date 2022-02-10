@@ -6,7 +6,6 @@ using WebAPI.Entities.Models;
 using WebAPI.Infrastructure.Interfaces.DataAccess;
 using WebAPI.UserCases.Common.Dto;
 using WebAPI.UserCases.Common.Mappings;
-using static WebAPI.Tests.Common.TestContent;
 
 namespace WebAPI.Tests.Common
 {
@@ -22,11 +21,11 @@ namespace WebAPI.Tests.Common
         [SetUp]
         public void Setup()
         {
-            var mappingConfig = new MapperConfiguration(c => c.AddProfile(new AssemblyMappingProfile()));
-            var mapper = mappingConfig.CreateMapper();
+            var mapperConfig = new MapperConfiguration(c => c.AddProfile(new AssemblyMappingProfile()));
+            var mapper = mapperConfig.CreateMapper();
 
-            TestDepartmentDto = GetTestDepartmentDto();
-            TestEmployeeDto = GetTestEmployeeDto();
+            TestDepartmentDto = TestContent.TestDepartmentDto;
+            TestEmployeeDto = TestContent.TestEmployeeDto;
             MockDepartmentRepo = new Mock<ICrudRepository<Department>>();
             MockEmployeeRepo = new Mock<ICrudRepository<Employee>>();
             MockEnvironment = new Mock<IWebHostEnvironment>();

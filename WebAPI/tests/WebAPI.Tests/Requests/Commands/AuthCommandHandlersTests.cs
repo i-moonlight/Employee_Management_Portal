@@ -1,27 +1,36 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Moq;
 using NUnit.Framework;
 using WebAPI.Entities.Models;
 using WebAPI.Tests.Common;
+using WebAPI.UserCases.Common.Dto;
 using WebAPI.UserCases.Requests.Authentication.Commands;
-using static WebAPI.Tests.Common.MockInstances;
 
 namespace WebAPI.Tests.Requests.Commands
 {
     [TestFixture]
     public class AuthCommandHandlersTests : RequestTestSetup
     {
+        private Mock<UserManager<User>> _mockUserManager;
+        private Mock<SignInManager<User>> _mockSignInManager;
+        private RegisterUserDto _testRegisterUserDto;
+
+        [SetUp]
+        public new void Setup()
+        {
+            _mockUserManager = MockInstances.GetMockUserManager<User>();
+            _mockSignInManager = MockInstances.GetMockSignInManager<User>();
+            _testRegisterUserDto = TestContent.TestRegisterUserDto;
+        }
+
         [Test]
         public async Task RegisterUserCommandHandler_Handle_Method_Should_Returns_Success_String()
         {
             // Arrange.
-            var testRegisterUserDto = TestContent.GetTestRegisterUserDto();
-            var request = new RegisterUserCommand() {RegisterUserDto = testRegisterUserDto};
-            var manager = GetMockUserManager<User>();
-            var handler = new RegisterUserCommandHandler(manager.Object, Mapper);
+            var request = new RegisterUserCommand() {RegisterUserDto = _testRegisterUserDto};
+            var handler = new RegisterUserCommandHandler(_mockUserManager.Object, Mapper);
 
             // Act.
             var result = await handler.Handle(request, CancellationToken.None);
@@ -34,15 +43,13 @@ namespace WebAPI.Tests.Requests.Commands
         public async Task RegisterUserCommandHandler_Handle_Method_Should_Returns_Failure_String()
         {
             // Arrange.
-            var testRegisterUserDto = TestContent.GetTestRegisterUserDto();
-            var request = new RegisterUserCommand() {RegisterUserDto = testRegisterUserDto};
-            var manager = GetMockUserManager<User>();
+            var request = new RegisterUserCommand() {RegisterUserDto = _testRegisterUserDto};
 
-            manager
+            _mockUserManager
                 .Setup(m => m.CreateAsync(It.IsAny<User>(), It.IsAny<string>()))
                 .ReturnsAsync(IdentityResult.Failed());
 
-            var handler = new RegisterUserCommandHandler(manager.Object, Mapper);
+            var handler = new RegisterUserCommandHandler(_mockUserManager.Object, Mapper);
 
             // Act.
             var result = await handler.Handle(request, CancellationToken.None);
@@ -55,15 +62,13 @@ namespace WebAPI.Tests.Requests.Commands
         public async Task RegisterUserCommandHandler_Handle_Method_Should_Returns_Exception()
         {
             // Arrange.
-            var testRegisterUserDto = TestContent.GetTestRegisterUserDto();
-            var request = new RegisterUserCommand() {RegisterUserDto = testRegisterUserDto};
-            var manager = GetMockUserManager<User>();
+            var request = new RegisterUserCommand() {RegisterUserDto = _testRegisterUserDto};
 
-            manager
+            _mockUserManager
                 .Setup(m => m.CreateAsync(It.IsAny<User>(), It.IsAny<string>()))
                 .ReturnsAsync((IdentityResult) null);
 
-            var handler = new RegisterUserCommandHandler(manager.Object, Mapper);
+            var handler = new RegisterUserCommandHandler(_mockUserManager.Object, Mapper);
 
             // Act.
             var result = await handler.Handle(request, CancellationToken.None);
@@ -76,12 +81,9 @@ namespace WebAPI.Tests.Requests.Commands
         public async Task SignInCommandHandler_Handle_Method_Should_Returns_Token()
         {
             // Arrange.
-            var testRegisterUserDto = TestContent.GetTestLoginDto();
+            var testRegisterUserDto = TestContent.TestLoginDto;
             var request = new SignInCommand() {LoginDto = testRegisterUserDto};
-            var mockUserManager = GetMockUserManager<User>();
-            var mockSignInManager = GetMockSignInManager<User>();
-
-            var handler = new SignInCommandHandler(mockUserManager.Object, mockSignInManager.Object);
+            var handler = new SignInCommandHandler(_mockUserManager.Object, _mockSignInManager.Object);
 
             // Act.
             var result = await handler.Handle(request, CancellationToken.None);
@@ -95,10 +97,7 @@ namespace WebAPI.Tests.Requests.Commands
         {
             // Arrange.
             var request = new SignInCommand() {LoginDto = null};
-            var mockUserManager = GetMockUserManager<User>();
-            var mockSignInManager = GetMockSignInManager<User>();
-
-            var handler = new SignInCommandHandler(mockUserManager.Object, mockSignInManager.Object);
+            var handler = new SignInCommandHandler(_mockUserManager.Object, _mockSignInManager.Object);
 
             // Act.
             var result = await handler.Handle(request, CancellationToken.None);

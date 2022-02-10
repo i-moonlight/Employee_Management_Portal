@@ -23,8 +23,8 @@ namespace WebAPI.Tests.Common
                 .ReturnsAsync(IdentityResult.Success);
 
             mockUserManager
-                .Setup(m => m.FindByEmailAsync(TestContent.GetTestUser().Email))
-                .ReturnsAsync(TestContent.GetTestUser() as TUser);
+                .Setup(m => m.FindByEmailAsync(TestContent.TestUser.Email))
+                .ReturnsAsync(TestContent.TestUser as TUser);
 
             mockUserManager
                 .Setup(m => m.GetRolesAsync(It.IsAny<TUser>()))

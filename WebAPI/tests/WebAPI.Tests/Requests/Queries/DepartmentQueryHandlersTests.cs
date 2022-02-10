@@ -9,7 +9,6 @@ using WebAPI.UserCases.Common.Dto;
 using WebAPI.UserCases.Common.Exceptions;
 using WebAPI.UserCases.Requests.Departments.Queries;
 using static System.Threading.CancellationToken;
-using static WebAPI.Tests.Common.TestContent;
 
 namespace WebAPI.Tests.Requests.Queries
 {
@@ -25,7 +24,7 @@ namespace WebAPI.Tests.Requests.Queries
         {
             _request = new GetDepartmentQuery();
             _handler = new GetDepartmentQueryHandler(MockDepartmentRepo.Object, Mapper);
-            _testDepartmentList = GetTestDepartmentList();
+            _testDepartmentList = TestContent.TestDepartmentList;
         }
 
         [Test]

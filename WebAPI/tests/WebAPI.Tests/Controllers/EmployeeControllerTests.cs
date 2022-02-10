@@ -45,7 +45,7 @@ namespace WebAPI.Tests.Controllers
         public void GetEmployeeById_Method_Should_Returns_ActionResult_EmployeeDto_Type()
         {
             // Arrange.
-            var employeeId = GetTestEmployeeDto().Id;
+            var employeeId = TestContent.TestEmployeeDto.Id;
 
             // Act.
             var result = EmployeeController.GetEmployeeById(employeeId);

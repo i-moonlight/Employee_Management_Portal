@@ -62,7 +62,7 @@ namespace WebAPI.Tests.Controllers
         public void SignIn_Method_Should_Returns_ActionResult_ResponseModel_Type()
         {
             // Arrange.
-            var testLoginDto = TestContent.GetTestLoginDto();
+            var testLoginDto = TestContent.TestLoginDto;
 
             // Act.
             var result = AuthController.SignIn(testLoginDto);

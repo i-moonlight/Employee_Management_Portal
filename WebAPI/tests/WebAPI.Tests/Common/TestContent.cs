@@ -15,23 +15,22 @@ namespace WebAPI.Tests.Common
     /// </summary>
     public static class TestContent
     {
-        public static User GetTestUser() => new()
+        public static User TestUser => new()
         {
-            UserName = "UserName",
             FullName = "FullName",
+            UserName = "UserName",
             Email = "User@test.ru",
-            DateModified = DateTime.Today,
-            DateCreated = DateTime.Now
+            DateModified = DateTime.Today
         };
-        
-        public static LoginDto GetTestLoginDto() => new()
+
+        public static LoginDto TestLoginDto => new()
         {
             Username = "UserName",
             Email = "User@test.ru",
             Password = "User123!"
         };
 
-        public static RegisterUserDto GetTestRegisterUserDto() => new()
+        public static RegisterUserDto TestRegisterUserDto => new()
         {
             FullName = "FullName",
             UserName = "UserName",
@@ -39,7 +38,7 @@ namespace WebAPI.Tests.Common
             Password = "User123!"
         };
 
-        public static EmployeeDto GetTestEmployeeDto() => new()
+        public static EmployeeDto TestEmployeeDto => new()
         {
             Name = "Name",
             Department = "Department",
@@ -47,7 +46,7 @@ namespace WebAPI.Tests.Common
             PhotoFileName = "PhotoFileName"
         };
 
-        public static IEnumerable GetTestEmployeeList() => new List<Employee>
+        public static IEnumerable TestEmployeeList => new List<Employee>
         {
             new()
             {
@@ -59,12 +58,12 @@ namespace WebAPI.Tests.Common
             }
         };
 
-        public static DepartmentDto GetTestDepartmentDto() => new()
+        public static DepartmentDto TestDepartmentDto => new()
         {
             Name = "Name"
         };
 
-        public static IEnumerable GetTestDepartmentList() => new List<Department>
+        public static IEnumerable TestDepartmentList => new List<Department>
         {
             new()
             {
