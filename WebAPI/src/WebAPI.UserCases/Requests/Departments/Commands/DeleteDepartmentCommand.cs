@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using MediatR;
 using WebAPI.Entities.Models;
 using WebAPI.Infrastructure.Interfaces.DataAccess;
+using static WebAPI.Utils.Constants.MessageTypes;
 
 namespace WebAPI.UserCases.Requests.Departments.Commands
 {
@@ -44,7 +45,7 @@ namespace WebAPI.UserCases.Requests.Departments.Commands
                 success = false;
             }
 
-            return await Task.FromResult(success ? "Deleted successfully" : "Delete failed");
+            return await Task.FromResult(success ? DeletedSuccessfull : DeletedFailed);
         }
     }
 }

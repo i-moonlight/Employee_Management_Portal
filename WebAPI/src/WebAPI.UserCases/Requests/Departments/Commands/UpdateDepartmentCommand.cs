@@ -6,6 +6,7 @@ using MediatR;
 using WebAPI.Entities.Models;
 using WebAPI.Infrastructure.Interfaces.DataAccess;
 using WebAPI.UserCases.Common.Dto;
+using static WebAPI.Utils.Constants.MessageTypes;
 
 namespace WebAPI.UserCases.Requests.Departments.Commands
 {
@@ -47,7 +48,7 @@ namespace WebAPI.UserCases.Requests.Departments.Commands
                 success = false;
             }
 
-            return await Task.FromResult(success ? "Updated successfully" : "Update failed");
+            return await Task.FromResult(success ? UpdatedSuccessfull : UpdatedFailed);
         }
     }
 }

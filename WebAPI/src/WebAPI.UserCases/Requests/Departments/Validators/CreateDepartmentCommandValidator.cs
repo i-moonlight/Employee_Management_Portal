@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using WebAPI.UserCases.Requests.Departments.Commands;
+using static WebAPI.Utils.Constants.MessageTypes;
 
 namespace WebAPI.UserCases.Requests.Departments.Validators
 {
@@ -11,12 +12,12 @@ namespace WebAPI.UserCases.Requests.Departments.Validators
         public CreateDepartmentCommandValidator()
         {
             RuleFor(cmd => cmd.DepartmentDto.Id)
-                .Empty().WithMessage("Id must be empty");
+                .Empty().WithMessage(IdMustEmpty);
 
             RuleFor(cmd => cmd.DepartmentDto.Name)
-                .NotNull().WithMessage("Name must be filled")
-                .NotEmpty().WithMessage("Name must be filled")
-                .MaximumLength(50).WithMessage("Name must be shorter");
+                .NotNull().WithMessage(NameMustFilled)
+                .NotEmpty().WithMessage(NameMustFilled)
+                .MaximumLength(50).WithMessage(NameMustShorter);
         }
     }
 }

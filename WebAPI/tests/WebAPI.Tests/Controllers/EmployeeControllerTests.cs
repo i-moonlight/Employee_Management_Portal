@@ -8,6 +8,7 @@ using WebAPI.Entities.Models;
 using WebAPI.UserCases.Common.Dto;
 using static System.Net.HttpStatusCode;
 using static WebAPI.Tests.Common.TestContent;
+using static WebAPI.Utils.Constants.MessageTypes;
 
 namespace WebAPI.Tests.Controllers
 {
@@ -109,7 +110,7 @@ namespace WebAPI.Tests.Controllers
 
             // Assert.
             response.EnsureSuccessStatusCode();
-            Assert.AreEqual("Created successfully", stringResponse);
+            Assert.AreEqual(CreatedSuccessfull, stringResponse);
         }
 
         [Test]
@@ -124,7 +125,7 @@ namespace WebAPI.Tests.Controllers
             var stringResponse = await response.Content.ReadAsStringAsync();
 
             // Assert.
-            Assert.AreEqual("Name must be filled", stringResponse);
+            Assert.AreEqual(NameMustFilled, stringResponse);
         }
 
         [Test]
@@ -198,7 +199,7 @@ namespace WebAPI.Tests.Controllers
 
             // Assert.
             response.EnsureSuccessStatusCode();
-            Assert.AreEqual("Updated successfully", stringResponse);
+            Assert.AreEqual(UpdatedSuccessfull, stringResponse);
         }
 
         [Test]
@@ -213,7 +214,7 @@ namespace WebAPI.Tests.Controllers
             var stringResponse = await response.Content.ReadAsStringAsync();
 
             // Assert.
-            Assert.AreEqual("Name must be filled", stringResponse);
+            Assert.AreEqual(NameMustFilled, stringResponse);
         }
 
         [Test]
@@ -241,7 +242,7 @@ namespace WebAPI.Tests.Controllers
 
             // Assert.
             response.EnsureSuccessStatusCode();
-            Assert.AreEqual("Deleted successfully", stringResponse);
+            Assert.AreEqual(DeletedSuccessfull, stringResponse);
         }
     }
 }

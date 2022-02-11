@@ -9,6 +9,7 @@ using WebAPI.UserCases.Common.Dto;
 using WebAPI.UserCases.Common.Dto.Request;
 using WebAPI.UserCases.Common.Response;
 using static WebAPI.UserCases.Common.Response.ResponseCode;
+using static WebAPI.Utils.Constants.MessageTypes;
 
 namespace WebAPI.UserCases.Requests.Authentication.Commands
 {
@@ -59,14 +60,14 @@ namespace WebAPI.UserCases.Requests.Authentication.Commands
 
                     user.Token = await _userManager.GenerateUserTokenAsync(new User(), "tokenProvider", "purpose");
 
-                    return await Task.FromResult(new ResponseModel(Ok, "Token generated.", user));
+                    return await Task.FromResult(new ResponseModel(Ok, TokenGenerated, user));
                 }
 
-                return await Task.FromResult(new ResponseModel(Error, "Invalid email or password.", null));
+                return await Task.FromResult(new ResponseModel(Error, TokenInvalidGenerated, null));
             }
             catch (Exception ex)
             {
-                return await Task.FromResult(new ResponseModel(Error, ex.Message, "The user does not exist."));
+                return await Task.FromResult(new ResponseModel(Error, ex.Message, UserNotExist));
             }
         }
     }

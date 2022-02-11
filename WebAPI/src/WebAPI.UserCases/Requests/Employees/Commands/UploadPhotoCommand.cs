@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI.Utils.Constants;
 
 namespace WebAPI.UserCases.Requests.Employees.Commands
 {
@@ -45,7 +46,7 @@ namespace WebAPI.UserCases.Requests.Employees.Commands
             }
             catch (Exception)
             {
-                return await Task.FromResult("anonymous.png");
+                return await Task.FromResult(MessageTypes.NamePhotoDefault);
             }
         }
     }

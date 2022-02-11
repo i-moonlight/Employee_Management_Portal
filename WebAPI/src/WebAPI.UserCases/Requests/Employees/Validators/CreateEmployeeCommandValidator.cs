@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using WebAPI.UserCases.Requests.Employees.Commands;
+using static WebAPI.Utils.Constants.MessageTypes;
 
 namespace WebAPI.UserCases.Requests.Employees.Validators
 {
@@ -11,25 +12,25 @@ namespace WebAPI.UserCases.Requests.Employees.Validators
         public CreateEmployeeCommandValidator()
         {
             RuleFor(cmd => cmd.EmployeeDto.Id)
-                .Empty().WithMessage("Id must be empty");
+                .Empty().WithMessage(IdMustEmpty);
 
             RuleFor(cmd => cmd.EmployeeDto.Name)
-                .NotNull().WithMessage("Name must be filled")
-                .NotEmpty().WithMessage("Name must be filled")
-                .MaximumLength(50).WithMessage("Name must be shorter");
+                .NotNull().WithMessage(NameMustFilled)
+                .NotEmpty().WithMessage(NameMustFilled)
+                .MaximumLength(50).WithMessage(NameMustShorter);
 
             RuleFor(cmd => cmd.EmployeeDto.Department)
-                .NotEmpty().WithMessage("Department name must be filled")
-                .MaximumLength(50).WithMessage("Department name must be shorter");
+                .NotEmpty().WithMessage(DepartmentNameMustFilled)
+                .MaximumLength(50).WithMessage(DepartmentNameMustShorter);
 
             RuleFor(cmd => cmd.EmployeeDto.DateOfJoining)
-                .NotNull().WithMessage("Date must be filled")
-                .NotEmpty().WithMessage("Date must be filled");
+                .NotNull().WithMessage(DateMustFilled)
+                .NotEmpty().WithMessage(DateMustFilled);
 
             RuleFor(cmd => cmd.EmployeeDto.PhotoFileName)
-                .NotNull().WithMessage("Photo name must be filled")
-                .NotEmpty().WithMessage("Photo name must be filled")
-                .MaximumLength(50).WithMessage("Photo name must be shorter");
+                .NotNull().WithMessage(PhotoNameMustFilled)
+                .NotEmpty().WithMessage(PhotoNameMustFilled)
+                .MaximumLength(50).WithMessage(PhotoNameMustShorter);
         }
     }
 }

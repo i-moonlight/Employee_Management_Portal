@@ -51,10 +51,10 @@ namespace WebAPI.UserCases.Requests.Authentication.Commands
 
                     await _userManager.AddToRoleAsync(tempUser, RoleNameTypes.AllRoles.ElementAt(0));
 
-                    return await Task.FromResult(new ResponseModel(Ok, "User has been registered.", null));
+                    return await Task.FromResult(new ResponseModel(Ok, MessageTypes.RegistrationSuccess, null));
                 }
 
-                return await Task.FromResult(new ResponseModel(Ok, "User has been not registered.",
+                return await Task.FromResult(new ResponseModel(Ok, MessageTypes.RegistrationFailed,
                     result.Errors.Select(error => error.Description).ToArray()));
             }
             catch (Exception ex)

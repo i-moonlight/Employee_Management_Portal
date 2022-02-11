@@ -7,6 +7,7 @@ using WebAPI.Entities.Models;
 using WebAPI.Tests.Common;
 using WebAPI.UserCases.Common.Dto;
 using WebAPI.UserCases.Requests.Authentication.Commands;
+using static WebAPI.Utils.Constants.MessageTypes;
 
 namespace WebAPI.Tests.Requests.Commands
 {
@@ -36,7 +37,7 @@ namespace WebAPI.Tests.Requests.Commands
             var result = await handler.Handle(request, CancellationToken.None);
 
             // Assert.
-            Assert.AreEqual("User has been registered.", result.ResponseMessage);
+            Assert.AreEqual(RegistrationSuccess, result.ResponseMessage);
         }
 
         [Test]
@@ -55,7 +56,7 @@ namespace WebAPI.Tests.Requests.Commands
             var result = await handler.Handle(request, CancellationToken.None);
 
             // Assert.
-            Assert.AreEqual("User has been not registered.", result.ResponseMessage);
+            Assert.AreEqual(RegistrationFailed, result.ResponseMessage);
         }
 
         [Test]
@@ -74,7 +75,7 @@ namespace WebAPI.Tests.Requests.Commands
             var result = await handler.Handle(request, CancellationToken.None);
 
             // Assert.
-            Assert.AreEqual("Object reference not set to an instance of an object.", result.ResponseMessage);
+            Assert.AreEqual(NullReference, result.ResponseMessage);
         }
 
         [Test]
@@ -89,7 +90,7 @@ namespace WebAPI.Tests.Requests.Commands
             var result = await handler.Handle(request, CancellationToken.None);
 
             // Assert.
-            Assert.AreEqual("Token generated.", result.ResponseMessage);
+            Assert.AreEqual(TokenGenerated, result.ResponseMessage);
         }
 
         [Test]
@@ -103,7 +104,7 @@ namespace WebAPI.Tests.Requests.Commands
             var result = await handler.Handle(request, CancellationToken.None);
 
             // Assert.
-            Assert.AreEqual("Object reference not set to an instance of an object.", result.ResponseMessage);
+            Assert.AreEqual(NullReference, result.ResponseMessage);
         }
     }
 }

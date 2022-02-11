@@ -3,6 +3,7 @@ using NUnit.Framework;
 using WebAPI.Tests.Common;
 using WebAPI.UserCases.Requests.Employees.Commands;
 using static System.Threading.CancellationToken;
+using static WebAPI.Utils.Constants.MessageTypes;
 
 namespace WebAPI.Tests.Requests.Commands
 {
@@ -20,7 +21,7 @@ namespace WebAPI.Tests.Requests.Commands
             var result = await handler.Handle(request, None);
 
             // Assert.
-            Assert.AreEqual("Created successfully", result);
+            Assert.AreEqual(CreatedSuccessfull, result);
         }
 
         [Test]
@@ -33,7 +34,7 @@ namespace WebAPI.Tests.Requests.Commands
             var result = await handler.Handle(null, None);
 
             // Assert.
-            Assert.AreEqual("Create failed", result);
+            Assert.AreEqual(CreatedFailed, result);
         }
 
         [Test]
@@ -46,7 +47,7 @@ namespace WebAPI.Tests.Requests.Commands
             var result = await handler.Handle(new UploadPhotoCommand(), None);
 
             // Assert.
-            Assert.AreEqual("anonymous.png", result);
+            Assert.AreEqual(NamePhotoDefault, result);
         }
 
         [Test]
@@ -59,7 +60,7 @@ namespace WebAPI.Tests.Requests.Commands
             var result = await handler.Handle(new UpdatePhotoCommand(), None);
 
             // Assert.
-            Assert.AreEqual("anonymous.png", result);
+            Assert.AreEqual(NamePhotoDefault, result);
         }
 
         [Test]
@@ -73,7 +74,7 @@ namespace WebAPI.Tests.Requests.Commands
             var result = await handler.Handle(request, None);
 
             // Assert.
-            Assert.AreEqual("Updated successfully", result);
+            Assert.AreEqual(UpdatedSuccessfull, result);
         }
 
         [Test]
@@ -86,7 +87,7 @@ namespace WebAPI.Tests.Requests.Commands
             var result = await handler.Handle(null, None);
 
             // Assert.
-            Assert.AreEqual("Update failed", result);
+            Assert.AreEqual(UpdatedFailed, result);
         }
 
         [Test]
@@ -101,7 +102,7 @@ namespace WebAPI.Tests.Requests.Commands
             var result = await handler.Handle(request, None);
 
             // Assert.
-            Assert.AreEqual("Deleted successfully", result);
+            Assert.AreEqual(DeletedSuccessfull, result);
         }
 
         [Test]
@@ -114,7 +115,7 @@ namespace WebAPI.Tests.Requests.Commands
             var result = await handler.Handle(null, None);
 
             // Assert.
-            Assert.AreEqual("Delete failed", result);
+            Assert.AreEqual(DeletedFailed, result);
         }
     }
 }
