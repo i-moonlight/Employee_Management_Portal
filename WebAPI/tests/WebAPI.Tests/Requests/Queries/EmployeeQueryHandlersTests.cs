@@ -15,14 +15,12 @@ namespace WebAPI.Tests.Requests.Queries
     public class EmployeeQueryHandlersTests : RequestTestSetup
     {
         private GetEmployeeQuery _request;
-        private GetEmployeeQueryHandler _handler;
         private Employee _testEmployee;
 
         [SetUp]
         public new void Setup()
         {
             _request = new GetEmployeeQuery();
-            _handler = new GetEmployeeQueryHandler(MockEmployeeRepo.Object, Mapper);
             _testEmployee = TestContent.TestEmployeeList.Cast<Employee>().First();
             _request.Id = _testEmployee.Id;
         }
@@ -47,10 +45,11 @@ namespace WebAPI.Tests.Requests.Queries
         public async Task GetEmployeeQueryHandler_Handler_Method_Should_Returns_EmployeeDto()
         {
             // Arrange.
+            var handler = new GetEmployeeQueryHandler(MockEmployeeRepo.Object, Mapper);
             MockEmployeeRepo.Setup(r => r.Read(_request.Id)).Returns(_testEmployee);
 
             // Act.
-            var result = await _handler.Handle(_request, None);
+            var result = await handler.Handle(_request, None);
 
             // Assert.
             Assert.AreEqual(typeof(EmployeeDto), result.GetType());
@@ -60,10 +59,11 @@ namespace WebAPI.Tests.Requests.Queries
         public async Task GetEmployeeQueryHandler_Handler_Should_Returns_Exception()
         {
             // Arrange.
+            var handler = new GetEmployeeQueryHandler(MockEmployeeRepo.Object, Mapper);
             MockEmployeeRepo.Setup(r => r.Read(_request.Id)).Returns(null as Employee);
 
             // Act.
-            async Task Exception() => await _handler.Handle(_request, None);
+            async Task Exception() => await handler.Handle(_request, None);
 
             // Assert.
             await Task.FromResult(Assert.ThrowsAsync<NotFoundException>(Exception));

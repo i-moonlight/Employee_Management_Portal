@@ -82,8 +82,8 @@ namespace WebAPI.Tests.Requests.Commands
         public async Task SignInCommandHandler_Handle_Method_Should_Returns_Token()
         {
             // Arrange.
-            var testRegisterUserDto = TestContent.TestLoginDto;
-            var request = new SignInCommand() {LoginDto = testRegisterUserDto};
+            var testLoginDto = TestContent.TestLoginDto;
+            var request = new SignInCommand() {LoginDto = testLoginDto};
             var handler = new SignInCommandHandler(_mockUserManager.Object, _mockSignInManager.Object);
 
             // Act.

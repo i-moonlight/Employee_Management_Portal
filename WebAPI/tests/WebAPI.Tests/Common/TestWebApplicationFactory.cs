@@ -31,9 +31,8 @@ namespace WebAPI.Tests.Common
                     .BuildServiceProvider();
 
                 services
-                    .AddDbContext<AppDbContext>(options => options
-                        .UseInMemoryDatabase("EmployeeTestDB")
-                        .UseInternalServiceProvider(serviceProvider))
+                    .AddDbContext<AppDbContext>(options =>
+                        options.UseInMemoryDatabase("EmployeeTestDB").UseInternalServiceProvider(serviceProvider))
                     .AddControllers()
                     .AddApplicationPart(typeof(Startup).Assembly);
 

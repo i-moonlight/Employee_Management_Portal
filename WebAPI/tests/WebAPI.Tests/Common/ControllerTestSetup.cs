@@ -1,7 +1,6 @@
 ﻿using System.Net.Http;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
-using WebAPI.Controllers;
 using WebAPI.DataAccess.MsSql.Persistence.Context;
 using WebAPI.UserCases.Common.Dto;
 using WebAPI.UserCases.Common.Dto.Request;
@@ -11,9 +10,6 @@ namespace WebAPI.Tests.Common
 {
     public class ControllerTestSetup
     {
-        protected AuthController AuthController;
-        protected DepartmentController DepartmentController;
-        protected EmployeeController EmployeeController;
         protected TestWebApplicationFactory<Startup> WebApplicationFactory;
         protected DepartmentDto TestDepartmentDto;
         protected EmployeeDto TestEmployeeDto;
@@ -25,9 +21,6 @@ namespace WebAPI.Tests.Common
         [SetUp]
         public void Setup()
         {
-            AuthController = new AuthController();
-            DepartmentController = new DepartmentController();
-            EmployeeController = new EmployeeController();
             WebApplicationFactory = new TestWebApplicationFactory<Startup>();
             TestDepartmentDto = TestContent.TestDepartmentDto;
             TestEmployeeDto = TestContent.TestEmployeeDto;

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
+using WebAPI.Controllers;
 using WebAPI.Entities.Models;
 using WebAPI.Tests.Common;
 using WebAPI.UserCases.Common.Dto;
@@ -15,9 +16,13 @@ namespace WebAPI.Tests.Controllers
     [TestFixture]
     public class DepartmentControllerTests : ControllerTestSetup
     {
+        private DepartmentController _departmentController;
+
         [SetUp]
         public new void Setup()
         {
+            _departmentController = new DepartmentController();
+
             TestDbContext.Departments.AddRangeAsync(new Department());
             TestDbContext.SaveChangesAsync();
         }
@@ -26,7 +31,7 @@ namespace WebAPI.Tests.Controllers
         public void GetDepartmentList_Method_Should_Returns_ActionResult_IEnumerable_Type()
         {
             // Act.
-            var result = DepartmentController.GetDepartmentList();
+            var result = _departmentController.GetDepartmentList();
 
             // Assert.
             Assert.AreEqual(typeof(Task<ActionResult<IEnumerable>>), result.GetType());
@@ -49,7 +54,7 @@ namespace WebAPI.Tests.Controllers
             var departmentId = TestDepartmentDto.Id;
 
             // Act.
-            var result = DepartmentController.GetDepartmentById(departmentId);
+            var result = _departmentController.GetDepartmentById(departmentId);
 
             // Assert.
             Assert.AreEqual(typeof(Task<ActionResult<DepartmentDto>>), result.GetType());
@@ -72,7 +77,7 @@ namespace WebAPI.Tests.Controllers
         public void CreateDepartment_Method_Should_Returns_ActionResult_String_Type()
         {
             // Act.
-            var result = DepartmentController.CreateDepartment(TestDepartmentDto);
+            var result = _departmentController.CreateDepartment(TestDepartmentDto);
 
             // Assert.
             Assert.AreEqual(typeof(Task<ActionResult<string>>), result.GetType());
@@ -112,7 +117,7 @@ namespace WebAPI.Tests.Controllers
         public void UpdateDepartment_Method_Should_Returns_ActionResult_String_Type()
         {
             // Act.
-            var result = DepartmentController.UpdateDepartment(TestDepartmentDto);
+            var result = _departmentController.UpdateDepartment(TestDepartmentDto);
 
             // Assert.
             Assert.AreEqual(typeof(Task<ActionResult<string>>), result.GetType());
@@ -155,14 +160,14 @@ namespace WebAPI.Tests.Controllers
             var departmentId = TestDepartmentDto.Id;
 
             // Act.
-            var result = DepartmentController.DeleteDepartmentById(departmentId);
+            var result = _departmentController.DeleteDepartmentById(departmentId);
 
             // Assert.
             Assert.AreEqual(typeof(Task<ActionResult<string>>), result.GetType());
         }
 
         [Test]
-        public async Task DeleteEmployee_Method_Should_Returns_Success_Http_Status_Code()
+        public async Task DeleteDepartment_Method_Should_Returns_Success_Http_Status_Code()
         {
             // Arrange.
             var departmentId = TestDbContext.Departments?.FirstOrDefault()?.Id;

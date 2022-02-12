@@ -3,6 +3,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
+using WebAPI.Controllers;
 using WebAPI.Tests.Common;
 using WebAPI.UserCases.Common.Dto;
 using WebAPI.UserCases.Common.Response;
@@ -12,11 +13,19 @@ namespace WebAPI.Tests.Controllers
     [TestFixture]
     public class AuthControllerTests : ControllerTestSetup
     {
+        private AuthController _authController;
+
+        [SetUp]
+        public new void Setup()
+        {
+            _authController = new AuthController();
+        }
+
         [Test]
         public void GetUserList_Method_Should_Returns_ActionResult_IEnumerable_Type()
         {
             // Act.
-            var result = AuthController.GetUserList();
+            var result = _authController.GetUserList();
 
             // Assert.
             Assert.AreEqual(typeof(Task<ActionResult<IEnumerable>>), result.GetType());
@@ -39,7 +48,7 @@ namespace WebAPI.Tests.Controllers
             var registerUser = new RegisterUserDto();
 
             // Act.
-            var result = AuthController.RegisterUser(registerUser);
+            var result = _authController.RegisterUser(registerUser);
 
             // Assert.
             Assert.AreEqual(typeof(Task<ActionResult<ResponseModel>>), result.GetType());
@@ -65,7 +74,7 @@ namespace WebAPI.Tests.Controllers
             var testLoginDto = TestContent.TestLoginDto;
 
             // Act.
-            var result = AuthController.SignIn(testLoginDto);
+            var result = _authController.SignIn(testLoginDto);
 
             // Assert.
             Assert.AreEqual(typeof(Task<ActionResult<ResponseModel>>), result.GetType());

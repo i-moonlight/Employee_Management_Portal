@@ -3,6 +3,7 @@ using System.Collections;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI.Controllers;
 using WebAPI.Tests.Common;
 using WebAPI.Entities.Models;
 using WebAPI.UserCases.Common.Dto;
@@ -15,9 +16,13 @@ namespace WebAPI.Tests.Controllers
     [TestFixture]
     public class EmployeeControllerTests : ControllerTestSetup
     {
+        private EmployeeController _departmentController;
+        
         [SetUp]
         public new void Setup()
         {
+            _departmentController = new EmployeeController();
+            
             TestDbContext.Employees.AddRangeAsync(new Employee());
             TestDbContext.SaveChangesAsync();
         }
@@ -26,7 +31,7 @@ namespace WebAPI.Tests.Controllers
         public void GetEmployeeList_Method_Should_Returns_ActionResult_IEnumerable_Type()
         {
             // Act.
-            var result = EmployeeController.GetEmployeeList();
+            var result = _departmentController.GetEmployeeList();
 
             // Assert.
             Assert.AreEqual(typeof(Task<ActionResult<IEnumerable>>), result.GetType());
@@ -49,7 +54,7 @@ namespace WebAPI.Tests.Controllers
             var employeeId = TestContent.TestEmployeeDto.Id;
 
             // Act.
-            var result = EmployeeController.GetEmployeeById(employeeId);
+            var result = _departmentController.GetEmployeeById(employeeId);
 
             // Assert.
             Assert.AreEqual(typeof(Task<ActionResult<EmployeeDto>>), result.GetType());
@@ -72,7 +77,7 @@ namespace WebAPI.Tests.Controllers
         public void GetDepartmentNameList_Method_Should_Returns_ActionResult_IEnumerable_Type()
         {
             // Act.
-            var result = EmployeeController.GetDepartmentNameList();
+            var result = _departmentController.GetDepartmentNameList();
 
             // Assert.
             Assert.AreEqual(typeof(Task<ActionResult<IEnumerable>>), result.GetType());
@@ -92,7 +97,7 @@ namespace WebAPI.Tests.Controllers
         public void CreateEmployee_Method_Should_Returns_ActionResult_String_Type()
         {
             // Act.
-            var result = EmployeeController.CreateEmployee(TestEmployeeDto);
+            var result = _departmentController.CreateEmployee(TestEmployeeDto);
 
             // Assert.
             Assert.AreEqual(typeof(Task<ActionResult<string>>), result.GetType());
@@ -132,7 +137,7 @@ namespace WebAPI.Tests.Controllers
         public void UploadEmployeePhoto_Method_Should_Returns_ActionResult_String_Type()
         {
             // Act.
-            var result = EmployeeController.UploadEmployeePhoto();
+            var result = _departmentController.UploadEmployeePhoto();
 
             // Assert.
             Assert.AreEqual(typeof(Task<ActionResult<string>>), result.GetType());
@@ -158,7 +163,7 @@ namespace WebAPI.Tests.Controllers
             var employeeId = TestEmployeeDto.Id;
 
             // Act.
-            var result = EmployeeController.UpdateEmployeePhoto(employeeId);
+            var result = _departmentController.UpdateEmployeePhoto(employeeId);
 
             // Assert.
             Assert.AreEqual(typeof(Task<ActionResult<string>>), result.GetType());
@@ -181,7 +186,7 @@ namespace WebAPI.Tests.Controllers
         public void UpdateEmployee_Method_Should_Returns_ActionResult_String_Type()
         {
             // Act.
-            var result = EmployeeController.UpdateEmployee(TestEmployeeDto);
+            var result = _departmentController.UpdateEmployee(TestEmployeeDto);
 
             // Assert.
             Assert.AreEqual(typeof(Task<ActionResult<string>>), result.GetType());
@@ -224,7 +229,7 @@ namespace WebAPI.Tests.Controllers
             var employeeId = TestEmployeeDto.Id;
 
             // Act.
-            var result = EmployeeController.DeleteEmployeeById(employeeId);
+            var result = _departmentController.DeleteEmployeeById(employeeId);
 
             // Assert.
             Assert.AreEqual(typeof(Task<ActionResult<string>>), result.GetType());
