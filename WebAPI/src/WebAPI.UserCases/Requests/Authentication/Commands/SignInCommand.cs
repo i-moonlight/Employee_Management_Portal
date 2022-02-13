@@ -63,7 +63,7 @@ namespace WebAPI.UserCases.Requests.Authentication.Commands
                     return await Task.FromResult(new ResponseModel(Ok, TokenGenerated, user));
                 }
 
-                return await Task.FromResult(new ResponseModel(Error, TokenInvalidGenerated, null));
+                return await Task.FromResult(new ResponseModel(Error, InvalidEmailOrPassword, null));
             }
             catch (Exception ex)
             {

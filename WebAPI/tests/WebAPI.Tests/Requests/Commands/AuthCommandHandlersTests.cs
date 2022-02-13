@@ -94,6 +94,25 @@ namespace WebAPI.Tests.Requests.Commands
         }
 
         [Test]
+        public async Task SignInCommandHandler_Handle_Method_Should_Returns_Invalid_Result()
+        {
+            // Arrange.
+            var testLoginDto = TestContent.TestLoginDto;
+            var request = new SignInCommand() {LoginDto = testLoginDto};
+            var handler = new SignInCommandHandler(_mockUserManager.Object, _mockSignInManager.Object);
+
+            _mockSignInManager
+                .Setup(m => m.PasswordSignInAsync(It.IsAny<string>(), It.IsAny<string>(), true, false))
+                .ReturnsAsync(SignInResult.Failed);
+
+            // Act.
+            var result = await handler.Handle(request, CancellationToken.None);
+
+            // Assert.
+            Assert.AreEqual(InvalidEmailOrPassword, result.ResponseMessage);
+        }
+
+        [Test]
         public async Task SignInCommandHandler_Handle_Method_Should_Returns_Exception()
         {
             // Arrange.

@@ -42,7 +42,7 @@ namespace WebAPI.UserCases.Requests.Authentication.Queries
                 var role = await _userManager.GetRolesAsync(user);
 
                 userProfiles.Add(new ProfileDto(user.FullName, user.Email, user.UserName, user.DateCreated,
-                    role.First()));
+                    role.FirstOrDefault()));
             }
 
             return await Task.FromResult(userProfiles);

@@ -31,7 +31,7 @@
         public const string RegistrationFailed = "User has been not registered.";
         
         public const string TokenGenerated = "Token generated.";
-        public const string TokenInvalidGenerated = "Invalid email or password.";
+        public const string InvalidEmailOrPassword = "Invalid email or password.";
         
         public const string UserNotExist = "The user doesn't exist.";
         public const string NamePhotoDefault = "anonymous.png";
