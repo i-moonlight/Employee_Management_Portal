@@ -20,16 +20,21 @@ using WebAPI.DataAccess.MsSql;
 using WebAPI.DataAccess.MsSql.Persistence.Context;
 using WebAPI.Entities.Models;
 using WebAPI.UserCases;
-using WebAPI.UserCases.Token;
 
 namespace WebAPI.Web
 {
     public class Startup
     {
+        /// <summary>
+        /// Represents a application configuration property.
+        /// </summary>
         private IConfiguration Configuration { get; }
 
-        public Startup(IConfiguration configuration) =>
-            Configuration = configuration;
+        /// <summary>
+        /// Represents a application constructor.
+        /// </summary>
+        /// <param name="configuration">IConfiguration</param>
+        public Startup(IConfiguration configuration) => Configuration = configuration;
 
         /// <summary>
         /// The optional method registers the services that are used by the application.
@@ -107,8 +112,6 @@ namespace WebAPI.Web
 
             #region Authentication JWT
 
-            services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig"));
-
             services.AddAuthentication(options =>
                 {
                     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -155,11 +158,9 @@ namespace WebAPI.Web
         /// <param name="env"></param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-                app.UseDeveloperExceptionPage();
+            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
-            app.UseStaticFiles(app.ApplicationServices
-                .GetRequiredService<IOptions<StaticFileOptions>>().Value);
+            app.UseStaticFiles(app.ApplicationServices.GetRequiredService<IOptions<StaticFileOptions>>().Value);
 
             app.UseRouting();
 

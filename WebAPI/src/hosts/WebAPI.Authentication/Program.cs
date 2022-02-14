@@ -23,7 +23,7 @@ namespace WebAPI.Authentication
 
             try
             {
-                Log.Information("Authentication server initialize");
+                Log.Information("Authentication server initialize.");
 
                 var host = CreateHostBuilder(args).Build();
                 using var scope = host.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
@@ -36,7 +36,7 @@ namespace WebAPI.Authentication
             }
             catch (Exception exception)
             {
-                Log.Fatal(exception, "Resource server failed");
+                Log.Fatal(exception, "Resource server failed.");
                 throw;
             }
             finally

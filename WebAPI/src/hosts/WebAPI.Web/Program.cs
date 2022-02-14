@@ -23,7 +23,7 @@ namespace WebAPI.Web
 
             try
             {
-                Log.Information("Resource server initialize");
+                Log.Information("Resource server initialize.");
 
                 var host = CreateHostBuilder(args).Build();
                 using var scope = host.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
@@ -32,7 +32,7 @@ namespace WebAPI.Web
             }
             catch (Exception exception)
             {
-                Log.Error(exception, "Resource server failed");
+                Log.Error(exception, "Resource server failed.");
                 throw;
             }
             finally
