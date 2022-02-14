@@ -58,9 +58,10 @@ namespace WebAPI.Authentication
                     options.Password.RequiredLength = 5;
                     options.Password.RequireUppercase = true;
                     options.Lockout.MaxFailedAccessAttempts = 6;
+                    options.Lockout.AllowedForNewUsers = true;
                     options.User.RequireUniqueEmail = true;
                     options.SignIn.RequireConfirmedAccount = true;
-                    options.SignIn.RequireConfirmedEmail = false;
+                    options.SignIn.RequireConfirmedEmail = true;
                 })
                 .AddRoles<IdentityRole>()
                 .AddRoleManager<RoleManager<IdentityRole>>()

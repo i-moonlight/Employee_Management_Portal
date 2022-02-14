@@ -62,6 +62,7 @@ namespace WebAPI.Controllers
         /// <returns>Response model.</returns>
         // [AllowAnonymous]
         [HttpPost("SignIn")]
+        [AllowAnonymous]
         public async Task<ActionResult<ResponseModel>> SignIn([FromBody] LoginDto login)
         {
             var request = new SignInCommand() {LoginDto = login};

@@ -50,7 +50,7 @@ namespace WebAPI.Tests.Common
                         }
                         catch (Exception ex)
                         {
-                            logger.LogError(ex, MessageTypes.ErrorMessage, ex.Message);
+                            logger.LogError(ex.Message, MessageTypes.ErrorMessage);
                             throw;
                         }
                     }
