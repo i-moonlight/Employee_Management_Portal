@@ -30,10 +30,6 @@ namespace WebAPI.Tests.Common
                 .Setup(m => m.GetRolesAsync(It.IsAny<TUser>()))
                 .ReturnsAsync(Mock.Of<IList<string>>());
 
-            mockUserManager
-                .Setup(m => m.GenerateUserTokenAsync(It.IsAny<TUser>(), It.IsAny<string>(), It.IsAny<string>()))
-                .ReturnsAsync("token");
-
             return mockUserManager;
         }
 
@@ -48,7 +44,7 @@ namespace WebAPI.Tests.Common
 
             mockSignInManager
                 .Setup(m => m.PasswordSignInAsync(It.IsAny<string>(), It.IsAny<string>(), true, false))
-                .ReturnsAsync(SignInResult.Success);
+                .ReturnsAsync(SignInResult.NotAllowed);
 
             return mockSignInManager;
         }

@@ -1,13 +1,13 @@
 using NUnit.Framework;
 using System.Collections;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Controllers;
 using WebAPI.Tests.Common;
 using WebAPI.Entities.Models;
 using WebAPI.UserCases.Common.Dto;
-using static System.Net.HttpStatusCode;
 using static WebAPI.Tests.Common.TestContent;
 using static WebAPI.Utils.Constants.MessageTypes;
 
@@ -44,7 +44,7 @@ namespace WebAPI.Tests.Controllers
             var response = await HttpClient.GetAsync("api/employee");
 
             // Assert.
-            Assert.AreEqual(OK, response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
         }
 
         [Test]
@@ -70,7 +70,7 @@ namespace WebAPI.Tests.Controllers
             var response = await HttpClient.GetAsync($"api/employee/{employeeId}");
 
             // Assert.
-            Assert.AreEqual(OK, response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -90,7 +90,7 @@ namespace WebAPI.Tests.Controllers
             var response = await HttpClient.GetAsync("api/employee/GetDepartmentNames");
 
             // Assert.
-            Assert.AreEqual(OK, response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -153,7 +153,7 @@ namespace WebAPI.Tests.Controllers
             var response = await HttpClient.PostAsync("api/employee/UploadPhoto", content);
 
             // Assert.
-            Assert.AreEqual(OK, response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
@@ -179,7 +179,7 @@ namespace WebAPI.Tests.Controllers
             var response = await HttpClient.PostAsync("api/employee/UpdatePhoto", content);
 
             // Assert.
-            Assert.AreEqual(OK, response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]

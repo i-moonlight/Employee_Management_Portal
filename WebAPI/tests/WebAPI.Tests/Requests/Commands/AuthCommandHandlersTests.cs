@@ -5,6 +5,7 @@ using Moq;
 using NUnit.Framework;
 using WebAPI.Entities.Models;
 using WebAPI.Tests.Common;
+using WebAPI.UserCases.Common.Configs;
 using WebAPI.UserCases.Common.Dto;
 using WebAPI.UserCases.Requests.Authentication.Commands;
 using static WebAPI.Utils.Constants.MessageTypes;
@@ -14,6 +15,7 @@ namespace WebAPI.Tests.Requests.Commands
     [TestFixture]
     public class AuthCommandHandlersTests : RequestTestSetup
     {
+        private Mock<JwtConfig> _mockJwtConfig;
         private Mock<UserManager<User>> _mockUserManager;
         private Mock<SignInManager<User>> _mockSignInManager;
         private RegisterUserDto _testRegisterUserDto;
@@ -21,6 +23,7 @@ namespace WebAPI.Tests.Requests.Commands
         [SetUp]
         public new void Setup()
         {
+            _mockJwtConfig = new Mock<JwtConfig>();
             _mockUserManager = MockInstances.GetMockUserManager<User>();
             _mockSignInManager = MockInstances.GetMockSignInManager<User>();
             _testRegisterUserDto = TestContent.TestRegisterUserDto;
@@ -79,27 +82,13 @@ namespace WebAPI.Tests.Requests.Commands
         }
 
         [Test]
-        public async Task SignInCommandHandler_Handle_Method_Should_Returns_Token()
-        {
-            // Arrange.
-            var testLoginDto = TestContent.TestLoginDto;
-            var request = new SignInCommand() {LoginDto = testLoginDto};
-            var handler = new SignInCommandHandler(_mockUserManager.Object, _mockSignInManager.Object);
-
-            // Act.
-            var result = await handler.Handle(request, CancellationToken.None);
-
-            // Assert.
-            Assert.AreEqual(TokenGenerated, result.ResponseMessage);
-        }
-
-        [Test]
         public async Task SignInCommandHandler_Handle_Method_Should_Returns_Invalid_Result()
         {
             // Arrange.
             var testLoginDto = TestContent.TestLoginDto;
             var request = new SignInCommand() {LoginDto = testLoginDto};
-            var handler = new SignInCommandHandler(_mockUserManager.Object, _mockSignInManager.Object);
+            var handler = new SignInCommandHandler(_mockUserManager.Object, _mockSignInManager.Object,
+                _mockJwtConfig.Object);
 
             _mockSignInManager
                 .Setup(m => m.PasswordSignInAsync(It.IsAny<string>(), It.IsAny<string>(), true, false))
@@ -117,7 +106,8 @@ namespace WebAPI.Tests.Requests.Commands
         {
             // Arrange.
             var request = new SignInCommand() {LoginDto = null};
-            var handler = new SignInCommandHandler(_mockUserManager.Object, _mockSignInManager.Object);
+            var handler = new SignInCommandHandler(_mockUserManager.Object, _mockSignInManager.Object,
+                _mockJwtConfig.Object);
 
             // Act.
             var result = await handler.Handle(request, CancellationToken.None);

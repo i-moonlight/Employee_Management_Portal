@@ -21,7 +21,7 @@ namespace WebAPI.Tests.Common
         [SetUp]
         public void Setup()
         {
-            var mapperConfig = new MapperConfiguration(c => c.AddProfile(new AssemblyMappingProfile()));
+            var mapperConfig = new MapperConfiguration(e => e.AddProfile(new AssemblyMappingProfile()));
             var mapper = mapperConfig.CreateMapper();
 
             TestDepartmentDto = TestContent.TestDepartmentDto;
