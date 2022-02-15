@@ -85,10 +85,10 @@ model Review {
   id            String        @unique @id @default(uuid()) @db.Uuid
   rating        Int
   text          String
-  user          User?         @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId        String?       @db.Uuid
-  product       Product?      @relation(fields: [productId], references: [id], onDelete: Cascade)
+  user          User?         @relation(fields: [userId], references: [id], onDelete: Cascade)
   productId     String?       @db.Uuid
+  product       Product?      @relation(fields: [productId], references: [id], onDelete: Cascade)
   createdAt     DateTime      @default(now()) @map("created_at")
   updatedAt     DateTime      @updatedAt @map("updated_at")
 }
