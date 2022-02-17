@@ -12,6 +12,10 @@ import { DepartmentModalComponent} from '../components/department/dep-modal/dep-
 import { SharedService } from '../services/shared/shared.service';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
+import { environment } from "../../environments/environment";
+import { AUTH_API_URL } from "../app-injection-tokens";
+import { JwtModule } from "@auth0/angular-jwt";
+import { ACCESS_TOKEN_KEY } from "../services/authentication/auth.service";
 
 @NgModule({
   declarations: [
@@ -23,6 +27,7 @@ import { AppRoutingModule } from './app-routing.module';
     DepartmentListComponent,
     DepartmentModalComponent
   ],
+
   imports: [
     BrowserModule,
     ReactiveFormsModule,
@@ -30,8 +35,17 @@ import { AppRoutingModule } from './app-routing.module';
     FormsModule,
     RouterModule,
     AppRoutingModule,
+
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => localStorage.getItem(ACCESS_TOKEN_KEY),
+        allowedDomains: ['localhost:5000'],
+        disallowedRoutes: ['localhost:5000/api/auth']
+      }
+    })
   ],
-  providers: [SharedService],
+
+  providers: [{provide: AUTH_API_URL, useValue: environment.authApi}, SharedService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
