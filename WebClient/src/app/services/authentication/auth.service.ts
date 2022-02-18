@@ -1,11 +1,11 @@
-import { Inject, Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import { Token } from "../../models/token";
-import { HttpClient } from "@angular/common/http";
-import { AUTH_API_URL } from "../../app-injection-tokens";
-import { JwtHelperService } from "@auth0/angular-jwt";
-import { Router } from "@angular/router";
-import { tap } from "rxjs/operators";
+import { Inject, Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Token } from '../../models/token';
+import { HttpClient } from '@angular/common/http';
+import { AUTH_API_URL } from '../../app-injection-tokens';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { Router } from '@angular/router';
+import { tap } from 'rxjs/operators';
 
 export const ACCESS_TOKEN_KEY = 'access_token';
 

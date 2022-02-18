@@ -12,14 +12,16 @@ import { DepartmentModalComponent} from '../components/department/dep-modal/dep-
 import { SharedService } from '../services/shared/shared.service';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
-import { environment } from "../../environments/environment";
-import { AUTH_API_URL } from "../app-injection-tokens";
-import { JwtModule } from "@auth0/angular-jwt";
-import { ACCESS_TOKEN_KEY } from "../services/authentication/auth.service";
+import { environment } from '../../environments/environment';
+import { AUTH_API_URL } from '../app-injection-tokens';
+import { JwtModule } from '@auth0/angular-jwt';
+import { ACCESS_TOKEN_KEY } from '../services/authentication/auth.service';
+import { AuthComponent } from '../components/authentication/auth.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    AuthComponent,
     EmployeeComponent,
     EmployeeListComponent,
     EmployeeModalComponent,
