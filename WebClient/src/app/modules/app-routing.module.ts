@@ -3,9 +3,11 @@ import { Routes, RouterModule } from '@angular/router';
 import { EmployeeComponent } from '../components/employee/emp.comp';
 import { DepartmentComponent } from '../components/department/dep.comp';
 import { AuthComponent } from '../components/authentication/auth.component';
+import { RegisterComponent } from '../components/registration/register.component';
 
 const routes: Routes = [
   {path: 'auth', component: AuthComponent},
+  {path: 'register', component: RegisterComponent},
   {path: 'employee', component: EmployeeComponent},
   {path: 'department', component: DepartmentComponent}
 ];

@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-6">
+      <div class="card">
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+          <div class="card-body">
+            <h5 class="card-title text-center">Register</h5>
+            <div class="mb-3 row">
+              <label class="col-sm-2 col-form-label">FullName</label>
+              <div class="col-sm-10">
+                <input type="text" formControlName="fullName" class="form-control" value="">
+              </div>
+            </div>
+            <div class="mb-3 row">
+              <label class="col-sm-2 col-form-label">Email</label>
+              <div class="col-sm-10">
+                <input type="text" formControlName="email" class="form-control" value="">
+              </div>
+            </div>
+            <div class="mb-3 row">
+              <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+              <div class="col-sm-10">
+                <input type="password" formControlName="password" class="form-control" id="inputPassword">
+              </div>
+            </div>
+            <div class="row mb-3">
+              <label for="inputPassword" class="col-sm-2 col-form-label">Role</label>
+              <div class="col-sm-2">
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary" [disabled]="!registerForm.valid">Login</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
