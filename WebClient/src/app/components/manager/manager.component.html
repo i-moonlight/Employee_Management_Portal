@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-10">
+      <div class="card">
+        <table class="table">
+          <thead>
+          <tr>
+            <th scope="col">FullName</th>
+            <th scope="col">Email</th>
+            <th scope="col">UserName</th>
+            <th scope="col">Role</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let user of userList">
+            <td>{{user.fullName}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.userName}}</td>
+            <td>{{user.roles.join(',')}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

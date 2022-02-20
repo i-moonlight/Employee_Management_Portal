@@ -3,7 +3,7 @@
     <div class="col-6">
       <div class="card">
         <!-- Form data submit button -->
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
           <div class="card-body">
             <h5 class="card-title text-center">Login</h5>
             <div class="mb-3 row">
@@ -19,7 +19,7 @@
               </div>
             </div>
           </div>
-          <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">Login</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!authForm.valid">Login</button>
         </form>
       </div>
     </div>

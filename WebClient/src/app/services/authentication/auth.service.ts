@@ -1,11 +1,14 @@
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Token } from '../../models/token';
-import { HttpClient } from '@angular/common/http';
+import { Token } from '../../view-models/token';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AUTH_API_URL } from '../../app-injection-tokens';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
-import { tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
+import { ResponseCode, ResponseModel } from '../../view-models/responseModel';
+import { User } from '../../view-models/user';
+import { Constants } from '../../common/constants';
 
 export const ACCESS_TOKEN_KEY = 'access_token';
 
@@ -15,13 +18,11 @@ export const ACCESS_TOKEN_KEY = 'access_token';
 export class AuthService {
   @Inject(AUTH_API_URL)
   private http: HttpClient;
-  private apiUrl: string;
   private jwtHelper: JwtHelperService;
   private router: Router;
 
-  constructor(http: HttpClient, apiUrl: string, jwtHelper: JwtHelperService, router: Router) {
+  constructor(http: HttpClient, jwtHelper: JwtHelperService, router: Router) {
     this.http = http;
-    this.apiUrl = apiUrl;
     this.jwtHelper = jwtHelper;
     this.router = router;
   };
@@ -31,7 +32,7 @@ export class AuthService {
   And in case of successful authentication, writes the token to the storage.
   */
   toLogin(email: string, password: string): Observable<Token> {
-    return this.http.post<Token>(`${this.apiUrl} api/auth/login`, {
+    return this.http.post<Token>(`${Constants.AUTH_URL} login`, {
       email, password
     })
       .pipe(tap(token => localStorage.setItem(ACCESS_TOKEN_KEY, token.accessToken)))
@@ -54,7 +55,7 @@ export class AuthService {
       Email: email,
       Password: password
     }
-    return this.http.post('https://localhost:4021/api/auth/', body);
+    return this.http.post(Constants.AUTH_URL, body);
   }
 
   public toRegistration(fullName: string, email: string, password: string) {
@@ -63,6 +64,25 @@ export class AuthService {
       Email: email,
       Password: password
     }
-    return this.http.post('https://localhost:4021/api/auth/RegisterUser', body);
+    return this.http.post(Constants.AUTH_URL + 'RegisterUser', body);
+  }
+
+  public getUserList() {
+    let userInfo = JSON.parse(localStorage.getItem(Constants.USER_KEY));
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${userInfo?.token}`
+    });
+
+    return this.http.get<ResponseModel>(Constants.AUTH_URL + 'GetAllUsers', {headers: headers}).pipe(map(res => {
+      let userList = new Array<User>();
+      if (res.responseCode == ResponseCode.OK) {
+        if (res.dateSet) {
+          res.dateSet.map((x: User) => {
+            userList.push(new User(x.userId, x.fullName, x.email, x.userName, x.roles));
+          })
+        }
+      }
+      return userList;
+    }));
   }
 }

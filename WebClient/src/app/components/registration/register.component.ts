@@ -8,7 +8,7 @@ import { AuthService } from '../../services/authentication/auth.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  private registerForm;
+  public registerForm;
 
   constructor(private formBuilder: FormBuilder, private authService: AuthService) {}
 

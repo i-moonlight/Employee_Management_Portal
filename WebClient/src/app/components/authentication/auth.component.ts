@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { SharedService } from '../../services/shared/shared.service';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/authentication/auth.service';
 
 @Component({
   selector: 'app-auth',
@@ -8,10 +9,9 @@ import { SharedService } from '../../services/shared/shared.service';
   styleUrls: ['./auth.component.css']
 })
 export class AuthComponent implements OnInit {
+  public authForm;
 
-  private authForm;
-
-  constructor(private formBuilder: FormBuilder, private sharedService: SharedService) {}
+  constructor(private formBuilder: FormBuilder, private sharedService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.authForm = this.formBuilder.group({
@@ -25,8 +25,12 @@ export class AuthComponent implements OnInit {
     let email = this.authForm.controls['email'].value;
     let password = this.authForm.controls['password'].value;
 
-    this.sharedService.toAuthentication(email, password).subscribe((data) => {
-        console.log("response", data);
+    this.sharedService.toAuthentication(email, password).subscribe((response: any) => {
+      if (response.ResponseCode == 1) {
+        localStorage.setItem('userInfo', response.dateSet);
+        this.router.navigate(["/employee"]);
+      }
+        console.log("response", response);
       },
       error => {
         console.log("error", error)
