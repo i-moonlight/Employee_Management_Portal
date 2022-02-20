@@ -8,7 +8,7 @@ export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
   @HttpCode(200)
-  @Get('list')
+  @Get('')
   async getCategoryList() {
     return this.categoryService.getCategories();
   }
@@ -41,7 +41,7 @@ export class CategoryController {
   }
 
   @HttpCode(200)
-  @Authorize()
+  // @Authorize()
   @Delete(':id')
   async deleteCategory(@Param('id') categoryId: string) {
     return this.categoryService.deleteCategory(categoryId);

@@ -29,16 +29,8 @@ const createProducts = async (quantity: number) => {
             {
               rating: faker.number.int({ min: 1, max: 5 }),
               text: faker.lorem.paragraph(),
-              // user: {connect: {id: 'c54d4628-e709-489e-8302-299d3f269791'}}
-            },
-            {
-              rating: faker.number.int({ min: 1, max: 5 }),
-              text: faker.lorem.paragraph(),
-            },
-            {
-              rating: faker.number.int({ min: 1, max: 5 }),
-              text: faker.lorem.paragraph(),
-            },
+              user: {connect: {id: '08a37c38-8baf-4e48-9e21-8a196b99236b'}}
+            }
           ]
         }
       }
