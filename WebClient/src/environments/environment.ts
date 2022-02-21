@@ -1,10 +1,11 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
+import { Constants } from '../app/common/constants';
 
 export const environment = {
   production: false,
-  authApi: 'http://localhost:4021/',
+  authApi: Constants.AUTH_URL,
   tokenWhitelistedDomains: 'http://localhost:5000'
 };
 

@@ -58,6 +58,12 @@ export class AuthService {
     return this.http.post(Constants.AUTH_URL, body);
   }
 
+  toUserAuthentication(userName, password) {
+    let data = "username=" + userName + "&password=" + password + "&grant_type=password";
+    let reqHeader = new HttpHeaders({'Content-Type': 'application/x-www-urlencoded', 'No-Auth': 'True'});
+    return this.http.post(Constants.AUTH_URL, data, {headers: reqHeader});
+  }
+
   public toRegistration(fullName: string, email: string, password: string) {
     const body = {
       FullName: fullName,

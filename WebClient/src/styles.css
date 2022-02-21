@@ -1,4 +1,62 @@
-/* You can add global styles to this file, and also import other style files */
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding: 0;
+}
 
+h1 {
+  font-size: 4.642em;
+}
 
+h2 {
+  font-size: 2.285em;
+}
 
+h3 {
+  font-size: 2em;
+}
+
+h4 {
+  font-size: 1em;
+}
+
+p {
+  font-size: 1em;
+}
+
+a {
+  display: inherit;
+  text-decoration: underline;
+}
+
+ul, li {
+  display: block;
+  margin-right: 0;
+  padding: 0;
+}
+
+li:hover {
+  -webkit-box-shadow: -11px 9px 35px -11px rgba(42, 71, 94, 0.58);
+  -moz-box-shadow: -11px 9px 35px -11px rgba(42, 71, 94, 0.58);
+  box-shadow: -11px 9px 35px -11px rgba(42, 71, 94, 0.58);
+}
+
+.shadows {
+  -webkit-box-shadow: 3px 5px 48px -4px rgba(42, 71, 94, 0.21);
+  -moz-box-shadow: 3px 5px 48px -4px rgba(42, 71, 94, 0.21);
+  box-shadow: 3px 5px 48px -4px rgba(42, 71, 94, 0.21);
+  border: 1px solid #dee2e6;
+}
+
+input[type="text"], input[type="password"], .btn {
+  border-radius: 0px;
+}
+
+.btn-danger, .btn-danger:hover {
+  background-color: #333399 !important;
+  border-color: #333399 !important;
+}
+
+.btn-primary, .btn-primary:hover {
+  background-color: #3366CC !important;
+  border-color: #3366CC !important;
+}

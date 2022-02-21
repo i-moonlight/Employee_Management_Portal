@@ -19,6 +19,7 @@ import { ACCESS_TOKEN_KEY } from '../services/authentication/auth.service';
 import { AuthComponent } from '../components/authentication/auth.component';
 import { RegisterComponent } from '../components/registration/register.component';
 import { ManagerComponent } from '../components/manager/manager.component';
+import { LoginComponent } from '../components/authentication/login/login.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { ManagerComponent } from '../components/manager/manager.component';
     DepartmentListComponent,
     DepartmentModalComponent,
     RegisterComponent,
-    ManagerComponent
+    ManagerComponent,
+    LoginComponent
   ],
 
   imports: [

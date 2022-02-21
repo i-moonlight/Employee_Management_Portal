@@ -1,0 +1,58 @@
+<!-- Tab header section -->
+<section class="tab-header">
+  <div class="container">
+    <h4 class="tab-header__title">Login</h4>
+  </div>
+</section>
+
+<!-- Tab form section -->
+<form class="form" #loginForm="ngForm" (ngSubmit)="onSubmit(UserName.value, Password.value)">
+  <div class="container">
+    <!-- Username input field -->
+    <div class="form__item">
+      <label class="form__label">Your Username</label>
+      <input class="form-control" type="text" placeholder="Enter your username" required
+             #UserName ngModel name="UserName">
+    </div>
+    <!-- Password input field -->
+    <div class="form__item">
+      <label class="form__label">Your Password</label>
+      <input class="form-control" type="password" placeholder="Enter your password" required
+             #Password ngModel name="Password">
+    </div>
+    <!-- Password remember -->
+    <div class="form-check form__item">
+      <input class="form-check-input" type="checkbox">
+      <label class="form-check-label">Remember Password</label>
+    </div>
+    <!-- Login button -->
+    <div class="form__item">
+      <button class="btn btn-primary" type="submit" [disabled]="!loginForm.valid">
+        Login
+      </button>
+    </div>
+  </div>
+</form>
+
+<!-- Tab social area section -->
+<section class="social-area">
+  <div class="container">
+    <h3 class="social-area__title">Or</h3>
+    <p class="social-area__text">Sign In with social media</p>
+    <ul class="social-area__links">
+      <li>
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+      </li>
+      <li>
+        <a href="#"><i class="fab fa-google-plus-g"></i></a>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- Forgot password section -->
+<section class="forgot-password">
+  <div class="container">
+    <a href="#" target="_blank">Forgot Password?</a>
+  </div>
+</section>
