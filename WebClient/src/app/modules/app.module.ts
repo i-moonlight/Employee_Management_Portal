@@ -17,9 +17,11 @@ import { AUTH_API_URL } from '../app-injection-tokens';
 import { JwtModule } from '@auth0/angular-jwt';
 import { ACCESS_TOKEN_KEY } from '../services/authentication/auth.service';
 import { AuthComponent } from '../components/authentication/auth.component';
-import { RegisterComponent } from '../components/registration/register.component';
+import { RegisterComponent } from '../components/authentication/registration/register.component';
 import { ManagerComponent } from '../components/manager/manager.component';
 import { LoginComponent } from '../components/authentication/login/login.component';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,8 @@ import { LoginComponent } from '../components/authentication/login/login.compone
     FormsModule,
     RouterModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
 
     JwtModule.forRoot({
       config: {
