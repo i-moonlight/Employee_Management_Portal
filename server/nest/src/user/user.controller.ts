@@ -18,14 +18,20 @@ export class UserController {
   @Put('profile/update')
   @UsePipes(new ValidationPipe())
   @Authorize()
-  async updateProfile(@CurrentUser('id') id: string, @Body() dto: UserDto) {
+  async updateProfile(
+     @CurrentUser('id') id: string,
+     @Body() dto: UserDto)
+  {
     return this.userService.updateProfile(id, dto);
   }
 
   @HttpCode(200)
   @Patch('profile/favorite/:productId')
   @Authorize()
-  async toggleFavorite(@CurrentUser('id') userId: string, @Param('productId') productId: string) {
+  async toggleFavorite(
+     @CurrentUser('id') userId: string,
+     @Param('productId') productId: string)
+  {
     return this.userService.toggleFavorite(userId, productId);
   }
 }

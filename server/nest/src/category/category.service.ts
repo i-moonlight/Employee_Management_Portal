@@ -8,11 +8,11 @@ import Slug from '../../content/slug';
 export class CategoryService {
   constructor(private prismaService: PrismaService) {}
 
-  async createCategory(categoryDto: CategoryDto) {
+  async createCategory(dto: CategoryDto) {
     return await this.prismaService.category.create({
       data: {
-        name: categoryDto.name,
-        slug: Slug(categoryDto.name)
+        name: dto.name,
+        slug: Slug(dto.name)
       }
     });
   }
@@ -41,12 +41,12 @@ export class CategoryService {
     return category;
   }
 
-  async updateCategory(id: string, categoryDto: CategoryDto) {
+  async updateCategory(id: string, dto: CategoryDto) {
     return await this.prismaService.category.update({
       where: { id: id },
       data: {
-        name: categoryDto.name,
-        slug: Slug(categoryDto.name)
+        name: dto.name,
+        slug: Slug(dto.name)
       }
     });
   }

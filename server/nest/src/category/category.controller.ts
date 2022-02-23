@@ -36,14 +36,14 @@ export class CategoryController {
   @HttpCode(200)
   @Authorize()
   @Put(':id')
-  async updateCategory(@Param('id') categoryId: string, @Body() dto: CategoryDto) {
+  async updateCategory(@Param('categoryId') categoryId: string, @Body() dto: CategoryDto) {
     return this.categoryService.updateCategory(categoryId, dto);
   }
 
   @HttpCode(200)
-  // @Authorize()
+  @Authorize()
   @Delete(':id')
-  async deleteCategory(@Param('id') categoryId: string) {
+  async deleteCategory(@Param('categoryId') categoryId: string) {
     return this.categoryService.deleteCategory(categoryId);
   }
 }

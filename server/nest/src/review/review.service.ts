@@ -46,7 +46,7 @@ export class ReviewService {
   }
 
   async deleteReview(id: string) {
-    await this.getReview(id)
+    await this.getReview(id);
     return await this.prisma.review.delete({where: {id}});
   }
 
