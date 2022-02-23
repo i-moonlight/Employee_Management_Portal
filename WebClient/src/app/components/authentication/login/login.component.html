@@ -1,24 +1,23 @@
-<!-- Tab header section -->
-<section class="tab-header">
-  <div class="container">
-    <h4 class="tab-header__title">Login</h4>
-  </div>
-</section>
-
 <!-- Tab form section -->
 <form class="form" #loginForm="ngForm" (ngSubmit)="onSubmit(UserName.value, Password.value)">
   <div class="container">
+    <!-- Tab form header -->
+    <h4 class="form__title">Login</h4>
     <!-- Username input field -->
     <div class="form__item">
-      <label class="form__label">Your Username</label>
-      <input class="form-control" type="text" placeholder="Enter your username" required
-             #UserName ngModel name="UserName">
+      <label class="form__label">
+        <input class="form-control" type="text" placeholder="&nbsp;"
+               #UserName ngModel name="UserName" required>
+        <span>Enter your username</span>
+      </label>
     </div>
     <!-- Password input field -->
     <div class="form__item">
-      <label class="form__label">Your Password</label>
-      <input class="form-control" type="password" placeholder="Enter your password" required
-             #Password ngModel name="Password">
+      <label class="form__label">
+        <input class="form-control" type="password" placeholder="&nbsp;"
+               #Password ngModel name="Password" required>
+        <span>Enter your password</span>
+      </label>
     </div>
     <!-- Password remember -->
     <div class="form-check form__item">
@@ -47,12 +46,7 @@
         <a href="#"><i class="fab fa-google-plus-g"></i></a>
       </li>
     </ul>
-  </div>
-</section>
-
-<!-- Forgot password section -->
-<section class="forgot-password">
-  <div class="container">
+    <!-- Forgot password -->
     <a href="#" target="_blank">Forgot Password?</a>
   </div>
 </section>
