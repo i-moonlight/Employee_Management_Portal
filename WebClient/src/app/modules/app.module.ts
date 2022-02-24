@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from '../app.comp';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { EmployeeComponent } from '../components/employee/emp.comp';
 import { EmployeeListComponent } from '../components/employee/emp-list/emp-list.comp';
 import { EmployeeModalComponent } from '../components/employee/emp-modal/emp-modal.comp';
@@ -10,18 +10,17 @@ import { DepartmentComponent } from '../components/department/dep.comp';
 import { DepartmentListComponent } from '../components/department/dep-list/dep-list.comp';
 import { DepartmentModalComponent} from '../components/department/dep-modal/dep-modal.comp';
 import { SharedService } from '../services/shared/shared.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
+import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
-import { environment } from '../../environments/environment';
-import { AUTH_API_URL } from '../app-injection-tokens';
-import { JwtModule } from '@auth0/angular-jwt';
-import { ACCESS_TOKEN_KEY } from '../services/authentication/auth.service';
-import { AuthComponent } from '../components/authentication/auth.component';
 import { RegisterComponent } from '../components/authentication/registration/register.component';
 import { ManagerComponent } from '../components/manager/manager.component';
 import { LoginComponent } from '../components/authentication/login/login.component';
-import { ToastrModule } from 'ngx-toastr';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AuthComponent } from '../components/authentication/auth.component';
+import { AuthService } from '../services/authentication/auth.service';
+import { AuthGuard } from '../guards/auth.guard';
+import { AuthInterceptor } from '../guards/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -47,17 +46,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-
-    JwtModule.forRoot({
-      config: {
-        tokenGetter: () => localStorage.getItem(ACCESS_TOKEN_KEY),
-        allowedDomains: ['localhost:5000'],
-        disallowedRoutes: ['localhost:5000/api/auth']
-      }
-    })
   ],
 
-  providers: [{provide: AUTH_API_URL, useValue: environment.authApi}, SharedService],
+  providers: [
+    SharedService,
+    AuthService,
+    AuthGuard,
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
+
   bootstrap: [AppComponent]
 })
 export class AppModule {}

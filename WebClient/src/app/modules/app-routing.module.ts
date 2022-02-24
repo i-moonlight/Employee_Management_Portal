@@ -5,10 +5,11 @@ import { DepartmentComponent } from '../components/department/dep.comp';
 import { AuthComponent } from '../components/authentication/auth.component';
 import { RegisterComponent } from '../components/authentication/registration/register.component';
 import { LoginComponent } from '../components/authentication/login/login.component';
+import { AuthGuard } from '../guards/auth.guard';
 
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
-  {path: 'employee', component: EmployeeComponent},
+  {path: 'employee', component: EmployeeComponent, canActivate: [AuthGuard]},
   {path: 'department', component: DepartmentComponent},
   {path: 'auth', component: AuthComponent},
   {path: 'login', component: AuthComponent, children: [{path: '', component: LoginComponent}]},
