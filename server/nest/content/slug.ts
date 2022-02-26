@@ -22,7 +22,7 @@ const translit = (str: string): string => {
   return res
 }
 
-const slug = (str: string): string => {
+const generateSlug = (str: string): string => {
   let url: string = str.replace(/[\s]+/gi, '-')
   url = translit(url)
   url = url
@@ -33,4 +33,4 @@ const slug = (str: string): string => {
   return url
 }
 
-export default slug
+export default generateSlug

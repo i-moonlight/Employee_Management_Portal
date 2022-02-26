@@ -1,8 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CategoryDto } from './dto/category.dto';
 import { PrismaService } from '../../prisma/prisma.service';
-import { categoryObjectResponse } from './dto/category.response';
+
 import Slug from '../../content/slug';
+import {returnCategoryObject} from "./dto/return-category.object";
 
 @Injectable()
 export class CategoryService {
@@ -19,14 +20,14 @@ export class CategoryService {
 
   async getCategories() {
     return await this.prismaService.category.findMany({
-      select: categoryObjectResponse
+      select: returnCategoryObject
     });
   }
 
   async getCategoryById(id: string) {
     const category = await this.prismaService.category.findUnique({
       where: {id: id},
-      select: categoryObjectResponse,
+      select: returnCategoryObject,
     });
     if (!category) throw new NotFoundException('Category not found!');
     return category;
@@ -35,7 +36,7 @@ export class CategoryService {
   async getCategoryBySlug(slug: string) {
     const category = await this.prismaService.category.findUnique({
       where: { slug: slug },
-      select: categoryObjectResponse,
+      select: returnCategoryObject,
     });
     if (!category) throw new NotFoundException('Category not found!');
     return category;
