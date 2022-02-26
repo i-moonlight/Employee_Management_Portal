@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '../../models/user.model';
+// import { User } from '../../models/user.model';
 import { AuthService } from '../../services/authentication/auth.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { AuthService } from '../../services/authentication/auth.service';
   styleUrls: ['./manager.component.css']
 })
 export class ManagerComponent implements OnInit {
-  public userList: User[] = [];
+  // public userList: User[] = [];
 
   constructor(private authService: AuthService) {}
 

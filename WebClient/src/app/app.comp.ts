@@ -10,7 +10,7 @@ export class AppComponent {
   appTitle = 'Employee Management Portal';
   private as : AuthService;
 
-  public get isLoggedIn(): boolean {
-    return this.as.isAuthenticated();
-  }
+  // public get isLoggedIn(): boolean {
+  //   return this.as.isAuthenticated();
+  // }
 }
