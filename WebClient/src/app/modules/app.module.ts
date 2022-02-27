@@ -52,7 +52,8 @@ import { AuthInterceptor } from '../guards/auth.interceptor';
     SharedService,
     AuthService,
     AuthGuard,
-    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+  ],
 
   bootstrap: [AppComponent]
 })
