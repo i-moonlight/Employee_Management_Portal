@@ -1,14 +1,20 @@
 <!-- Tab form section -->
-<form class="form" #loginForm="ngForm" (submit)="onSubmit(UserName.value, Password.value)">
+<form class="form" [formGroup]="form" #loginForm="ngForm"
+      (submit)="onSubmit(UserName.value, Password.value)">
   <div class="container">
     <!-- Tab form header -->
     <h4 class="form__title">Login</h4>
     <!-- Username input field -->
-    <div class="form-field indent">
-      <input class="form-field__input" type="text" id="name" autocomplete="off"
-             placeholder=" "
-             #UserName ngModel name="UserName" required>
-      <label for="name" class="form-field__label">UserName</label>
+    <div class="form-field">
+      <input class="form-field__input" id="name" type="text" placeholder=" " autocomplete="off"
+             #UserName formControlName="username" minlength="6" maxlength="16" required/>
+      <label class="form-field__label" for="name">UserName</label>
+      <!-- Username input field validtion-->
+      <div class="form-field__hint">
+        <span *ngIf="username?.required">* Username is required</span>
+        <span *ngIf="username?.minlength">* Username must be at least 6 characters</span>
+        <span *ngIf="username?.maxlength">* Username must not exceed 16 characters</span>
+      </div>
     </div>
     <!-- Password input field -->
     <div class="form-field">
