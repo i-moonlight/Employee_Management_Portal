@@ -31,4 +31,30 @@ export class ProductController {
   async getProductBySlug(@Param('slug') slug: string) {
     return this.productService.getProductBySlug(slug);
   }
+
+  @HttpCode(200)
+  @Get('similar/:productId')
+  async getSimilarProduct(@Param('productId') id: string) {
+    return this.productService.getSimilarProduct(id);
+  }
+
+  @HttpCode(201)
+  @Post()
+  async createProduct(@Body() dto: ProductDto) {
+    return this.productService.createProduct(dto);
+  }
+
+  @HttpCode(200)
+  @UsePipes(new ValidationPipe())
+  @Put(':id')
+  async updateProduct(@Param('id') id: string, @Body() dto: ProductDto) {
+    return this.productService.updateProduct(id, dto);
+  }
+
+  @HttpCode(200)
+  @Authorize()
+  @Delete(':id')
+  async deleteProduct(@Param('id') id: string) {
+    return this.productService.deleteProduct(id);
+  }
 }
