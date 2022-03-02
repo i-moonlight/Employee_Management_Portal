@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Login } from '../../../models/login.model';
 import { Response } from '../../../models/response.model';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -12,61 +12,59 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators }
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  public form: FormGroup;
-  public usernamePattern = /^[a-z0-9_-]{6,16}$/;
-  public passwordPattern = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$/;
+  public loginForm: FormGroup;
+  private readonly usernamePattern = /^[\S][\w\d]{6,16}$/;
+  private readonly passwordPattern = /^((?!.*[\s])(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{12,25})$/;
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService,
-              private toastr: ToastrService, private router: Router) {
-  }
+  constructor(private authService: AuthService, private toastr: ToastrService, private router: Router) {}
 
   ngOnInit(): void {
-    this.form = this.formBuilder.group({
-      username: ['', Validators.compose([
+    this.loginForm = new FormGroup({
+      userName: new FormControl('', [
         Validators.required,
-        Validators.minLength(6),
-        Validators.maxLength(16),
+        Validators.minLength(7),
         Validators.pattern(this.usernamePattern),
-        LoginComponent.shouldBeUniqueUserName,
-        LoginComponent.cannotContainSpace,
-      ])],
-      password: ['', [
+      ]),
+      password: new FormControl('', [
         Validators.required,
         Validators.pattern(this.passwordPattern),
-        LoginComponent.cannotContainSpace]],
-    });
+      ]),
+    })
   }
 
-  private static cannotContainSpace(control: AbstractControl): ValidationErrors | null {
-    let password = control.value as string;
-    if (password.indexOf(' ') >= 0) {
-      return {
-        cannotContainSpace: true
-      };
-    }
-    return null;
-  }
+  // private static cannotContainSpace(control: AbstractControl): ValidationErrors | null {
+  //   let password = control.value as string;
+  //   if (password.indexOf(' ') >= 0) {
+  //     return {
+  //       cannotContainSpace: true
+  //     };
+  //   }
+  //   return null;
+  // }
+  //
+  // private static shouldBeUniqueUserName(control: AbstractControl): Promise<ValidationErrors | null> {
+  //   return new Promise<ValidationErrors | null>((resolve, _reject) => {
+  //     return setTimeout(() => {
+  //         console.log('ok')
+  //         if ((control.value as string) !== 'mosh') {
+  //           resolve(null)
+  //         } else {
+  //           return resolve({
+  //             shouldBeUniqueUserName: true
+  //           });
+  //         }
+  //       },
+  //       2000)
+  //   });
+  // }
 
-  private static shouldBeUniqueUserName(control: AbstractControl): Promise<ValidationErrors | null> {
-    return new Promise<ValidationErrors | null>((resolve, _reject) => {
-      return setTimeout(() => {
-          console.log('ok')
-          if ((control.value as string) !== 'mosh') {
-            resolve(null)
-          } else {
-            return resolve({
-              shouldBeUniqueUserName: true
-            });
-          }
-        },
-        2000)
-    });
-  }
+  onSubmit(loginForm: any) {
+    let username = loginForm.controls['userName'].value;
+    let password = loginForm.controls['password'].value;
 
-  onSubmit(userName, password) {
     const login: Login = {
-      UserName: userName,
-      Password: password,
+      UserName: username,
+      Password: password
     }
     this.authService.getLoginToken(login).subscribe((res: Response) => {
       if (res.DateSet != null) {
@@ -80,10 +78,10 @@ export class LoginComponent implements OnInit {
   }
 
   public get username() {
-    return this.form.get('username').errors;
+    return this.loginForm.controls['userName'];
   }
 
   public get password() {
-    return this.form.get('password').errors;
+    return this.loginForm.controls['password'];
   }
 }

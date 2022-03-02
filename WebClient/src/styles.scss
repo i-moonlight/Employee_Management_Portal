@@ -154,7 +154,6 @@ input[type="text"], input[type="password"], .btn {
 .container {
   width: 100%;
   max-width: 1200px;
-  margin: 0 auto;
   text-align: center;
 }
 
@@ -167,6 +166,29 @@ input[type="text"], input[type="password"], .btn {
     margin: 2px 0;
     font-weight: 600;
   }
+
+  &-hint {
+    display: flex;
+    text-align: initial;
+    flex-basis: 100%;
+    color: $clr-error;
+    opacity: 0;
+    animation: ani 1s forwards;
+
+    @keyframes ani {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    & > span {
+      display: contents;
+      font-size: small;
+    }
+  }
 }
 
 .form-field {
@@ -175,8 +197,8 @@ input[type="text"], input[type="password"], .btn {
   flex-wrap: wrap;
   font-size: 14px;
   height: 50px;
-  border-top: 10px solid transparent;
-  margin: 0 0 20px 0;;
+  //border-top: 10px solid transparent;
+  margin: 20px 0 0 0;
   border-radius: $radius;
 
   &__input {
@@ -207,14 +229,14 @@ input[type="text"], input[type="password"], .btn {
     }
   }
 
-  &__input[type=text]:valid:not(:focus) {
-    color: $clr-succes;
-    border-color: $clr-succes;
-  }
-
-  &__input[type=text]:valid:not(:focus) + label {
-    color: $clr-succes;
-  }
+  //&__input[type=text]:valid:not(:focus) {
+  //  color: $clr-succes;
+  //  border-color: $clr-succes;
+  //}
+  //
+  //&__input[type=text]:valid:not(:focus) + label {
+  //  color: $clr-succes;
+  //}
 
   &__input[type=text]:invalid:focus {
     border: 1px solid $clr-error;
@@ -226,20 +248,21 @@ input[type="text"], input[type="password"], .btn {
 
   &__input[type=text]:invalid:not(:focus) {
     border: 1px solid $clr-error;
+    //height: inherit;
   }
 
   &__input[type=text]:invalid:not(:focus) + label {
     color: $clr-error;
   }
 
-  &__input[type=password]:valid:not(:focus) {
-    color: $clr-succes;
-    border-color: $clr-succes;
-  }
-
-  &__input[type=password]:valid:not(:focus) + label {
-    color: $clr-succes;
-  }
+  //&__input[type=password]:valid:not(:focus) {
+  //  color: $clr-succes;
+  //  border-color: $clr-succes;
+  //}
+  //
+  //&__input[type=password]:valid:not(:focus) + label {
+  //  color: $clr-succes;
+  //}
 
   &__input[type=password]:invalid:focus {
     border: 1px solid $clr-error;
@@ -251,6 +274,7 @@ input[type="text"], input[type="password"], .btn {
 
   &__input[type=password]:invalid:not(:focus) {
     border: 1px solid $clr-error;
+    //height: inherit;
   }
 
   &__input[type=password]:invalid:not(:focus) + label {
@@ -273,28 +297,5 @@ input[type="text"], input[type="password"], .btn {
     cursor: text;
     transition: top 200ms ease-in, left 200ms ease-in, font-size 200ms ease-in;
     background-color: white;
-  }
-
-  &__hint {
-    display: flex;
-    flex-basis: 100%;
-    color: $clr-error;
-    max-height: 0;
-    opacity: 0;
-    animation: ani 1s forwards;
-
-    @keyframes ani {
-      0% {
-        opacity: 0;
-      }
-      100% {
-        opacity: 1;
-      }
-    }
-
-    & > span {
-      display: contents;
-      font-size: small;
-    }
   }
 }
