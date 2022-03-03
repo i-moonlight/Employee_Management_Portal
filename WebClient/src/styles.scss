@@ -138,6 +138,7 @@ li:hover {
 }
 
 input[type="text"], input[type="password"], .btn {
+  display: flex;
   //border-radius: 2px;
 }
 
@@ -158,13 +159,13 @@ input[type="text"], input[type="password"], .btn {
 }
 
 .form {
-  margin: 1rem 0;
 
   &__title {
     text-transform: uppercase;
     line-height: 1.1;
-    margin: 2px 0;
+    //margin: 2px 0;
     font-weight: 600;
+    margin: 1rem 0;
   }
 
   &-hint {
@@ -191,15 +192,22 @@ input[type="text"], input[type="password"], .btn {
   }
 }
 
+.form__wrapper {
+  margin: 10px 0 10px 0;
+}
+
 .form-field {
   display: flex;
-  position: relative;
   flex-wrap: wrap;
   font-size: 14px;
   height: 50px;
-  //border-top: 10px solid transparent;
-  margin: 20px 0 0 0;
   border-radius: $radius;
+  //border-top: 10px solid transparent;
+
+  &__item {
+    position: relative;
+    margin: 20px 0 0 0;
+  }
 
   &__input {
     position: relative;
@@ -278,6 +286,23 @@ input[type="text"], input[type="password"], .btn {
   }
 
   &__input[type=password]:invalid:not(:focus) + label {
+    color: $clr-error;
+  }
+
+  &__input[type=email]:invalid:focus {
+    border: 1px solid $clr-error;
+  }
+
+  &__input[type=email]:invalid:focus + label {
+    color: $clr-error;
+  }
+
+  &__input[type=email]:invalid:not(:focus) {
+    border: 1px solid $clr-error;
+    //height: inherit;
+  }
+
+  &__input[type=email]:invalid:not(:focus) + label {
     color: $clr-error;
   }
 
