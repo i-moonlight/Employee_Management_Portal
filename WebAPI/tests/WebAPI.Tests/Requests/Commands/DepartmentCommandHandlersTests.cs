@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using NUnit.Framework;
 using WebAPI.Tests.Common;
-using WebAPI.UserCases.Requests.Departments.Commands;
+using WebAPI.UseCases.Requests.Departments.Commands;
 using static System.Threading.CancellationToken;
 using static WebAPI.Utils.Constants.MessageTypes;
 

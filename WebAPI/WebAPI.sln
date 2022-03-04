@@ -24,7 +24,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI.DataAccess.MsSql", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI.Tests", "tests\WebAPI.Tests\WebAPI.Tests.csproj", "{CC0D609E-B847-42B5-8A51-15BF9FB7EB41}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI.UserCases", "src\WebAPI.UserCases\WebAPI.UserCases.csproj", "{540CA6D3-D09F-4B7A-BBD3-55EA6A7241AB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI.UseCases", "src\WebAPI.UseCases\WebAPI.UseCases.csproj", "{540CA6D3-D09F-4B7A-BBD3-55EA6A7241AB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI.Infrastructure.Interfaces", "src\WebAPI.Infrastructure.Interfaces\WebAPI.Infrastructure.Interfaces.csproj", "{3277B408-6F50-43BA-BD73-588FAB4C0FB9}"
 EndProject

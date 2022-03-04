@@ -2,6 +2,11 @@
 
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
+        <EnforceCodeStyleInBuild>false</EnforceCodeStyleInBuild>
+        <AnalysisLevel>preview</AnalysisLevel>
+        <RunAnalyzersDuringLiveAnalysis>false</RunAnalyzersDuringLiveAnalysis>
+        <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
+        <EnableNETAnalyzers>false</EnableNETAnalyzers>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
         <NoWarn>8034</NoWarn>
@@ -33,7 +38,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\WebAPI.UserCases\WebAPI.UserCases.csproj"/>
+        <ProjectReference Include="..\..\WebAPI.UseCases\WebAPI.UseCases.csproj"/>
         <ProjectReference Include="..\..\WebAPI.Utils\WebAPI.Utils.csproj"/>
         <ProjectReference Include="..\..\WebAPI.Controllers\WebAPI.Controllers.csproj"/>
         <ProjectReference Include="..\..\WebAPI.DataAccess.MsSql\WebAPI.DataAccess.MsSql.csproj"/>

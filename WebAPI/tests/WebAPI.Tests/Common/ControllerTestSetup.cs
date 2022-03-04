@@ -2,8 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using WebAPI.DataAccess.MsSql.Persistence.Context;
-using WebAPI.UserCases.Common.Dto;
-using WebAPI.UserCases.Common.Dto.Request;
+using WebAPI.UseCases.Common.Dto;
+using WebAPI.UseCases.Common.Dto.Request;
 using WebAPI.Web;
 
 namespace WebAPI.Tests.Common

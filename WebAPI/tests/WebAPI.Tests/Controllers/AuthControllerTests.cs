@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
 using WebAPI.Controllers;
 using WebAPI.Tests.Common;
-using WebAPI.UserCases.Common.Dto;
-using WebAPI.UserCases.Common.Response;
+using WebAPI.UseCases.Common.Dto;
+using WebAPI.UseCases.Common.Response;
 
 namespace WebAPI.Tests.Controllers
 {

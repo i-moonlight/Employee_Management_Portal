@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using WebAPI.Controllers;
 using WebAPI.Tests.Common;
 using WebAPI.Entities.Models;
-using WebAPI.UserCases.Common.Dto;
+using WebAPI.UseCases.Common.Dto;
 using static WebAPI.Tests.Common.TestContent;
 using static WebAPI.Utils.Constants.MessageTypes;
 

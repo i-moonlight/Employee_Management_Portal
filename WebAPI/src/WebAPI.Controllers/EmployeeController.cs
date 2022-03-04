@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using WebAPI.UserCases.Common.Dto;
-using WebAPI.UserCases.Requests.Employees.Commands;
-using WebAPI.UserCases.Requests.Employees.Queries;
-using WebAPI.UserCases.Requests.Employees.Validators;
+using WebAPI.UseCases.Common.Dto;
+using WebAPI.UseCases.Requests.Employees.Commands;
+using WebAPI.UseCases.Requests.Employees.Queries;
+using WebAPI.UseCases.Requests.Employees.Validators;
 
 namespace WebAPI.Controllers
 {

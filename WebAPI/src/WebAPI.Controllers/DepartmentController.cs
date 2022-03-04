@@ -4,10 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using WebAPI.UserCases.Common.Dto;
-using WebAPI.UserCases.Requests.Departments.Commands;
-using WebAPI.UserCases.Requests.Departments.Queries;
-using WebAPI.UserCases.Requests.Departments.Validators;
+using WebAPI.UseCases.Common.Dto;
+using WebAPI.UseCases.Requests.Departments.Commands;
+using WebAPI.UseCases.Requests.Departments.Queries;
+using WebAPI.UseCases.Requests.Departments.Validators;
 
 namespace WebAPI.Controllers
 {

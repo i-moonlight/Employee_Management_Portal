@@ -5,8 +5,8 @@ using System.Net.Http;
 using System.Text;
 using Newtonsoft.Json;
 using WebAPI.Entities.Models;
-using WebAPI.UserCases.Common.Dto;
-using WebAPI.UserCases.Common.Dto.Request;
+using WebAPI.UseCases.Common.Dto;
+using WebAPI.UseCases.Common.Dto.Request;
 
 namespace WebAPI.Tests.Common
 {

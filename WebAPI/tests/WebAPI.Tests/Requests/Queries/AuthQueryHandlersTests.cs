@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using WebAPI.Entities.Models;
 using WebAPI.Tests.Common;
-using WebAPI.UserCases.Requests.Authentication.Queries;
+using WebAPI.UseCases.Requests.Authentication.Queries;
 
 namespace WebAPI.Tests.Requests.Queries
 {

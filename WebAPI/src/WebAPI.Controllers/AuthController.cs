@@ -2,11 +2,11 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WebAPI.UserCases.Common.Dto;
-using WebAPI.UserCases.Common.Dto.Request;
-using WebAPI.UserCases.Common.Response;
-using WebAPI.UserCases.Requests.Authentication.Commands;
-using WebAPI.UserCases.Requests.Authentication.Queries;
+using WebAPI.UseCases.Common.Dto;
+using WebAPI.UseCases.Common.Dto.Request;
+using WebAPI.UseCases.Common.Response;
+using WebAPI.UseCases.Requests.Authentication.Commands;
+using WebAPI.UseCases.Requests.Authentication.Queries;
 
 namespace WebAPI.Controllers
 {

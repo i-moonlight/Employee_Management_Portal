@@ -5,21 +5,21 @@ namespace WebAPI.DataAccess.MsSql.Identity
 {
     public static class DefaultUsers
     {
-        public static readonly User Employee = new User
+        public static readonly User Employee = new()
         {
             UserName = "Employee",
             EmailConfirmed = true,
             Email = "Employee@test.ru"
         };
 
-        public static readonly User Manager = new User
+        public static readonly User Manager = new()
         {
             UserName = "Manager",
             EmailConfirmed = true,
             Email = "Manager@test.ru"
         };
 
-        public static readonly User Administrator = new User
+        public static readonly User Administrator = new()
         {
             UserName = "Admin",
             EmailConfirmed = true,

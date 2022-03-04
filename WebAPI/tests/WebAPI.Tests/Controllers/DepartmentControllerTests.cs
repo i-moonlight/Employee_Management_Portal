@@ -6,7 +6,7 @@ using NUnit.Framework;
 using WebAPI.Controllers;
 using WebAPI.Entities.Models;
 using WebAPI.Tests.Common;
-using WebAPI.UserCases.Common.Dto;
+using WebAPI.UseCases.Common.Dto;
 using static System.Net.HttpStatusCode;
 using static WebAPI.Tests.Common.TestContent;
 using static WebAPI.Utils.Constants.MessageTypes;

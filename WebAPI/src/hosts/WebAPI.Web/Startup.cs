@@ -19,7 +19,7 @@ using Newtonsoft.Json.Serialization;
 using WebAPI.DataAccess.MsSql;
 using WebAPI.DataAccess.MsSql.Persistence.Context;
 using WebAPI.Entities.Models;
-using WebAPI.UserCases;
+using WebAPI.UseCases;
 
 namespace WebAPI.Web
 {
@@ -44,7 +44,7 @@ namespace WebAPI.Web
         {
             #region Dependency Injection
             
-            services.AddUserCases();
+            services.AddUseCases();
             services.AddDataAccess(Configuration);
 
             #endregion

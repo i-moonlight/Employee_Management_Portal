@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using WebAPI.Entities.Models;
 using WebAPI.Tests.Common;
-using WebAPI.UserCases.Common.Dto;
-using WebAPI.UserCases.Common.Exceptions;
-using WebAPI.UserCases.Requests.Departments.Queries;
+using WebAPI.UseCases.Common.Dto;
+using WebAPI.UseCases.Common.Exceptions;
+using WebAPI.UseCases.Requests.Departments.Queries;
 using static System.Threading.CancellationToken;
 
 namespace WebAPI.Tests.Requests.Queries

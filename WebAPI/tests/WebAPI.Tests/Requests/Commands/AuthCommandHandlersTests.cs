@@ -5,9 +5,9 @@ using Moq;
 using NUnit.Framework;
 using WebAPI.Entities.Models;
 using WebAPI.Tests.Common;
-using WebAPI.UserCases.Common.Configs;
-using WebAPI.UserCases.Common.Dto;
-using WebAPI.UserCases.Requests.Authentication.Commands;
+using WebAPI.UseCases.Common.Configs;
+using WebAPI.UseCases.Common.Dto;
+using WebAPI.UseCases.Requests.Authentication.Commands;
 using static WebAPI.Utils.Constants.MessageTypes;
 
 namespace WebAPI.Tests.Requests.Commands

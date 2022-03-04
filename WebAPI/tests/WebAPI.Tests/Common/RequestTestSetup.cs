@@ -4,8 +4,8 @@ using Moq;
 using NUnit.Framework;
 using WebAPI.Entities.Models;
 using WebAPI.Infrastructure.Interfaces.DataAccess;
-using WebAPI.UserCases.Common.Dto;
-using WebAPI.UserCases.Common.Mappings;
+using WebAPI.UseCases.Common.Dto;
+using WebAPI.UseCases.Common.Mappings;
 
 namespace WebAPI.Tests.Common
 {

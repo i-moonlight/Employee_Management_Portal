@@ -1,21 +1,25 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
+        <EnforceCodeStyleInBuild>false</EnforceCodeStyleInBuild>
+        <AnalysisLevel>preview</AnalysisLevel>
+        <RunAnalyzersDuringLiveAnalysis>false</RunAnalyzersDuringLiveAnalysis>
+        <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
+        <EnableNETAnalyzers>false</EnableNETAnalyzers>
     </PropertyGroup>
     
     <ItemGroup>
       <PackageReference Include="MediatR" Version="8.1.0" />
       <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
       <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.7" />
-      <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
       <PackageReference Include="Serilog.AspNetCore" Version="4.1.0" />
       <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.16.0" />
     </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\WebAPI.DataAccess.MsSql\WebAPI.DataAccess.MsSql.csproj" />
-        <ProjectReference Include="..\WebAPI.UserCases\WebAPI.UserCases.csproj" />
+        <ProjectReference Include="..\WebAPI.UseCases\WebAPI.UseCases.csproj" />
     </ItemGroup>
 
 </Project>

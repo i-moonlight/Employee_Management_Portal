@@ -8,8 +8,8 @@ using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Serialization;
 using WebAPI.DataAccess.MsSql.Persistence.Context;
 using WebAPI.Entities.Models;
-using WebAPI.UserCases;
-using WebAPI.UserCases.Common.Configs;
+using WebAPI.UseCases;
+using WebAPI.UseCases.Common.Configs;
 
 namespace WebAPI.Authentication
 {
@@ -29,7 +29,7 @@ namespace WebAPI.Authentication
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddUserCases();
+            services.AddUseCases();
 
             #region JSON Serializer
 

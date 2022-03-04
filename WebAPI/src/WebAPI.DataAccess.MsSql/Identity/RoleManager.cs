@@ -48,9 +48,9 @@ namespace WebAPI.DataAccess.MsSql.Identity
         {
             // Create users.
             var userManager = provider.GetRequiredService<UserManager<User>>();
-            var empResult = await userManager.CreateAsync(DefaultUsers.Employee, "User123!");
-            var managerResult = await userManager.CreateAsync(DefaultUsers.Manager, "User123!");
-            var adminResult = await userManager.CreateAsync(DefaultUsers.Administrator, "User123!");
+            var empResult = await userManager.CreateAsync(DefaultUsers.Employee, "Es4$hF9D#eLfo83#9fv");
+            var managerResult = await userManager.CreateAsync(DefaultUsers.Manager, "Ms4$hF9D#eLfo83#9fv");
+            var adminResult = await userManager.CreateAsync(DefaultUsers.Administrator, "As4$hF9D#eLfo83#9fv");
 
             // Create user roles based on email confirmation.
             if (empResult.Succeeded || managerResult.Succeeded || adminResult.Succeeded)
