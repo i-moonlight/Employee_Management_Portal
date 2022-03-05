@@ -118,6 +118,10 @@ p {
   font-size: 1em;
 }
 
+span {
+  font-size: 18px
+}
+
 li:hover {
   -webkit-box-shadow: -11px 9px 35px -11px rgba(42, 71, 94, 0.58);
   -moz-box-shadow: -11px 9px 35px -11px rgba(42, 71, 94, 0.58);
@@ -139,6 +143,8 @@ li:hover {
 
 input[type="text"], input[type="password"], .btn {
   display: flex;
+  font-size: 18px;
+  text-transform: none;
   //border-radius: 2px;
 }
 
@@ -163,9 +169,14 @@ input[type="text"], input[type="password"], .btn {
   &__title {
     text-transform: uppercase;
     line-height: 1.1;
+    font-size: 18px;
     //margin: 2px 0;
     font-weight: 600;
     margin: 1rem 0;
+  }
+
+  &__wrapper {
+    margin: 15px 0 30px 0;
   }
 
   &-hint {
@@ -185,15 +196,16 @@ input[type="text"], input[type="password"], .btn {
       }
     }
 
-    & > span {
+    &__item {
       display: contents;
-      font-size: small;
+      font-size: 0.9rem;
     }
-  }
-}
 
-.form__wrapper {
-  margin: 10px 0 10px 0;
+    //& > span {
+    //  display: contents;
+    //  font-size: small;
+    //}
+  }
 }
 
 .form-field {
@@ -224,103 +236,111 @@ input[type="text"], input[type="password"], .btn {
     padding: 1.25rem;
     background: none;
 
-    &:hover {
+    &:valid:hover {
       border-color: $clr-gray600;
     }
 
-    &:focus {
+    &:valid:focus {
       border-color: $clr-primary;
     }
 
-    &:focus ~ .form-field__label {
+    &:valid:focus ~ .form-field__label {
       color: $clr-primary;
     }
-  }
 
-  //&__input[type=text]:valid:not(:focus) {
-  //  color: $clr-succes;
-  //  border-color: $clr-succes;
-  //}
-  //
-  //&__input[type=text]:valid:not(:focus) + label {
-  //  color: $clr-succes;
-  //}
+    &[type=text]:invalid:focus {
+      border: 1px solid $clr-error;
+    }
 
-  &__input[type=text]:invalid:focus {
-    border: 1px solid $clr-error;
-  }
+    &[type=text]:invalid:focus + label {
+      color: $clr-error;
+    }
 
-  &__input[type=text]:invalid:focus + label {
-    color: $clr-error;
-  }
+    &[type=text]:invalid:not(:focus) {
+      border: 1px solid $clr-error;
+      //height: inherit;
+    }
 
-  &__input[type=text]:invalid:not(:focus) {
-    border: 1px solid $clr-error;
-    //height: inherit;
-  }
+    &[type=text]:invalid:not(:focus) + label {
+      color: $clr-error;
+    }
 
-  &__input[type=text]:invalid:not(:focus) + label {
-    color: $clr-error;
-  }
+    &[type=password]:invalid:focus {
+      border: 1px solid $clr-error;
+    }
 
-  //&__input[type=password]:valid:not(:focus) {
-  //  color: $clr-succes;
-  //  border-color: $clr-succes;
-  //}
-  //
-  //&__input[type=password]:valid:not(:focus) + label {
-  //  color: $clr-succes;
-  //}
+    &[type=password]:invalid:focus + label {
+      color: $clr-error;
+    }
 
-  &__input[type=password]:invalid:focus {
-    border: 1px solid $clr-error;
-  }
+    &[type=password]:invalid:not(:focus) {
+      border: 1px solid $clr-error;
+      //height: inherit;
+    }
 
-  &__input[type=password]:invalid:focus + label {
-    color: $clr-error;
-  }
+    &[type=password]:invalid:not(:focus) + label {
+      color: $clr-error;
+    }
 
-  &__input[type=password]:invalid:not(:focus) {
-    border: 1px solid $clr-error;
-    //height: inherit;
-  }
+    &[type=email]:invalid:focus {
+      border: 1px solid $clr-error;
+    }
 
-  &__input[type=password]:invalid:not(:focus) + label {
-    color: $clr-error;
-  }
+    &[type=email]:invalid:focus + label {
+      color: $clr-error;
+    }
 
-  &__input[type=email]:invalid:focus {
-    border: 1px solid $clr-error;
-  }
+    &[type=email]:invalid:not(:focus) {
+      border: 1px solid $clr-error;
+      //height: inherit;
+    }
 
-  &__input[type=email]:invalid:focus + label {
-    color: $clr-error;
-  }
+    &[type=email]:invalid:not(:focus) + label {
+      color: $clr-error;
+    }
 
-  &__input[type=email]:invalid:not(:focus) {
-    border: 1px solid $clr-error;
-    //height: inherit;
-  }
+    //&[type=text]:valid:not(:focus) {
+    //  color: $clr-succes;
+    //  border-color: $clr-succes;
+    //}
+    //
+    //&[type=text]:valid:not(:focus) + label {
+    //  color: $clr-succes;
+    //}
 
-  &__input[type=email]:invalid:not(:focus) + label {
-    color: $clr-error;
+    //&[type=password]:valid:not(:focus) {
+    //  color: $clr-succes;
+    //  border-color: $clr-succes;
+    //}
+    //
+    //&[type=password]:valid:not(:focus) + label {
+    //  color: $clr-succes;
+    //}
   }
 
   &__input:focus ~ &__label,
   &__input:not(:placeholder-shown).form-field__input:not(:focus) ~ &__label {
     top: -0.5rem;
-    font-size: 0.8rem;
+    //font-size: 0.8rem;
     left: 0.8rem;
     font-weight: bold;
   }
 
   &__label {
     position: absolute;
+    font-size: 18px;
+    //font-size: 1em;
     left: 1rem;
     top: 0.8rem;
     padding: 0 0.5rem;
     cursor: text;
     transition: top 200ms ease-in, left 200ms ease-in, font-size 200ms ease-in;
     background-color: white;
+
+    &_check {
+      align-self: baseline;
+      font-size: 18px;
+      margin: 5px;
+    }
   }
 }
