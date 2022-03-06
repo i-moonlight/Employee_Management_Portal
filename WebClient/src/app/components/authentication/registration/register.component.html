@@ -1,5 +1,5 @@
 <!-- Tab form section -->
-<form class="form" [formGroup]="registrationForm" novalidate (submit)="onSubmit(registrationForm)">
+<form class="form" [formGroup]="registerForm" novalidate (submit)="onSubmit(registerForm)">
   <div class="container">
     <!-- Tab form header -->
     <h4 class="form__title">Registration</h4>
@@ -65,7 +65,7 @@
     </div>
     <!-- Registration button -->
     <div class="form__button">
-      <button class="btn btn-primary" type="submit" [disabled]="registrationForm.invalid">
+      <button class="btn btn-primary" type="submit" [disabled]="registerForm.invalid">
         Registration
       </button>
     </div>

@@ -13,8 +13,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  public registrationForm: FormGroup;
-  public account: Account;
+  public registerForm: FormGroup;
   private readonly usernamePattern = /^[\S][\w\d]{6,16}$/;
   private readonly passwordPattern = /^((?!.*[\s])(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{12,25})$/;
   private readonly emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
@@ -23,7 +22,7 @@ export class RegisterComponent implements OnInit {
               private toastr: ToastrService, private router: Router) {}
 
   ngOnInit(): void {
-    this.registrationForm = new FormGroup({
+    this.registerForm = new FormGroup({
       userName: new FormControl('', [
         Validators.required,
         Validators.minLength(7),
@@ -52,23 +51,23 @@ export class RegisterComponent implements OnInit {
   // }
 
   onSubmit(registerForm: FormGroup) {
-    let username = registerForm.controls['userName'].value;
-    let email = registerForm.controls['email'].value;
-    let password = registerForm.controls['password'].value;
+    let username = registerForm.value.userName;
+    let email = registerForm.value.email;
+    let password = registerForm.value.password;
 
-    this.account = {
+    const account: Account = {
       UserName: username,
       Email: email,
       Password: password,
     }
 
-    this.authService.registerUser(this.account).subscribe((res: Response) => {
+    this.authService.registerUser(account).subscribe((res: Response) => {
       if (res.DateSet == null) {
-        this.toastr.success('Registration Successful');
-        this.authenticationUser(this.account);
+        this.toastr.success('Registration Successful', null, {timeOut: 8000});
+        this.authenticationUser(account);
         // this.resetForm(registrForm);
       } else {
-        this.toastr.error('Registration Failed');
+        this.toastr.error('Registration Failed', null, {timeOut: 8000});
         console.warn(res.ResponseMessage);
       }
     });
@@ -92,14 +91,14 @@ export class RegisterComponent implements OnInit {
   }
 
   public get username() {
-    return this.registrationForm.controls['userName'];
+    return this.registerForm.controls['userName'];
   }
 
   public get email() {
-    return this.registrationForm.controls['email'];
+    return this.registerForm.controls['email'];
   }
 
   public get password() {
-    return this.registrationForm.controls['password'];
+    return this.registerForm.controls['password'];
   }
 }

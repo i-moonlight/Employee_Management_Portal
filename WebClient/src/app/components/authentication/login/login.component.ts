@@ -58,17 +58,19 @@ export class LoginComponent implements OnInit {
   //   });
   // }
 
-  onSubmit(loginForm: any) {
-    let username = loginForm.controls['userName'].value;
-    let password = loginForm.controls['password'].value;
+  onSubmit(loginForm: FormGroup) {
+    let username = loginForm.value.userName;
+    let password = loginForm.value.password;
 
     const login: Login = {
       UserName: username,
       Password: password
     }
+
     this.authService.getLoginToken(login).subscribe((res: Response) => {
       if (res.DateSet != null) {
-        this.toastr.success('Login Successful', null, {timeOut: 50000})
+        console.warn(res.DateSet.Token);
+        this.toastr.success('Login Successful', null, {timeOut: 8000});
         localStorage.setItem('token', res.DateSet.Token);
         this.router.navigate(['/employee']).then(() => window.location.reload());
       } else {
