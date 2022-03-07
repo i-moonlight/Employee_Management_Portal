@@ -5,7 +5,8 @@ import { ToastrService } from 'ngx-toastr';
 import { Response } from '../../../models/response.model';
 import { Router } from '@angular/router';
 import { Login } from '../../../models/login.model';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import Validation from 'src/app/utils/validation';
 
 @Component({
   selector: 'app-register',
@@ -23,21 +24,28 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.registerForm = new FormGroup({
-      userName: new FormControl('', [
-        Validators.required,
-        Validators.minLength(7),
-        Validators.pattern(this.usernamePattern)
-      ]),
-      email: new FormControl('', [
-        Validators.email,
-        Validators.required,
-        Validators.pattern(this.emailPattern)
-      ]),
-      password: new FormControl('', [
-        Validators.required,
-        Validators.pattern(this.passwordPattern)
-      ])
-    });
+        userName: new FormControl('', [
+          Validators.required,
+          Validators.minLength(7),
+          Validators.pattern(this.usernamePattern)
+        ]),
+        email: new FormControl('', [
+          Validators.email,
+          Validators.required,
+          Validators.pattern(this.emailPattern)
+        ]),
+        password: new FormControl('', [
+          Validators.required,
+          Validators.pattern(this.passwordPattern)
+        ]),
+        confirmPassword: new FormControl('', [
+          Validators.required
+        ])
+      },
+      {
+        // Check matching password.
+        validators: [Validation.match('password', 'confirmPassword')]
+      });
     // this.resetForm();
   }
 
@@ -90,15 +98,19 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  public get username() {
+  public get username(): AbstractControl {
     return this.registerForm.controls['userName'];
   }
 
-  public get email() {
+  public get email(): AbstractControl {
     return this.registerForm.controls['email'];
   }
 
-  public get password() {
+  public get password(): AbstractControl {
     return this.registerForm.controls['password'];
+  }
+
+  public get confirmPassword(): AbstractControl {
+    return this.registerForm.controls['confirmPassword'];
   }
 }
