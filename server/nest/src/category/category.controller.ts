@@ -1,16 +1,16 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put } from '@nestjs/common';
-import { CategoryService } from './category.service';
-import { CategoryDto } from './dto/category.dto';
-import { Authorize } from '../auth/decorator/auth.decorator';
+import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put } from '@nestjs/common'
+import { CategoryService } from './category.service'
+import { CategoryDto } from './dto/category.dto'
+import { Authorize } from '../auth/decorator/auth.decorator'
 
-@Controller('category')
+@Controller('categories')
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
   @HttpCode(200)
   @Get('')
   async getCategoryList() {
-    return this.categoryService.getCategories();
+    return this.categoryService.getAllCategories();
   }
 
   @HttpCode(200)

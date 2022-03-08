@@ -10,7 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+models User {
   id            String        @id @default(uuid()) @db.Uuid
   name          String        @default("")
   email         String        @unique
@@ -24,7 +24,7 @@ model User {
   favourites    Product[]
 }
 
-model Product {
+models Product {
   id            String        @id @default(uuid()) @db.Uuid
   name          String        @unique
   slug          String        @unique
@@ -41,7 +41,7 @@ model Product {
   updatedAt     DateTime      @updatedAt @map("updated_at")
 }
 
-model Category {
+models Category {
   id            String        @unique @id @default(uuid()) @db.Uuid
   name          String        @unique
   slug          String        @unique
@@ -57,7 +57,7 @@ enum OrderStatus {
   CANCELLED
 }
 
-model Order {
+models Order {
   id            String        @unique @id @default(uuid()) @db.Uuid
   status        OrderStatus   @default(PENDING)
   totalAmount   Float         @default(0)
@@ -68,7 +68,7 @@ model Order {
   updatedAt     DateTime      @updatedAt @map("updated_at")
 }
 
-model OrderItem {
+models OrderItem {
   id            String        @unique @id @default(uuid()) @db.Uuid
   quantity      Int
   price         Float
@@ -81,7 +81,7 @@ model OrderItem {
   @@map("Order_item")
 }
 
-model Review {
+models Review {
   id            String        @unique @id @default(uuid()) @db.Uuid
   rating        Int
   text          String

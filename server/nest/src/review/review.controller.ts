@@ -1,8 +1,8 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, UsePipes, ValidationPipe } from '@nestjs/common';
-import { Authorize } from '../auth/decorator/auth.decorator';
-import { CurrentUser } from '../auth/decorator/user.decorator';
-import { ReviewDto } from './dto/review.dto';
-import { ReviewService } from './review.service';
+import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, UsePipes, ValidationPipe } from '@nestjs/common'
+import { Authorize } from '../auth/decorator/auth.decorator'
+import { CurrentUser } from '../auth/decorator/user.decorator'
+import { ReviewDto } from './dto/review.dto'
+import { ReviewService } from './review.service'
 
 @Controller('review')
 export class ReviewController {
@@ -30,8 +30,13 @@ export class ReviewController {
   @HttpCode(200)
   @Get(':id')
   @Authorize()
-  async getReview(@Param('id') id: string) {
+  async getReviewById(@Param('id') id: string) {
     return this.reviewService.getReview(id);
+  }
+
+  @Get('average-by-product/:productId')
+  async getAverageByProduct(@Param('productId') productId: string) {
+    return this.reviewService.getAverageValueByProductId(productId)
   }
 
   @HttpCode(200)
