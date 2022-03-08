@@ -9,9 +9,9 @@ import { Login } from '../../../models/login.model';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { autoSave, autoSaveClear } from '../../../utils/auto-save';
+import { Pattern } from '../../../app.constants';
 
-const key = 'save1';
-const keyS = new Subject<string>();
+const Key = new Subject<string>();
 
 @Component({
   selector: 'app-register',
@@ -19,49 +19,45 @@ const keyS = new Subject<string>();
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  private readonly usernamePattern = /^[\S][\w\d]{6,16}$/;
-  private readonly passwordPattern = /^((?!.*[\s])(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{12,25})$/;
-  private readonly emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
 
-  @autoSave(keyS)
+  constructor(
+    private authService: AuthService,
+    private formBuilder: FormBuilder,
+    private toastr: ToastrService,
+    private router: Router) {}
+
+  @autoSave(Key)
   public registerForm = new FormGroup({
       userName: new FormControl('', [
         Validators.required,
         Validators.minLength(7),
-        Validators.pattern(this.usernamePattern)
+        Validators.pattern(Pattern.USERNAME_PATTERN)
       ]),
       email: new FormControl('', [
         Validators.email,
         Validators.required,
-        Validators.pattern(this.emailPattern)
+        Validators.pattern(Pattern.EMAIL_PATTERN)
       ]),
       password: new FormControl('', [
         Validators.required,
-        Validators.pattern(this.passwordPattern)
+        Validators.pattern(Pattern.PASSWORD_PATTERN)
       ]),
       confirmPassword: new FormControl('', [
         Validators.required
       ])
     },
     {
-      // Check matching password.
       validators: [Validation.match('password', 'confirmPassword')]
     });
 
-  constructor(private authService: AuthService, private formBuilder: FormBuilder,
-              private toastr: ToastrService, private router: Router) {}
-
   ngOnInit() {
-    setTimeout(() => keyS.next('save1'), 1000);
+    setTimeout(() => Key.next('save1'), 1000);
   }
 
   onSubmit(registerForm: FormGroup) {
-    autoSaveClear(key);
-
     let username = registerForm.value.userName;
     let email = registerForm.value.email;
     let password = registerForm.value.password;
-
     const account: Account = {
       UserName: username,
       Email: email,
@@ -77,10 +73,11 @@ export class RegisterComponent implements OnInit {
         console.warn(res.ResponseMessage);
       }
     });
+    autoSaveClear(Key);
   }
 
   onCancel() {
-    autoSaveClear(key);
+    autoSaveClear(Key);
     if (this.registerForm != null) this.registerForm.reset();
   }
 

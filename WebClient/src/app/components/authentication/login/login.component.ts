@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Login } from '../../../models/login.model';
 import { Response } from '../../../models/response.model';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { Pattern } from 'src/app/app.constants';
 
 @Component({
   selector: 'app-login',
@@ -12,25 +13,25 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  public loginForm: FormGroup;
-  private readonly usernamePattern = /^[\S][\w\d]{6,16}$/;
-  private readonly passwordPattern = /^((?!.*[\s])(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{12,25})$/;
 
-  constructor(private authService: AuthService, private toastr: ToastrService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private toastr: ToastrService,
+    private router: Router) {}
 
-  ngOnInit(): void {
-    this.loginForm = new FormGroup({
-      userName: new FormControl('', [
-        Validators.required,
-        Validators.minLength(7),
-        Validators.pattern(this.usernamePattern),
-      ]),
-      password: new FormControl('', [
-        Validators.required,
-        Validators.pattern(this.passwordPattern),
-      ]),
-    })
-  }
+  public loginForm = new FormGroup({
+    userName: new FormControl('', [
+      Validators.required,
+      Validators.minLength(7),
+      Validators.pattern(Pattern.USERNAME_PATTERN)
+    ]),
+    password: new FormControl('', [
+      Validators.required,
+      Validators.pattern(Pattern.PASSWORD_PATTERN)
+    ]),
+  })
+
+  ngOnInit(): void {}
 
   // private static cannotContainSpace(control: AbstractControl): ValidationErrors | null {
   //   let password = control.value as string;
