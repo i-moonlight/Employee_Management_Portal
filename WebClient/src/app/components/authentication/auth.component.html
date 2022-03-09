@@ -1,21 +1,19 @@
-<section class="nav-tabs">
-  <div class="container">
-    <div class="card">
-      <div class="card-body shadows-light">
-        <ul class="nav nav-tabs nav-fill">
-          <li class="nav-item shadows-middle">
-            <a class="nav-link active" data-bs-toggle="tab" routerLink='/login'>
-              Login
-            </a>
-          </li>
-          <li class="nav-item shadows-middle">
-            <a class="nav-link" data-bs-toggle="tab" routerLink='/registration'>
-              Registration
-            </a>
-          </li>
-        </ul>
-        <router-outlet></router-outlet>
-      </div>
-    </div>
+<div class="card">
+  <div class="card__body shadows__light">
+    <ul class="card__tabs">
+      <!-- Login link tab -->
+      <li class="card__tab shadows__middle">
+        <a class="card__link" routerLinkActive="card__link--active" [routerLink]="['/auth/login']">
+          Login
+        </a>
+      </li>
+      <!-- Registration link tab -->
+      <li class="card__tab shadows__middle">
+        <a class="card__link" routerLinkActive="card__link--active" [routerLink]="['/auth/registration']"
+           [routerLinkActiveOptions]="{exact:true}">
+          Registration
+        </a>
+    </ul>
+    <router-outlet></router-outlet>
   </div>
-</section>
+</div>
