@@ -4,6 +4,7 @@ import { instance } from '@/api/api.interceptor';
 const CATEGORIES = 'categories'
 
 export const CategoryService = {
+
 	async getAllCategories() {
 		return instance<Category[]>({
 			url: CATEGORIES,

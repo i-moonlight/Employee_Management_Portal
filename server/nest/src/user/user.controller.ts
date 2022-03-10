@@ -1,10 +1,10 @@
-import { Body, Controller, Get, HttpCode, Param, Patch, Put, UsePipes, ValidationPipe } from '@nestjs/common';
-import { Authorize } from '../auth/decorator/auth.decorator';
-import { CurrentUser } from '../auth/decorator/user.decorator';
-import { UserDto } from './dto/user.dto';
-import { UserService } from './user.service';
+import { Body, Controller, Get, HttpCode, Param, Patch, Put, UsePipes, ValidationPipe } from '@nestjs/common'
+import { Authorize } from '../auth/decorator/auth.decorator'
+import { CurrentUser } from '../auth/decorator/user.decorator'
+import { UserDto } from './dto/user.dto'
+import { UserService } from './user.service'
 
-@Controller('user')
+@Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
