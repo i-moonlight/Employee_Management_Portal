@@ -1,57 +1,62 @@
-import { NgModule } from '@angular/core';
+import { ToastrModule } from 'ngx-toastr';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+
 import { AppComponent } from '../app.comp';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { EmployeeComponent } from '../components/employee/emp.comp';
-import { EmployeeListComponent } from '../components/employee/emp-list/emp-list.comp';
-import { EmployeeModalComponent } from '../components/employee/emp-modal/emp-modal.comp';
+import { AppRoutingModule } from './app-routing.module';
+
+import { AuthComponent } from '@auth/auth.component';
+import { AuthGuard } from '@guards/auth.guard';
+import { AuthInterceptor } from '@guards/auth.interceptor';
+import { AuthService } from '@services/authentication/auth.service';
 import { DepartmentComponent } from '../components/department/dep.comp';
 import { DepartmentListComponent } from '../components/department/dep-list/dep-list.comp';
 import { DepartmentModalComponent} from '../components/department/dep-modal/dep-modal.comp';
-import { SharedService } from '../services/shared/shared.service';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterModule } from '@angular/router';
-import { ToastrModule } from 'ngx-toastr';
-import { AppRoutingModule } from './app-routing.module';
-import { RegisterComponent } from '../components/authentication/registration/register.component';
+import { EmployeeComponent } from '../components/employee/emp.comp';
+import { EmployeeListComponent } from '../components/employee/emp-list/emp-list.comp';
+import { EmployeeModalComponent } from '../components/employee/emp-modal/emp-modal.comp';
+import { ForgotPasswordComponent } from '@auth/forgot-password/forgot-password.component';
+import { LoginComponent } from '@auth/login/login.component';
 import { ManagerComponent } from '../components/manager/manager.component';
-import { LoginComponent } from '../components/authentication/login/login.component';
-import { AuthComponent } from '../components/authentication/auth.component';
-import { AuthService } from '../services/authentication/auth.service';
-import { AuthGuard } from '../guards/auth.guard';
-import { AuthInterceptor } from '../guards/auth.interceptor';
+import { RegisterComponent } from '@auth/registration/register.component';
+import { SharedService } from '@services/shared/shared.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthComponent,
-    EmployeeComponent,
-    EmployeeListComponent,
-    EmployeeModalComponent,
     DepartmentComponent,
     DepartmentListComponent,
     DepartmentModalComponent,
-    RegisterComponent,
+    EmployeeComponent,
+    EmployeeListComponent,
+    EmployeeModalComponent,
+    ForgotPasswordComponent,
+    LoginComponent,
     ManagerComponent,
-    LoginComponent
+    RegisterComponent,
   ],
 
   imports: [
-    BrowserModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    FormsModule,
-    RouterModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    BrowserModule,
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    RouterModule,
     ToastrModule.forRoot(),
   ],
 
   providers: [
-    SharedService,
-    AuthService,
     AuthGuard,
+    AuthService,
+    SharedService,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
   ],
 

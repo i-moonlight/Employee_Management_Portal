@@ -1,9 +1,11 @@
-import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+
 import { HttpClient } from '@angular/common/http';
-import { Account } from '../../models/account.model';
-import { Login } from '../../models/login.model';
-import { Response } from '../../models/response.model';
+import { Injectable } from '@angular/core';
+
+import { Account } from '@models/account.model';
+import { Login } from '@models/login.model';
+import { Response } from '@models/response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +23,15 @@ export class AuthService {
   // Method of user registration.
   public registerUser(accountForm: Account): Observable<Response> {
     return this.http.post<Response>(this.AUTH_URL + 'RegisterUser', accountForm);
+  }
+
+  /**
+   * Method of user forgot registration password.
+   *
+   * @return An `Observable` of the response, with the response body as a result execution RememberPassword method.
+   */
+  public forgotPassword(email: Account): Observable<Response> {
+    return this.http.post<Response>(this.AUTH_URL + 'ForgotPassword', email);
   }
 
   // public getUserList() {
