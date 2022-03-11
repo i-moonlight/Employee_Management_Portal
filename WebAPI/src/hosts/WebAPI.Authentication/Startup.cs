@@ -8,6 +8,9 @@ using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Serialization;
 using WebAPI.DataAccess.MsSql.Persistence.Context;
 using WebAPI.Entities.Models;
+using WebAPI.Infrastructure.Implementation.Services;
+using WebAPI.Infrastructure.Interfaces.Options;
+using WebAPI.Infrastructure.Interfaces.Services;
 using WebAPI.UseCases;
 using WebAPI.UseCases.Common.Configs;
 
@@ -29,7 +32,26 @@ namespace WebAPI.Authentication
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
+            #region DataBase Connection
+
+            var connection = Configuration["Connection:DefaultConnection"];
+            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connection));
+
+            #endregion
+            
+            #region Configurations
+
+            services.Configure<JwtConfig>(Configuration.GetSection("JwtOptions"));
+            services.Configure<EmailOptions>(Configuration.GetSection("EmailOptions"));
+
+            #endregion
+
+            #region Dependency Injection
+
+            services.AddScoped<IEmailService, EmailService>();
             services.AddUseCases();
+
+            #endregion
 
             #region JSON Serializer
 
@@ -39,13 +61,6 @@ namespace WebAPI.Authentication
                 options.SerializerSettings.ContractResolver = new DefaultContractResolver();
                 options.SerializerSettings.DateFormatString = "yyyy'-'MM'-'dd' 'HH':'mm':'ss";
             });
-
-            #endregion
-
-            #region Enable application context
-
-            services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             #endregion
 
@@ -61,17 +76,13 @@ namespace WebAPI.Authentication
                     options.User.RequireUniqueEmail = true;
                     options.SignIn.RequireConfirmedAccount = true;
                     options.SignIn.RequireConfirmedEmail = true;
+                    options.User.RequireUniqueEmail = true;
                 })
+                .AddDefaultTokenProviders()
+                .AddEntityFrameworkStores<AppDbContext>()
                 .AddRoles<IdentityRole>()
                 .AddRoleManager<RoleManager<IdentityRole>>()
-                .AddSignInManager<SignInManager<User>>()
-                .AddEntityFrameworkStores<AppDbContext>();
-
-            #endregion
-
-            #region Authentication JWT
-
-            services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig"));
+                .AddSignInManager<SignInManager<User>>();
 
             #endregion
 

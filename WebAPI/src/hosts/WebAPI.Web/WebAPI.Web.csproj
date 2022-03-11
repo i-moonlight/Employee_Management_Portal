@@ -7,6 +7,7 @@
         <RunAnalyzersDuringLiveAnalysis>false</RunAnalyzersDuringLiveAnalysis>
         <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
         <EnableNETAnalyzers>false</EnableNETAnalyzers>
+        <UserSecretsId>7d20386d-49cb-4762-9637-06d184121626</UserSecretsId>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
         <NoWarn>8034</NoWarn>
@@ -38,6 +39,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\WebAPI.Infrastructure.Implementation\WebAPI.Infrastructure.Implementation.csproj"/>
         <ProjectReference Include="..\..\WebAPI.UseCases\WebAPI.UseCases.csproj"/>
         <ProjectReference Include="..\..\WebAPI.Utils\WebAPI.Utils.csproj"/>
         <ProjectReference Include="..\..\WebAPI.Controllers\WebAPI.Controllers.csproj"/>

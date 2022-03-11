@@ -1,10 +1,18 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Threading.Tasks;
+using System.Web;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using WebAPI.Entities.Models;
+using WebAPI.Infrastructure.Interfaces.Options;
+using WebAPI.Infrastructure.Interfaces.Services;
 using WebAPI.UseCases.Common.Dto;
+using WebAPI.UseCases.Common.Dto.Auth;
 using WebAPI.UseCases.Common.Dto.Request;
-using WebAPI.UseCases.Common.Response;
+using WebAPI.UseCases.Common.Dto.Response;
 using WebAPI.UseCases.Requests.Authentication.Commands;
 using WebAPI.UseCases.Requests.Authentication.Queries;
 
@@ -17,6 +25,18 @@ namespace WebAPI.Controllers
     [Route("api/auth")]
     public class AuthController : BaseController
     {
+        private readonly UserManager<User> _userManager;
+        private readonly IOptions<EmailOptions> _emailOptions;
+        private readonly IEmailService _emailService;
+
+        public AuthController(UserManager<User> userManager, IOptions<EmailOptions> emailOptions,
+            IEmailService emailService)
+        {
+            _emailOptions = emailOptions;
+            _userManager = userManager;
+            _emailService = emailService;
+        }
+
         /// <summary>
         /// Get all user from database.   
         /// </summary>
@@ -67,6 +87,54 @@ namespace WebAPI.Controllers
         {
             var request = new SignInCommand() {LoginDto = login};
             return Ok(await Mediator.Send(request));
+        }
+
+        /// <summary>
+        /// Forgot user password.  
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// POST -> /auth/ForgotPassword.
+        /// </remarks>
+        /// <param name="dto"> Data from app client. </param>
+        /// <returns> Response model. </returns>
+        [AllowAnonymous]
+        [HttpPost("ForgotPassword")]
+        public async Task<ActionResult<ResponseModel>> ForgotPassword([FromBody] ForgotPasswordDto dto)
+        {
+            try
+            {
+                var user = await _userManager.FindByEmailAsync(dto.Email);
+
+                if (user != null || user!.EmailConfirmed)
+                {
+                    var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+                    var changePasswordUrl = HttpContext.Request.Headers["changePasswordUrl"];
+
+                    var uriBuilder = new UriBuilder(changePasswordUrl);
+                    var query = HttpUtility.ParseQueryString(uriBuilder.Query);
+                    query["token"] = token;
+                    query["userid"] = user.Id;
+                    uriBuilder.Query = query.ToString();
+                    var urlString = uriBuilder.ToString();
+
+                    var emailBody = $"Click on link to change password </br>{urlString}";
+
+                    await _emailService.SendEmail(dto.Email, emailBody, _emailOptions.Value);
+
+                    return await Task.FromResult(new ResponseModel(
+                        ResponseCode.Ok, "The link to collect the password was sent to the mail", null));
+                }
+
+                return await Task.FromResult(new ResponseModel(
+                    ResponseCode.Error, "Failed to send a message to this address", null));
+            }
+            catch (Exception ex)
+            {
+                return await Task.FromResult(
+                    new ResponseModel(ResponseCode.Error, ex.Message, null));
+            }
         }
     }
 }

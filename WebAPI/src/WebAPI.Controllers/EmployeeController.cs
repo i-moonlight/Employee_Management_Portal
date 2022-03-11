@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.UseCases.Common.Dto;
@@ -27,7 +26,7 @@ namespace WebAPI.Controllers
         /// <response code="200">Success.</response>
         /// <response code="401">If the user is unauthorized.</response>
         [HttpGet]
-        [Authorize (Roles = "Manager")]
+        // [Authorize (Roles = "Manager")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<IEnumerable>> GetEmployeeList()
