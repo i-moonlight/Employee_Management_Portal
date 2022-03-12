@@ -1,26 +1,27 @@
-import { getRefreshToken, saveToStorage } from './auth.helper';
-import { instance } from '@/src/api/api.interceptor';
-import { AuthResponse } from '@/store/user/user.interface'
+import { instance } from '@/api/api.interceptor';
+import { EmailPassword, AuthResponse } from '@/store/user/user.interface';
+import { getRefreshToken, saveToStorage } from './token.service';
 
 export const AuthService = {
-	async invoke(data: UserLogin) {
+
+	async main(type: 'login' | 'register', data: EmailPassword) {
 		const response = await instance<AuthResponse>({
-			url: `/auth/signin`,
+			url: `/auth/${type}`,
 			method: 'POST',
-			data,
-		})
-		if (response.data.accessToken) saveToStorage(response.data)
-		return response.data
+			data
+		});
+		if (response.data.accessToken) saveToStorage(response.data);
+		return response.data;
 	},
 
 	async getNewTokens() {
-		const refreshToken = getRefreshToken()
+		const refreshToken = getRefreshToken();
 		const response = await instance<AuthResponse>({
 			url: `/auth/update-tokens`,
 			method: 'POST',
-			data: { refreshToken },
-		})
-		if (response.data.accessToken) saveToStorage(response.data)
-		return response
-	},
+			data: { refreshToken }
+		});
+		if (response.data.accessToken) saveToStorage(response.data);
+		return response;
+	}
 }
