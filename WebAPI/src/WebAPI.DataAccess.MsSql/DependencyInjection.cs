@@ -13,9 +13,9 @@ namespace WebAPI.DataAccess.MsSql
         public static IServiceCollection AddDataAccess(this IServiceCollection services, IConfiguration config)
         {
             services.AddScoped<IAppDbContext>(provider => provider.GetService<AppDbContext>());
-            services.AddDbContext<AppDbContext>(options => options
-                .UseSqlServer(config.GetConnectionString("DefaultConnection"),
-                    builder => builder.MigrationsAssembly("WebAPI.DataAccess.MsSql")));
+            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(
+                config.GetConnectionString("DefaultConnection"),
+                builder => builder.MigrationsAssembly("WebAPI.DataAccess.MsSql")));
             services.AddScoped<ICrudRepository<Employee>, EmployeeRepository>();
             services.AddScoped<ICrudRepository<Department>, DepartmentRepository>();
 

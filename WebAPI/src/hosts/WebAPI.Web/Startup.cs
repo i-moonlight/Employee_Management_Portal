@@ -19,6 +19,8 @@ using Newtonsoft.Json.Serialization;
 using WebAPI.DataAccess.MsSql;
 using WebAPI.DataAccess.MsSql.Persistence.Context;
 using WebAPI.Entities.Models;
+using WebAPI.Infrastructure.Implementation.Services;
+using WebAPI.Infrastructure.Interfaces.Services;
 using WebAPI.UseCases;
 
 namespace WebAPI.Web
@@ -42,6 +44,19 @@ namespace WebAPI.Web
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
+            #region DataBase Connection
+
+            var connection = Configuration["Connection:DefaultConnection"];
+            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connection));
+
+            #endregion
+
+            #region Services
+            
+            services.AddScoped<IEmailService, EmailService>();
+
+            #endregion
+            
             #region Dependency Injection
             
             services.AddUseCases();
@@ -120,9 +135,9 @@ namespace WebAPI.Web
                 })
                 .AddJwtBearer(options =>
                 {
-                    var key = Encoding.ASCII.GetBytes(Configuration["JwtConfig:Secret"]);
-                    var issuer = Configuration["JwtConfig:Issuer"];
-                    var audience = Configuration["JwtConfig:Audience"];
+                    var key = Encoding.ASCII.GetBytes(Configuration["JwtOptions:Secret"]);
+                    var issuer = Configuration["JwtOptions:Issuer"];
+                    var audience = Configuration["JwtOptions:Audience"];
 
                     options.TokenValidationParameters = new TokenValidationParameters()
                     {

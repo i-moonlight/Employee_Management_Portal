@@ -2,9 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WebAPI.UseCases.Common.Dto;
 using WebAPI.UseCases.Common.Dto.Auth;
-using WebAPI.UseCases.Common.Dto.Request;
 using WebAPI.UseCases.Common.Dto.Response;
 using WebAPI.UseCases.Requests.Authentication.Commands;
 using WebAPI.UseCases.Requests.Authentication.Queries;

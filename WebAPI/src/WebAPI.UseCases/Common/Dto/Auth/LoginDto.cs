@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WebAPI.UseCases.Common.Dto.Request
+namespace WebAPI.UseCases.Common.Dto.Auth
 {
     /// <summary>
     /// Sets a properties of the data transfer object for user login.

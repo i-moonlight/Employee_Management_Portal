@@ -57,7 +57,7 @@ namespace WebAPI.Utils.Logging
         /// <returns>Returns options the elasticsearch sink.</returns>
         public static ElasticsearchSinkOptions ConfigureElasticSink(IConfigurationRoot config, string env)
         {
-            var sink = new ElasticsearchSinkOptions(new Uri(config["ElasticConfiguration:Uri"]))
+            var sink = new ElasticsearchSinkOptions(new Uri(config["ElasticOptions:Uri"]))
             {
                 AutoRegisterTemplate = true,
                 IndexFormat = $@"{GetExecutingAssembly()

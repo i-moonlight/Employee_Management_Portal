@@ -6,10 +6,10 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using WebAPI.Entities.Models;
-using WebAPI.UseCases.Common.Dto;
-using WebAPI.UseCases.Common.Response;
+using WebAPI.UseCases.Common.Dto.Auth;
+using WebAPI.UseCases.Common.Dto.Response;
 using WebAPI.Utils.Constants;
-using static WebAPI.UseCases.Common.Response.ResponseCode;
+using static WebAPI.UseCases.Common.Dto.Response.ResponseCode;
 
 namespace WebAPI.UseCases.Requests.Authentication.Commands
 {
@@ -51,7 +51,7 @@ namespace WebAPI.UseCases.Requests.Authentication.Commands
 
                     await _userManager.AddToRoleAsync(tempUser, RoleNameTypes.AllRoles.ElementAt(0));
 
-                    return await Task.FromResult(new ResponseModel(Ok, MessageTypes.RegistrationSuccess, null));
+                    return await Task.FromResult(new ResponseModel(Ok, MessageTypes.RegistrationSuccess, ""));
                 }
 
                 return await Task.FromResult(new ResponseModel(Ok, MessageTypes.RegistrationFailed,
@@ -59,7 +59,7 @@ namespace WebAPI.UseCases.Requests.Authentication.Commands
             }
             catch (Exception ex)
             {
-                return await Task.FromResult(new ResponseModel(Error, ex.Message, null));
+                return await Task.FromResult(new ResponseModel(Error, ex.Message, ""));
             }
         }
     }

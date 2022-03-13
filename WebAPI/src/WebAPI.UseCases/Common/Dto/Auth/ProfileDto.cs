@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WebAPI.UseCases.Common.Dto
+namespace WebAPI.UseCases.Common.Dto.Auth
 {
     /// <summary>
     /// The data transfer object for user profile.

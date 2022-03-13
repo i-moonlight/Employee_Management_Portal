@@ -6,16 +6,14 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using WebAPI.Entities.Models;
-using WebAPI.UseCases.Common.Dto;
+using WebAPI.UseCases.Common.Dto.Auth;
 
 namespace WebAPI.UseCases.Requests.Authentication.Queries
 {
     /// <summary>
     /// Sets a property of the request object.
     /// </summary>
-    public class GetUserListQuery : IRequest<IEnumerable>
-    {
-    }
+    public class GetUserListQuery : IRequest<IEnumerable> {}
 
     /// <summary>
     /// Implements a request handler for a list of registered users.

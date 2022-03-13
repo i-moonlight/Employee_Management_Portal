@@ -11,11 +11,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using WebAPI.Entities.Models;
-using WebAPI.UseCases.Common.Configs;
-using WebAPI.UseCases.Common.Dto;
-using WebAPI.UseCases.Common.Dto.Request;
-using WebAPI.UseCases.Common.Response;
-using static WebAPI.UseCases.Common.Response.ResponseCode;
+using WebAPI.Infrastructure.Interfaces.Options;
+using WebAPI.UseCases.Common.Dto.Auth;
+using WebAPI.UseCases.Common.Dto.Response;
+using static WebAPI.UseCases.Common.Dto.Response.ResponseCode;
 using static WebAPI.Utils.Constants.MessageTypes;
 using static Microsoft.IdentityModel.Tokens.SecurityAlgorithms;
 
@@ -36,14 +35,14 @@ namespace WebAPI.UseCases.Requests.Authentication.Commands
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        private readonly JwtConfig _jwtConfig;
+        private readonly JwtOptions _jwtOptions;
 
         public SignInCommandHandler(UserManager<User> userManager, SignInManager<User> signInManager,
-            IOptions<JwtConfig> jwtConfig)
+            IOptions<JwtOptions> jwtOptions)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _jwtConfig = jwtConfig.Value;
+            _jwtOptions = jwtOptions.Value;
         }
 
         /// <summary>
@@ -73,7 +72,7 @@ namespace WebAPI.UseCases.Requests.Authentication.Commands
                     return await Task.FromResult(new ResponseModel(Ok, TokenGenerated, user));
                 }
 
-                return await Task.FromResult(new ResponseModel(Error, InvalidEmailOrPassword, null));
+                return await Task.FromResult(new ResponseModel(Error, InvalidEmailOrPassword, ""));
             }
             catch (Exception ex)
             {
@@ -107,14 +106,14 @@ namespace WebAPI.UseCases.Requests.Authentication.Commands
             }
 
             var jwtTokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_jwtConfig.Secret);
+            var key = Encoding.ASCII.GetBytes(_jwtOptions.Secret);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.UtcNow.AddHours(12),
-                Audience = _jwtConfig.Audience,
-                Issuer = _jwtConfig.Issuer,
+                Audience = _jwtOptions.Audience,
+                Issuer = _jwtOptions.Issuer,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), HmacSha256)
             };
 

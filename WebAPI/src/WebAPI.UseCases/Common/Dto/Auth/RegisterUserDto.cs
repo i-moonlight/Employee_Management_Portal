@@ -1,7 +1,7 @@
 ﻿using WebAPI.Entities.Models;
 using WebAPI.UseCases.Common.Mappings;
 
-namespace WebAPI.UseCases.Common.Dto
+namespace WebAPI.UseCases.Common.Dto.Auth
 {
     /// <summary>
     /// Sets a properties of the data transfer object for user entity.

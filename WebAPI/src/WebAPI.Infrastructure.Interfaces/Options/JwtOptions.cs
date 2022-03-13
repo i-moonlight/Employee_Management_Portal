@@ -1,10 +1,10 @@
-﻿using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Options;
 
-namespace WebAPI.UseCases.Common.Configs
+namespace WebAPI.Infrastructure.Interfaces.Options
 {
-    public class JwtConfig : IOptions<JwtConfig>
+    public class JwtOptions : IOptions<JwtOptions>
     {
-        public JwtConfig Value { get; set; }
+        public JwtOptions Value { get; set; }
         public string Secret { get; set; }
         public string Issuer { get; set; }
         public string Audience { get; set; }

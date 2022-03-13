@@ -12,7 +12,6 @@ using WebAPI.Infrastructure.Implementation.Services;
 using WebAPI.Infrastructure.Interfaces.Options;
 using WebAPI.Infrastructure.Interfaces.Services;
 using WebAPI.UseCases;
-using WebAPI.UseCases.Common.Configs;
 
 namespace WebAPI.Authentication
 {
@@ -38,10 +37,10 @@ namespace WebAPI.Authentication
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connection));
 
             #endregion
-            
+
             #region Configurations
 
-            services.Configure<JwtConfig>(Configuration.GetSection("JwtOptions"));
+            services.Configure<JwtOptions>(Configuration.GetSection("JwtOptions"));
             services.Configure<EmailOptions>(Configuration.GetSection("EmailOptions"));
 
             #endregion
