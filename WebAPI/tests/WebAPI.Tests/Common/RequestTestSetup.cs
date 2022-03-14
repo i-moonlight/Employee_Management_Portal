@@ -9,10 +9,10 @@ using WebAPI.UseCases.Common.Mappings;
 
 namespace WebAPI.Tests.Common
 {
-    public class RequestTestSetup
+    public abstract class RequestTestSetup
     {
-        protected DepartmentDto TestDepartmentDto;
-        protected EmployeeDto TestEmployeeDto;
+        protected DepartmentDto FakeDepartmentDto;
+        protected EmployeeDto FakeEmployeeDto;
         protected Mock<ICrudRepository<Department>> MockDepartmentRepo;
         protected Mock<ICrudRepository<Employee>> MockEmployeeRepo;
         protected Mock<IWebHostEnvironment> MockEnvironment;
@@ -24,8 +24,8 @@ namespace WebAPI.Tests.Common
             var mapperConfig = new MapperConfiguration(e => e.AddProfile(new AssemblyMappingProfile()));
             var mapper = mapperConfig.CreateMapper();
 
-            TestDepartmentDto = TestContent.TestDepartmentDto;
-            TestEmployeeDto = TestContent.TestEmployeeDto;
+            FakeDepartmentDto = FakeTestContent.FakeDepartmentDto;
+            FakeEmployeeDto = FakeTestContent.FakeEmployeeDto;
             MockDepartmentRepo = new Mock<ICrudRepository<Department>>();
             MockEmployeeRepo = new Mock<ICrudRepository<Employee>>();
             MockEnvironment = new Mock<IWebHostEnvironment>();

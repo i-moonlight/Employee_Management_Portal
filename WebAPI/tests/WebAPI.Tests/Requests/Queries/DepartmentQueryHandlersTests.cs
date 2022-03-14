@@ -17,14 +17,14 @@ namespace WebAPI.Tests.Requests.Queries
     {
         private GetDepartmentQuery _request;
         private GetDepartmentQueryHandler _handler;
-        private IEnumerable _testDepartmentList;
+        private IEnumerable _fakeDepartmentList;
 
         [SetUp]
         public new void Setup()
         {
             _request = new GetDepartmentQuery();
             _handler = new GetDepartmentQueryHandler(MockDepartmentRepo.Object, Mapper);
-            _testDepartmentList = TestContent.TestDepartmentList;
+            _fakeDepartmentList = FakeTestContent.FakeDepartmentList;
         }
 
         [Test]
@@ -32,7 +32,7 @@ namespace WebAPI.Tests.Requests.Queries
         {
             // Arrange.
             var handler = new GetDepartmentListQueryHandler(MockDepartmentRepo.Object);
-            MockDepartmentRepo.Setup(r => r.Read()).Returns(_testDepartmentList);
+            MockDepartmentRepo.Setup(r => r.Read()).Returns(_fakeDepartmentList);
 
             // Act.
             var result = await handler.Handle(new GetDepartmentListQuery(), None);
@@ -45,9 +45,9 @@ namespace WebAPI.Tests.Requests.Queries
         public async Task GetDepartmentQueryHandler_Handler_Method_Should_Returns_DepartmentDto()
         {
             // Arrange.
-            var testDepartment = _testDepartmentList.Cast<Department>().First();
-            _request.Id = testDepartment.Id;
-            MockDepartmentRepo.Setup(r => r.Read(_request.Id)).Returns(testDepartment);
+            var fakeDepartment = _fakeDepartmentList.Cast<Department>().First();
+            _request.Id = fakeDepartment.Id;
+            MockDepartmentRepo.Setup(r => r.Read(_request.Id)).Returns(fakeDepartment);
 
             // Act.
             var result = await _handler.Handle(_request, None);

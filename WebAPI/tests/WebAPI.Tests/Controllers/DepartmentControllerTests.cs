@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
@@ -7,8 +8,6 @@ using WebAPI.Controllers;
 using WebAPI.Entities.Models;
 using WebAPI.Tests.Common;
 using WebAPI.UseCases.Common.Dto;
-using static System.Net.HttpStatusCode;
-using static WebAPI.Tests.Common.TestContent;
 using static WebAPI.Utils.Constants.MessageTypes;
 
 namespace WebAPI.Tests.Controllers
@@ -23,8 +22,8 @@ namespace WebAPI.Tests.Controllers
         {
             _departmentController = new DepartmentController();
 
-            TestDbContext.Departments.AddRangeAsync(new Department());
-            TestDbContext.SaveChangesAsync();
+            FakeDbContext.Departments.AddRangeAsync(new Department());
+            FakeDbContext.SaveChangesAsync();
         }
 
         [Test]
@@ -44,14 +43,14 @@ namespace WebAPI.Tests.Controllers
             var response = await HttpClient.GetAsync("api/department");
 
             // Assert.
-            Assert.AreEqual(OK, response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
         public void GetDepartmentById_Method_Should_Returns_ActionResult_IEnumerable_Type()
         {
             // Arrange.
-            var departmentId = TestDepartmentDto.Id;
+            var departmentId = FakeDepartmentDto.Id;
 
             // Act.
             var result = _departmentController.GetDepartmentById(departmentId);
@@ -64,20 +63,20 @@ namespace WebAPI.Tests.Controllers
         public async Task GetDepartmentById_Method_Should_Returns_Success_Http_Status_Code()
         {
             // Arrange.
-            var departmentId = TestDbContext.Departments?.FirstOrDefault()?.Id;
+            var departmentId = FakeDbContext.Departments?.FirstOrDefault()?.Id;
 
             // Act.
             var response = await HttpClient.GetAsync($"api/department/{departmentId}");
 
             // Assert.
-            Assert.AreEqual(OK, response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
         public void CreateDepartment_Method_Should_Returns_ActionResult_String_Type()
         {
             // Act.
-            var result = _departmentController.CreateDepartment(TestDepartmentDto);
+            var result = _departmentController.CreateDepartment(FakeDepartmentDto);
 
             // Assert.
             Assert.AreEqual(typeof(Task<ActionResult<string>>), result.GetType());
@@ -87,7 +86,7 @@ namespace WebAPI.Tests.Controllers
         public async Task CreateDepartment_Method_Should_Returns_Success_Http_Status_Code()
         {
             // Arrange.
-            var content = GetRequestContent(TestDepartmentDto);
+            var content = FakeTestContent.GetRequestContent(FakeDepartmentDto);
 
             // Act.
             var response = await HttpClient.PostAsync("api/department", content);
@@ -103,7 +102,7 @@ namespace WebAPI.Tests.Controllers
         {
             // Arrange.
             var departmentDto = new DepartmentDto() {Name = null};
-            var content = GetRequestContent(departmentDto);
+            var content = FakeTestContent.GetRequestContent(departmentDto);
 
             // Act.
             var response = await HttpClient.PostAsync("api/department", content);
@@ -117,7 +116,7 @@ namespace WebAPI.Tests.Controllers
         public void UpdateDepartment_Method_Should_Returns_ActionResult_String_Type()
         {
             // Act.
-            var result = _departmentController.UpdateDepartment(TestDepartmentDto);
+            var result = _departmentController.UpdateDepartment(FakeDepartmentDto);
 
             // Assert.
             Assert.AreEqual(typeof(Task<ActionResult<string>>), result.GetType());
@@ -127,7 +126,7 @@ namespace WebAPI.Tests.Controllers
         public async Task UpdateDepartment_Method_Should_Returns_Success_Http_Status_Code()
         {
             // Arrange.
-            var content = GetRequestContent(TestDepartmentDto);
+            var content = FakeTestContent.GetRequestContent(FakeDepartmentDto);
 
             // Act.
             var response = await HttpClient.PutAsync("api/department", content);
@@ -143,7 +142,7 @@ namespace WebAPI.Tests.Controllers
         {
             // Arrange.
             var departmentDto = new DepartmentDto() {Name = null};
-            var content = GetRequestContent(departmentDto);
+            var content = FakeTestContent.GetRequestContent(departmentDto);
 
             // Act.
             var response = await HttpClient.PutAsync("api/department", content);
@@ -157,7 +156,7 @@ namespace WebAPI.Tests.Controllers
         public void DeleteDepartment_Method_Should_Returns_ActionResult_String_Type()
         {
             // Arrange.
-            var departmentId = TestDepartmentDto.Id;
+            var departmentId = FakeDepartmentDto.Id;
 
             // Act.
             var result = _departmentController.DeleteDepartmentById(departmentId);
@@ -170,7 +169,7 @@ namespace WebAPI.Tests.Controllers
         public async Task DeleteDepartment_Method_Should_Returns_Success_Http_Status_Code()
         {
             // Arrange.
-            var departmentId = TestDbContext.Departments?.FirstOrDefault()?.Id;
+            var departmentId = FakeDbContext.Departments?.FirstOrDefault()?.Id;
 
             // Act.
             var response = await HttpClient.DeleteAsync($"api/department/{departmentId}");

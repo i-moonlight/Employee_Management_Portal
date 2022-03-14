@@ -15,14 +15,14 @@ namespace WebAPI.Tests.Requests.Queries
     public class EmployeeQueryHandlersTests : RequestTestSetup
     {
         private GetEmployeeQuery _request;
-        private Employee _testEmployee;
+        private Employee _fakeEmployee;
 
         [SetUp]
         public new void Setup()
         {
             _request = new GetEmployeeQuery();
-            _testEmployee = TestContent.TestEmployeeList.Cast<Employee>().First();
-            _request.Id = _testEmployee.Id;
+            _fakeEmployee = FakeTestContent.FakeEmployeeList.Cast<Employee>().First();
+            _request.Id = _fakeEmployee.Id;
         }
 
         [Test]
@@ -30,7 +30,7 @@ namespace WebAPI.Tests.Requests.Queries
         {
             // Arrange.
             var handler = new GetEmployeeListQueryHandler(MockEmployeeRepo.Object);
-            var employeeList = TestContent.TestEmployeeList;
+            var employeeList = FakeTestContent.FakeEmployeeList;
 
             MockEmployeeRepo.Setup(r => r.Read()).Returns(employeeList);
 
@@ -46,7 +46,7 @@ namespace WebAPI.Tests.Requests.Queries
         {
             // Arrange.
             var handler = new GetEmployeeQueryHandler(MockEmployeeRepo.Object, Mapper);
-            MockEmployeeRepo.Setup(r => r.Read(_request.Id)).Returns(_testEmployee);
+            MockEmployeeRepo.Setup(r => r.Read(_request.Id)).Returns(_fakeEmployee);
 
             // Act.
             var result = await handler.Handle(_request, None);
@@ -75,12 +75,12 @@ namespace WebAPI.Tests.Requests.Queries
             // Arrange.
             var handler = new GetDepartmentNameListQueryHandler(MockEmployeeRepo.Object);
 
-            var testDepartmentNameList = TestContent.TestDepartmentList
+            var fakeDepartmentNameList = FakeTestContent.FakeDepartmentList
                 .Cast<Department>()
                 .OrderBy(d => d.Name).Select(d => d.Name)
                 .ToList();
 
-            MockEmployeeRepo.Setup(r => r.ReadAll()).Returns(testDepartmentNameList);
+            MockEmployeeRepo.Setup(r => r.ReadAll()).Returns(fakeDepartmentNameList);
 
             // Act.
             var result = await handler.Handle(new GetDepartmentNameListQuery(), None);

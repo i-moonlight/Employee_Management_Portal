@@ -6,16 +6,16 @@ using System.Text;
 using Newtonsoft.Json;
 using WebAPI.Entities.Models;
 using WebAPI.UseCases.Common.Dto;
-using WebAPI.UseCases.Common.Dto.Request;
+using WebAPI.UseCases.Common.Dto.Auth;
 
 namespace WebAPI.Tests.Common
 {
     /// <summary>
-    /// Sets the content for testing.
+    /// Sets the fake content for testing.
     /// </summary>
-    public static class TestContent
+    public static class FakeTestContent
     {
-        public static User TestUser => new()
+        public static User FakeUser => new()
         {
             FullName = "FullName",
             UserName = "UserName",
@@ -23,14 +23,14 @@ namespace WebAPI.Tests.Common
             DateModified = DateTime.Today
         };
 
-        public static LoginDto TestLoginDto => new()
+        public static LoginDto FakeLoginDto => new()
         {
             Username = "UserName",
             Email = "User@test.ru",
             Password = "User123!"
         };
 
-        public static RegisterUserDto TestRegisterUserDto => new()
+        public static RegisterUserDto FakeRegisterUserDto => new()
         {
             FullName = "FullName",
             UserName = "UserName",
@@ -38,7 +38,7 @@ namespace WebAPI.Tests.Common
             Password = "User123!"
         };
 
-        public static EmployeeDto TestEmployeeDto => new()
+        public static EmployeeDto FakeEmployeeDto => new()
         {
             Name = "Name",
             Department = "Department",
@@ -46,7 +46,7 @@ namespace WebAPI.Tests.Common
             PhotoFileName = "PhotoFileName"
         };
 
-        public static IEnumerable TestEmployeeList => new List<Employee>
+        public static IEnumerable FakeEmployeeList => new List<Employee>
         {
             new()
             {
@@ -58,12 +58,12 @@ namespace WebAPI.Tests.Common
             }
         };
 
-        public static DepartmentDto TestDepartmentDto => new()
+        public static DepartmentDto FakeDepartmentDto => new()
         {
             Name = "Name"
         };
 
-        public static IEnumerable TestDepartmentList => new List<Department>
+        public static IEnumerable FakeDepartmentList => new List<Department>
         {
             new()
             {

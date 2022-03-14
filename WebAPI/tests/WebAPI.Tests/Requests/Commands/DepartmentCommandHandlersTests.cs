@@ -2,8 +2,8 @@
 using NUnit.Framework;
 using WebAPI.Tests.Common;
 using WebAPI.UseCases.Requests.Departments.Commands;
-using static System.Threading.CancellationToken;
 using static WebAPI.Utils.Constants.MessageTypes;
+using static System.Threading.CancellationToken;
 
 namespace WebAPI.Tests.Requests.Commands
 {
@@ -15,7 +15,7 @@ namespace WebAPI.Tests.Requests.Commands
         {
             // Arrange.
             var handler = new CreateDepartmentCommandHandler(MockDepartmentRepo.Object, Mapper);
-            var request = new CreateDepartmentCommand() {DepartmentDto = TestDepartmentDto};
+            var request = new CreateDepartmentCommand() { DepartmentDto = FakeDepartmentDto };
 
             // Act.
             var result = await handler.Handle(request, None);
@@ -42,7 +42,7 @@ namespace WebAPI.Tests.Requests.Commands
         {
             // Arrange.
             var handler = new UpdateDepartmentCommandHandler(MockDepartmentRepo.Object, Mapper);
-            var request = new UpdateDepartmentCommand() {DepartmentDto = TestDepartmentDto};
+            var request = new UpdateDepartmentCommand() { DepartmentDto = FakeDepartmentDto };
 
             // Act.
             var result = await handler.Handle(request, None);
@@ -69,8 +69,8 @@ namespace WebAPI.Tests.Requests.Commands
         {
             // Arrange.
             var handler = new DeleteDepartmentCommandHandler(MockDepartmentRepo.Object);
-            var departmentId = TestDepartmentDto.Id;
-            var request = new DeleteDepartmentCommand() {Id = departmentId};
+            var departmentId = FakeDepartmentDto.Id;
+            var request = new DeleteDepartmentCommand() { Id = departmentId };
 
             // Act.
             var result = await handler.Handle(request, None);

@@ -2,8 +2,8 @@
 using NUnit.Framework;
 using WebAPI.Tests.Common;
 using WebAPI.UseCases.Requests.Employees.Commands;
-using static System.Threading.CancellationToken;
 using static WebAPI.Utils.Constants.MessageTypes;
+using static System.Threading.CancellationToken;
 
 namespace WebAPI.Tests.Requests.Commands
 {
@@ -15,7 +15,7 @@ namespace WebAPI.Tests.Requests.Commands
         {
             // Arrange.
             var handler = new CreateEmployeeCommandHandler(MockEmployeeRepo.Object, Mapper);
-            var request = new CreateEmployeeCommand() {EmployeeDto = TestEmployeeDto};
+            var request = new CreateEmployeeCommand() { EmployeeDto = FakeEmployeeDto };
 
             // Act.
             var result = await handler.Handle(request, None);
@@ -68,7 +68,7 @@ namespace WebAPI.Tests.Requests.Commands
         {
             // Arrange.
             var handler = new UpdateEmployeeCommandHandler(MockEmployeeRepo.Object, Mapper);
-            var request = new UpdateEmployeeCommand() {EmployeeDto = TestEmployeeDto};
+            var request = new UpdateEmployeeCommand() { EmployeeDto = FakeEmployeeDto };
 
             // Act.
             var result = await handler.Handle(request, None);
@@ -95,8 +95,8 @@ namespace WebAPI.Tests.Requests.Commands
         {
             // Arrange.
             var handler = new DeleteEmployeeCommandHandler(MockEmployeeRepo.Object);
-            var employeeId = TestEmployeeDto.Id;
-            var request = new DeleteEmployeeCommand() {Id = employeeId};
+            var fakeId = FakeEmployeeDto.Id;
+            var request = new DeleteEmployeeCommand() { Id = fakeId };
 
             // Act.
             var result = await handler.Handle(request, None);

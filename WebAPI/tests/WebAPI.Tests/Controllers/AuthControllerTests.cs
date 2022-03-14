@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
 using WebAPI.Controllers;
 using WebAPI.Tests.Common;
-using WebAPI.UseCases.Common.Dto;
-using WebAPI.UseCases.Common.Response;
+using WebAPI.UseCases.Common.Dto.Auth;
+using WebAPI.UseCases.Common.Dto.Response;
 
 namespace WebAPI.Tests.Controllers
 {
@@ -58,7 +58,7 @@ namespace WebAPI.Tests.Controllers
         public async Task RegisterUser_Method_Should_Returns_Success_Http_Status_Code()
         {
             // Arrange.
-            var content = TestContent.GetRequestContent(TestRegisterUserDto);
+            var content = FakeTestContent.GetRequestContent(FakeRegisterUserDto);
 
             // Act.
             var response = await HttpClient.PostAsync("api/auth/RegisterUser", content);
@@ -71,7 +71,7 @@ namespace WebAPI.Tests.Controllers
         public void SignIn_Method_Should_Returns_ActionResult_ResponseModel_Type()
         {
             // Arrange.
-            var testLoginDto = TestContent.TestLoginDto;
+            var testLoginDto = FakeTestContent.FakeLoginDto;
 
             // Act.
             var result = _authController.SignIn(testLoginDto);
@@ -84,7 +84,7 @@ namespace WebAPI.Tests.Controllers
         public async Task SignIn_Method_Should_Returns_Success_Http_Status_Code()
         {
             // Arrange.
-            var content = TestContent.GetRequestContent(TestLoginDto);
+            var content = FakeTestContent.GetRequestContent(FakeLoginDto);
 
             // Act.
             var response = await HttpClient.PostAsync("api/auth/SignIn", content);

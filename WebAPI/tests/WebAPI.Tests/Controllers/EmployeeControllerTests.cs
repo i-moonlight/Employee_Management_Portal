@@ -8,7 +8,6 @@ using WebAPI.Controllers;
 using WebAPI.Tests.Common;
 using WebAPI.Entities.Models;
 using WebAPI.UseCases.Common.Dto;
-using static WebAPI.Tests.Common.TestContent;
 using static WebAPI.Utils.Constants.MessageTypes;
 
 namespace WebAPI.Tests.Controllers
@@ -17,14 +16,14 @@ namespace WebAPI.Tests.Controllers
     public class EmployeeControllerTests : ControllerTestSetup
     {
         private EmployeeController _departmentController;
-        
+
         [SetUp]
         public new void Setup()
         {
             _departmentController = new EmployeeController();
-            
-            TestDbContext.Employees.AddRangeAsync(new Employee());
-            TestDbContext.SaveChangesAsync();
+
+            FakeDbContext.Employees.AddRangeAsync(new Employee());
+            FakeDbContext.SaveChangesAsync();
         }
 
         [Test]
@@ -44,14 +43,14 @@ namespace WebAPI.Tests.Controllers
             var response = await HttpClient.GetAsync("api/employee");
 
             // Assert.
-            Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
         public void GetEmployeeById_Method_Should_Returns_ActionResult_EmployeeDto_Type()
         {
             // Arrange.
-            var employeeId = TestContent.TestEmployeeDto.Id;
+            var employeeId = FakeTestContent.FakeEmployeeDto.Id;
 
             // Act.
             var result = _departmentController.GetEmployeeById(employeeId);
@@ -64,7 +63,7 @@ namespace WebAPI.Tests.Controllers
         public async Task GetEmployeeById_Method_Should_Returns_Success_Http_Status_Code()
         {
             // Arrange.
-            var employeeId = TestDbContext.Employees?.FirstOrDefault()?.Id;
+            var employeeId = FakeDbContext.Employees?.FirstOrDefault()?.Id;
 
             // Act.
             var response = await HttpClient.GetAsync($"api/employee/{employeeId}");
@@ -97,7 +96,7 @@ namespace WebAPI.Tests.Controllers
         public void CreateEmployee_Method_Should_Returns_ActionResult_String_Type()
         {
             // Act.
-            var result = _departmentController.CreateEmployee(TestEmployeeDto);
+            var result = _departmentController.CreateEmployee(FakeEmployeeDto);
 
             // Assert.
             Assert.AreEqual(typeof(Task<ActionResult<string>>), result.GetType());
@@ -107,7 +106,7 @@ namespace WebAPI.Tests.Controllers
         public async Task CreateEmployee_Method_Should_Returns_Success_Http_Status_Code()
         {
             // Arrange.
-            var content = GetRequestContent(TestEmployeeDto);
+            var content = FakeTestContent.GetRequestContent(FakeEmployeeDto);
 
             // Act.
             var response = await HttpClient.PostAsync("api/employee", content);
@@ -122,8 +121,8 @@ namespace WebAPI.Tests.Controllers
         public async Task CreateEmployee_Method_Should_Returns_Validate_Response()
         {
             // Arrange.
-            var employeeDto = new EmployeeDto() {Name = null};
-            var content = GetRequestContent(employeeDto);
+            var employeeDto = new EmployeeDto() { Name = null };
+            var content = FakeTestContent.GetRequestContent(employeeDto);
 
             // Act.
             var response = await HttpClient.PostAsync("api/employee", content);
@@ -147,7 +146,7 @@ namespace WebAPI.Tests.Controllers
         public async Task UploadEmployeePhoto_Method_Should_Returns_Success_Http_Status_Code()
         {
             // Arrange.
-            var content = GetRequestContent(TestEmployeeDto);
+            var content = FakeTestContent.GetRequestContent(FakeEmployeeDto);
 
             // Act.
             var response = await HttpClient.PostAsync("api/employee/UploadPhoto", content);
@@ -160,7 +159,7 @@ namespace WebAPI.Tests.Controllers
         public void UpdateEmployeePhoto_Method_Should_Returns_ActionResult_String_Type()
         {
             // Arrange.
-            var employeeId = TestEmployeeDto.Id;
+            var employeeId = FakeEmployeeDto.Id;
 
             // Act.
             var result = _departmentController.UpdateEmployeePhoto(employeeId);
@@ -173,7 +172,7 @@ namespace WebAPI.Tests.Controllers
         public async Task UpdateEmployeePhoto_Method_Should_Returns_Success_Http_Status_Code()
         {
             // Arrange.
-            var content = GetRequestContent(TestEmployeeDto);
+            var content = FakeTestContent.GetRequestContent(FakeEmployeeDto);
 
             // Act.
             var response = await HttpClient.PostAsync("api/employee/UpdatePhoto", content);
@@ -186,7 +185,7 @@ namespace WebAPI.Tests.Controllers
         public void UpdateEmployee_Method_Should_Returns_ActionResult_String_Type()
         {
             // Act.
-            var result = _departmentController.UpdateEmployee(TestEmployeeDto);
+            var result = _departmentController.UpdateEmployee(FakeEmployeeDto);
 
             // Assert.
             Assert.AreEqual(typeof(Task<ActionResult<string>>), result.GetType());
@@ -196,7 +195,7 @@ namespace WebAPI.Tests.Controllers
         public async Task UpdateEmployee_Method_Should_Returns_Success_Http_Status_Code()
         {
             // Arrange.
-            var content = GetRequestContent(TestEmployeeDto);
+            var content = FakeTestContent.GetRequestContent(FakeEmployeeDto);
 
             // Act.
             var response = await HttpClient.PutAsync("api/employee", content);
@@ -211,8 +210,8 @@ namespace WebAPI.Tests.Controllers
         public async Task UpdateEmployee_Method_Should_Returns_Validate_Response()
         {
             // Arrange.
-            var employeeDto = new EmployeeDto() {Name = null};
-            var content = GetRequestContent(employeeDto);
+            var employeeDto = new EmployeeDto() { Name = null };
+            var content = FakeTestContent.GetRequestContent(employeeDto);
 
             // Act.
             var response = await HttpClient.PutAsync("api/employee", content);
@@ -226,7 +225,7 @@ namespace WebAPI.Tests.Controllers
         public void DeleteEmployee_Method_Should_Returns_ActionResult_String_Type()
         {
             // Arrange.
-            var employeeId = TestEmployeeDto.Id;
+            var employeeId = FakeEmployeeDto.Id;
 
             // Act.
             var result = _departmentController.DeleteEmployeeById(employeeId);
@@ -239,7 +238,7 @@ namespace WebAPI.Tests.Controllers
         public async Task DeleteEmployee_Method_Should_Returns_Success_Http_Status_Code()
         {
             // Arrange.
-            var employeeId = TestDbContext.Employees?.FirstOrDefault()?.Id;
+            var employeeId = FakeDbContext.Employees?.FirstOrDefault()?.Id;
 
             // Act.
             var response = await HttpClient.DeleteAsync($"api/employee/{employeeId}");

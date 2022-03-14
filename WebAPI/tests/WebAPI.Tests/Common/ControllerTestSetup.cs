@@ -3,31 +3,31 @@ using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using WebAPI.DataAccess.MsSql.Persistence.Context;
 using WebAPI.UseCases.Common.Dto;
-using WebAPI.UseCases.Common.Dto.Request;
+using WebAPI.UseCases.Common.Dto.Auth;
 using WebAPI.Web;
 
 namespace WebAPI.Tests.Common
 {
-    public class ControllerTestSetup
+    public abstract class ControllerTestSetup
     {
         protected TestWebApplicationFactory<Startup> WebApplicationFactory;
-        protected DepartmentDto TestDepartmentDto;
-        protected EmployeeDto TestEmployeeDto;
-        protected LoginDto TestLoginDto;
-        protected RegisterUserDto TestRegisterUserDto;
+        protected DepartmentDto FakeDepartmentDto;
+        protected EmployeeDto FakeEmployeeDto;
+        protected LoginDto FakeLoginDto;
+        protected RegisterUserDto FakeRegisterUserDto;
         protected HttpClient HttpClient;
-        protected AppDbContext TestDbContext;
+        protected AppDbContext FakeDbContext;
 
         [SetUp]
         public void Setup()
         {
             WebApplicationFactory = new TestWebApplicationFactory<Startup>();
-            TestDepartmentDto = TestContent.TestDepartmentDto;
-            TestEmployeeDto = TestContent.TestEmployeeDto;
-            TestLoginDto = TestContent.TestLoginDto;
-            TestRegisterUserDto = TestContent.TestRegisterUserDto;
+            FakeDepartmentDto = FakeTestContent.FakeDepartmentDto;
+            FakeEmployeeDto = FakeTestContent.FakeEmployeeDto;
+            FakeLoginDto = FakeTestContent.FakeLoginDto;
+            FakeRegisterUserDto = FakeTestContent.FakeRegisterUserDto;
             HttpClient = WebApplicationFactory.CreateClient();
-            TestDbContext = WebApplicationFactory.Services.CreateScope().ServiceProvider.GetService<AppDbContext>();
+            FakeDbContext = WebApplicationFactory.Services.CreateScope().ServiceProvider.GetService<AppDbContext>();
         }
     }
 }
