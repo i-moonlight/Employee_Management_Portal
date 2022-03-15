@@ -92,5 +92,32 @@ namespace WebAPI.Tests.Controllers
             // Assert.
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
+
+        [Test]
+        public void ForgotPassword_Method_Should_Returns_ActionResult_ResponseModel_Type()
+        {
+            // Arrange.
+            var fakeDto = FakeTestContent.FakeForgotPasswordDto;
+
+            // Act.
+            var result = _authController.ForgotPassword(fakeDto);
+
+            // Assert.
+            Assert.AreEqual(typeof(Task<ActionResult<ResponseModel>>), result.GetType());
+        }
+
+        [Test]
+        public async Task ForgotPassword_Method_Should_Returns_Success_Http_Status_Code()
+        {
+            // Arrange.
+            var fakeDto = FakeTestContent.FakeForgotPasswordDto;
+            var content = FakeTestContent.GetRequestContent(fakeDto);
+
+            // Act.
+            var response = await HttpClient.PostAsync("api/auth/ForgotPassword", content);
+
+            // Assert.
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        }
     }
 }
