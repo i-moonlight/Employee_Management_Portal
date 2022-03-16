@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Primitives;
 using WebAPI.Entities.Models;
 using WebAPI.Infrastructure.Interfaces.Options;
 using WebAPI.Infrastructure.Interfaces.Services;
@@ -44,7 +45,7 @@ namespace WebAPI.UseCases.Requests.Authentication.Commands
         /// <summary>
         /// Handles a request.
         /// </summary>
-        /// <param name="request">ResetPasswordCommand.</param>
+        /// <param name="request">ForgotPasswordCommand.</param>
         /// <param name="cancellationToken">CancellationToken.</param>
         /// <returns>Returns string about success.</returns>
         public async Task<ResponseModel> Handle(ForgotPasswordCommand request, CancellationToken cancellationToken)
@@ -53,35 +54,46 @@ namespace WebAPI.UseCases.Requests.Authentication.Commands
             {
                 var user = await _userManager.FindByEmailAsync(request.ForgotPasswordDto.Email);
 
-                if (user != null || user!.EmailConfirmed)
+                if (user != null || ((User)null)!.EmailConfirmed)
                 {
                     var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                    var changePasswordUrl = _httpContextAccessor.HttpContext!.Request.Headers["changePasswordUrl"];
+                    
+                    // Generate email link as string.
+                    var emailLink = await GenerateEmailLink(token, changePasswordUrl, user);
+                    await _emailService.SendEmail(request.ForgotPasswordDto.Email, emailLink, _emailOptions.Value);
 
-                    var changePasswordUrl = _httpContextAccessor.HttpContext.Request.Headers["changePasswordUrl"];
-
-                    var uriBuilder = new UriBuilder(changePasswordUrl);
-                    var query = HttpUtility.ParseQueryString(uriBuilder.Query);
-                    query["token"] = token;
-                    query["userid"] = user.Id;
-                    uriBuilder.Query = query.ToString();
-                    var urlString = uriBuilder.ToString();
-
-                    var emailBody = $"Click on link to change password </br>{urlString}";
-
-                    await _emailService.SendEmail(request.ForgotPasswordDto.Email, emailBody, _emailOptions.Value);
-
-                    return await Task.FromResult(new ResponseModel(
-                        ResponseCode.Ok, "The link to collect the password was sent to the mail", null));
+                    return await Task.FromResult(new ResponseModel(ResponseCode.Ok,
+                        "The link to collect the password was sent to the mail", ""));
                 }
 
-                return await Task.FromResult(new ResponseModel(
-                    ResponseCode.Error, "Failed to send a message to this address", null));
+                return await Task.FromResult(new ResponseModel(ResponseCode.Error,
+                    "Failed to send a message to this address", ""));
             }
             catch (Exception ex)
             {
-                return await Task.FromResult(
-                    new ResponseModel(ResponseCode.Error, ex.Message, null));
+                return await Task.FromResult(new ResponseModel(ResponseCode.Error, ex.Message, ""));
             }
+        }
+
+        /// <summary>
+        /// Generate email link.  
+        /// </summary>
+        /// <param name="token">Access token.</param>
+        /// <param name="changePasswordUrl">StringValues.</param>
+        /// <param name="user">User entity.</param>
+        /// <returns>Return token.</returns>
+        public Task<string> GenerateEmailLink(string token, StringValues changePasswordUrl, User user)
+        {
+            var uriBuilder = new UriBuilder(changePasswordUrl);
+            var query = HttpUtility.ParseQueryString(uriBuilder.Query);
+            query["token"] = token;
+            query["userid"] = user.Id;
+            uriBuilder.Query = query.ToString()!;
+
+            var urlString = uriBuilder.ToString();
+            var emailBody = $"Click on link to change password </br>{urlString}";
+            return Task.FromResult(emailBody);
         }
     }
 }

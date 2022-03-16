@@ -66,7 +66,7 @@ namespace WebAPI.UseCases.Requests.Authentication.Commands
                     var user = new ProfileDto(appUser.FullName, appUser.Email, appUser.UserName, appUser.DateCreated,
                         role.ElementAt(0));
 
-                    // Generate JWT.
+                    // Generate JWT as string -> unreachable test mock.
                     user.Token = await GenerateToken(appUser);
 
                     return await Task.FromResult(new ResponseModel(Ok, TokenGenerated, user));

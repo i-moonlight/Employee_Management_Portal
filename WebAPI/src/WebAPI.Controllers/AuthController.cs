@@ -58,7 +58,7 @@ namespace WebAPI.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<ResponseModel>> RegisterUser([FromBody] RegisterUserDto registerUser)
         {
-            var request = new RegisterUserCommand() {RegisterUserDto = registerUser};
+            var request = new RegisterUserCommand() { RegisterUserDto = registerUser };
             return Ok(await Mediator.Send(request));
         }
 
@@ -76,7 +76,7 @@ namespace WebAPI.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<ResponseModel>> SignIn([FromBody] LoginDto login)
         {
-            var request = new SignInCommand() {LoginDto = login};
+            var request = new SignInCommand() { LoginDto = login };
             return Ok(await Mediator.Send(request));
         }
 
