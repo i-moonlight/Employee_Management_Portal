@@ -59,8 +59,10 @@ namespace WebAPI.UseCases.Requests.Authentication.Commands
                     var token = await _userManager.GeneratePasswordResetTokenAsync(user);
                     var changePasswordUrl = _httpContextAccessor.HttpContext!.Request.Headers["changePasswordUrl"];
                     
-                    // Generate email link as string.
+                    // Generate email link as string -> unreachable test mock.
                     var emailLink = await GenerateEmailLink(token, changePasswordUrl, user);
+                    
+                    // Send email service result -> unreachable test mock.
                     await _emailService.SendEmail(request.ForgotPasswordDto.Email, emailLink, _emailOptions.Value);
 
                     return await Task.FromResult(new ResponseModel(ResponseCode.Ok,

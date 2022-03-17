@@ -15,6 +15,11 @@ namespace WebAPI.Tests.Common
     /// </summary>
     public static class FakeTestContent
     {
+        public const string FakeToken =
+            "CfDJ8FOZ5NbcDSBPu6UPW3rjaldtdO75Cnqmu4WiOait+wyFheNgvJKPDw8NnvW6xpvlMD3nhhJKQtfftG+UOvDLKFuRioX" +
+            "JxjdhFdS5EQwCYU7bZySsJoEU4ccl4kEM5+OHm5XHFiLuOdLF78VUrCu3msH+VYffTS+tWosH/cqpj/xOS4RKLBHaVfgSvg" +
+            "xdm6+UQh91aX+H7HENJDMIH2wsMpxnoB50ihWY9HmAga9ytjl+";
+
         public static User FakeUser => new()
         {
             FullName = "FullName",
@@ -37,7 +42,7 @@ namespace WebAPI.Tests.Common
             Email = "User@test.ru",
             Password = "User123!"
         };
-        
+
         public static ForgotPasswordDto FakeForgotPasswordDto => new()
         {
             Email = "User@test.ru"
