@@ -1,15 +1,17 @@
-import Validation from 'src/app/utils/validation';
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../../services/authentication/auth.service';
-import { Account } from '../../../models/account.model'
-import { ToastrService } from 'ngx-toastr';
-import { Response } from '../../../models/response.model';
-import { Router } from '@angular/router';
-import { Login } from '../../../models/login.model';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { Subject } from 'rxjs';
-import { autoSave, autoSaveClear } from '../../../utils/auto-save';
-import { Pattern } from '../../../app.constants';
+import { ToastrService } from 'ngx-toastr';
+
+import { Account } from '@models/account.model'
+import { AuthService } from '@services/authentication/auth.service';
+import { autoSave, autoSaveClear } from '@utils/auto-save';
+import { Login } from '@models/login.model';
+import { Pattern } from '@app/app.constants';
+import { Response } from '@models/response.model';
+import Validation from '@utils/validation';
 
 const Key = new Subject<string>();
 

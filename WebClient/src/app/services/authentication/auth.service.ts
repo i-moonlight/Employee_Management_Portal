@@ -1,9 +1,10 @@
 import { Observable } from 'rxjs';
 
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { Account } from '@models/account.model';
+import { Dto } from '@models/dto.model';
 import { Login } from '@models/login.model';
 import { Response } from '@models/response.model';
 
@@ -28,10 +29,13 @@ export class AuthService {
   /**
    * Method of user forgot registration password.
    *
-   * @return An `Observable` of the response, with the response body as a result execution RememberPassword method.
+   * @return An `Observable` of the response, with the response body as a result execution ForgotPassword api method.
    */
-  public forgotPassword(email: Account): Observable<Response> {
-    return this.http.post<Response>(this.AUTH_URL + 'ForgotPassword', email);
+  public sendForgotPasswordEmail(body: Dto): Observable<Response> {
+    const headers = new HttpHeaders({
+      'ChangePasswordUrl': 'url'
+    });
+    return this.http.post<Response>(this.AUTH_URL + 'ForgotPassword', body, {headers: headers});
   }
 
   // public getUserList() {
