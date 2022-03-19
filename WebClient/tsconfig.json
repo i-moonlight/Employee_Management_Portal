@@ -6,6 +6,7 @@
     "paths": {
       "@app/*": ["src/app/*"],
       "@auth/*": ["src/app/components/authentication/*"],
+      "@components/*": ["src/app/components/*"],
       "@guards/*": ["src/app/guards/*"],
       "@models/*": ["src/app/models/*"],
       "@services/*": ["src/app/services/*"],
