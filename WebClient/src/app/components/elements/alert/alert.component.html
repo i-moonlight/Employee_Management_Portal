@@ -1,0 +1,32 @@
+﻿<!--<div class="{{cssClass(alert)}}" *ngFor="let alert of alerts">-->
+<!--  <span class="fas fa-exclamation-circle"></span>-->
+<!--  <span class="msg">Warning:</span>-->
+<!--  <div class="close-btn">-->
+<!--    <span class="fas fa-times"></span>-->
+<!--  </div>-->
+<!--  <a class="close" (click)="removeAlert(alert)">&times;</a>-->
+<!--  <span [innerHTML]="alert.message"></span>-->
+<!--</div>-->
+
+<div class="container">
+  <div class="alert__wrapper">
+    <div class="alert alert-success" *ngIf="successMessage | async as successMessage"
+         [class.show]="active">
+      {{ successMessage }}
+      <span class="fas fa-exclamation-circle"></span>
+      <div class="close-btn">
+        <span class="fas fa-times"></span>
+      </div>
+    </div>
+
+    <div class="alert alert-danger" *ngIf="errorMessage | async as errorMessage"
+         [class.show]="active">
+      {{ errorMessage }}
+      <span class="fas fa-exclamation-circle"></span>
+      <div class="close-btn">
+        <span class="fas fa-times"></span>
+      </div>
+    </div>
+  </div>
+</div>
+

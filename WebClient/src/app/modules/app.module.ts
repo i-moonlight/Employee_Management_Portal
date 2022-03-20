@@ -6,6 +6,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NgProgressModule } from '@ngx-progressbar/core';
 import { ToastrModule } from 'ngx-toastr';
+import { AlertModule } from '@app/components/elements/alert/alert.module';
 import { AppComponent } from '../app.comp';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthComponent } from '@auth/auth.component';
@@ -43,6 +44,7 @@ import { SharedService } from '@services/shared/shared.service';
     RegisterComponent,
   ],
   imports: [
+    AlertModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     BrowserModule,

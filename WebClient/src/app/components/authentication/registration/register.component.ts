@@ -72,7 +72,7 @@ export class RegisterComponent implements OnInit {
         this.authenticationUser(account);
       } else {
         this.toastr.error('Registration Failed', null, {timeOut: 8000});
-        console.warn(res.ResponseMessage);
+        console.warn(res.Message);
       }
     });
     autoSaveClear(Key);
