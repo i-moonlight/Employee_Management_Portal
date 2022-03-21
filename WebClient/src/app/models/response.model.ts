@@ -1,7 +1,7 @@
 export class Response {
   public ResponseCode: ResponseCode = ResponseCode.NotSet;
-  public IsValid: boolean;
-  public Message: string;
+  public IsValid!: boolean; // Flag
+  public Message!: string;
   public DateSet: any
 }
 
