@@ -34,33 +34,31 @@ export class ForgotPasswordComponent implements OnInit {
     return this.emailForm.controls['email'];
   }
 
-  public forgotPassword(emailFormValue): void {
+  public forgotPassword(form: FormGroup): void {
     this.progressBar.startLoading();
 
     const dto: Dto = {
-      Email: emailFormValue.email,
-      ResetPasswordUrl: "http://localhost:4200/auth/forgot-password"
+      Email: form.value.email,
+      ResetPasswordUrl: "http://localhost:4200/auth/change-password"
     }
 
-    this.authService.sendForgotPasswordEmail(dto).subscribe(
-      (res) => {
-        if (res.IsValid == true) {
-          this.progressBar.setSuccess();
-          this.progressBar.completeLoading();
-          this.notificationService.setSuccessMessage(res.Message);
-          console.warn(res);
-        } else {
-          this.progressBar.setError();
-          this.progressBar.completeLoading();
-          this.notificationService.setErrorMessage(res.Message);
-          console.error(res);
-        }
-      },
-      (err: HttpErrorResponse) => {
-        this.progressBar.setError();
+    this.authService.sendForgotPasswordEmail(dto).subscribe((res) => {
+      if (res.IsValid) {
+        this.progressBar.setSuccess();
+        this.notificationService.setSuccessMessage(res.Message);
         this.progressBar.completeLoading();
-        this.notificationService.setErrorMessage('Server connection failed');
-        console.error(err);
-      });
+        console.warn(res);
+      } else {
+        this.progressBar.setError();
+        this.notificationService.setErrorMessage(res.Message);
+        this.progressBar.completeLoading();
+        console.error(res);
+      }
+    }, (err: HttpErrorResponse) => {
+      this.progressBar.setError();
+      this.notificationService.setErrorMessage('Server connection failed');
+      this.progressBar.completeLoading();
+      console.error(err);
+    });
   }
 }
