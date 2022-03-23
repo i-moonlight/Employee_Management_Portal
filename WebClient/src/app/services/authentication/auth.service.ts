@@ -36,6 +36,15 @@ export class AuthService {
     return this.http.post<Response>(this.AUTH_URL + 'ForgotPassword', body, {headers: headers});
   }
 
+  /**
+   * Method of user change registration password.
+   *
+   * @return An `Observable` of the response, with a result execution ChangePassword api method.
+   */
+  public changePassword(body: Dto): Observable<Response> {
+    return this.http.post<Response>(this.AUTH_URL + 'ChangePassword', body);
+  }
+
   // public getUserList() {
   //   let userInfo = JSON.parse(localStorage.getItem(Constants.USER_KEY));
   //   const headers = new HttpHeaders({

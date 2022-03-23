@@ -13,6 +13,7 @@ import { AuthComponent } from '@auth/auth.component';
 import { AuthGuard } from '@guards/auth.guard';
 import { AuthInterceptor } from '@guards/auth.interceptor';
 import { AuthService } from '@services/authentication/auth.service';
+import { ChangePasswordComponent } from '@auth/change-password/change-password.component';
 import { DepartmentComponent } from '@components/department/dep.comp';
 import { DepartmentListComponent } from '@components/department/dep-list/dep-list.comp';
 import { DepartmentModalComponent} from '@components/department/dep-modal/dep-modal.comp';
@@ -31,6 +32,7 @@ import { SharedService } from '@services/shared/shared.service';
   declarations: [
     AppComponent,
     AuthComponent,
+    ChangePasswordComponent,
     DepartmentComponent,
     DepartmentListComponent,
     DepartmentModalComponent,

@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
 import { AuthComponent } from '@auth/auth.component';
 import { AuthGuard } from '@guards/auth.guard';
-import { DepartmentComponent } from '../components/department/dep.comp';
-import { EmployeeComponent } from '../components/employee/emp.comp';
+import { ChangePasswordComponent } from '@auth/change-password/change-password.component';
+import { DepartmentComponent } from '@components/department/dep.comp';
+import { EmployeeComponent } from '@components/employee/emp.comp';
 import { ForgotPasswordComponent } from '@auth/forgot-password/forgot-password.component';
 import { LoginComponent } from '@auth/login/login.component';
 import { RegisterComponent } from '@auth/registration/register.component';
@@ -16,7 +16,8 @@ const routes: Routes = [
   {path: 'auth', component: AuthComponent},
   {path: 'auth/login', component: AuthComponent, children: [{path: '', component: LoginComponent}]},
   {path: 'auth/registration', component: AuthComponent, children: [{path: '', component: RegisterComponent}]},
-  {path: 'auth/forgot-password', component: ForgotPasswordComponent}
+  {path: 'auth/forgot-password', component: ForgotPasswordComponent},
+  {path: 'auth/change-password', component: ChangePasswordComponent},
 ];
 
 @NgModule({

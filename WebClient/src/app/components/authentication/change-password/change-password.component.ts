@@ -1,47 +1,58 @@
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '@services/authentication/auth.service';
 import { Dto } from '@models/dto.model';
+import { HttpErrorResponse } from '@angular/common/http';
 import { NotificationService } from '@services/notification.service';
 import { Pattern } from '@app/app.constants';
 import { ProgressBarService } from '@services/progress-bar/progress-bar.service';
 
 @Component({
-  selector: 'app-forgot-password',
-  templateUrl: './forgot-password.component.html'
+  selector: 'app-change-password',
+  templateUrl: './change-password.component.html',
+  styleUrls: ['./change-password.component.scss']
 })
-export class ForgotPasswordComponent implements OnInit {
-  public emailForm!: FormGroup;
+export class ChangePasswordComponent implements OnInit {
+  public passwordForm!: FormGroup;
 
   constructor(
     private authService: AuthService,
     private progressBar: ProgressBarService,
-    private notificationService: NotificationService) {}
+    private notificationService: NotificationService) {
+  }
 
   ngOnInit(): void {
-    this.emailForm = new FormGroup({
-      email: new FormControl('', [
-        Validators.email,
+    this.passwordForm = new FormGroup({
+      password: new FormControl('', [
         Validators.required,
-        Validators.pattern(Pattern.EMAIL_PATTERN)
+        Validators.pattern(Pattern.PASSWORD_PATTERN)
       ]),
+      confirmPassword: new FormControl('', [
+        Validators.required
+      ])
     })
   }
 
-  public get email(): AbstractControl {
-    return this.emailForm.controls['email'];
+  public get password(): AbstractControl {
+    return this.passwordForm.controls['password'];
   }
 
-  public forgotPassword(form: FormGroup): void {
+  public get confirmPassword(): AbstractControl {
+    return this.passwordForm.controls['confirmPassword'];
+  }
+
+  onCancel(): void {
+    if (this.passwordForm != null) this.passwordForm.reset();
+  }
+
+  changePassword(form: FormGroup): void {
     this.progressBar.startLoading();
 
     const dto: Dto = {
-      Email: form.value.email,
-      ResetPasswordUrl: "http://localhost:4200/auth/change-password"
+      Email: form.value.email
     }
 
-    this.authService.sendForgotPasswordEmail(dto).subscribe((res) => {
+    this.authService.changePassword(dto).subscribe((res) => {
       if (res.IsValid) {
         this.progressBar.setSuccess();
         this.notificationService.setSuccessMessage(res.Message);
