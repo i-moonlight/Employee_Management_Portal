@@ -1,7 +1,7 @@
 import { Category } from './category.interface';
 import { Review } from './review.interface';
 
-export interface IProduct {
+export interface Product {
 	id: string;
 	name: string;
 	slug: string
