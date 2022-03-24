@@ -4,8 +4,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+
+import { CookieService } from 'ngx-cookie-service';
 import { NgProgressModule } from '@ngx-progressbar/core';
 import { ToastrModule } from 'ngx-toastr';
+
 import { AlertModule } from '@app/components/elements/alert/alert.module';
 import { AppComponent } from '../app.comp';
 import { AppRoutingModule } from './app-routing.module';
@@ -60,6 +63,7 @@ import { SharedService } from '@services/shared/shared.service';
   providers: [
     AuthGuard,
     AuthService,
+    CookieService,
     SharedService,
     ProgressBarService,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},

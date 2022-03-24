@@ -70,12 +70,19 @@ export class LoginComponent implements OnInit {
       Password: password
     }
 
+    // Passing data to a service
     this.authService.getLoginToken(login).subscribe((res: Response) => {
       if (res.DateSet != null) {
         console.warn(res.DateSet.Token);
         this.toastr.success('Login Successful', null, {timeOut: 8000});
         localStorage.setItem('token', res.DateSet.Token);
-        this.router.navigate(['/employee']).then(() => window.location.reload());
+
+        // Redirect to employee URL
+        setTimeout(() => {
+          this.router.navigate(['/employee'], {skipLocationChange: true}).then(() =>
+            window.location.reload());
+          }, 2000)
+
       } else {
         this.toastr.error('Login Failed');
       }
