@@ -1,36 +1,36 @@
 import { IProduct, TypePaginationProducts } from '@/models/product.interface'
 import { instance } from '@/api/api.interceptor'
-import { PRODUCTS, typeProductData, TypeProductDataFilters } from './product.types'
+import { PRODUCTS, typeProductData } from './product.types'
 
 export const ProductService = {
 
-	async getAllProducts(queryData = {} as TypeProductDataFilters) {
+	async getAllProducts(queryData?: { perPage: number; page: number }) {
 		const { data } = await instance<TypePaginationProducts>({
 			url: PRODUCTS,
 			method: 'GET',
-			params: queryData,
-		})
+			params: queryData
+		});
 		return data
 	},
 
 	async getSimilarProduct(id: string) {
 		return instance<IProduct[]>({
 			url: `${PRODUCTS}/similar/${id}`,
-			method: 'GET',
+			method: 'GET'
 		})
 	},
 
 	async getProductById(id: string) {
 		return instance<IProduct>({
 			url: `${PRODUCTS}/${id}`,
-			method: 'GET',
+			method: 'GET'
 		})
 	},
 
 	async getProductBySlug(slug: string) {
 		const { data } = await instance<IProduct>({
 			url: `${PRODUCTS}/by-slug/${slug}`,
-			method: 'GET',
+			method: 'GET'
 		})
 		return data
 	},
@@ -38,14 +38,14 @@ export const ProductService = {
 	async getProductByCategory(categorySlug: string) {
 		return instance<IProduct[]>({
 			url: `${PRODUCTS}/by-category/${categorySlug}`,
-			method: 'GET',
+			method: 'GET'
 		})
 	},
 
 	async createProduct() {
 		return instance<IProduct>({
 			url: PRODUCTS,
-			method: 'POST',
+			method: 'POST'
 		})
 	},
 
@@ -53,14 +53,14 @@ export const ProductService = {
 		return instance<IProduct>({
 			url: `${PRODUCTS}/${id}`,
 			method: 'PUT',
-			data,
+			data
 		})
 	},
 
 	async deleteProduct(id: string) {
 		return instance<IProduct>({
 			url: `${PRODUCTS}/${id}`,
-			method: 'DELETE',
+			method: 'DELETE'
 		})
-	},
+	}
 }

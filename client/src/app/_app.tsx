@@ -1,11 +1,11 @@
 import type { AppProps } from 'next/app';
 import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/es/integration/';
-import { QueryClient } from '@tanstack/query-core';
-import { QueryClientProvider } from '@tanstack/react-query/src/QueryClientProvider';
+import { PersistGate } from 'redux-persist/integration/react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import AuthProvider from '@/providers/auth/AuthProvider';
-import { TypeComponentAuthFields } from '@/shared/types/auth.interface';
+import { TypeComponentAuthFields } from '@/providers/auth/auth-page.types';
 import { persistor, store } from '@/store/store';
+import '../styles/globals.scss';
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -27,6 +27,6 @@ const App = ({ Component, pageProps }: AppProps & TypeComponentAuthFields) => {
 			</Provider>
 		</QueryClientProvider>
 	);
-};
+}
 
 export default App;
