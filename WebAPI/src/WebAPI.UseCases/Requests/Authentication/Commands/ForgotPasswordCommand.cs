@@ -5,6 +5,7 @@ using System.Web;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Primitives;
 using WebAPI.Entities.Models;
@@ -20,24 +21,24 @@ namespace WebAPI.UseCases.Requests.Authentication.Commands
     /// </summary>
     public class ForgotPasswordCommand : IRequest<ResponseModel>
     {
-        public ForgotPasswordDto ForgotPasswordDto { get; set; }
+        public AccountDto AccountDto { get; set; }
     }
 
     /// <summary>
     /// Implements a handler for reset forgot password.
     /// </summary>
-    public class ForgotPasswordCommandHandler : IRequestHandler<ForgotPasswordCommand, ResponseModel>
+    public class ForgotPasswordCommandHandler : Controller, IRequestHandler<ForgotPasswordCommand, ResponseModel>
     {
         private readonly UserManager<User> _userManager;
         private readonly IEmailService _emailService;
-        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IOptions<EmailOptions> _emailOptions;
+        private readonly IHttpContextAccessor _contextAccessor;
 
         public ForgotPasswordCommandHandler(UserManager<User> userManager, IEmailService emailService,
-            IHttpContextAccessor httpContextAccessor, IOptions<EmailOptions> emailOptions)
+            IHttpContextAccessor contextAccessor, IOptions<EmailOptions> emailOptions)
         {
             _userManager = userManager;
-            _httpContextAccessor = httpContextAccessor;
+            _contextAccessor = contextAccessor;
             _emailService = emailService;
             _emailOptions = emailOptions;
         }
@@ -52,29 +53,35 @@ namespace WebAPI.UseCases.Requests.Authentication.Commands
         {
             try
             {
-                var user = await _userManager.FindByEmailAsync(request.ForgotPasswordDto.Email);
+                var currentUser = await _userManager.FindByEmailAsync(request.AccountDto.Email);
+                // _contextAccessor.HttpContext.Session.Set(SessionExtensions.UserKey, currentUser);
+                //var cookies = _httpService.CheckCookies();
+                // if (cookies != null)
+                // {
+                //     Response.Cookies.Append("User", currentUser);
+                // }
 
-                if (user != null || ((User)null)!.EmailConfirmed)
+                if (currentUser != null || ((User)null)!.EmailConfirmed)
                 {
-                    var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-                    var changePasswordUrl = _httpContextAccessor.HttpContext!.Request.Headers["changePasswordUrl"];
-                    
-                    // Generate email link as string -> unreachable test mock.
-                    var emailLink = await GenerateEmailLink(token, changePasswordUrl, user);
-                    
-                    // Send email service result -> unreachable test mock.
-                    await _emailService.SendEmail(request.ForgotPasswordDto.Email, emailLink, _emailOptions.Value);
+                    var token = await _userManager.GeneratePasswordResetTokenAsync(currentUser);
+                    var header = _contextAccessor.HttpContext!.Request.Headers["ChangePasswordUrl"];
 
-                    return await Task.FromResult(new ResponseModel(ResponseCode.Ok,
+                    // Generate email link as string -> unreachable test mock.
+                    var emailLink = await GenerateEmailLink(request, token, header, currentUser);
+
+                    // Send email service result -> unreachable test mock.
+                    await _emailService.SendEmail(request.AccountDto.Email, emailLink, _emailOptions.Value);
+
+                    return await Task.FromResult(new ResponseModel(ResponseCode.Ok, true,
                         "The link to collect the password was sent to the mail", ""));
                 }
 
-                return await Task.FromResult(new ResponseModel(ResponseCode.Error,
+                return await Task.FromResult(new ResponseModel(ResponseCode.Error, false,
                     "Failed to send a message to this address", ""));
             }
             catch (Exception ex)
             {
-                return await Task.FromResult(new ResponseModel(ResponseCode.Error, ex.Message, ""));
+                return await Task.FromResult(new ResponseModel(ResponseCode.Error, false, ex.Message, ""));
             }
         }
 
@@ -85,16 +92,17 @@ namespace WebAPI.UseCases.Requests.Authentication.Commands
         /// <param name="changePasswordUrl">StringValues.</param>
         /// <param name="user">User entity.</param>
         /// <returns>Return token.</returns>
-        public Task<string> GenerateEmailLink(string token, StringValues changePasswordUrl, User user)
+        public Task<string> GenerateEmailLink(ForgotPasswordCommand request, string token, StringValues header,
+            User user)
         {
-            var uriBuilder = new UriBuilder(changePasswordUrl);
+            var uriBuilder = new UriBuilder(header);
             var query = HttpUtility.ParseQueryString(uriBuilder.Query);
             query["token"] = token;
             query["userid"] = user.Id;
-            uriBuilder.Query = query.ToString()!;
+            uriBuilder.Query = request.AccountDto.ResetPasswordUri!;
 
-            var urlString = uriBuilder.ToString();
-            var emailBody = $"Click on link to change password </br>{urlString}";
+            var recoveryLink = uriBuilder.ToString();
+            var emailBody = $"Click on link to change password {recoveryLink}";
             return Task.FromResult(emailBody);
         }
     }

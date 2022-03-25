@@ -1,5 +1,9 @@
+using System;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -31,6 +35,35 @@ namespace WebAPI.Authentication
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
+            #region Enable Session
+            services
+                .AddSession(options =>
+                {
+                    options.Cookie.Domain = "localhost";
+                    options.Cookie.Name = Configuration["SessionOptions:Cookie"];
+                    options.IdleTimeout = TimeSpan.FromMinutes(10);
+                    // options.Cookie.SecurePolicy = CookieSecurePolicy.None;
+                    options.Cookie.SameSite = SameSiteMode.Strict;
+                })
+                .Configure<CookiePolicyOptions>(options =>
+                {
+                    options.MinimumSameSitePolicy = SameSiteMode.Strict;
+                    options.HttpOnly = HttpOnlyPolicy.Always;
+                    options.Secure = CookieSecurePolicy.Always; // Https
+                })
+                .AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                })
+                .AddCookie(options =>
+                {
+                    options.LoginPath = "/auth/forgot-password";
+                    //options.LogoutPath = "/auth/logout";
+                });
+            #endregion
+
             #region DataBase Connection
 
             var connection = Configuration["Connection:DefaultConnection"];
@@ -46,10 +79,12 @@ namespace WebAPI.Authentication
             #endregion
 
             #region Dependency Injection
-
-            services.AddScoped<IEmailService, EmailService>();
-            services.AddUseCases();
-
+            services
+                .AddHttpContextAccessor()
+                .AddSingleton<IHttpContextAccessor, HttpContextAccessor>()
+                .AddSingleton<IHttpService, HttpService>()
+                .AddScoped<IEmailService, EmailService>()
+                .AddUseCases();
             #endregion
 
             #region JSON Serializer
@@ -86,15 +121,14 @@ namespace WebAPI.Authentication
             #endregion
 
             #region CORS
-
             services.AddCors(options =>
             {
-                options.AddDefaultPolicy(builder =>
+                options.AddPolicy("ApiCorsPolicy", builder =>
                 {
-                    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                    builder.AllowCredentials().AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()
+                        .WithOrigins("http://localhost:4200", "https://localhost:5001;http://localhost:5000");
                 });
             });
-
             #endregion
         }
 
@@ -110,11 +144,15 @@ namespace WebAPI.Authentication
 
             app.UseRouting();
 
-            app.UseCors();
+            app.UseCors("ApiCorsPolicy");
 
             app.UseAuthentication();
 
             app.UseAuthorization();
+
+            app.UseSession();
+
+            app.UseCookiePolicy();
 
             app.UseEndpoints(endpoints => endpoints.MapControllers());
         }

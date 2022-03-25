@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.UseCases.Common.Dto.Auth;
 using WebAPI.UseCases.Common.Dto.Response;
@@ -91,9 +92,22 @@ namespace WebAPI.Controllers
         /// <returns>Response model.</returns>
         [AllowAnonymous]
         [HttpPost("ForgotPassword")]
-        public async Task<ActionResult<ResponseModel>> ForgotPassword([FromBody] ForgotPasswordDto dto)
+        public async Task<ActionResult<ResponseModel>> ForgotPassword([FromBody] AccountDto dto)
         {
-            var request = new ForgotPasswordCommand() { ForgotPasswordDto = dto };
+            #region Cookies test
+            if (HttpContext.Request.Cookies.ContainsKey("Cookie"))
+            {
+                var name = HttpContext.Request.Cookies["Cookie"];
+                await HttpContext.Response.WriteAsync($"Hello {name}!");
+            }
+            else
+            {
+                HttpContext.Response.Cookies.Append("Cookie", "Test");
+                //await HttpContext.Response.WriteAsync("Hello World!");
+            }
+            #endregion
+            
+            var request = new ForgotPasswordCommand() { AccountDto = dto };
             return Ok(await Mediator.Send(request));
         }
     }

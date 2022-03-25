@@ -9,8 +9,7 @@ namespace WebAPI.UseCases.Common.Dto.Auth
     {
         [Required]
         public string Username { get; set; }
-
-        // [Required]
+        
         [EmailAddress]
         public string Email { get; set; }
 

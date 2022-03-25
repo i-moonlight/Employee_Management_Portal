@@ -19,6 +19,14 @@ namespace WebAPI.UseCases.Common.Dto.Response
             Message = responseMessage;
             DataSet = dataSet;
         }
+        
+        public ResponseModel(ResponseCode responseCode, bool isValid, string responseMessage, object dataSet)
+        {
+            Code = responseCode;
+            IsValid = isValid;
+            Message = responseMessage;
+            DataSet = dataSet;
+        }
     }
 
     public enum ResponseCode
