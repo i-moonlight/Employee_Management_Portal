@@ -97,7 +97,7 @@ namespace WebAPI.Tests.Controllers
         public void ForgotPassword_Method_Should_Returns_ActionResult_ResponseModel_Type()
         {
             // Arrange.
-            var fakeDto = FakeTestContent.FakeForgotPasswordDto;
+            var fakeDto = FakeTestContent.FakeAccountDto;
 
             // Act.
             var result = _authController.ForgotPassword(fakeDto);
@@ -110,7 +110,7 @@ namespace WebAPI.Tests.Controllers
         public async Task ForgotPassword_Method_Should_Returns_Success_Http_Status_Code()
         {
             // Arrange.
-            var fakeDto = FakeTestContent.FakeForgotPasswordDto;
+            var fakeDto = FakeTestContent.FakeAccountDto;
             var content = FakeTestContent.GetRequestContent(fakeDto);
 
             // Act.

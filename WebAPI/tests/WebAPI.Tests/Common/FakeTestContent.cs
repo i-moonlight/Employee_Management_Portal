@@ -43,7 +43,7 @@ namespace WebAPI.Tests.Common
             Password = "User123!"
         };
 
-        public static ForgotPasswordDto FakeForgotPasswordDto => new()
+        public static AccountDto FakeAccountDto => new()
         {
             Email = "User@test.ru"
         };

@@ -129,8 +129,8 @@ namespace WebAPI.Tests.Requests.Commands
         public async Task ForgotPasswordCommandHandler_Handle_Method_Should_Returns_Invalid_Result()
         {
             // Arrange.
-            var fakeDto = FakeTestContent.FakeForgotPasswordDto;
-            var request = new ForgotPasswordCommand() { ForgotPasswordDto = fakeDto };
+            var fakeDto = FakeTestContent.FakeAccountDto;
+            var request = new ForgotPasswordCommand() { AccountDto = fakeDto };
             var handler = new ForgotPasswordCommandHandler(_mockUserManager.Object, _mockIEmailService.Object,
                 _mockIHttpContextAccessor.Object, _mockEmailOptions.Object);
 
@@ -146,7 +146,7 @@ namespace WebAPI.Tests.Requests.Commands
             _mockIHttpContextAccessor.Setup(x => x.HttpContext).Returns(context);
 
             // Act.
-            var result = await handler.Handle(request, CancellationToken.None);
+            var result = await handler.Handle(request, None);
 
             // Assert.
             Assert.AreEqual("Value cannot be null. (Parameter 'uriString')", result.Message);

@@ -101,7 +101,7 @@ namespace WebAPI.Tests.Controllers
         public async Task CreateDepartment_Method_Should_Returns_Validation_Response()
         {
             // Arrange.
-            var departmentDto = new DepartmentDto() {Name = null};
+            var departmentDto = new DepartmentDto() { Name = null };
             var content = FakeTestContent.GetRequestContent(departmentDto);
 
             // Act.
@@ -141,7 +141,7 @@ namespace WebAPI.Tests.Controllers
         public async Task UpdateDepartment_Method_Should_Returns_Validation_Response()
         {
             // Arrange.
-            var departmentDto = new DepartmentDto() {Name = null};
+            var departmentDto = new DepartmentDto() { Name = null };
             var content = FakeTestContent.GetRequestContent(departmentDto);
 
             // Act.
