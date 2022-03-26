@@ -103,11 +103,27 @@ namespace WebAPI.Controllers
             else
             {
                 HttpContext.Response.Cookies.Append("Cookie", "Test");
-                //await HttpContext.Response.WriteAsync("Hello World!");
             }
             #endregion
             
             var request = new ForgotPasswordCommand() { AccountDto = dto };
+            return Ok(await Mediator.Send(request));
+        }
+
+        /// <summary>
+        /// Change user password.  
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// POST -> /auth/ChangePassword.
+        /// </remarks>
+        /// <param name="dto">Data from app client.</param>
+        /// <returns>Response model.</returns>
+        [AllowAnonymous]
+        [HttpPost("ChangePassword")]
+        public async Task<ActionResult<ResponseModel>> ChangePassword([FromBody] AccountDto dto)
+        {
+            var request = new ChangePasswordCommand() { AccountDto = dto };
             return Ok(await Mediator.Send(request));
         }
     }
