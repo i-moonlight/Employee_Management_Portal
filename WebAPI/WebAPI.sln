@@ -14,7 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hosts", "hosts", "{2E3BA21B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{AEF342B1-CBA4-47F6-8118-F43D00CAB2DA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI.Authentication", "src\hosts\WebAPI.Authentication\WebAPI.Authentication.csproj", "{FCC5864E-4247-40F6-9528-A17099AE3E67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI.Service.Authentication", "src\hosts\WebAPI.Service.Authentication\WebAPI.Service.Authentication.csproj", "{FCC5864E-4247-40F6-9528-A17099AE3E67}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI.Web", "src\hosts\WebAPI.Web\WebAPI.Web.csproj", "{DDE1AFC9-FFAA-40E6-A232-DABF128B014D}"
 EndProject
@@ -32,7 +32,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI.Controllers", "src\W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI.Utils", "src\WebAPI.Utils\WebAPI.Utils.csproj", "{95FD976A-6E86-4DF4-B65D-8B124567B4A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI.Infrastructure.Implementation", "src\WebAPI.Infrastructure.Implementation\WebAPI.Infrastructure.Implementation.csproj", "{A6F48590-AE7B-48D3-A835-BB39BBEB02E3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI.Infrastructure.Implementations", "src\WebAPI.Infrastructure.Implementations\WebAPI.Infrastructure.Implementations.csproj", "{A6F48590-AE7B-48D3-A835-BB39BBEB02E3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
