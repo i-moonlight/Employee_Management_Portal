@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using WebAPI.Service.Authentication.Configurations.Logging;
 using WebAPI.Service.Authentication.Database.Identity;
 
 namespace WebAPI.Service.Authentication
@@ -17,6 +18,8 @@ namespace WebAPI.Service.Authentication
         /// <param name="args"></param>
         public static void Main(string[] args)
         {
+            LogSets.DefaultSetup();
+            
             try
             {
                 Log.Information("Authentication server initialize.");
