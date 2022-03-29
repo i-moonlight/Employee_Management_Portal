@@ -21,8 +21,7 @@ namespace WebAPI.UseCases.Common.Behaviors
         /// Initializes a new instance of the <see cref="ValidationBehavior{TRequest,TResponse}"/> class.
         /// </summary>
         /// <param name="sender"></param>
-        public ValidationBehavior(IEnumerable<IValidator<TRequest>> validators) =>
-            _validators = validators;
+        public ValidationBehavior(IEnumerable<IValidator<TRequest>> validators) => _validators = validators;
 
         /// <summary>
         /// Pipeline handler.

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using WebAPI.Entities.Models;
+using WebAPI.Entities;
 using WebAPI.Infrastructure.Interfaces.DataAccess;
 using WebAPI.Utils.Constants;
 

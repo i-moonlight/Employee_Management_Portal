@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Linq;
-using WebAPI.DataAccess.MsSql.Persistence.Context;
-using WebAPI.Entities.Models;
+using WebAPI.DataAccess.MsSql.Persistence;
+using WebAPI.Entities;
 using WebAPI.Infrastructure.Interfaces.DataAccess;
 
 namespace WebAPI.DataAccess.MsSql.Repositories
@@ -14,8 +14,7 @@ namespace WebAPI.DataAccess.MsSql.Repositories
     {
         private readonly AppDbContext _context;
 
-        public EmployeeRepository(AppDbContext context) =>
-            _context = context;
+        public EmployeeRepository(AppDbContext context) => _context = context;
 
         /// <summary>
         /// Gets a list of employees ordered by ID.

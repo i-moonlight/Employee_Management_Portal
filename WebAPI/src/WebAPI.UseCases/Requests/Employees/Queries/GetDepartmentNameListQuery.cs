@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using WebAPI.Entities.Models;
+using WebAPI.Entities;
 using WebAPI.Infrastructure.Interfaces.DataAccess;
 
 namespace WebAPI.UseCases.Requests.Employees.Queries
@@ -19,8 +19,7 @@ namespace WebAPI.UseCases.Requests.Employees.Queries
     {
         private readonly ICrudRepository<Employee> _repository;
 
-        public GetDepartmentNameListQueryHandler(ICrudRepository<Employee> repo) =>
-            _repository = repo;
+        public GetDepartmentNameListQueryHandler(ICrudRepository<Employee> repo) => _repository = repo;
 
         /// <summary>
         /// Handles a request.

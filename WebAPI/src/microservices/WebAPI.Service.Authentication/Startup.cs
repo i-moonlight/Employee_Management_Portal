@@ -89,7 +89,7 @@ namespace WebAPI.Service.Authentication
                 .AddScoped<IEmailService, EmailService>();
             #endregion
 
-            #region JSON Serializer
+            #region JSON Serialization
             services.AddControllersWithViews().AddNewtonsoftJson(options =>
             {
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;

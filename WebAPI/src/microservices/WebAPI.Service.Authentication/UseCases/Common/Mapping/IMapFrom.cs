@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-namespace WebAPI.UseCases.Common.Mappings
+namespace WebAPI.Service.Authentication.UseCases.Common.Mapping
 {
     /// <summary>
     /// Provides a default generic type mapping implementation.

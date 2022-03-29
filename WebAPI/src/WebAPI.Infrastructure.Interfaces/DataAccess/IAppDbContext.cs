@@ -1,7 +1,5 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using WebAPI.Entities.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using WebAPI.Entities;
 
 namespace WebAPI.Infrastructure.Interfaces.DataAccess
 {
@@ -9,6 +7,5 @@ namespace WebAPI.Infrastructure.Interfaces.DataAccess
     {
         DbSet<Department> Departments { get; set; }
         DbSet<Employee> Employees { get; set; }
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

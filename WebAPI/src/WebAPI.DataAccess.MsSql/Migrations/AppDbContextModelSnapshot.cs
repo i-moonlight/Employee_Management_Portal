@@ -4,7 +4,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using WebAPI.DataAccess.MsSql.Persistence.Context;
+using WebAPI.DataAccess.MsSql.Persistence;
 
 namespace WebAPI.DataAccess.MsSql.Migrations
 {
@@ -22,28 +22,19 @@ namespace WebAPI.DataAccess.MsSql.Migrations
             modelBuilder.Entity("WebAPI.Entities.Models.Department", b =>
             {
                 b.Property<Guid>("Id").ValueGeneratedOnAdd().HasColumnType("uniqueidentifier");
-
                 b.Property<string>("Name").HasColumnType("nvarchar(max)");
-
                 b.HasKey("Id");
-
                 b.ToTable("Departments");
             });
 
             modelBuilder.Entity("WebAPI.Entities.Models.Employee", b =>
             {
                 b.Property<Guid>("Id").ValueGeneratedOnAdd().HasColumnType("uniqueidentifier");
-
                 b.Property<DateTime>("DateOfJoining").HasColumnType("datetime2");
-
                 b.Property<string>("Department").HasColumnType("nvarchar(max)");
-
                 b.Property<string>("Name").HasColumnType("nvarchar(max)");
-
                 b.Property<string>("PhotoFileName").HasColumnType("nvarchar(max)");
-
                 b.HasKey("Id");
-
                 b.ToTable("Employees");
             });
 #pragma warning restore 612, 618

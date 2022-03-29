@@ -6,7 +6,6 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,10 +16,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using WebAPI.DataAccess.MsSql;
-using WebAPI.DataAccess.MsSql.Persistence.Context;
-using WebAPI.Entities.Models;
-using WebAPI.Infrastructure.Implementation.Services;
-using WebAPI.Infrastructure.Interfaces.Services;
+using WebAPI.DataAccess.MsSql.Persistence;
 using WebAPI.UseCases;
 
 namespace WebAPI.Web
@@ -44,46 +40,26 @@ namespace WebAPI.Web
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-            #region DataBase Connection
-
-            var connection = Configuration["Connection:DefaultConnection"];
-            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connection));
-
-            #endregion
-
-            #region Services
-            
-            services.AddScoped<IEmailService, EmailService>();
-
-            #endregion
-            
             #region Dependency Injection
-            
             services.AddUseCases();
             services.AddDataAccess(Configuration);
-
             #endregion
 
-            #region JSON Serializer
-
+            #region JSON Serialization
             services.AddControllersWithViews().AddNewtonsoftJson(options =>
             {
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 options.SerializerSettings.ContractResolver = new DefaultContractResolver();
             });
-
             #endregion
 
             #region Role Identity
-
-            services
-                .AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<AppDbContext>();
-
+            //services
+            //.AddIdentity<User, IdentityRole>()
+            //.AddEntityFrameworkStores<AppDbContext>();
             #endregion
 
-            #region Swagger
-
+            #region Documentaton
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo
@@ -95,11 +71,9 @@ namespace WebAPI.Web
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFile));
             });
-
             #endregion
 
-            #region Enable logging
-
+            #region Logging
             services.AddLogging(loggingBuilder =>
             {
                 loggingBuilder
@@ -107,14 +81,10 @@ namespace WebAPI.Web
                     .AddFilter(DbLoggerCategory.Database.Command.Name, LogLevel.Information)
                     .AddDebug();
             });
-
-            // Enable Serilog.
             services.AddSingleton(Log.Logger);
-
             #endregion
 
             #region CORS
-
             services.AddCors(options =>
             {
                 options.AddDefaultPolicy(builder =>
@@ -122,11 +92,9 @@ namespace WebAPI.Web
                     builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
                 });
             });
-
             #endregion
 
             #region Authentication JWT
-
             services.AddAuthentication(options =>
                 {
                     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -150,18 +118,15 @@ namespace WebAPI.Web
                         RequireExpirationTime = true,
                     };
                 });
-
             #endregion
 
             #region Static Files
-
             services.Configure<StaticFileOptions>(options =>
             {
                 var fileDirectory = new DirectoryInfo(Path.Combine(Directory.GetCurrentDirectory(), "Photos"));
                 if (!fileDirectory.Exists) fileDirectory.Create();
                 options.RequestPath = "/Photos";
             });
-
             #endregion
         }
 
@@ -174,17 +139,11 @@ namespace WebAPI.Web
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
-
             app.UseStaticFiles(app.ApplicationServices.GetRequiredService<IOptions<StaticFileOptions>>().Value);
-
             app.UseRouting();
-
             app.UseCors();
-
             app.UseAuthentication();
-
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
     }

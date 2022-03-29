@@ -19,8 +19,7 @@ namespace WebAPI.Service.Authentication.Controllers
     {
         private IMediator _mediator = null!;
 
-        protected IMediator Mediator =>
-            _mediator ??= HttpContext.RequestServices.GetRequiredService<IMediator>();
+        protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetRequiredService<IMediator>();
         
         // private readonly UserManager<User> _userManager;
         // private readonly IOptions<EmailOptions> _emailOptions;

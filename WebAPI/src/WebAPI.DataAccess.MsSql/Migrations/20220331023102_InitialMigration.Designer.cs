@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using WebAPI.DataAccess.MsSql.Persistence.Context;
+using WebAPI.DataAccess.MsSql.Persistence;
 
 namespace WebAPI.DataAccess.MsSql.Migrations
 {

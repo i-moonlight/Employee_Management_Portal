@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
-using WebAPI.Entities.Models;
+using WebAPI.Entities;
 using WebAPI.Infrastructure.Interfaces.DataAccess;
 using WebAPI.UseCases.Common.Dto;
 using static WebAPI.Utils.Constants.MessageTypes;

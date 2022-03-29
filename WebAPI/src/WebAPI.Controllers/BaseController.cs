@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace WebAPI.Service.Authentication.Controllers
+namespace WebAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]/[action]")]

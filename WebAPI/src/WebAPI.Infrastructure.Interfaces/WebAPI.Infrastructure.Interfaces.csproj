@@ -5,11 +5,15 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\WebAPI.Entities\WebAPI.Entities.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
       <PackageReference Include="MimeKit" Version="2.6.0" />
     </ItemGroup>
 
+    <ItemGroup>
+        <ProjectReference Include="..\WebAPI.Entities\WebAPI.Entities.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Services" />
+    </ItemGroup>
+    
 </Project>

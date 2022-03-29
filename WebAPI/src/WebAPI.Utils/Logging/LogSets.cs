@@ -4,9 +4,9 @@ using Serilog;
 using Serilog.Exceptions;
 using Serilog.Sinks.Elasticsearch;
 using static System.Reflection.Assembly;
-using static WebAPI.Service.Authentication.Configurations.Logging.ConsoleLogTheme;
+using static WebAPI.Utils.Logging.LogTheme;
 
-namespace WebAPI.Service.Authentication.Configurations.Logging
+namespace WebAPI.Utils.Logging
 {
     public static class LogSets
     {
@@ -35,7 +35,7 @@ namespace WebAPI.Service.Authentication.Configurations.Logging
             Log.Logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()
                 .Enrich.WithExceptionDetails()
-                //.Enrich.WithMachineName()
+                .Enrich.WithMachineName()
                 .WriteTo.Debug()
                 .WriteTo.Console(theme: Signal, outputTemplate: ConsoleOutputTemplate)
                 .WriteTo.Elasticsearch(ConfigureElasticSink(configuration, environment))

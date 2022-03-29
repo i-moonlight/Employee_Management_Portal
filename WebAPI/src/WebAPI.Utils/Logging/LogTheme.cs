@@ -2,12 +2,12 @@
 using System.IO;
 using Serilog.Sinks.SystemConsole.Themes;
 
-namespace WebAPI.Service.Authentication.Configurations.Logging
+namespace WebAPI.Utils.Logging
 {
     /// <summary>
     /// Custom theme for logging.
     /// </summary>
-    public static class ConsoleLogTheme
+    public static class LogTheme
     {
         public const string ConsoleOutputTemplate =
             "[{Timestamp:HH:mm:ss}] [{Level}] -> {Message:lj}{NewLine}{Exception}";

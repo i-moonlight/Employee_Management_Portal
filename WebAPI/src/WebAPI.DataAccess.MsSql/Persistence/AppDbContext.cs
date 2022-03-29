@@ -1,11 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using WebAPI.Entities;
-using WebAPI.Infrastructure.Interfaces.DataAccess;
 
-namespace WebAPI.DataAccess.MsSql.Persistence.Context
+namespace WebAPI.DataAccess.MsSql.Persistence
 {
-    public class AppDbContext : IdentityDbContext<User>, IAppDbContext
+    public class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions options) : base(options) {}
 

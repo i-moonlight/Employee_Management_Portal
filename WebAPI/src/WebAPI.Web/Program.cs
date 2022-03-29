@@ -12,22 +12,19 @@ namespace WebAPI.Web
     public class Program
     {
         #region Program initialization
-
         /// <summary>
         /// Program initialization.
         /// </summary>
         /// <param name="args"></param>
         public static void Main(string[] args)
         {
-            LoggingSets.ElasticsearchSetup();
+            LogSets.DefaultSetup();
 
             try
             {
                 Log.Information("Resource server initialize.");
-
                 var host = CreateHostBuilder(args).Build();
                 using var scope = host.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
-                
                 host.Run();
             }
             catch (Exception exception)
@@ -40,11 +37,9 @@ namespace WebAPI.Web
                 Log.CloseAndFlush();
             }
         }
-        
         #endregion
         
         #region Create web host
-
         /// <summary>
         /// Create web host.
         /// </summary>
@@ -53,13 +48,12 @@ namespace WebAPI.Web
         private static IHostBuilder CreateHostBuilder(string[] args)
         {
             return Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>())
-                .ConfigureAppConfiguration(confBuilder => confBuilder.AddJsonFile("appsettings.json", false, true))
-                .UseDefaultServiceProvider(options => options.ValidateScopes = false) // needed for mediatr DI.
+                .ConfigureWebHostDefaults(wb => wb.UseStartup<Startup>())
+                .ConfigureAppConfiguration(cb => cb.AddJsonFile("appsettings.json", false, true))
+                .UseDefaultServiceProvider(opts => opts.ValidateScopes = false) // Need for mediatr DI
                 .UseSerilog()
                 .UseNLog();
         }
-
         #endregion
     }
 }

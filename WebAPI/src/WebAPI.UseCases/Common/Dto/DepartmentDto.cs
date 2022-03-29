@@ -1,5 +1,5 @@
 ﻿using System;
-using WebAPI.Entities.Models;
+using WebAPI.Entities;
 using WebAPI.UseCases.Common.Mappings;
 
 namespace WebAPI.UseCases.Common.Dto

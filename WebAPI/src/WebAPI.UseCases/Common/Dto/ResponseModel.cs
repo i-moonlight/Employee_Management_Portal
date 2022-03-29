@@ -1,5 +1,5 @@
 ﻿#nullable enable
-namespace WebAPI.UseCases.Common.Dto.Response
+namespace WebAPI.UseCases.Common.Dto
 {
     /// <summary>
     /// Universal response model.
@@ -31,6 +31,7 @@ namespace WebAPI.UseCases.Common.Dto.Response
 
     public enum ResponseCode
     {
-        Ok = 1, Error = 2
+        Ok = 1,
+        Error = 2
     }
 }

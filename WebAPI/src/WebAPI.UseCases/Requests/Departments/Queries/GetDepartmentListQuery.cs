@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using WebAPI.Entities.Models;
+using WebAPI.Entities;
 using WebAPI.Infrastructure.Interfaces.DataAccess;
 
 namespace WebAPI.UseCases.Requests.Departments.Queries

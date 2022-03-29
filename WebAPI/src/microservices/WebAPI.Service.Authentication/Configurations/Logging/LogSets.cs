@@ -4,14 +4,13 @@ using Serilog;
 using Serilog.Exceptions;
 using Serilog.Sinks.Elasticsearch;
 using static System.Reflection.Assembly;
-using static WebAPI.Utils.Logging.ConsoleCustomTheme;
+using static WebAPI.Service.Authentication.Configurations.Logging.LogTheme;
 
-namespace WebAPI.Utils.Logging
+namespace WebAPI.Service.Authentication.Configurations.Logging
 {
-    public static class LoggingSets
+    public static class LogSets
     {
         #region Configure Logging
-
         /// <summary>
         /// The setup of logging settings by default.
         /// </summary>
@@ -36,7 +35,7 @@ namespace WebAPI.Utils.Logging
             Log.Logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()
                 .Enrich.WithExceptionDetails()
-                .Enrich.WithMachineName()
+                //.Enrich.WithMachineName()
                 .WriteTo.Debug()
                 .WriteTo.Console(theme: Signal, outputTemplate: ConsoleOutputTemplate)
                 .WriteTo.Elasticsearch(ConfigureElasticSink(configuration, environment))
@@ -44,11 +43,9 @@ namespace WebAPI.Utils.Logging
                 .ReadFrom.Configuration(configuration)
                 .CreateLogger();
         }
-
         #endregion
 
         #region Configure Elasticsearch Sink
-
         /// <summary>
         /// Configure Elasticsearch Sink.
         /// </summary>
@@ -68,7 +65,6 @@ namespace WebAPI.Utils.Logging
             };
             return sink;
         }
-
         #endregion
     }
 }
