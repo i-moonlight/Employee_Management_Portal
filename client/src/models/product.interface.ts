@@ -1,27 +1,55 @@
 import { Category } from './category.interface';
 import { Review } from './review.interface';
+import { EnumProductSort } from '@/services/product/product.types';
 
 export interface Product {
 	id: string;
 	name: string;
-	slug: string
+	slug: string;
 	description: string;
 	price: number;
 	reviews: Review[];
 	images: string[];
-	category: Category;
 	createdAt: string;
+	category: Category;
 }
 
 export interface ProductDetails {
 	product: Product;
 }
 
+export type TypeProductData = {
+	name: string;
+	price: number;
+	description?: string;
+	images: string[];
+	categoryId: number;
+}
+
+export type TypeProductDataFilter = {
+	sort?: EnumProductSort;
+	searchTerm?: string;
+	page?: string | number;
+	perPage?: string | number;
+}
+
 export type TypeProducts = {
 	products: Product[];
 }
 
-export type TypePaginationProducts = {
-	count: number;
+export type TypeProductPagination = {
 	products: Product[];
+	length: number;
 }
+
+// export type TypePaginationProducts = {
+// 	data: Product[]
+// 	meta: {
+// 		total: number;
+// 		lastPage: number;
+// 		currentPage: number;
+// 		perPage: number;
+// 		prev: number | null;
+// 		next: number | null;
+// 	}
+// }

@@ -1,5 +1,5 @@
-import { CartItem } from './cart.interface';
 import { User } from './user.interface';
+import { CartItem } from '@/models/cart.interface';
 
 export enum EnumOrderStatus {
 	PENDING = 'PENDING',
@@ -11,9 +11,9 @@ export enum EnumOrderStatus {
 export type TypeOrderData = {
 	status?: EnumOrderStatus;
 	items: {
-		productId: string
-		quantity: number
-		price: number
+		productId: string;
+		quantity: number;
+		price: number;
 	}[]
 }
 
@@ -26,8 +26,8 @@ export interface Order {
 	total: number;
 }
 
-export interface IConfirmation {
+export interface Confirmation {
 	confirmation: {
-		confirmation_url: string
+		confirmation_url: string;
 	}
 }
