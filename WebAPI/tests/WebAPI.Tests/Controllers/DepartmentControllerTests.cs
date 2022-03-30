@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
 using WebAPI.Controllers;
-using WebAPI.Entities.Models;
+using WebAPI.Entities;
 using WebAPI.Tests.Common;
 using WebAPI.UseCases.Common.Dto;
 using static WebAPI.Utils.Constants.MessageTypes;

@@ -15,10 +15,11 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\src\hosts\WebAPI.Web\WebAPI.Web.csproj" />
+        <ProjectReference Include="..\..\src\microservices\WebAPI.Service.Authentication\WebAPI.Service.Authentication.csproj" />
         <ProjectReference Include="..\..\src\WebAPI.Controllers\WebAPI.Controllers.csproj" />
         <ProjectReference Include="..\..\src\WebAPI.Entities\WebAPI.Entities.csproj" />
         <ProjectReference Include="..\..\src\WebAPI.Infrastructure.Interfaces\WebAPI.Infrastructure.Interfaces.csproj" />
+        <ProjectReference Include="..\..\src\WebAPI.Web\WebAPI.Web.csproj" />
     </ItemGroup>
 
 </Project>

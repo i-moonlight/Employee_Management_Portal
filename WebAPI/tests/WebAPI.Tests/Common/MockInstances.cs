@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Moq;
-using WebAPI.Entities.Models;
+using WebAPI.Service.Authentication.Entities;
 
 namespace WebAPI.Tests.Common
 {

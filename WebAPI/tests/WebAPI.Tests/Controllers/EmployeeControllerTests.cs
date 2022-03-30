@@ -5,8 +5,8 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Controllers;
+using WebAPI.Entities;
 using WebAPI.Tests.Common;
-using WebAPI.Entities.Models;
 using WebAPI.UseCases.Common.Dto;
 using static WebAPI.Utils.Constants.MessageTypes;
 

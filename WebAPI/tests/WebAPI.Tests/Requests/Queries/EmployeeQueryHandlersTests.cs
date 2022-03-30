@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using WebAPI.Entities.Models;
+using WebAPI.Entities;
 using WebAPI.Tests.Common;
 using WebAPI.UseCases.Common.Dto;
 using WebAPI.UseCases.Common.Exceptions;

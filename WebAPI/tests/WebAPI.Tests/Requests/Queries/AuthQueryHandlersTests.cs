@@ -1,9 +1,9 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using WebAPI.Entities.Models;
+using WebAPI.Service.Authentication.Entities;
+using WebAPI.Service.Authentication.UseCases.Commands;
 using WebAPI.Tests.Common;
-using WebAPI.UseCases.Requests.Authentication.Queries;
 
 namespace WebAPI.Tests.Requests.Queries
 {

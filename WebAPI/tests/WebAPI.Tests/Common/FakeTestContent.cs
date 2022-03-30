@@ -4,9 +4,10 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using Newtonsoft.Json;
-using WebAPI.Entities.Models;
+using WebAPI.Entities;
+using WebAPI.Service.Authentication.Entities;
+using WebAPI.Service.Authentication.UseCases.Dto;
 using WebAPI.UseCases.Common.Dto;
-using WebAPI.UseCases.Common.Dto.Auth;
 
 namespace WebAPI.Tests.Common
 {

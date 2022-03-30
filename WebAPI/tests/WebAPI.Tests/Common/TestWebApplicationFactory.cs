@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using WebAPI.DataAccess.MsSql.Persistence.Context;
+using WebAPI.DataAccess.MsSql.Persistence;
 using WebAPI.Utils.Constants;
 using WebAPI.Web;
 

@@ -3,10 +3,9 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
-using WebAPI.Controllers;
+using WebAPI.Service.Authentication.Controllers;
+using WebAPI.Service.Authentication.UseCases.Dto;
 using WebAPI.Tests.Common;
-using WebAPI.UseCases.Common.Dto.Auth;
-using WebAPI.UseCases.Common.Dto.Response;
 
 namespace WebAPI.Tests.Controllers
 {

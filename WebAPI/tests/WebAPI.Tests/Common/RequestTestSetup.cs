@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Moq;
 using NUnit.Framework;
-using WebAPI.Entities.Models;
+using WebAPI.Entities;
 using WebAPI.Infrastructure.Interfaces.DataAccess;
 using WebAPI.UseCases.Common.Dto;
 using WebAPI.UseCases.Common.Mappings;
