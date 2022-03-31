@@ -6,7 +6,6 @@ using System.Text;
 using Newtonsoft.Json;
 using WebAPI.Entities;
 using WebAPI.Service.Authentication.Entities;
-using WebAPI.Service.Authentication.UseCases.Dto;
 using WebAPI.UseCases.Common.Dto;
 
 namespace WebAPI.Tests.Common
@@ -27,26 +26,6 @@ namespace WebAPI.Tests.Common
             UserName = "UserName",
             Email = "User@test.ru",
             DateModified = DateTime.Today
-        };
-
-        public static LoginDto FakeLoginDto => new()
-        {
-            Username = "UserName",
-            Email = "User@test.ru",
-            Password = "User123!"
-        };
-
-        public static RegisterUserDto FakeRegisterUserDto => new()
-        {
-            FullName = "FullName",
-            UserName = "UserName",
-            Email = "User@test.ru",
-            Password = "User123!"
-        };
-
-        public static AccountDto FakeAccountDto => new()
-        {
-            Email = "User@test.ru"
         };
 
         public static EmployeeDto FakeEmployeeDto => new()

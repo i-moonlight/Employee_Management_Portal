@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
 using WebAPI.Service.Authentication.Controllers;
+using WebAPI.Service.Authentication.Tests.Common;
 using WebAPI.Service.Authentication.UseCases.Dto;
-using WebAPI.Tests.Common;
 
-namespace WebAPI.Tests.Controllers
+namespace WebAPI.Service.Authentication.Tests.Controllers
 {
     [TestFixture]
     public class AuthControllerTests : ControllerTestSetup
@@ -15,10 +15,7 @@ namespace WebAPI.Tests.Controllers
         private AuthController _authController;
 
         [SetUp]
-        public new void Setup()
-        {
-            _authController = new AuthController();
-        }
+        public new void Setup() => _authController = new AuthController();
 
         [Test]
         public void GetUserList_Method_Should_Returns_ActionResult_IEnumerable_Type()
@@ -41,26 +38,26 @@ namespace WebAPI.Tests.Controllers
         }
 
         [Test]
-        public void RegisterUser_Method_Should_Returns_ActionResult_ResponseModel_Type()
+        public void SignUp_Method_Should_Returns_ActionResult_ResponseModel_Type()
         {
             // Arrange.
             var registerUser = new RegisterUserDto();
 
             // Act.
-            var result = _authController.RegisterUser(registerUser);
+            var result = _authController.SignUp(registerUser);
 
             // Assert.
             Assert.AreEqual(typeof(Task<ActionResult<ResponseModel>>), result.GetType());
         }
 
         [Test]
-        public async Task RegisterUser_Method_Should_Returns_Success_Http_Status_Code()
+        public async Task SignUp_Method_Should_Returns_Success_Http_Status_Code()
         {
             // Arrange.
-            var content = FakeTestContent.GetRequestContent(FakeRegisterUserDto);
+            var content = FakeAuthContent.GetRequestContent(FakeRegisterUserDto);
 
             // Act.
-            var response = await HttpClient.PostAsync("api/auth/RegisterUser", content);
+            var response = await HttpClient.PostAsync("api/auth/SignUp", content);
 
             // Assert.
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
@@ -70,7 +67,7 @@ namespace WebAPI.Tests.Controllers
         public void SignIn_Method_Should_Returns_ActionResult_ResponseModel_Type()
         {
             // Arrange.
-            var testLoginDto = FakeTestContent.FakeLoginDto;
+            var testLoginDto = FakeAuthContent.FakeLoginDto;
 
             // Act.
             var result = _authController.SignIn(testLoginDto);
@@ -83,7 +80,7 @@ namespace WebAPI.Tests.Controllers
         public async Task SignIn_Method_Should_Returns_Success_Http_Status_Code()
         {
             // Arrange.
-            var content = FakeTestContent.GetRequestContent(FakeLoginDto);
+            var content = FakeAuthContent.GetRequestContent(FakeLoginDto);
 
             // Act.
             var response = await HttpClient.PostAsync("api/auth/SignIn", content);
@@ -96,7 +93,7 @@ namespace WebAPI.Tests.Controllers
         public void ForgotPassword_Method_Should_Returns_ActionResult_ResponseModel_Type()
         {
             // Arrange.
-            var fakeDto = FakeTestContent.FakeAccountDto;
+            var fakeDto = FakeAuthContent.FakeAccountDto;
 
             // Act.
             var result = _authController.ForgotPassword(fakeDto);
@@ -109,8 +106,8 @@ namespace WebAPI.Tests.Controllers
         public async Task ForgotPassword_Method_Should_Returns_Success_Http_Status_Code()
         {
             // Arrange.
-            var fakeDto = FakeTestContent.FakeAccountDto;
-            var content = FakeTestContent.GetRequestContent(fakeDto);
+            var fakeDto = FakeAuthContent.FakeAccountDto;
+            var content = FakeAuthContent.GetRequestContent(fakeDto);
 
             // Act.
             var response = await HttpClient.PostAsync("api/auth/ForgotPassword", content);

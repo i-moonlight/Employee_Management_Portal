@@ -32,7 +32,7 @@ namespace WebAPI.Tests.Requests.Commands
             _mockJwtOptions = new Mock<JwtOptions>();
             _mockUserManager = MockInstances.GetMockUserManager<User>();
             _mockSignInManager = MockInstances.GetMockSignInManager<User>();
-            _testRegisterUserDto = FakeTestContent.FakeRegisterUserDto;
+            
             _mockIEmailService = new Mock<IEmailService>();
             _mockIHttpContextAccessor = new Mock<IHttpContextAccessor>();
         }
