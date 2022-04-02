@@ -4,11 +4,11 @@ import { instance } from '@/api/api.interceptor';
 const USERS = 'users/profile';
 
 type formData = {
-	email:       string;
-	name?:       string;
-	password?:   string;
+	email: string;
+	name?: string;
+	password?: string;
 	avatarPath?: string;
-	phone?:      string;
+	phone?: string;
 }
 
 export const UserService = {
