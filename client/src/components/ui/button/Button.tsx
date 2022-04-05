@@ -8,18 +8,15 @@ interface Button extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const Button: FC<PropsWithChildren<Button>> = ({ children, className, variant, size = 'md', ...rest }) => {
 	return (
-		<button
-			{...rest}
-			className={cn(
-				'rounded-2xl font-medium shadow px-10 py-2 hover: shadow-lg transition duration-300 ease-in-out',
-				{
-					'text-white bg-primary': variant === 'orange',
-					'text-primary bg-white': variant === 'white',
-					'px-5 py-2 text-sm': size === 'sm'
-				},
-				className
-			)}
-		>
+		<button {...rest} className={cn(
+			'rounded-2xl font-medium shadow px-10 py-2 hover: shadow-lg transition duration-300 ease-in-out',
+			{
+				'text-white bg-primary': variant === 'orange',
+				'text-primary bg-white': variant === 'white',
+				'px-5 py-2 text-sm': size === 'sm'
+			},
+			className
+		)}>
 			{children}
 		</button>
 	);

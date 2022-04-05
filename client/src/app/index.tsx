@@ -1,7 +1,7 @@
 import type { GetStaticProps, NextPage } from 'next';
 import type { TypeProductPagination } from '@/models/product.interface';
 import { ProductService } from '@/services/product/product.service';
-import Home from '@/components/screens/Home';
+import Home from '@/pages';
 
 const HomePage: NextPage<TypeProductPagination> = ({ products, length }) => {
 	return <Home products={products} length={length} />

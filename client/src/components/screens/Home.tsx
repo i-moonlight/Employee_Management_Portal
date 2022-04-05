@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 import type { TypeProductPagination } from '@/models/product.interface';
 import Meta from '@/components/ui/Meta';
 import Heading from '@/components/ui/Heading';

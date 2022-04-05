@@ -2,9 +2,9 @@ import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
 import type { FC } from 'react';
+import { Product } from '@/models/product.interface';
 import { convertPrice } from '@/utils/convertPrice';
 import AddToCartButton from './AddToCartButton';
-import { Product } from '@/models/product.interface';
 
 const DynamicFavoriteButton = dynamic(() => import('./FavoriteButton'), {
 	ssr: false

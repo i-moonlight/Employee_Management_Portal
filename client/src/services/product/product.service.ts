@@ -1,11 +1,11 @@
-import { Product, TypePaginationProducts } from '@/models/product.interface';
+import { Product, TypeProductPagination } from '@/models/product.interface';
 import { instance } from '@/api/api.interceptor';
 import { PRODUCTS, typeProductData } from './product.types';
 
 export const ProductService = {
 
 	async getAllProducts(queryData?: { perPage: number; page: number }) {
-		const { data } = await instance<TypePaginationProducts>({
+		const { data } = await instance<TypeProductPagination>({
 			url: PRODUCTS,
 			method: 'GET',
 			params: queryData
