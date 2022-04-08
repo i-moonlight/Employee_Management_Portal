@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getLocalStorage } from '@/utils/local-storage';
 import { checkAuth, login, logout, register } from './user.actions';
-import { InitialState } from './user.interface';
 
 const initialState: InitialState = {
 	user: getLocalStorage('user'),

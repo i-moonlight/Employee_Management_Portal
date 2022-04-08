@@ -1,7 +1,6 @@
 import axios, { CreateAxiosDefaults } from 'axios';
 import { AuthService } from '@/services/auth/auth.service';
 import { getAccessToken, removeFromStorage } from '@/services/auth/token.service';
-
 import { errorCatch, getContentType } from './api.helper';
 
 const axiosOptions: CreateAxiosDefaults = {
@@ -16,7 +15,6 @@ instance.interceptors.request.use(async config => {
 	if (config.headers && accessToken) config.headers.Authorization = `Bearer ${accessToken}`;
 	return config;
 });
-
 
 instance.interceptors.response.use(
 	config => config,

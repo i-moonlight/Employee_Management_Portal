@@ -1,16 +1,16 @@
-import { Product, TypeProductPagination } from '@/models/product.interface';
 import { instance } from '@/api/api.interceptor';
+import { Product, TypeProductDataFilter, TypeProductPagination } from '@/models/product.interface';
 import { PRODUCTS, typeProductData } from './product.types';
 
 export const ProductService = {
 
-	async getAllProducts(queryData?: { perPage: number; page: number }) {
+	async getAllProducts(queryData: TypeProductDataFilter = {}) {
 		const { data } = await instance<TypeProductPagination>({
 			url: PRODUCTS,
 			method: 'GET',
 			params: queryData
 		});
-		return data
+		return data;
 	},
 
 	async getSimilarProduct(id: string) {

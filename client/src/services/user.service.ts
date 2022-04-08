@@ -1,4 +1,4 @@
-import { FullUser, User } from '@/models/user.interface';
+import { User, FullUser } from '@/models/user.interface';
 import { instance } from '@/api/api.interceptor';
 
 const USERS = 'users/profile';

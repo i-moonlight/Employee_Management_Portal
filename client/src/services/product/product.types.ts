@@ -1,25 +1,25 @@
-import { IPagination } from '@/models/pagination.interface'
+import { Pagination } from '@/models/pagination.interface';
 
-export const PRODUCTS = 'products'
+export const PRODUCTS = 'products';
 
 export type typeProductData = {
-	name:         string
-	price:        number
-	description?: string
-	images:       string[]
-	categoryId:   number
+	name: string;
+	price: number;
+	description?: string;
+	images: string[];
+	categoryId: number;
 }
 
 type SortData = {
-	sort?:       EnumProductSort | string
-	searchTerm?: string
-	ratings:     string
-	minPrice?:   string
-	maxPrice?:   string
-	categoryId?: string
+	sort?: EnumProductSort | string;
+	searchTerm?: string;
+	ratings: string;
+	minPrice?: string;
+	maxPrice?: string;
+	categoryId?: string;
 }
 
-export type TypeProductDataFilters = SortData & IPagination
+export type TypeProductDataFilters = SortData & Pagination;
 
 export type TypeParamsFilters = {
 	searchParams: TypeProductDataFilters
@@ -27,7 +27,7 @@ export type TypeParamsFilters = {
 
 export enum EnumProductSort {
 	HIGH_PRICE = 'height-price',
-	LOW_PRICE  = 'low-price',
-	NEWEST     = 'newest',
-	OLDEST     = 'oldest'
+	LOW_PRICE = 'low-price',
+	NEWEST = 'newest',
+	OLDEST = 'oldest'
 }

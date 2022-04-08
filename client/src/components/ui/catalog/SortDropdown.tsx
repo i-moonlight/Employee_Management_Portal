@@ -25,7 +25,6 @@ const SortDropdown: FC<SortDropdown> = ({ sortType, setSortType }) => {
 						{EnumProductSort[key]}
 					</option>)
 				)}
-
 			</select>
 
 			<div

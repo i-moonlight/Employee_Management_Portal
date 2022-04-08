@@ -1,7 +1,7 @@
-import { Confirmation, Order, TypeOrderData } from '@/models/order.interface'
-import { instance } from '@/api/api.interceptor'
+import { Confirmation, Order, TypeOrderData } from '@/models/order.interface';
+import { instance } from '@/api/api.interceptor';
 
-const ORDERS = 'orders'
+const ORDERS = 'orders';
 
 export const OrderService = {
 

@@ -1,17 +1,18 @@
-import { FC, PropsWithChildren, useEffect } from 'react';
+import { useEffect } from 'react';
 import dynamic from 'next/dynamic';
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
 import { getAccessToken, getRefreshToken } from '@/services/auth/token.service';
 import { useActions } from '@/hooks/useActions';
 import { useAuth } from '@/hooks/useAuth';
-import { TypeComponentAuthFields } from '@/models/auth';
 
 // Чтобы динамически загружать компонент на стороне клиента,
 // можно использовать ssr опцию отключения рендеринга на сервере.
 // Это полезно, если внешняя зависимость или компонент полагается на API браузера, такие как window.
 const DynamicCheckRole = dynamic(() => import('./CheckRole'), { ssr: false });
 
-const AuthProvider: FC<PropsWithChildren<TypeComponentAuthFields>> = ({ children, Component: { isOnlyUser } }) => {
+const AuthProvider: (
+	{ children, Component: { isOnlyUser } }: { children: any; Component: { isOnlyUser: any } }) =>
+	JSX.Element = ({ children, Component: { isOnlyUser } }) => {
 
 	const pathname = useRouter();
 	const { user } = useAuth();

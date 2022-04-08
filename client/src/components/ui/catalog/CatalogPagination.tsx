@@ -1,28 +1,29 @@
 import { FC, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { ProductService } from '@/services/product/product.service';
 import { EnumProductSort } from '@/services/product/product.types';
+<<<<<<< HEAD
 import type { TypeProductPagination } from '@/models/product.interface';
+=======
+import { ProductService } from '@/services/product/product.service';
+import { ProductPagination } from '@/models/product.interface';
+import Button from '@/ui/button/Button';
+>>>>>>> 4847270 (refactor(client): auth components)
 import Heading from '@/ui/Heading';
 import SortDropdown from '@/ui/catalog/SortDropdown';
 import ProductItem from '@/ui/product/ProductItem';
-import Button from '@/ui/button/Button';
 
 interface Catalog {
 	data: TypeProductPagination;
 	title?: string;
 }
 
-const Catalog: FC<Catalog> = ({ data, title }) => {
+const CatalogPagination: FC<Catalog> = ({ data, title }) => {
 	const [sortType, setSortType] = useState<EnumProductSort>(EnumProductSort.NEWEST);
 	const [page, setPage] = useState<number>(1);
 
-	const { data: response, isLoading } = useQuery(['product', sortType, page], () =>
-		ProductService.getAllProducts({
-			page,
-			perPage: 4,
-			sort: sortType
-		})
+	const { data: response, isLoading } = useQuery(
+		['product', sortType, page],
+		() => ProductService.getAllProducts({ page, perPage: 4, sort: sortType })
 	);
 
 	return (
@@ -48,7 +49,8 @@ const Catalog: FC<Catalog> = ({ data, title }) => {
 						))}
 					</div>
 				</>)
-				: (<div>There are no products</div>)}
+				: (<div>There are no products</div>)
+			}
 		</section>
 	);
 }

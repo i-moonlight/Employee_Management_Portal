@@ -1,10 +1,12 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
+import { cartSlice } from '@/store/cart/cart.slice';
 import { userSlice } from './user/user.slice';
 
 const isClient = typeof window !== 'undefined';
 
 const rootReducer = combineReducers({
+	cart: cartSlice.reducer,
 	user: userSlice.reducer
 });
 
@@ -32,4 +34,4 @@ export const store = configureStore({
 
 export const persistor = persistStore(store);
 
-export type TypeRootStore = ReturnType<typeof rootReducer>;
+export type TypeRootState = ReturnType<typeof rootReducer>;

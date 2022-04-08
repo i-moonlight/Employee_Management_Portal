@@ -1,5 +1,5 @@
-import { AuthResponse, Tokens } from '@/store/user/user.interface';
 import Cookies from 'js-cookie';
+import { AuthResponse, Tokens } from '@/store/user/user.interface';
 
 const ACCESS_TOKEN = 'accessToken';
 const REFRESH_TOKEN = 'refreshToken';

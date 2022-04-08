@@ -1,15 +1,14 @@
 import { FC, useState } from 'react';
-import Meta from '@/ui/Meta';
-import Button from '@/ui/button/Button';
+import { EmailPassword } from '@/store/user/user.interface';
+import Field from '@/ui/input/Field';
 import Heading from '@/ui/Heading';
+import Loader from '@/ui/Loader';
+import Meta from '@/ui/Meta';
 import { useAuth } from '@/hooks/useAuth';
 import { useActions } from '@/hooks/useActions';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { validEmail } from '@/ui/validate/valid-email';
-import Field from '@/ui/input/Field';
-import { EmailPassword } from '@/store/user/user.interface';
 import { useAuthRedirect } from '@/hooks/useAuthRedirect';
-import Loader from '@/ui/Loader';
+import { validEmail } from '@/ui/validate/valid-email';
 
 const Auth: FC = () => {
 
@@ -63,9 +62,9 @@ const Auth: FC = () => {
 						placeholder='Password'
 						error={errors.password?.message}
 					/>
-					<Button type='submit' variant='orange'>
-						let's go!
-					</Button>
+					{/*<Button type='submit' variant='orange'>*/}
+					{/*	let's go!*/}
+					{/*</Button>*/}
 
 					<div>
 						<button

@@ -35,6 +35,7 @@ npm i @tanstack/react-query react-simple-star-rating
 npm i sass
 npm i react-hook-form
 npm i react-icons
+npm i --save-dev @types/js-cookie
 ```
 
 ## Learn More
