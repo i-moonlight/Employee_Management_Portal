@@ -1,8 +1,7 @@
 import { useRouter } from 'next/router'
 import { FC, PropsWithChildren } from 'react'
-import Header from './header/Header'
-import ProfileSidebar from './sidebar/ProfileSidebar'
-import Sidebar from './sidebar/Sidebar'
+import Header from './Header'
+// import ProfileSidebar from './sidebar/ProfileSidebar'
 
 const profileUrls = ['/profile', '/favorites', '/orders']
 
@@ -16,19 +15,14 @@ const Layout: FC<PropsWithChildren<Layout>> = ({ children, showSidebar = true })
 	return (
 		<div>
 			<Header />
-			{showSidebar ? (
-				<div
-					className='grid h-screen'
-					style={{ gridTemplateColumns: '1fr 4fr' }}
-				>
-					{profileUrls.includes(asPath) ? <ProfileSidebar /> : <Sidebar />}
+			{showSidebar
+				? (<div className='grid h-screen' style={{ gridTemplateColumns: '1fr 4fr' }}>
+					{/*{profileUrls.includes(asPath) ? <ProfileSidebar /> : <Sidebar />}*/}
 					<main className='p-12'>{children}</main>
-				</div>
-			) : (
-				<div className='grid h-screen'>
+				</div>)
+				: (<div className='grid h-screen'>
 					<main className='p-12'>{children}</main>
-				</div>
-			)}
+				</div>)}
 		</div>
 	)
 }

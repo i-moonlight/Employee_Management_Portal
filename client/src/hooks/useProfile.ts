@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
 import { errorCatch } from '@/api/api.helper';
-import { UserService } from '@/services/user.service';
 import { FullUser } from '@/models/user.interface';
+import { UserService } from '@/services/user.service';
 import { useAuth } from './useAuth';
 
 export const useProfile = () => {

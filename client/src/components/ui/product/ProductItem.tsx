@@ -3,7 +3,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import type { FC } from 'react';
 import { Product } from '@/models/product.interface';
-import { convertPrice } from '@/utils/convertPrice';
 import AddToCartButton from './AddToCartButton';
 
 const DynamicFavoriteButton = dynamic(() => import('./FavoriteButton'), {
@@ -43,9 +42,9 @@ const ProductItem: FC<{ product: Product }> = ({ product }) => {
 				>
 					{product.category.slug}
 				</Link>
-				<ProductRating product={product} />
+				{/*<ProductRating product={product} />*/}
 				<div className='text-xl font-semibold'>
-					{convertPrice(product.price)}
+					{/*{convertPrice(product.price)}*/}
 				</div>
 			</div>
 		</div>
