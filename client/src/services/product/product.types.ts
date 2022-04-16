@@ -31,3 +31,10 @@ export enum EnumProductSort {
 	NEWEST = 'newest',
 	OLDEST = 'oldest'
 }
+
+export type TypeProductDataFilter = {
+	sort?: EnumProductSort;
+	searchTerm?: string;
+	page?: string | number;
+	perPage?: string | number;
+};

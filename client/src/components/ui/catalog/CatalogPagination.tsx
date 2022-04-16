@@ -1,16 +1,12 @@
 import { FC, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { EnumProductSort } from '@/services/product/product.types';
-<<<<<<< HEAD
-import type { TypeProductPagination } from '@/models/product.interface';
-=======
 import { ProductService } from '@/services/product/product.service';
-import { ProductPagination } from '@/models/product.interface';
-import Button from '@/ui/button/Button';
->>>>>>> 4847270 (refactor(client): auth components)
-import Heading from '@/ui/Heading';
-import SortDropdown from '@/ui/catalog/SortDropdown';
-import ProductItem from '@/ui/product/ProductItem';
+import type { TypeProductPagination } from '@/models/product.interface';
+import SortDropdown from '@/components/ui/catalog/SortDropdown';
+import Button from '@/components/ui/button/Button';
+import Heading from '@/components/ui/Heading';
+import ProductItem from '@/components/ui/product/ProductItem';
 
 interface Catalog {
 	data: TypeProductPagination;

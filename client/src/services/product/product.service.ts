@@ -1,6 +1,6 @@
 import { instance } from '@/api/api.interceptor';
-import { Product, TypeProductDataFilter, TypeProductPagination } from '@/models/product.interface';
-import { PRODUCTS, typeProductData } from './product.types';
+import { Product, TypeProductPagination } from '@/models/product.interface';
+import { PRODUCTS, typeProductData, TypeProductDataFilter } from './product.types';
 
 export const ProductService = {
 

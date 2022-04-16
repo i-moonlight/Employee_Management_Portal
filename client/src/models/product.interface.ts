@@ -1,6 +1,5 @@
 import { Category } from './category.interface';
 import { Review } from './review.interface';
-import { EnumProductSort } from '@/services/product/product.types';
 
 export interface Product {
 	id: string;
@@ -24,13 +23,6 @@ export type TypeProductData = {
 	description?: string;
 	images: string[];
 	categoryId: number;
-}
-
-export type TypeProductDataFilter = {
-	sort?: EnumProductSort;
-	searchTerm?: string;
-	page?: string | number;
-	perPage?: string | number;
 }
 
 export type TypeProducts = {

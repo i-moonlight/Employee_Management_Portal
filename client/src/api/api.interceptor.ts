@@ -1,10 +1,10 @@
-import axios, { CreateAxiosDefaults } from 'axios';
+import axios, { CreateAxiosDefaults, AxiosError } from 'axios';
 import { AuthService } from '@/services/auth/auth.service';
 import { getAccessToken, removeFromStorage } from '@/services/auth/token.service';
 import { errorCatch, getContentType } from './api.helper';
 
 const axiosOptions: CreateAxiosDefaults = {
-	baseURL: process.env.NEXT_PUBLIC_API_URL,
+	baseURL: process.env.SERVER_URL,
 	headers: getContentType()
 }
 
@@ -16,22 +16,31 @@ instance.interceptors.request.use(async config => {
 	return config;
 });
 
+AxiosError<{ __isRetry?: boolean }>;
+
 instance.interceptors.response.use(
 	config => config,
-	async error => {
-		const originalRequest = error.config;
+	async err => {
+		const originalRequest= err.config;
 
-		if (error?.response?.status === 401 || errorCatch(error) === 'jwt expired' ||
-			(errorCatch(error) === 'jwt must be provided' && error.config && !error.config._isRetry))
-		{
-			originalRequest._isRetry = true;
+		if (
+			(err?.response?.status === 401 ||
+				errorCatch(err) === 'jwt expired' ||
+				errorCatch(err) === 'jwt must be provided') &&
+			err.config &&
+			!err.config.__isRetry
+		) {
+			originalRequest.__isRetry = true;
 			try {
 				await AuthService.getNewTokens();
 				return instance.request(originalRequest);
 			} catch (error) {
-				if (errorCatch(error) === 'jwt expired') removeFromStorage();
+				if (errorCatch(error) == 'jwt expired') {
+					removeFromStorage();
+				}
 			}
 		}
-		throw error;
+
+		throw err;
 	}
 );

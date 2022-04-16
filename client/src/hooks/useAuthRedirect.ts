@@ -8,5 +8,5 @@ export const useAuthRedirect = () => {
 
 	useEffect(() => {
 		if (user) replace('/')
-	}, [user]);
+	}, [user]); // eslint-disable-line react-hooks/exhaustive-deps
 }

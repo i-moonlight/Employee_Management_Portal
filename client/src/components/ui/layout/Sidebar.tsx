@@ -1,13 +1,13 @@
 import clsx from 'clsx';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { FC } from 'react';
+import type { FC } from 'react';
 import { FiLogOut } from 'react-icons/fi';
 import { useQuery } from '@tanstack/react-query';
 import { useActions } from '@/hooks/useActions';
 import { useAuth } from '@/hooks/useAuth';
 import { CategoryService } from '@/services/category.service';
-import Loader from '@/ui/Loader';
+import Loader from '@/components/ui/Loader';
 
 const Sidebar: FC = () => {
 	const { data, isLoading } = useQuery(

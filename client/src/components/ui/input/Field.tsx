@@ -1,6 +1,6 @@
 import cn from 'clsx';
 import { forwardRef, InputHTMLAttributes } from 'react';
-import { IconType } from 'react-icons';
+import type { IconType } from 'react-icons';
 
 export interface Field extends InputHTMLAttributes<HTMLInputElement> {
 	placeholder: string;

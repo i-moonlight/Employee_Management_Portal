@@ -1,14 +1,14 @@
 import { FC, useState } from 'react';
-import { EmailPassword } from '@/store/user/user.interface';
-import Field from '@/ui/input/Field';
-import Heading from '@/ui/Heading';
-import Loader from '@/ui/Loader';
-import Meta from '@/ui/Meta';
-import { useAuth } from '@/hooks/useAuth';
-import { useActions } from '@/hooks/useActions';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useActions } from '@/hooks/useActions';
+import { useAuth } from '@/hooks/useAuth';
 import { useAuthRedirect } from '@/hooks/useAuthRedirect';
-import { validEmail } from '@/ui/validate/valid-email';
+import { EmailPassword } from '@/store/user/user.interface';
+import { validEmail } from '@/components/ui/validate/valid-email';
+import Field from '@/components/ui/input/Field';
+import Meta from '@/components/ui/Meta';
+import Heading from '@/components/ui/Heading';
+import Loader from '@/components/ui/Loader';
 
 const Auth: FC = () => {
 

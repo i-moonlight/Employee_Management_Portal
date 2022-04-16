@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router';
+import type { FC, PropsWithChildren } from 'react';
 import { useAuth } from '@/hooks/useAuth';
+import type { TypeComponentAuthFields } from '@/providers/auth/auth-page.types';
 
-const CheckRole: ({ Component: { isOnlyUser }, children }: { Component: { isOnlyUser: any }, children: any }) =>
-	(JSX.Element | null) = ({ Component: { isOnlyUser }, children }) => {
+const CheckRole: FC<PropsWithChildren<TypeComponentAuthFields>> = ({Component: {isOnlyUser}, children}) => {
 
 	const router = useRouter();
 	const { user } = useAuth();

@@ -1,4 +1,4 @@
-/** @type {import('tailwindcss').Config} */
+/** @type {DefaultColors} */
 const twColors = require('tailwindcss/colors');
 
 const colors = {
