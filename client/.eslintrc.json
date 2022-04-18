@@ -1,7 +1,7 @@
 {
   "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended",
+//    "eslint:recommended",
+//    "plugin:react/recommended",
     "next/core-web-vitals"
   ]
   // "react-hooks/exhaustive-deps": "off"

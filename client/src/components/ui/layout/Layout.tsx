@@ -1,30 +1,18 @@
-import { useRouter } from 'next/router'
-import { FC, PropsWithChildren } from 'react'
-import Header from './Header'
-// import ProfileSidebar from './sidebar/ProfileSidebar'
+import { FC, PropsWithChildren } from 'react';
+import Header from '@/components/ui/layout/Header'
+import Sidebar from '@/components/ui/layout/Sidebar'
 
-const profileUrls = ['/profile', '/favorites', '/orders']
 
-interface Layout {
-	showSidebar?: boolean
-}
-
-const Layout: FC<PropsWithChildren<Layout>> = ({ children, showSidebar = true }) => {
-	const { asPath } = useRouter()
-
+const Layout: FC<PropsWithChildren<unknown>> = ({ children }) => {
 	return (
 		<div>
 			<Header />
-			{showSidebar
-				? (<div className='grid h-screen' style={{ gridTemplateColumns: '1fr 4fr' }}>
-					{/*{profileUrls.includes(asPath) ? <ProfileSidebar /> : <Sidebar />}*/}
-					<main className='p-12'>{children}</main>
-				</div>)
-				: (<div className='grid h-screen'>
-					<main className='p-12'>{children}</main>
-				</div>)}
+			<div className='grid grid-cols-layout' style={{minHeight:'calc(100vh - 91px)'}}>
+				<Sidebar />
+				<main className='p-12 pb-0'>{children}</main>
+			</div>
 		</div>
-	)
-}
+	);
+};
 
-export default Layout
+export default Layout;

@@ -6,7 +6,7 @@ interface SortDropdown {
 	setSortType: Dispatch<SetStateAction<EnumProductSort>>;
 }
 
-const SortDropdown: FC<SortDropdown> = ({ sortType, setSortType }) => {
+const DropList: FC<SortDropdown> = ({ sortType, setSortType }) => {
 	return (
 		<div className='w-48 ml-auto mb-6 relative border border-gray text-gray-800 bg-white shadow-lg'>
 			<select
@@ -41,4 +41,4 @@ const SortDropdown: FC<SortDropdown> = ({ sortType, setSortType }) => {
 	);
 }
 
-export default SortDropdown;
+export default DropList;

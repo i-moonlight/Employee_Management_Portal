@@ -1,15 +1,15 @@
 import { User } from './user.interface';
 import { CartItem } from '@/models/cart.interface';
 
-export enum EnumOrderStatus {
-	PENDING = 'PENDING',
-	PAYED = 'PAYED',
-	SHIPPED = 'SHIPPED',
-	DELIVERED = 'DELIVERED'
-}
+// export enum EnumOrderStatus {
+// 	PENDING = 'PENDING',
+// 	PAYED = 'PAYED',
+// 	SHIPPED = 'SHIPPED',
+// 	DELIVERED = 'DELIVERED'
+// }
 
 export type TypeOrderData = {
-	status?: EnumOrderStatus;
+	// status?: EnumOrderStatus;
 	items: {
 		productId: string;
 		quantity: number;
@@ -21,7 +21,7 @@ export interface Order {
 	id: string;
 	createdAt: string;
 	items: CartItem[];
-	status: EnumOrderStatus;
+	// status: EnumOrderStatus;
 	user: User;
 	total: number;
 }

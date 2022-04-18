@@ -3,17 +3,18 @@ import { useQuery } from '@tanstack/react-query';
 import { EnumProductSort } from '@/services/product/product.types';
 import { ProductService } from '@/services/product/product.service';
 import type { TypeProductPagination } from '@/models/product.interface';
-import SortDropdown from '@/components/ui/catalog/SortDropdown';
+import DropList from '@/components/ui/catalog/DropList';
 import Button from '@/components/ui/button/Button';
 import Heading from '@/components/ui/Heading';
+import Loader from '@/components/ui/Loader';
 import ProductItem from '@/components/ui/product/ProductItem';
 
-interface Catalog {
+interface CatalogPagination {
 	data: TypeProductPagination;
 	title?: string;
 }
 
-const CatalogPagination: FC<Catalog> = ({ data, title }) => {
+const Catalog: FC<CatalogPagination> = ({ data, title }) => {
 	const [sortType, setSortType] = useState<EnumProductSort>(EnumProductSort.NEWEST);
 	const [page, setPage] = useState<number>(1);
 
@@ -22,12 +23,14 @@ const CatalogPagination: FC<Catalog> = ({ data, title }) => {
 		() => ProductService.getAllProducts({ page, perPage: 4, sort: sortType })
 	);
 
+	if (isLoading) return <Loader />;
+
 	return (
 		<section>
 			{!!title && <Heading className='mb-5'>{title}</Heading>}
-			{!!response?.products.length
+			{response?.products.length
 				? (<>
-					<SortDropdown sortType={sortType} setSortType={setSortType} />
+					<DropList sortType={sortType} setSortType={setSortType} />
 					<div className='grid grid-cols-4 gap-10 '>
 						{response.products.map(product => (<ProductItem key={product.id} product={product} />))}
 					</div>

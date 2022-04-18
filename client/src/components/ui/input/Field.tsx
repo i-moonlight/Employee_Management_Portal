@@ -2,15 +2,14 @@ import cn from 'clsx';
 import { forwardRef, InputHTMLAttributes } from 'react';
 import type { IconType } from 'react-icons';
 
-export interface Field extends InputHTMLAttributes<HTMLInputElement> {
+export interface InputField extends InputHTMLAttributes<HTMLInputElement> {
 	placeholder: string;
 	Icon?: IconType;
 	error?: string;
 }
 
-const Field = forwardRef<HTMLInputElement, Field>((
-		{ placeholder, error, className, type = 'text', style, Icon, ...rest },
-		ref) => {
+const Field = forwardRef<HTMLInputElement, InputField>((
+		{ placeholder, error, className, type = 'text', style, Icon, ...rest }, ref) => {
 		return (
 			<div className={cn('mb-4', className)} style={style}>
 				<label>
@@ -26,7 +25,7 @@ const Field = forwardRef<HTMLInputElement, Field>((
 						className={cn(
 							'px-4 py-2 w-full outline-none border border-gray border-solid focus:border-primary transition-all placeholder:text-gray rounded-lg',
 							{
-								'border-red': !!error
+								'border-red': !!error,
 							})}
 					/>
 				</label>
